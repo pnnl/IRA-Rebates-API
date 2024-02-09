@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesRedemption",
+  "type": "object",
+  "properties": {
+    "rebate_type": {
+      "$ref": "/schemas/definitions#rebate_type"
+    },
+    "rebate_deducted": {
+      "$ref": "/schemas/definitions#rebate_deducted"
+    },
+    "equipment_and_material_cost": {
+      "$ref": "/schemas/definitions#equipment_and_material_cost"
+    },
+    "installation_cost": {
+      "$ref": "/schemas/definitions#installation_cost"
+    },
+    "project_completion_date": {
+      "$ref": "/schemas/definitions#project_completion_date"
+    },
+    "post_retrofit_total_annual_energy_usage_kwh_equivalent": {
+      "$ref": "/schemas/definitions#post_retrofit_total_annual_energy_usage_kwh_equivalent"
+    }
+  },
+  "required": [
+    "rebate_deducted",
+    "equipment_and_material_cost",
+    "installation_cost",
+    "project_completion_date"
+  ],
+  "if": {
+    "properties": {
+      "rebate_type": {
+        "const": "MEASURED"
+      }
+    }
+  },
+  "then": {
+    "required": [
+      "post_retrofit_total_annual_energy_usage_kwh_equivalent"
+    ]
+  },
+  "else": {
+    "not": {
+      "required": [
+        "post_retrofit_total_annual_energy_usage_kwh_equivalent"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

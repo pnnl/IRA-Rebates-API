@@ -1,0 +1,504 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/definitions",
+  "$defs": {
+    "address_id": {
+      "$anchor": "address_id",
+      "type": "string",
+      "format": "uuid"
+    },
+    "building_address": {
+      "$anchor": "building_address",
+      "properties": {
+        "street_number": {
+          "type": "string",
+          "title": "Street number",
+          "pattern": "^\\d+$",
+          "minLength": 1,
+          "maxLength": 6
+        },
+        "street": {
+          "type": "string",
+          "title": "Street",
+          "minLength": 1
+        },
+        "city": {
+          "type": "string",
+          "title": "City",
+          "minLength": 1
+        },
+        "state": {
+          "title": "State",
+          "$comment": " https://bedes.lbl.gov/bedes-online/state",
+          "enum": [
+            "AA",
+            "AE",
+            "AK",
+            "AL",
+            "AP",
+            "AR",
+            "AS",
+            "AZ",
+            "CA",
+            "CO",
+            "CT",
+            "DC",
+            "DE",
+            "FL",
+            "FM",
+            "GA",
+            "GU",
+            "HI",
+            "IA",
+            "ID",
+            "IL",
+            "IN",
+            "KS",
+            "KY",
+            "LA",
+            "MA",
+            "MD",
+            "ME",
+            "MH",
+            "MI",
+            "MN",
+            "MO",
+            "MP",
+            "MS",
+            "MT",
+            "NC",
+            "ND",
+            "NE",
+            "NH",
+            "NJ",
+            "NM",
+            "NV",
+            "NY",
+            "OH",
+            "OK",
+            "OR",
+            "PA",
+            "PR",
+            "PW",
+            "RI",
+            "SC",
+            "SD",
+            "TN",
+            "TX",
+            "UT",
+            "VA",
+            "VI",
+            "VT",
+            "WA",
+            "WI",
+            "WV",
+            "WY"
+          ]
+        },
+        "zip_code": {
+          "type": "string",
+          "title": "Zip code",
+          "pattern": "^(\\d{5}(-\\d{4})?)$"
+        },
+        "county": {
+          "type": "string",
+          "title": "County",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "street_number",
+        "street",
+        "state"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "city"
+          ]
+        },
+        {
+          "required": [
+            "zip_code"
+          ]
+        },
+        {
+          "required": [
+            "county"
+          ]
+        }
+      ]
+    },
+    "building_type": {
+      "$anchor": "building_type",
+      "title": "Building type",
+      "enum": [
+        "SINGLE_FAMILY",
+        "MULTIFAMILY"
+      ]
+    },
+    "claimant_type": {
+      "$anchor": "claimant_type",
+      "title": "Claimant type",
+      "enum": [
+        "HOMEOWNER",
+        "MULTIFAMILY_BUILDING_OWNER",
+        "CONTRACTOR",
+        "AGGREGATOR",
+        "TENANT"
+      ]
+    },
+    "construction_type": {
+      "$anchor": "construction_type",
+      "title": "Construction type",
+      "enum": [
+        "NEW",
+        "EXISTING"
+      ]
+    },
+    "delivered_fuel_savings_kwh_equivalent": {
+      "type": "integer",
+      "title": "Delivered fuel savings kwh equivalent",
+      "minimum": 0,
+      "$anchor": "delivered_fuel_savings_kwh_equivalent"
+    },
+    "doe_approved_bpi_2400_compliant_software_used": {
+      "enum": [
+        "TBD"
+      ],
+      "title": "Doe approved bpi 2400 compliant software used",
+      "$anchor": "doe_approved_bpi_2400_compliant_software_used"
+    },
+    "electric_dwelling_unit_income_bucket": {
+      "$anchor": "electric_dwelling_unit_income_bucket",
+      "title": "Dwelling unit income bucket",
+      "enum": [
+        "LESS_THAN_80%_AMI",
+        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI"
+      ]
+    },
+    "homes_dwelling_unit_income_bucket": {
+      "$anchor": "homes_dwelling_unit_income_bucket",
+      "title": "Dwelling unit income bucket",
+      "enum": [
+        "LESS_THAN_80%_AMI",
+        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI"
+      ]
+    },
+    "energy_data_evaluation_permission": {
+      "$anchor": "energy_data_evaluation_permission",
+      "type": "boolean",
+      "title": "Energy data evaluation permission"
+    },
+    "equipment_and_material_cost": {
+      "type": "integer",
+      "title": "Equipment and material cost",
+      "minimum": 0,
+      "$anchor": "equipment_and_material_cost"
+    },
+    "estimated_energy_savings_percent": {
+      "type": "integer",
+      "title": "Estimated energy savings percent",
+      "minimum": 0,
+      "maximum": 100,
+      "$anchor": "estimated_energy_savings_percent"
+    },
+    "estimated_post_retrofit_annual_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Estimated post retrofit annual energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "estimated_post_retrofit_annual_energy_usage_kwh_equivalent"
+    },
+    "foundation_type": {
+      "title": "Foundation type",
+      "description": "Pick the one with the most area",
+      "enum": [
+        "SLAB_ON_GRADE",
+        "UNCONDITIONED_CRAWLSPACE",
+        "CONDITIONED_CRAWLSPACE",
+        "UNCONDITIONED_BASEMENT",
+        "CONDITIONED_BASEMENT",
+        "TUCK_UNDER_GARAGE"
+      ],
+      "$anchor": "foundation_type"
+    },
+    "homes_upgrade_details": {
+      "$anchor": "homes_upgrade_details",
+      "type": "array",
+      "title": "Upgrade details",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "WALL_INSULATION",
+          "CEILING_INSULATION",
+          "FLOOR_INSULATION",
+          "FOUNDATION_INSULATION",
+          "DUCT_INSULATION",
+          "AIR_SEALING",
+          "DUCT_SEALING",
+          "ELECTRICAL_PANEL",
+          "HEAT_PUMP_WATER_HEATER",
+          "OTHER_WATER_HEATER",
+          "AIR_SOURCE_HEAT_PUMP",
+          "GROUND_SOURCE_HEAT_PUMP",
+          "OTHER_HEATING_SYSTEM",
+          "VENTILATION",
+          "HEAT_PUMP_CLOTHES_DRYER",
+          "HYDRONIC_PUMP"
+        ]
+      }
+    },
+    "installation_cost": {
+      "$anchor": "installation_cost",
+      "type": "integer",
+      "minimum": 0,
+      "title": "Installation cost"
+    },
+    "is_dac": {
+      "$anchor": "is_dac",
+      "type": "boolean",
+      "title": "Is disadvantaged community"
+    },
+    "is_do_it_yourself": {
+      "$anchor": "is_do_it_yourself",
+      "type": "boolean",
+      "title": "Is do it yourself"
+    },
+    "is_model_calibrated": {
+      "type": "boolean",
+      "title": "Is model calibrated",
+      "$anchor": "is_model_calibrated"
+    },
+    "is_part_of_whole_building_project": {
+      "$anchor": "is_part_of_whole_building_project",
+      "type": "boolean",
+      "title": "Is part of whole building project"
+    },
+    "is_whole_building_project": {
+      "type": "boolean",
+      "title": "Is whole building project",
+      "$anchor": "is_whole_building_project"
+    },
+    "electric_savings_kwh": {
+      "type": "integer",
+      "title": "Electric savings kwh",
+      "minimum": 0,
+      "$anchor": "electric_savings_kwh"
+    },
+    "electric_mf_building_income_bucket": {
+      "$anchor": "electric_mf_building_income_bucket",
+      "title": "Multifamily building income bucket",
+      "enum": [
+        "LESS_THAN_80%_AMI",
+        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI"
+      ]
+    },
+    "homes_mf_building_income_bucket": {
+      "$anchor": "homes_mf_building_income_bucket",
+      "title": "Multifamily building income bucket",
+      "enum": [
+        "LESS_THAN_80%_AMI",
+        "80%_AND_GREATER"
+      ]
+    },
+    "mf_conditioned_floor_area": {
+      "$anchor": "mf_conditioned_floor_area",
+      "type": "integer",
+      "title": "Multifamily conditioned floor area",
+      "minimum": 0
+    },
+    "modeled_energy_savings_kwh_equivalent": {
+      "type": "integer",
+      "title": "Modeled energy savings kwh equivalent",
+      "minimum": 0,
+      "$anchor": "modeled_energy_savings_kwh_equivalent"
+    },
+    "modeled_energy_savings_percent": {
+      "type": "integer",
+      "title": "Modeled energy savings percent",
+      "minimum": 0,
+      "maximum": 100,
+      "$anchor": "modeled_energy_savings_percent"
+    },
+    "nat_gas_savings_therms": {
+      "type": "integer",
+      "title": "Nat gas savings therms",
+      "minimum": 0,
+      "$anchor": "nat_gas_savings_therms"
+    },
+    "num_units": {
+      "$anchor": "num_units",
+      "type": "integer",
+      "title": "Num units",
+      "minimum": 2,
+      "maximum": 2147483647
+    },
+    "num_units_meeting_income_bucket": {
+      "$anchor": "num_units_meeting_income_bucket",
+      "type": "integer",
+      "title": "Num units meeting income bucket",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "portfolio_id": {
+      "$anchor": "portfolio_id",
+      "type": "string",
+      "format": "uuid"
+    },
+    "post_retrofit_total_annual_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Post retrofit total annual energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "post_retrofit_total_annual_energy_usage_kwh_equivalent"
+    },
+    "prior_total_annual_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Prior total annual energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "prior_total_annual_energy_usage_kwh_equivalent"
+    },
+    "product_descriptions": {
+      "$anchor": "product_descriptions",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      },
+      "title": "Product descriptions"
+    },
+    "product_ids": {
+      "$anchor": "product_ids",
+      "description": "UPC",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Product ids"
+    },
+    "product_serial_nums": {
+      "$anchor": "product_serial_nums",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "title": "Product serial nums"
+    },
+    "project_completion_date": {
+      "$anchor": "project_completion_date",
+      "type": "string",
+      "format": "date",
+      "title": "Project completion date"
+    },
+    "project_id": {
+      "$anchor": "project_id",
+      "type": "string",
+      "format": "uuid",
+      "title": "Project id"
+    },
+    "purchase_date": {
+      "$anchor": "purchase_date",
+      "type": "string",
+      "format": "date-time",
+      "title": "Purchase date"
+    },
+    "rebate_amount": {
+      "$anchor": "rebate_amount",
+      "type": "number",
+      "minimum": 0,
+      "title": "Rebate amount"
+    },
+    "rebate_deducted": {
+      "$anchor": "rebate_deducted",
+      "type": "number",
+      "minimum": 0,
+      "title": "Rebate deducted"
+    },
+    "rebate_type": {
+      "title": "Rebate type",
+      "enum": [
+        "MEASURED",
+        "MODELED"
+      ],
+      "$anchor": "rebate_type"
+    },
+    "redemption_type": {
+      "$anchor": "redemption_type",
+      "enum": [
+        "COMPLETION",
+        "POINT_OF_PURCHASE"
+      ],
+      "title": "Redemption type"
+    },
+    "sf_conditioned_floor_area": {
+      "$anchor": "sf_conditioned_floor_area",
+      "title": "Single-family conditioned floor area",
+      "enum": [
+        "LESS_THAN_500SF",
+        "500SF_1500SF",
+        "1500SF_2500SF",
+        "GREATER_THAN_2500SF"
+      ]
+    },
+    "software_used_to_estimate_measured_savings": {
+      "type": "string",
+      "title": "Software used to estimate measured savings",
+      "$anchor": "software_used_to_estimate_measured_savings"
+    },
+    "unit_name_or_number": {
+      "$anchor": "unit_name_or_number",
+      "type": "string",
+      "title": "Unit name or number",
+      "minLength": 1
+    },
+    "upgrade_applicability": {
+      "$anchor": "upgrade_applicability",
+      "title": "Upgrade applicability",
+      "enum": [
+        "SINGLE_UNIT",
+        "WHOLE_BUILDING"
+      ]
+    },
+    "upgrade_type": {
+      "$anchor": "upgrade_type",
+      "title": "Upgrade type",
+      "enum": [
+        "HEAT_PUMP_WATER_HEATER",
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "ELECTRIC_COOKING_APPLIANCE",
+        "HEAT_PUMP_CLOTHES_DRYER",
+        "ELECTRIC_LOAD_SERVICE_CENTER",
+        "INSULATION_AIR_SEALING_VENTILATION",
+        "ELECTRIC_WIRING"
+      ]
+    },
+    "utility_bill_companies": {
+      "$anchor": "utility_bill_companies",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "vendor_id": {
+      "$anchor": "vendor_id",
+      "type": "string",
+      "title": "Vendor id",
+      "maxLength": 12
+    },
+    "year_built": {
+      "$anchor": "year_built",
+      "title": "Year built",
+      "enum": [
+        "BEFORE_1940",
+        "1940_1979",
+        "1980_2009",
+        "2010_OR_LATER"
+      ]
+    }
+  }
+}

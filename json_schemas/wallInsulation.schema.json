@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/wallInsulation",
+  "type": "object",
+  "properties": {
+    "original_component_details": {
+      "$anchor": "original_component_details",
+      "type": "object",
+      "properties": {
+        "insulation": {
+          "enum": [
+            "NONE",
+            "CAVITY",
+            "FANFOLD",
+            "EXTERIOR_CONTINUOUS",
+            "DO_NOT_KNOW"
+          ]
+        }
+      },
+      "required": [
+        "insulation"
+      ],
+      "additionalProperties": false
+    },
+    "upgrade_component_details": {
+      "$anchor": "upgrade_component_details",
+      "type": "object",
+      "properties": {
+        "cavity_insulation_added": {
+          "enum": [
+            "R13",
+            "R19",
+            "R21",
+            "MORE_THAN_R21"
+          ]
+        },
+        "exterior_continuous_insulation_added": {
+          "enum": [
+            "1_INCH",
+            "2_INCH",
+            "MORE_THAN_2_INCH"
+          ]
+        },
+        "percent_wall_area_treated": {
+          "enum": [
+            10,
+            25,
+            50,
+            75,
+            100
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "cavity_insulation_added"
+          ]
+        },
+        {
+          "required": [
+            "exterior_continuous_insulation_added"
+          ]
+        }
+      ],
+      "required": [
+        "percent_wall_area_treated"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
