@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/airSealing",
+  "type": "object",
+  "properties": {
+    "original_component_details": {
+      "$anchor": "original_component_details",
+      "type": "object",
+      "properties": {
+        "leakage_rate_known": {
+          "type": "boolean"
+        },
+        "cfm50": {
+          "type": "number",
+          "minimum": 100
+        }
+      },
+      "required": [
+        "leakage_rate_known"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "leakage_rate_known": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "cfm50"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "cfm50"
+          ]
+        }
+      }
+    },
+    "upgrade_component_details": {
+      "$anchor": "upgrade_component_details",
+      "type": "object",
+      "properties": {
+        "leakage_rate_known": {
+          "type": "boolean"
+        },
+        "cfm50": {
+          "type": "number",
+          "minimum": 0
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ATTIC",
+              "WALLS_WINDOWS_DOORS",
+              "FLOOR_FOUNDATION"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "leakage_rate_known",
+        "locations"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "leakage_rate_known": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "cfm50"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "cfm50"
+          ]
+        }
+      }
+    }
+  }
+}

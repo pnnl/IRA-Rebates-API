@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electricCookingAppliance",
+  "type": "object",
+  "properties": {
+    "original_component_details": {
+      "$anchor": "original_component_details",
+      "type": "object",
+      "properties": {
+        "fuel_type": {
+          "enum": [
+            "GAS",
+            "ELECTRIC",
+            "NONE"
+          ]
+        }
+      },
+      "required": [
+        "fuel_type"
+      ],
+      "additionalProperties": false
+    },
+    "upgrade_component_details": {
+      "$anchor": "upgrade_component_details",
+      "type": "object",
+      "properties": {
+        "cooking_appliance_type": {
+          "enum": [
+            "STANDARD_ELECTRIC",
+            "INDUCTION_COOKTOP"
+          ]
+        }
+      },
+      "required": [
+        "cooking_appliance_type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
