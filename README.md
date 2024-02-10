@@ -18,7 +18,9 @@ The `/json_schemas` folder includes JSON Schema files that are used by the IRA R
 | /homes/eligible-rebates | homesEligibleRebatesPayload.schema.json |
 | /homes/reservations | homesReservationsPayload.schema.json |
 | /homes/reservations/{reservation_id}/redemptions | homesRedemptionsPayload.schema.json |
-All other json schema files are referenced from the those listed in the table. 
+
+All other json schema files are referenced from those listed in the table. 
+
 ## Useful Links
 - Home Energy Rebate Programs: https://www.energy.gov/scep/home-energy-rebates-programs
 - Home Energy Rebate Tools (the high-level web page for the IRA Rebate API and related tools): https://www.pnnl.gov/projects/rebate-tools
