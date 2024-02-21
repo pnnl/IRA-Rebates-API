@@ -27,17 +27,6 @@
     },
     {
       "properties": {
-        "electric_wiring_original_details": {
-          "$ref": "/schemas/electricWiring#original_component_details"
-        }
-      },
-      "required": [
-        "electric_wiring_original_details"
-      ],
-      "additionalProperties": false
-    },
-    {
-      "properties": {
         "electric_cooking_appliance_original_details": {
           "$ref": "/schemas/electricCookingAppliance#original_component_details"
         }

@@ -27,17 +27,6 @@
     },
     {
       "properties": {
-        "electric_wiring_upgrade_details": {
-          "$ref": "/schemas/electricWiring#upgrade_component_details"
-        }
-      },
-      "required": [
-        "electric_wiring_upgrade_details"
-      ],
-      "additionalProperties": false
-    },
-    {
-      "properties": {
         "electric_cooking_appliance_upgrade_details": {
           "$ref": "/schemas/electricCookingAppliance#upgrade_component_details"
         }

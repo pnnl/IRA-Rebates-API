@@ -33,7 +33,10 @@
       "rebate_type": {
         "const": "MEASURED"
       }
-    }
+    },
+    "required": [
+      "rebate_type"
+    ]
   },
   "then": {
     "required": [

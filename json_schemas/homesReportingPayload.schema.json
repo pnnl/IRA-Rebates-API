@@ -5,6 +5,9 @@
   "items": {
     "type": "object",
     "properties": {
+      "address_id": {
+        "$ref": "/schemas/definitions#address_id"
+      },
       "building_address": {
         "$ref": "/schemas/definitions#building_address"
       },
@@ -19,12 +22,6 @@
       },
       "energy_data_evaluation_permission": {
         "$ref": "/schemas/definitions#energy_data_evaluation_permission"
-      },
-      "mf_conditioned_floor_area": {
-        "$ref": "/schemas/definitions#mf_conditioned_floor_area"
-      },
-      "sf_conditioned_floor_area": {
-        "$ref": "/schemas/definitions#sf_conditioned_floor_area"
       },
       "num_units": {
         "$ref": "/schemas/definitions#num_units"
@@ -62,9 +59,6 @@
       "upgrade_applicability": {
         "$ref": "/schemas/definitions#upgrade_applicability"
       },
-      "year_built": {
-        "$ref": "/schemas/definitions#year_built"
-      },
       "mf_building_income_bucket": {
         "$ref": "/schemas/definitions#homes_mf_building_income_bucket"
       },
@@ -73,9 +67,6 @@
       },
       "is_whole_building_project": {
         "$ref": "/schemas/definitions#is_whole_building_project"
-      },
-      "foundation_type": {
-        "$ref": "/schemas/definitions#foundation_type"
       },
       "portfolio_id": {
         "$ref": "/schemas/definitions#portfolio_id"
@@ -102,7 +93,6 @@
       "construction_type",
       "energy_data_evaluation_permission",
       "rebate_type",
-      "year_built",
       "prior_total_annual_energy_usage_kwh_equivalent",
       "rebate_deducted",
       "equipment_and_material_cost",
@@ -268,31 +258,6 @@
         }
       },
       {
-        "$comment": "Determine when mf_conditioned_floor_area is required or not allowed",
-        "if": {
-          "required": [
-            "upgrade_applicability"
-          ],
-          "properties": {
-            "upgrade_applicability": {
-              "const": "WHOLE_BULIDING"
-            }
-          }
-        },
-        "then": {
-          "required": [
-            "mf_conditioned_floor_area"
-          ]
-        },
-        "else": {
-          "not": {
-            "required": [
-              "mf_conditioned_floor_area"
-            ]
-          }
-        }
-      },
-      {
         "$comment": "Determine when dwelling_unit_income_bucket is required or not allowed",
         "if": {
           "anyOf": [
@@ -328,49 +293,6 @@
           "not": {
             "required": [
               "dwelling_unit_income_bucket"
-            ]
-          }
-        }
-      },
-      {
-        "$comment": "Determine when sf_conditioned_floor_area is required or not allowed",
-        "if": {
-          "anyOf": [
-            {
-              "properties": {
-                "claimant_type": {
-                  "const": "TENANT"
-                }
-              }
-            },
-            {
-              "properties": {
-                "building_type": {
-                  "const": "SINGLE_FAMILY"
-                }
-              }
-            },
-            {
-              "required": [
-                "upgrade_applicability"
-              ],
-              "properties": {
-                "upgrade_applicability": {
-                  "const": "SINGLE_UNIT"
-                }
-              }
-            }
-          ]
-        },
-        "then": {
-          "required": [
-            "sf_conditioned_floor_area"
-          ]
-        },
-        "else": {
-          "not": {
-            "required": [
-              "sf_conditioned_floor_area"
             ]
           }
         }

@@ -556,24 +556,6 @@
         "if": {
           "properties": {
             "upgrade_type": {
-              "const": "ELECTRIC_WIRING"
-            }
-          }
-        },
-        "then": {
-          "properties": {
-            "upgrade_component_details": {
-              "required": [
-                "electric_wiring_upgrade_details"
-              ]
-            }
-          }
-        }
-      },
-      {
-        "if": {
-          "properties": {
-            "upgrade_type": {
               "enum": [
                 "HEAT_PUMP_WATER_HEATER",
                 "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
@@ -692,24 +674,6 @@
             "original_component_details": {
               "required": [
                 "insulation_air_sealing_ventilation_original_details"
-              ]
-            }
-          }
-        }
-      },
-      {
-        "if": {
-          "properties": {
-            "upgrade_type": {
-              "const": "ELECTRIC_WIRING"
-            }
-          }
-        },
-        "then": {
-          "properties": {
-            "original_component_details": {
-              "required": [
-                "electric_wiring_original_details"
               ]
             }
           }

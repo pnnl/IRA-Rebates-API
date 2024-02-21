@@ -169,24 +169,6 @@
                 }
               }
             }
-          },
-          {
-            "if": {
-              "properties": {
-                "upgrade_type": {
-                  "const": "ELECTRIC_WIRING"
-                }
-              }
-            },
-            "then": {
-              "properties": {
-                "upgrade_component_details": {
-                  "required": [
-                    "electric_wiring_upgrade_details"
-                  ]
-                }
-              }
-            }
           }
         ]
       },
