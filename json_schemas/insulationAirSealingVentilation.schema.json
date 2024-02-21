@@ -31,6 +31,9 @@
           },
           {
             "$ref": "/schemas/foundationInsulation#upgrade_component_details"
+          },
+          {
+            "$ref": "/schemas/ventilation#upgrade_component_details"
           }
         ]
       }
@@ -57,6 +60,9 @@
           },
           {
             "$ref": "/schemas/ductInsulation#original_component_details"
+          },
+          {
+            "$ref": "/schemas/ventilation#original_component_details"
           }
         ]
       }
