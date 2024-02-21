@@ -183,7 +183,7 @@
       "title": "Dwelling unit income bucket",
       "enum": [
         "LESS_THAN_80%_AMI",
-        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI"
+        "80%_AND_GREATER"
       ]
     },
     "energy_data_evaluation_permission": {
