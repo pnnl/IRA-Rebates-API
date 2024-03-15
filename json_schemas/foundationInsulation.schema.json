@@ -7,6 +7,9 @@
       "$anchor": "upgrade_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "FOUNDATION_INSULATION"
+        },
         "percent_foundation_perimeter_receiving_additional_insulation": {
           "enum": [
             10,
@@ -28,6 +31,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "percent_foundation_perimeter_receiving_additional_insulation",
         "r_value_added"
       ],

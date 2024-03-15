@@ -1,17 +1,21 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ira-rebates.labworks.org/schemas/HVACVentilation",
+  "$id": "https://ira-rebates.labworks.org/schemas/ventilation",
   "type": "object",
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "VENTILATION"
+        },
         "has_whole_house_ventilation": {
           "type": "boolean"
         }
       },
       "required": [
+        "upgrade_subtype",
         "has_whole_house_ventilation"
       ],
       "additionalProperties": false
@@ -20,12 +24,16 @@
       "$anchor": "upgrade_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "VENTILATION"
+        },
         "cfm_flow_rate": {
           "type": "number",
           "minimum": 0
         }
       },
       "required": [
+        "upgrade_subtype",
         "cfm_flow_rate"
       ],
       "additionalProperties": false

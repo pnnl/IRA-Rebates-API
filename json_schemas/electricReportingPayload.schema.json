@@ -11,8 +11,8 @@
       "address_id": {
         "$ref": "/schemas/definitions#address_id"
       },
-      "is_dac": {
-        "$ref": "/schemas/definitions#is_dac"
+      "is_disadvantaged_community": {
+        "$ref": "/schemas/definitions#is_disadvantaged_community"
       },
       "sf_conditioned_floor_area": {
         "$ref": "/schemas/definitions#sf_conditioned_floor_area"
@@ -104,12 +104,12 @@
       "product_descriptions": {
         "$ref": "/schemas/definitions#product_descriptions"
       },
-      "product_serial_nums": {
-        "$ref": "/schemas/definitions#product_serial_nums"
+      "product_serial_numbers": {
+        "$ref": "/schemas/definitions#product_serial_numbers"
       }
     },
     "required": [
-      "is_dac",
+      "is_disadvantaged_community",
       "claimant_type",
       "construction_type",
       "energy_data_evaluation_permission",
@@ -119,10 +119,8 @@
       "utility_bill_companies",
       "rebate_deducted",
       "project_completion_date",
-      "upgrade_component_details",
       "purchase_date",
-      "equipment_and_material_cost",
-      "rebate_amount"
+      "equipment_and_material_cost"
     ],
     "additionalProperties": false,
     "oneOf": [
@@ -219,7 +217,7 @@
         }
       },
       {
-        "$comment": "Determine when num_units, num_units_meeting_income_bucket, project_id, mf_building_income_bucket, and upgrade_applicability are required or not allowed",
+        "$comment": "Determine when num_units, num_units_meeting_income_bucket, project_id, mf_building_income_bucket, dwelling_unit_income_bucket, and upgrade_applicability are required or not allowed",
         "if": {
           "required": [
             "is_part_of_whole_building_project"
@@ -237,152 +235,57 @@
             "project_id",
             "mf_building_income_bucket",
             "upgrade_applicability"
-          ]
+          ],
+          "not": {
+            "required": [
+              "dwelling_unit_income_bucket"
+            ]
+          }
         },
         "else": {
-          "allOf": [
-            {
-              "not": {
-                "required": [
-                  "num_units"
-                ]
-              }
-            },
-            {
-              "not": {
-                "required": [
-                  "num_units_meeting_income_bucket"
-                ]
-              }
-            },
-            {
-              "not": {
-                "required": [
-                  "project_id"
-                ]
-              }
-            },
-            {
-              "not": {
-                "required": [
-                  "mf_building_income_bucket"
-                ]
-              }
-            },
-            {
-              "not": {
-                "required": [
-                  "upgrade_applicabilty"
-                ]
-              }
-            }
-          ]
+          "required": [
+            "dwelling_unit_income_bucket"
+          ],
+          "not": {
+            "required": [
+              "num_units",
+              "num_units_meeting_income_bucket",
+              "project_id",
+              "mf_building_income_bucket",
+              "upgrade_applicability"
+            ]
+          }
         }
       },
       {
-        "$comment": "Determine when mf_conditioned_floor_area is required or not allowed",
+        "$comment": "Determine when mf_conditioned_floor_area and sf_conditioned_floor_area required or not allowed",
         "if": {
           "required": [
             "upgrade_applicability"
           ],
           "properties": {
             "upgrade_applicability": {
-              "const": "WHOLE_BULIDING"
+              "const": "WHOLE_BUILDING"
             }
           }
         },
         "then": {
           "required": [
             "mf_conditioned_floor_area"
-          ]
-        },
-        "else": {
-          "not": {
-            "required": [
-              "mf_conditioned_floor_area"
-            ]
-          }
-        }
-      },
-      {
-        "$comment": "Determine when dwelling_unit_income_bucket is required or not allowed",
-        "if": {
-          "anyOf": [
-            {
-              "properties": {
-                "claimant_type": {
-                  "const": "TENANT"
-                }
-              }
-            },
-            {
-              "properties": {
-                "building_type": {
-                  "const": "SINGLE_FAMILY"
-                }
-              }
-            },
-            {
-              "properties": {
-                "is_part_of_whole_building_project": {
-                  "const": false
-                }
-              }
-            }
-          ]
-        },
-        "then": {
-          "required": [
-            "dwelling_unit_income_bucket"
-          ]
-        },
-        "else": {
-          "not": {
-            "required": [
-              "dwelling_unit_income_bucket"
-            ]
-          }
-        }
-      },
-      {
-        "$comment": "Determine when sf_conditioned_floor_area is required or not allowed",
-        "if": {
-          "anyOf": [
-            {
-              "properties": {
-                "claimant_type": {
-                  "const": "TENANT"
-                }
-              }
-            },
-            {
-              "properties": {
-                "building_type": {
-                  "const": "SINGLE_FAMILY"
-                }
-              }
-            },
-            {
-              "required": [
-                "upgrade_applicability"
-              ],
-              "properties": {
-                "upgrade_applicability": {
-                  "const": "SINGLE_UNIT"
-                }
-              }
-            }
-          ]
-        },
-        "then": {
-          "required": [
-            "sf_conditioned_floor_area"
-          ]
-        },
-        "else": {
+          ],
           "not": {
             "required": [
               "sf_conditioned_floor_area"
+            ]
+          }
+        },
+        "else": {
+          "required": [
+            "sf_conditioned_floor_area"
+          ],
+          "not": {
+            "required": [
+              "mf_conditioned_floor_area"
             ]
           }
         }
@@ -441,6 +344,44 @@
             "required": [
               "unit_name_or_number"
             ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when product_serial_numbers is required or not allowed",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_WATER_HEATER",
+                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                "ELECTRIC_COOKING_APPLIANCE",
+                "HEAT_PUMP_CLOTHES_DRYER"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "product_serial_numbers"
+          ]
+        },
+        "else": {
+          "if": {
+            "not": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "INSULATION_AIR_SEALING_VENTILATION"
+                }
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "product_serial_numbers"
+              ]
+            }
           }
         }
       },
@@ -520,7 +461,7 @@
         "if": {
           "properties": {
             "upgrade_type": {
-              "const": "ELECTRIC_LOAD_SERVICE_CENTER"
+              "const": "ELECTRICAL_PANEL"
             }
           }
         },
@@ -528,7 +469,7 @@
           "properties": {
             "upgrade_component_details": {
               "required": [
-                "electric_load_service_center_upgrade_details"
+                "electrical_panel_upgrade_details"
               ]
             }
           }
@@ -547,43 +488,6 @@
             "upgrade_component_details": {
               "required": [
                 "insulation_air_sealing_ventilation_upgrade_details"
-              ]
-            }
-          }
-        }
-      },
-      {
-        "if": {
-          "properties": {
-            "upgrade_type": {
-              "enum": [
-                "HEAT_PUMP_WATER_HEATER",
-                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
-                "ELECTRIC_COOKING_APPLIANCE",
-                "HEAT_PUMP_CLOTHES_DRYER"
-              ]
-            }
-          }
-        },
-        "then": {
-          "required": [
-            "product_serial_nums"
-          ]
-        },
-        "else": {
-          "if": {
-            "not": {
-              "properties": {
-                "upgrade_type": {
-                  "const": "INSULATION_AIR_SEALING_VENTILATION"
-                }
-              }
-            }
-          },
-          "then": {
-            "not": {
-              "required": [
-                "product_serial_nums"
               ]
             }
           }
@@ -647,7 +551,7 @@
         "if": {
           "properties": {
             "upgrade_type": {
-              "const": "ELECTRIC_LOAD_SERVICE_CENTER"
+              "const": "ELECTRICAL_PANEL"
             }
           }
         },
@@ -655,7 +559,7 @@
           "properties": {
             "original_component_details": {
               "required": [
-                "electric_load_service_center_original_details"
+                "electrical_panel_original_details"
               ]
             }
           }

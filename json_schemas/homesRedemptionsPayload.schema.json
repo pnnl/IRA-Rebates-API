@@ -18,8 +18,8 @@
     "project_completion_date": {
       "$ref": "/schemas/definitions#project_completion_date"
     },
-    "post_retrofit_total_annual_energy_usage_kwh_equivalent": {
-      "$ref": "/schemas/definitions#post_retrofit_total_annual_energy_usage_kwh_equivalent"
+    "measured_post_retrofit_energy_usage_kwh_equivalent": {
+      "$ref": "/schemas/definitions#measured_post_retrofit_energy_usage_kwh_equivalent"
     }
   },
   "required": [
@@ -40,13 +40,13 @@
   },
   "then": {
     "required": [
-      "post_retrofit_total_annual_energy_usage_kwh_equivalent"
+      "measured_post_retrofit_energy_usage_kwh_equivalent"
     ]
   },
   "else": {
     "not": {
       "required": [
-        "post_retrofit_total_annual_energy_usage_kwh_equivalent"
+        "measured_post_retrofit_energy_usage_kwh_equivalent"
       ]
     }
   },

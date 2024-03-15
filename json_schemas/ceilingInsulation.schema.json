@@ -7,6 +7,9 @@
       "$anchor": "original_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "CEILING_INSULATION"
+        },
         "insulation_type": {
           "enum": [
             "NONE",
@@ -19,6 +22,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "insulation_type"
       ],
       "additionalProperties": false
@@ -27,6 +31,9 @@
       "$anchor": "upgrade_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "CEILING_INSULATION"
+        },
         "r_value_added": {
           "enum": [
             "LESS_THAN_R30",
@@ -47,6 +54,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "r_value_added",
         "percent_ceiling_receiving_additional_insulation"
       ],

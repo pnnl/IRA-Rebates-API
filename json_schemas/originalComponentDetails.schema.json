@@ -16,12 +16,12 @@
     },
     {
       "properties": {
-        "electric_load_service_center_original_details": {
-          "$ref": "/schemas/electricLoadServiceCenter#original_component_details"
+        "electrical_panel_original_details": {
+          "$ref": "/schemas/electricalPanel#original_component_details"
         }
       },
       "required": [
-        "electric_load_service_center_original_details"
+        "electrical_panel_original_details"
       ],
       "additionalProperties": false
     },

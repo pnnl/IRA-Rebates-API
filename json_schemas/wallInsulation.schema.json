@@ -7,6 +7,9 @@
       "$anchor": "original_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "WALL_INSULATION"
+        },
         "insulation": {
           "enum": [
             "NONE",
@@ -18,6 +21,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "insulation"
       ],
       "additionalProperties": false
@@ -26,6 +30,9 @@
       "$anchor": "upgrade_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "WALL_INSULATION"
+        },
         "cavity_insulation_added": {
           "enum": [
             "R13",
@@ -64,6 +71,7 @@
         }
       ],
       "required": [
+        "upgrade_subtype",
         "percent_wall_area_treated"
       ],
       "additionalProperties": false

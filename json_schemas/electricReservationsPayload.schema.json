@@ -166,7 +166,7 @@
       }
     },
     {
-      "$comment": "Determine when num_units, num_units_meeting_income_bucket, project_id, mf_building_income_bucket, and upgrade_applicability are required or not allowed",
+      "$comment": "Determine when num_units, num_units_meeting_income_bucket, project_id, mf_building_income_bucket, dwelling_unit_income_bucket, and upgrade_applicability are required or not allowed",
       "if": {
         "required": [
           "is_part_of_whole_building_project"
@@ -184,152 +184,57 @@
           "project_id",
           "mf_building_income_bucket",
           "upgrade_applicability"
-        ]
+        ],
+        "not": {
+          "required": [
+            "dwelling_unit_income_bucket"
+          ]
+        }
       },
       "else": {
-        "allOf": [
-          {
-            "not": {
-              "required": [
-                "num_units"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "num_units_meeting_income_bucket"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "project_id"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "mf_building_income_bucket"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "upgrade_applicabilty"
-              ]
-            }
-          }
-        ]
+        "required": [
+          "dwelling_unit_income_bucket"
+        ],
+        "not": {
+          "required": [
+            "num_units",
+            "num_units_meeting_income_bucket",
+            "project_id",
+            "mf_building_income_bucket",
+            "upgrade_applicability"
+          ]
+        }
       }
     },
     {
-      "$comment": "Determine when mf_conditioned_floor_area is required or not allowed",
+      "$comment": "Determine when mf_conditioned_floor_area and sf_conditioned_floor_area required or not allowed",
       "if": {
         "required": [
           "upgrade_applicability"
         ],
         "properties": {
           "upgrade_applicability": {
-            "const": "WHOLE_BULIDING"
+            "const": "WHOLE_BUILDING"
           }
         }
       },
       "then": {
         "required": [
           "mf_conditioned_floor_area"
-        ]
-      },
-      "else": {
-        "not": {
-          "required": [
-            "mf_conditioned_floor_area"
-          ]
-        }
-      }
-    },
-    {
-      "$comment": "Determine when dwelling_unit_income_bucket is required or not allowed",
-      "if": {
-        "anyOf": [
-          {
-            "properties": {
-              "claimant_type": {
-                "const": "TENANT"
-              }
-            }
-          },
-          {
-            "properties": {
-              "building_type": {
-                "const": "SINGLE_FAMILY"
-              }
-            }
-          },
-          {
-            "properties": {
-              "is_part_of_whole_building_project": {
-                "const": false
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "dwelling_unit_income_bucket"
-        ]
-      },
-      "else": {
-        "not": {
-          "required": [
-            "dwelling_unit_income_bucket"
-          ]
-        }
-      }
-    },
-    {
-      "$comment": "Determine when sf_conditioned_floor_area is required or not allowed",
-      "if": {
-        "anyOf": [
-          {
-            "properties": {
-              "claimant_type": {
-                "const": "TENANT"
-              }
-            }
-          },
-          {
-            "properties": {
-              "building_type": {
-                "const": "SINGLE_FAMILY"
-              }
-            }
-          },
-          {
-            "required": [
-              "upgrade_applicability"
-            ],
-            "properties": {
-              "upgrade_applicability": {
-                "const": "SINGLE_UNIT"
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "sf_conditioned_floor_area"
-        ]
-      },
-      "else": {
+        ],
         "not": {
           "required": [
             "sf_conditioned_floor_area"
+          ]
+        }
+      },
+      "else": {
+        "required": [
+          "sf_conditioned_floor_area"
+        ],
+        "not": {
+          "required": [
+            "mf_conditioned_floor_area"
           ]
         }
       }
@@ -467,7 +372,7 @@
       "if": {
         "properties": {
           "upgrade_type": {
-            "const": "ELECTRIC_LOAD_SERVICE_CENTER"
+            "const": "ELECTRICAL_PANEL"
           }
         }
       },
@@ -475,7 +380,7 @@
         "properties": {
           "original_component_details": {
             "required": [
-              "electric_load_service_center_original_details"
+              "electrical_panel_original_details"
             ]
           }
         }
