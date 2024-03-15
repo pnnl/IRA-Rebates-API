@@ -27,8 +27,8 @@
     "product_descriptions": {
       "$ref": "/schemas/definitions#product_descriptions"
     },
-    "product_serial_nums": {
-      "$ref": "/schemas/definitions#product_serial_nums"
+    "product_serial_numbers": {
+      "$ref": "/schemas/definitions#product_serial_numbers"
     }
   },
   "required": [
@@ -72,7 +72,7 @@
         },
         "then": {
           "required": [
-            "product_serial_nums"
+            "product_serial_numbers"
           ]
         },
         "else": {
@@ -88,7 +88,7 @@
           "then": {
             "not": {
               "required": [
-                "product_serial_nums"
+                "product_serial_numbers"
               ]
             }
           }

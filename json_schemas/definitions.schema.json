@@ -15,17 +15,20 @@
           "title": "Street number",
           "pattern": "^\\d+$",
           "minLength": 1,
-          "maxLength": 6
+          "maxLength": 6,
+          "description": "The building number. This would be &ldquo;122&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
         },
         "street": {
           "type": "string",
           "title": "Street",
-          "minLength": 1
+          "minLength": 1,
+          "description": "The name of the street, avenue, etc.. This would be &ldquo;Mayflower HIll Dr&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
         },
         "city": {
           "type": "string",
           "title": "City",
-          "minLength": 1
+          "minLength": 1,
+          "description": "The name of the city, town, etc.. This would be &ldquo;Waterville&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
         },
         "state": {
           "title": "State",
@@ -93,17 +96,20 @@
             "WI",
             "WV",
             "WY"
-          ]
+          ],
+          "description": "The name, or two letter code, for the state. This would be &ldquo;ME&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
         },
         "zip_code": {
           "type": "string",
           "title": "Zip code",
-          "pattern": "^(\\d{5}(-\\d{4})?)$"
+          "pattern": "^(\\d{5}(-\\d{4})?)$",
+          "description": "The *zip_code* is the 5-digit or 9-digit zip code. This would be &ldquo;04901&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
         },
         "county": {
           "type": "string",
           "title": "County",
-          "minLength": 1
+          "minLength": 1,
+          "description": "The name of the county containing the address."
         }
       },
       "required": [
@@ -183,7 +189,7 @@
       "title": "Dwelling unit income bucket",
       "enum": [
         "LESS_THAN_80%_AMI",
-        "80%_AND_GREATER"
+        "80%_AMI_AND_GREATER"
       ]
     },
     "energy_data_evaluation_permission": {
@@ -204,11 +210,11 @@
       "maximum": 100,
       "$anchor": "estimated_energy_savings_percent"
     },
-    "estimated_post_retrofit_annual_energy_usage_kwh_equivalent": {
+    "estimated_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Estimated post retrofit annual energy usage kwh equivalent",
+      "title": "Estimated post retrofit energy usage kwh equivalent",
       "minimum": 0,
-      "$anchor": "estimated_post_retrofit_annual_energy_usage_kwh_equivalent"
+      "$anchor": "estimated_post_retrofit_energy_usage_kwh_equivalent"
     },
     "foundation_type": {
       "title": "Foundation type",
@@ -255,8 +261,8 @@
       "minimum": 0,
       "title": "Installation cost"
     },
-    "is_dac": {
-      "$anchor": "is_dac",
+    "is_disadvantaged_community": {
+      "$anchor": "is_disadvantaged_community",
       "type": "boolean",
       "title": "Is disadvantaged community"
     },
@@ -299,8 +305,20 @@
       "title": "Multifamily building income bucket",
       "enum": [
         "LESS_THAN_80%_AMI",
-        "80%_AND_GREATER"
+        "80%_AMI_AND_GREATER"
       ]
+    },
+    "measured_post_retrofit_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Measured post retrofit energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "measured_post_retrofit_energy_usage_kwh_equivalent"
+    },
+    "measured_prior_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Measured prior energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "measured_prior_energy_usage_kwh_equivalent"
     },
     "mf_conditioned_floor_area": {
       "$anchor": "mf_conditioned_floor_area",
@@ -321,11 +339,29 @@
       "maximum": 100,
       "$anchor": "modeled_energy_savings_percent"
     },
+    "modeled_post_retrofit_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Modeled post retrofit energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "modeled_post_retrofit_energy_usage_kwh_equivalent"
+    },
+    "modeled_prior_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Modeled prior energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "modeled_prior_energy_usage_kwh_equivalent"
+    },
     "nat_gas_savings_therms": {
       "type": "integer",
       "title": "Nat gas savings therms",
       "minimum": 0,
       "$anchor": "nat_gas_savings_therms"
+    },
+    "new_expiration_date": {
+      "type": "string",
+      "format": "date",
+      "title": "New expiration date",
+      "$anchor": "new_expiration_date"
     },
     "num_units": {
       "$anchor": "num_units",
@@ -345,18 +381,6 @@
       "$anchor": "portfolio_id",
       "type": "string",
       "format": "uuid"
-    },
-    "post_retrofit_total_annual_energy_usage_kwh_equivalent": {
-      "type": "integer",
-      "title": "Post retrofit total annual energy usage kwh equivalent",
-      "minimum": 0,
-      "$anchor": "post_retrofit_total_annual_energy_usage_kwh_equivalent"
-    },
-    "prior_total_annual_energy_usage_kwh_equivalent": {
-      "type": "integer",
-      "title": "Prior total annual energy usage kwh equivalent",
-      "minimum": 0,
-      "$anchor": "prior_total_annual_energy_usage_kwh_equivalent"
     },
     "product_descriptions": {
       "$anchor": "product_descriptions",
@@ -379,8 +403,8 @@
       "minItems": 1,
       "title": "Product ids"
     },
-    "product_serial_nums": {
-      "$anchor": "product_serial_nums",
+    "product_serial_numbers": {
+      "$anchor": "product_serial_numbers",
       "type": "array",
       "items": {
         "type": "string",
@@ -472,7 +496,7 @@
         "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
         "ELECTRIC_COOKING_APPLIANCE",
         "HEAT_PUMP_CLOTHES_DRYER",
-        "ELECTRIC_LOAD_SERVICE_CENTER",
+        "ELECTRICAL_PANEL",
         "INSULATION_AIR_SEALING_VENTILATION",
         "ELECTRIC_WIRING"
       ]

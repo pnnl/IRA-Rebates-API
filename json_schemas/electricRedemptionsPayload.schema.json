@@ -33,8 +33,8 @@
     "product_descriptions": {
       "$ref": "/schemas/definitions#product_descriptions"
     },
-    "product_serial_nums": {
-      "$ref": "/schemas/definitions#product_serial_nums"
+    "product_serial_numbers": {
+      "$ref": "/schemas/definitions#product_serial_numbers"
     }
   },
   "required": [
@@ -138,15 +138,15 @@
             "if": {
               "properties": {
                 "upgrade_type": {
-                  "const": "ELECTRIC_LOAD_SERVICE_CENTER"
+                  "const": "ELECTRICAL_PANEL"
                 }
               }
             },
             "then": {
               "properties": {
-                "upgrade_component_details": {
+                "original_component_details": {
                   "required": [
-                    "electric_load_service_center_upgrade_details"
+                    "electrical_panel_upgrade_details"
                   ]
                 }
               }
@@ -218,7 +218,7 @@
         },
         "then": {
           "required": [
-            "product_serial_nums"
+            "product_serial_numbers"
           ]
         },
         "else": {
@@ -234,7 +234,7 @@
           "then": {
             "not": {
               "required": [
-                "product_serial_nums"
+                "product_serial_numbers"
               ]
             }
           }

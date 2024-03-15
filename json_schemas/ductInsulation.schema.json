@@ -7,6 +7,9 @@
       "$anchor": "original_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "DUCT_INSULATION"
+        },
         "primary_duct_location": {
           "enum": [
             "CONDITIONED_SPACE",
@@ -15,6 +18,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "primary_duct_location"
       ],
       "additionalProperties": false
@@ -23,6 +27,9 @@
       "$anchor": "upgrade_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "DUCT_INSULATION"
+        },
         "percent_ducts_receiving_additional_insulation": {
           "enum": [
             10,
@@ -34,6 +41,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "percent_ducts_receiving_additional_insulation"
       ],
       "additionalProperties": false

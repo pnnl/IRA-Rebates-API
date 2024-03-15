@@ -16,6 +16,9 @@
     "component_details": {
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "DUCT_SEALING"
+        },
         "leakage_rate_known": {
           "type": "boolean"
         },
@@ -26,6 +29,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "leakage_rate_known"
       ],
       "additionalProperties": false,

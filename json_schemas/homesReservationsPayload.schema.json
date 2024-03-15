@@ -42,14 +42,17 @@
     "software_used_to_estimate_measured_savings": {
       "$ref": "/schemas/definitions#software_used_to_estimate_measured_savings"
     },
-    "prior_total_annual_energy_usage_kwh_equivalent": {
-      "$ref": "/schemas/definitions#prior_total_annual_energy_usage_kwh_equivalent"
+    "modeled_prior_energy_usage_kwh_equivalent": {
+      "$ref": "/schemas/definitions#measured_prior_energy_usage_kwh_equivalent"
     },
-    "post_retrofit_annual_energy_usage_kwh_equivalent": {
-      "$ref": "/schemas/definitions#post_retrofit_annual_energy_usage_kwh_equivalent"
+    "modeled_post_retrofit_energy_usage_kwh_equivalent": {
+      "$ref": "/schemas/definitions#modeled_post_retrofit_energy_usage_kwh_equivalent"
     },
-    "estimated_post_retrofit_annual_energy_usage_kwh_equivalent": {
-      "$ref": "/schemas/definitions#estimated_post_retrofit_annual_energy_usage_kwh_equivalent"
+    "measured_prior_energy_usage_kwh_equivalent": {
+      "$ref": "/schemas/definitions#measured_prior_energy_usage_kwh_equivalent"
+    },
+    "estimated_post_retrofit_energy_usage_kwh_equivalent": {
+      "$ref": "/schemas/definitions#estimated_post_retrofit_energy_usage_kwh_equivalent"
     },
     "utility_bill_companies": {
       "$ref": "/schemas/definitions#utility_bill_companies"
@@ -75,8 +78,7 @@
     "claimant_type",
     "construction_type",
     "energy_data_evaluation_permission",
-    "rebate_type",
-    "prior_total_annual_energy_usage_kwh_equivalent"
+    "rebate_type"
   ],
   "additionalProperties": false,
   "oneOf": [
@@ -123,24 +125,28 @@
       },
       "then": {
         "required": [
-          "post_retrofit_total_annual_energy_usage_kwh_equivalent",
+          "modeled_prior_energy_usage_kwh_equivalent",
+          "modeled_post_retrofit_energy_usage_kwh_equivalent",
           "is_model_calibrated",
           "doe_approved_bpi_2400_compliant_software_used"
         ],
         "not": {
           "required": [
-            "estimated_post_retrofit_annual_energy_usage_kwh_equivalent"
+            "estimated_post_retrofit_energy_usage_kwh_equivalent",
+            "measured_prior_energy_usage_kwh_equivalent"
           ]
         }
       },
       "else": {
         "$comment": "Rebate type is MEASURED",
         "required": [
-          "estimated_post_retrofit_annual_energy_usage_kwh_equivalent"
+          "estimated_post_retrofit_energy_usage_kwh_equivalent",
+          "measured_prior_energy_usage_kwh_equivalent"
         ],
         "not": {
           "required": [
-            "post_retrofit_total_annual_energy_usage_kwh_equivalent",
+            "modeled_prior_energy_usage_kwh_equivalent",
+            "modeled_post_retrofit_energy_usage_kwh_equivalent",
             "is_model_calibrated",
             "doe_approved_bpi_2400_compliant_software_used"
           ]
@@ -183,7 +189,7 @@
       }
     },
     {
-      "$comment": "Determine when num_units, num_units_meeting_income_bucket, mf_building_income_bucket, and upgrade_applicability are required or not allowed",
+      "$comment": "Determine when num_units, num_units_meeting_income_bucket, mf_building_income_bucket, dwelling_unit_income_bucket, and upgrade_applicability are required or not allowed",
       "if": {
         "required": [
           "is_whole_building_project"
@@ -200,77 +206,23 @@
           "num_units_meeting_income_bucket",
           "mf_building_income_bucket",
           "upgrade_applicability"
-        ]
-      },
-      "else": {
-        "allOf": [
-          {
-            "not": {
-              "required": [
-                "num_units"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "num_units_meeting_income_bucket"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "mf_building_income_bucket"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "upgrade_applicabilty"
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "$comment": "Determine when dwelling_unit_income_bucket is required or not allowed",
-      "if": {
-        "anyOf": [
-          {
-            "properties": {
-              "claimant_type": {
-                "const": "TENANT"
-              }
-            }
-          },
-          {
-            "properties": {
-              "building_type": {
-                "const": "SINGLE_FAMILY"
-              }
-            }
-          },
-          {
-            "properties": {
-              "is_whole_building_project": {
-                "const": false
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "dwelling_unit_income_bucket"
-        ]
-      },
-      "else": {
+        ],
         "not": {
           "required": [
             "dwelling_unit_income_bucket"
+          ]
+        }
+      },
+      "else": {
+        "required": [
+          "dwelling_unit_income_bucket"
+        ],
+        "not": {
+          "required": [
+            "num_units",
+            "num_units_meeting_income_bucket",
+            "mf_building_income_bucket",
+            "upgrade_applicability"
           ]
         }
       }

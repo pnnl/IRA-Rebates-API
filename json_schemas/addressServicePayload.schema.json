@@ -1,26 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/addressService",
-  "type": "object",
-  "properties": {
-    "building_address": {
-      "$ref": "/schemas/definitions#building_address"
-    },
-    "address_id": {
-      "$ref": "/schemas/definitions#address_id"
-    }
-  },
-  "oneOf": [
-    {
-      "required": [
-        "building_address"
-      ]
-    },
-    {
-      "required": [
-        "address_id"
-      ]
-    }
-  ],
-  "additionalProperties": false
+  "$ref": "/schemas/definitions#building_address"
 }

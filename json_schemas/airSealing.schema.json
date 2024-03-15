@@ -7,6 +7,9 @@
       "$anchor": "original_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "AIR_SEALING"
+        },
         "leakage_rate_known": {
           "type": "boolean"
         },
@@ -16,6 +19,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "leakage_rate_known"
       ],
       "additionalProperties": false,
@@ -43,6 +47,9 @@
       "$anchor": "upgrade_component_details",
       "type": "object",
       "properties": {
+        "upgrade_subtype": {
+          "const": "AIR_SEALING"
+        },
         "leakage_rate_known": {
           "type": "boolean"
         },
@@ -64,6 +71,7 @@
         }
       },
       "required": [
+        "upgrade_subtype",
         "leakage_rate_known",
         "locations"
       ],
