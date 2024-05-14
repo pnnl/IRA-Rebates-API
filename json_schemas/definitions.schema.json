@@ -13,9 +13,9 @@
         "street_number": {
           "type": "string",
           "title": "Street number",
-          "pattern": "^\\d+$",
+          "pattern": "^\\d+(?:-\\d+)?$",
           "minLength": 1,
-          "maxLength": 6,
+          "maxLength": 10,
           "description": "The building number. This would be &ldquo;122&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
         },
         "street": {
