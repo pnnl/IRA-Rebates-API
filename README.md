@@ -1,5 +1,9 @@
 # IRA-Rebates-API
 
+## Announcement: Beta v4 JSON Schema Release - 05/31/2024
+
+Beta v4 of our JSON schemas is now available on the `beta_v4_schema` branch as of 5/31/2024. Please be aware that these schemas are not yet integrated into our sandbox environment.
+
 **Current API version:** beta v3
 
 This repository contains materials useful to users of the IRA Rebates API ***beta version 3***. The IRA Rebates API supports the HOMES (section 50121) and HEEHRA (section 50122) DOE rebate programs authorized by the Inflation Reduction Act (IRA) of 2022. See https://www.energy.gov/scep/home-energy-rebates-programs for program descriptions and updates.
