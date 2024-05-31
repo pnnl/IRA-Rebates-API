@@ -16,23 +16,12 @@
     },
     {
       "properties": {
-        "electric_load_service_center_upgrade_details": {
-          "$ref": "/schemas/electricLoadServiceCenter#upgrade_component_details"
+        "electrical_panel_upgrade_details": {
+          "$ref": "/schemas/electricalPanel#upgrade_component_details"
         }
       },
       "required": [
-        "electric_load_service_center_upgrade_details"
-      ],
-      "additionalProperties": false
-    },
-    {
-      "properties": {
-        "electric_wiring_upgrade_details": {
-          "$ref": "/schemas/electricWiring#upgrade_component_details"
-        }
-      },
-      "required": [
-        "electric_wiring_upgrade_details"
+        "electrical_panel_upgrade_details"
       ],
       "additionalProperties": false
     },
@@ -55,17 +44,6 @@
       },
       "required": [
         "heat_pump_clothes_dryer_upgrade_details"
-      ],
-      "additionalProperties": false
-    },
-    {
-      "properties": {
-        "heat_pump_for_space_heating_or_cooling_upgrade_details": {
-          "$ref": "/schemas/heatPumpForSpaceHeatingOrCooling#upgrade_component_details"
-        }
-      },
-      "required": [
-        "heat_pump_for_space_heating_or_cooling_upgrade_details"
       ],
       "additionalProperties": false
     },

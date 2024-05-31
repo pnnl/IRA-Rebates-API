@@ -3,32 +3,42 @@
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationReservation",
   "type": "object",
   "properties": {
-    "building_address": {
-      "$ref": "/schemas/definitions#building_address"
-    },
     "address_id": {
       "$ref": "/schemas/definitions#address_id"
     },
-    "sf_conditioned_floor_area": {
-      "$ref": "/schemas/definitions#sf_conditioned_floor_area"
+    "applicant_id": {
+      "$ref": "/schemas/definitions#applicant_id"
     },
-    "mf_conditioned_floor_area": {
-      "$ref": "/schemas/definitions#mf_conditioned_floor_area"
+    "building_project_type": {
+      "$ref": "/schemas/definitions#electric_building_project_type"
     },
     "claimant_type": {
-      "$ref": "/schemas/definitions#claimant_type"
+      "$ref": "/schemas/definitions#electric_claimant_type"
     },
     "construction_type": {
       "$ref": "/schemas/definitions#construction_type"
     },
+    "dwelling_unit_income_bucket": {
+      "$ref": "/schemas/definitions#electric_dwelling_unit_income_bucket"
+    },
     "energy_data_evaluation_permission": {
-      "$ref": "/schemas/definitions#energy_data_evaluation_permission"
+      "$ref": "/schemas/definitions#energy_data_evaluation_permission",
+      "const": true
     },
-    "building_type": {
-      "$ref": "/schemas/definitions#building_type"
+    "installation_type": {
+      "$ref": "/schemas/definitions#installation_type"
     },
-    "is_do_it_yourself": {
-      "$ref": "/schemas/definitions#is_do_it_yourself"
+    "is_disadvantaged_community": {
+      "$ref": "/schemas/definitions#is_disadvantaged_community"
+    },
+    "mf_building_income_bucket": {
+      "$ref": "/schemas/definitions#electric_mf_building_income_bucket"
+    },
+    "mf_conditioned_floor_area": {
+      "$ref": "/schemas/definitions#mf_conditioned_floor_area"
+    },
+    "mf_num_bedrooms": {
+      "$ref": "/schemas/definitions#mf_num_bedrooms"
     },
     "num_units": {
       "$ref": "/schemas/definitions#num_units"
@@ -36,254 +46,120 @@
     "num_units_meeting_income_bucket": {
       "$ref": "/schemas/definitions#num_units_meeting_income_bucket"
     },
-    "unit_name_or_number": {
-      "$ref": "/schemas/definitions#unit_name_or_number"
-    },
-    "upgrade_applicability": {
-      "$ref": "/schemas/definitions#upgrade_applicability"
-    },
-    "utility_bill_companies": {
-      "$ref": "/schemas/definitions#utility_bill_companies"
-    },
-    "year_built": {
-      "$ref": "/schemas/definitions#year_built"
-    },
-    "upgrade_type": {
-      "$ref": "/schemas/definitions#upgrade_type"
-    },
     "original_component_details": {
       "$ref": "/schemas/originalComponentDetails"
-    },
-    "vendor_id": {
-      "$ref": "/schemas/definitions#vendor_id"
-    },
-    "mf_building_income_bucket": {
-      "$ref": "/schemas/definitions#electric_mf_building_income_bucket"
-    },
-    "dwelling_unit_income_bucket": {
-      "$ref": "/schemas/definitions#electric_dwelling_unit_income_bucket"
-    },
-    "is_part_of_whole_building_project": {
-      "$ref": "/schemas/definitions#is_part_of_whole_building_project"
     },
     "project_id": {
       "$ref": "/schemas/definitions#project_id"
     },
-    "foundation_type": {
-      "$ref": "/schemas/definitions#foundation_type"
+    "sf_conditioned_floor_area": {
+      "$ref": "/schemas/definitions#sf_conditioned_floor_area"
+    },
+    "sf_num_bedrooms": {
+      "$ref": "/schemas/definitions#sf_num_bedrooms"
+    },
+    "state_attests_proof_of_identity_ownership_income": {
+      "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income",
+      "const": true
+    },
+    "unit_name_or_number": {
+      "$ref": "/schemas/definitions#unit_name_or_number"
+    },
+    "upgrade_type": {
+      "$ref": "/schemas/definitions#upgrade_type"
+    },
+    "vendor_id": {
+      "$ref": "/schemas/definitions#vendor_id"
     }
   },
   "required": [
+    "address_id",
+    "applicant_id",
+    "building_project_type",
     "claimant_type",
     "construction_type",
     "energy_data_evaluation_permission",
-    "building_type",
-    "year_built",
-    "upgrade_type",
-    "utility_bill_companies",
-    "original_component_details"
+    "installation_type",
+    "original_component_details",
+    "state_attests_proof_of_identity_ownership_income",
+    "upgrade_type"
   ],
   "additionalProperties": false,
-  "oneOf": [
-    {
-      "required": [
-        "building_address"
-      ]
-    },
-    {
-      "required": [
-        "address_id"
-      ]
-    }
-  ],
   "allOf": [
     {
-      "$comment": "Determine when is_part_of_whole_building_project is required or not allowed",
+      "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_CENTRAL",
       "if": {
-        "allOf": [
-          {
-            "not": {
-              "properties": {
-                "claimant_type": {
-                  "const": "TENANT"
-                }
-              }
-            }
-          },
-          {
-            "properties": {
-              "building_type": {
-                "const": "MULTIFAMILY"
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "is_part_of_whole_building_project"
-        ]
-      },
-      "else": {
-        "not": {
-          "required": [
-            "is_part_of_whole_building_project"
-          ]
-        }
-      }
-    },
-    {
-      "$comment": "Determine when is_do_it_yourself is required or not allowed",
-      "if": {
-        "anyOf": [
-          {
-            "properties": {
-              "claimant_type": {
-                "const": "TENANT"
-              }
-            }
-          },
-          {
-            "properties": {
-              "building_type": {
-                "const": "SINGLE_FAMILY"
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "is_do_it_yourself"
-        ]
-      },
-      "else": {
-        "not": {
-          "required": [
-            "is_do_it_yourself"
-          ]
-        }
-      }
-    },
-    {
-      "$comment": "Determine when num_units, num_units_meeting_income_bucket, project_id, mf_building_income_bucket, and upgrade_applicability are required or not allowed",
-      "if": {
-        "required": [
-          "is_part_of_whole_building_project"
-        ],
         "properties": {
-          "is_part_of_whole_building_project": {
-            "const": true
+          "building_project_type": {
+            "const": "MULTIFAMILY_CENTRAL"
           }
         }
       },
       "then": {
         "required": [
+          "mf_building_income_bucket",
+          "num_units",
+          "num_units_meeting_income_bucket"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dwelling_unit_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "unit_name_or_number"
+              ]
+            },
+            {
+              "required": [
+                "sf_conditioned_floor_area"
+              ]
+            },
+            {
+              "required": [
+                "sf_num_bedrooms"
+              ]
+            }
+          ]
+        }
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "mf_conditioned_floor_area"
+              ]
+            },
+            {
+              "required": [
+                "mf_num_bedrooms"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT",
+      "if": {
+        "properties": {
+          "building_project_type": {
+            "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "mf_building_income_bucket",
           "num_units",
           "num_units_meeting_income_bucket",
           "project_id",
-          "mf_building_income_bucket",
-          "upgrade_applicability"
-        ]
-      },
-      "else": {
-        "allOf": [
-          {
-            "not": {
-              "required": [
-                "num_units"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "num_units_meeting_income_bucket"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "project_id"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "mf_building_income_bucket"
-              ]
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "upgrade_applicabilty"
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "$comment": "Determine when mf_conditioned_floor_area is required or not allowed",
-      "if": {
-        "required": [
-          "upgrade_applicability"
+          "unit_name_or_number"
         ],
-        "properties": {
-          "upgrade_applicability": {
-            "const": "WHOLE_BULIDING"
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "mf_conditioned_floor_area"
-        ]
-      },
-      "else": {
-        "not": {
-          "required": [
-            "mf_conditioned_floor_area"
-          ]
-        }
-      }
-    },
-    {
-      "$comment": "Determine when dwelling_unit_income_bucket is required or not allowed",
-      "if": {
-        "anyOf": [
-          {
-            "properties": {
-              "claimant_type": {
-                "const": "TENANT"
-              }
-            }
-          },
-          {
-            "properties": {
-              "building_type": {
-                "const": "SINGLE_FAMILY"
-              }
-            }
-          },
-          {
-            "properties": {
-              "is_part_of_whole_building_project": {
-                "const": false
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "dwelling_unit_income_bucket"
-        ]
-      },
-      "else": {
         "not": {
           "required": [
             "dwelling_unit_income_bucket"
@@ -292,106 +168,81 @@
       }
     },
     {
-      "$comment": "Determine when sf_conditioned_floor_area is required or not allowed",
+      "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT",
       "if": {
-        "anyOf": [
-          {
-            "properties": {
-              "claimant_type": {
-                "const": "TENANT"
-              }
-            }
-          },
-          {
-            "properties": {
-              "building_type": {
-                "const": "SINGLE_FAMILY"
-              }
-            }
-          },
-          {
-            "required": [
-              "upgrade_applicability"
-            ],
-            "properties": {
-              "upgrade_applicability": {
-                "const": "SINGLE_UNIT"
-              }
-            }
+        "properties": {
+          "building_project_type": {
+            "const": "MULTIFAMILY_IN_UNIT"
           }
-        ]
+        }
       },
       "then": {
         "required": [
-          "sf_conditioned_floor_area"
-        ]
-      },
-      "else": {
+          "dwelling_unit_income_bucket",
+          "num_units",
+          "unit_name_or_number"
+        ],
         "not": {
-          "required": [
-            "sf_conditioned_floor_area"
+          "anyOf": [
+            {
+              "required": [
+                "mf_building_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_units_meeting_income_bucket"
+              ]
+            }
           ]
         }
       }
     },
     {
-      "$comment": "Determine when unit_name_or_number is required or not allowed",
+      "$comment": "Determine which fields are required or not allowed for single family building_project_type",
       "if": {
-        "allOf": [
-          {
-            "properties": {
-              "building_type": {
-                "const": "MULTIFAMILY"
-              }
-            }
-          },
-          {
-            "anyOf": [
-              {
-                "properties": {
-                  "claimant_type": {
-                    "const": "TENANT"
-                  }
-                }
-              },
-              {
-                "required": [
-                  "is_part_of_whole_building_project"
-                ],
-                "properties": {
-                  "is_part_of_whole_building_project": {
-                    "const": false
-                  }
-                }
-              },
-              {
-                "required": [
-                  "upgrade_applicability"
-                ],
-                "properties": {
-                  "upgrade_applicability": {
-                    "const": "SINGLE_UNIT"
-                  }
-                }
-              }
+        "properties": {
+          "building_project_type": {
+            "enum": [
+              "MANUFACTURED",
+              "SINGLE_FAMILY_ATTACHED",
+              "SINGLE_FAMILY_DETACHED"
             ]
           }
-        ]
+        }
       },
       "then": {
         "required": [
-          "unit_name_or_number"
-        ]
-      },
-      "else": {
+          "dwelling_unit_income_bucket"
+        ],
         "not": {
-          "required": [
-            "unit_name_or_number"
+          "anyOf": [
+            {
+              "required": [
+                "mf_building_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_units"
+              ]
+            },
+            {
+              "required": [
+                "num_units_meeting_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "unit_name_or_number"
+              ]
+            }
           ]
         }
       }
     },
     {
+      "$comment": "The appropriate schema must be used for original_component_details depending on upgrade_type.",
       "if": {
         "properties": {
           "upgrade_type": {
@@ -431,24 +282,6 @@
       "if": {
         "properties": {
           "upgrade_type": {
-            "const": "HEAT_PUMP_WATER_HEATER"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "original_component_details": {
-            "required": [
-              "heat_pump_water_heater_original_details"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "upgrade_type": {
             "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
           }
         }
@@ -467,7 +300,7 @@
       "if": {
         "properties": {
           "upgrade_type": {
-            "const": "ELECTRIC_LOAD_SERVICE_CENTER"
+            "const": "ELECTRICAL_PANEL"
           }
         }
       },
@@ -475,7 +308,7 @@
         "properties": {
           "original_component_details": {
             "required": [
-              "electric_load_service_center_original_details"
+              "electrical_panel_original_details"
             ]
           }
         }
@@ -503,7 +336,7 @@
       "if": {
         "properties": {
           "upgrade_type": {
-            "const": "ELECTRIC_WIRING"
+            "const": "HEAT_PUMP_WATER_HEATER"
           }
         }
       },
@@ -511,9 +344,114 @@
         "properties": {
           "original_component_details": {
             "required": [
-              "electric_wiring_original_details"
+              "heat_pump_water_heater_original_details"
             ]
           }
+        }
+      }
+    },
+    {
+      "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED",
+      "if": {
+        "oneOf": [
+          {
+            "properties": {
+              "upgrade_type": {
+                "enum": [
+                  "ELECTRICAL_PANEL",
+                  "ELECTRICAL_WIRING",
+                  "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "upgrade_type": {
+                "const": "INSULATION_AIR_SEALING_VENTILATION"
+              },
+              "original_component_details": {
+                "properties": {
+                  "insulation_air_sealing_ventilation_original_details": {
+                    "contains": {
+                      "$ref": "/schemas/airSealing#original_component_details"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "installation_type": {
+            "const": "CONTRACTOR_INSTALLED"
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required",
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "enum": [
+              "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+              "INSULATION_AIR_SEALING_VENTILATION"
+            ]
+          }
+        }
+      },
+      "then": {
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_CENTRAL"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "mf_conditioned_floor_area"
+          ]
+        },
+        "else": {
+          "required": [
+            "sf_conditioned_floor_area"
+          ]
+        }
+      }
+    },
+    {
+      "$comment": "Determine when mf_num_bedrooms and sf_num_bedrooms are required",
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "enum": [
+              "HEAT_PUMP_CLOTHES_DRYER",
+              "HEAT_PUMP_WATER_HEATER"
+            ]
+          }
+        }
+      },
+      "then": {
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_CENTRAL"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "mf_num_bedrooms"
+          ]
+        },
+        "else": {
+          "required": [
+            "sf_num_bedrooms"
+          ]
         }
       }
     }

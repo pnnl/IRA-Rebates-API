@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/safetyChecks",
+  "type": "object",
+  "properties": {
+    "ambient_co_test_result": {
+      "$ref": "#/$defs/safety_checks_passed_failed_warning_na",
+      "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+      "title": "Ambient CO test result"
+    },
+    "ashrae_62_2_ventilation_calculated": {
+      "$ref": "#/$defs/safety_checks_yes_no_na",
+      "title": "ASHRAE 62.2 ventilation calculated"
+    },
+    "confirm_all_safety_check_results_disclosed_to_homeowner": {
+      "type": "boolean",
+      "title": "Confirm all safety check results disclosed to homeowner"
+    },
+    "drainage_system_condition": {
+      "$ref": "#/$defs/safety_checks_good_potential_issues",
+      "title": "Drainage system condition"
+    },
+    "gas_leak_detection_test_result": {
+      "$ref": "#/$defs/safety_checks_passed_failed_warning_na",
+      "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+      "title": "Gas leak detection test result"
+    },
+    "roof_condition": {
+      "$ref": "#/$defs/safety_checks_good_potential_issues",
+      "title": "Roof condition"
+    },
+    "signs_of_mold_or_moisture": {
+      "type": "boolean",
+      "description": "Contractor should not proceed with energy efficiency measures until mold and moisture issues are mitigated.",
+      "title": "Signs of mold or moisture"
+    },
+    "spillage_test_result": {
+      "$ref": "#/$defs/safety_checks_passed_failed_warning_na",
+      "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+      "title": "Spillage test result"
+    },
+    "undiluted_co_test_result": {
+      "$ref": "#/$defs/safety_checks_passed_failed_warning_na",
+      "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+      "title": "Undiluted CO test result"
+    },
+    "venting_test_result": {
+      "$ref": "#/$defs/safety_checks_passed_failed_warning_na",
+      "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+      "title": "Venting test result"
+    }
+  },
+  "required": [
+    "ambient_co_test_result",
+    "ashrae_62_2_ventilation_calculated",
+    "confirm_all_safety_check_results_disclosed_to_homeowner",
+    "drainage_system_condition",
+    "gas_leak_detection_test_result",
+    "roof_condition",
+    "signs_of_mold_or_moisture",
+    "spillage_test_result",
+    "undiluted_co_test_result",
+    "venting_test_result"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "safety_checks_good_potential_issues": {
+      "enum": [
+        "GOOD",
+        "POTENTIAL_ISSUES"
+      ]
+    },
+    "safety_checks_passed_failed_warning_na": {
+      "enum": [
+        "FAILED",
+        "NA",
+        "PASSED",
+        "WARNING"
+      ]
+    },
+    "safety_checks_yes_no": {
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "safety_checks_yes_no_na": {
+      "enum": [
+        "NA",
+        "NO",
+        "YES"
+      ]
+    }
+  }
+}

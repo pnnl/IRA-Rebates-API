@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesFile",
+  "type": "object",
+  "properties": {
+    "binary_file_content_base_64": {
+      "$ref": "/schemas/definitions#binary_file_content_base_64"
+    },
+    "file_name": {
+      "$ref": "/schemas/definitions#file_name"
+    },
+    "file_type": {
+      "$ref": "/schemas/definitions#homes_file_type"
+    },
+    "file_purpose": {
+      "$ref": "/schemas/definitions#homes_file_purpose"
+    },
+    "text_file_content": {
+      "$ref": "/schemas/definitions#text_file_content"
+    }
+  },
+  "required": [
+    "file_name",
+    "file_type",
+    "file_purpose"
+  ],
+  "if": {
+    "properties": {
+      "file_type": {
+        "enum": [
+          "JPEG",
+          "PDF",
+          "PNG"
+        ]
+      }
+    }
+  },
+  "then": {
+    "required": [
+      "binary_file_content_base_64"
+    ],
+    "not": {
+      "required": [
+        "text_file_content"
+      ]
+    }
+  },
+  "else": {
+    "required": [
+      "text_file_content"
+    ],
+    "not": {
+      "required": [
+        "binary_file_content_base_64"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

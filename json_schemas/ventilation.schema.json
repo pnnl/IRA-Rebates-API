@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ira-rebates.labworks.org/schemas/ductInsulation",
+  "$id": "https://ira-rebates.labworks.org/schemas/ventilation",
   "type": "object",
   "properties": {
     "original_component_details": {
@@ -8,20 +8,16 @@
       "type": "object",
       "description": "The preexisting conditions associated with this improvement",
       "properties": {
-        "primary_duct_location": {
-          "description": "The type of space in which the majority of the ducts being treated are located.",
-          "enum": [
-            "CONDITIONED_SPACE",
-            "DO_NOT_KNOW",
-            "UNCONDITIONED_SPACE"
-          ]
+        "has_whole_house_ventilation": {
+          "type": "boolean",
+          "description": "Set to true if there is any existing exhaust fan, supply fan, HRV, ERV, or similar system in the home or building that automatically runs at least once every three hours."
         },
         "upgrade_subtype": {
           "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "primary_duct_location",
+        "has_whole_house_ventilation",
         "upgrade_subtype"
       ],
       "additionalProperties": false
@@ -31,22 +27,16 @@
       "type": "object",
       "description": "Details that describe this improvement",
       "properties": {
-        "percent_ducts_receiving_additional_insulation": {
-          "description": "The percentage of the ducts that received additional insulation in the upgrade. Choose the closest percentage.",
-          "enum": [
-            10,
-            25,
-            50,
-            75,
-            100
-          ]
+        "cfm_flow_rate": {
+          "type": "number",
+          "exclusiveMinimum": 0
         },
         "upgrade_subtype": {
           "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "percent_ducts_receiving_additional_insulation",
+        "cfm_flow_rate",
         "upgrade_subtype"
       ],
       "additionalProperties": false
@@ -54,7 +44,7 @@
   },
   "$defs": {
     "upgrade_subtype": {
-      "const": "DUCT_INSULATION"
+      "const": "VENTILATION"
     }
   }
 }

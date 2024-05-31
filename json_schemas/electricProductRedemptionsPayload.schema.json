@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ira-rebates.labworks.org/schemas/electrificationVendorCouponRedemption",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationProductRedemption",
   "type": "object",
   "properties": {
     "equipment_and_material_cost": {
@@ -10,6 +10,9 @@
     "installation_cost": {
       "$ref": "/schemas/definitions#installation_cost",
       "description": "Use this if installation cost is included at the point of purchase of the qualifying product(s), otherwise set this to 0."
+    },
+    "product_info": {
+      "$ref": "/schemas/definitions#product_info"
     },
     "purchase_date_time": {
       "$ref": "/schemas/definitions#purchase_date_time"

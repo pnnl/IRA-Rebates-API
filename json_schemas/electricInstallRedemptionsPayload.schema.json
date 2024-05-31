@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationInstallRedemption",
+  "type": "object",
+  "properties": {
+    "contractor_company_name": {
+      "$ref": "/schemas/definitions#contractor_company_name"
+    },
+    "contractor_name": {
+      "$ref": "/schemas/definitions#contractor_name"
+    },
+    "equipment_and_material_cost": {
+      "$ref": "/schemas/definitions#equipment_and_material_cost",
+      "description": "This should not include the cost of the qualifying product(s) for this rebate. Those should be provided using the `/electric/reservations/{reservation_id}/product-redemptions` endpoint. Include incidental equipment and materials costs directly related to installation here."
+    },
+    "installation_cost": {
+      "$ref": "/schemas/definitions#installation_cost"
+    },
+    "is_contractor_eligible": {
+      "$ref": "/schemas/definitions#is_contractor_eligible",
+      "const": true
+    },
+    "is_final_project_redemption": {
+      "$ref": "/schemas/definitions#is_final_project_redemption"
+    },
+    "project_completion_date": {
+      "$ref": "/schemas/definitions#project_completion_date"
+    },
+    "rebate_deducted": {
+      "$ref": "/schemas/definitions#rebate_deducted",
+      "description": "This is the amount that was deducted from the applicant's (homeowner, building owner, renter) invoiced amount for the installation."
+    },
+    "rebate_passed_through_to_applicant": {
+      "$ref": "/schemas/definitions#rebate_passed_through_to_applicant"
+    },
+    "upgrade_component_details": {
+      "$ref": "/schemas/upgradeComponentDetails"
+    },
+    "upgrade_type": {
+      "$ref": "/schemas/definitions#upgrade_type"
+    },
+    "vendor_id": {
+      "$ref": "/schemas/definitions#vendor_id"
+    }
+  },
+  "required": [
+    "contractor_company_name",
+    "contractor_name",
+    "equipment_and_material_cost",
+    "installation_cost",
+    "is_contractor_eligible",
+    "is_final_project_redemption",
+    "rebate_deducted",
+    "rebate_passed_through_to_applicant",
+    "upgrade_component_details",
+    "upgrade_type",
+    "vendor_id"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "$comment": "The appropriate schema must be used for upgrade_component_details depending on upgrade_type.",
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "HEAT_PUMP_CLOTHES_DRYER"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "heat_pump_clothes_dryer_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "ELECTRIC_COOKING_APPLIANCE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "electric_cooking_appliance_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "HEAT_PUMP_WATER_HEATER"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "heat_pump_water_heater_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "ELECTRICAL_PANEL"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "electrical_panel_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "INSULATION_AIR_SEALING_VENTILATION"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "insulation_air_sealing_ventilation_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "is_final_project_redemption": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "project_completion_date"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "project_completion_date"
+          ]
+        }
+      }
+    }
+  ]
+}

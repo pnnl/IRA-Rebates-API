@@ -5,419 +5,455 @@
     "address_id": {
       "$anchor": "address_id",
       "type": "string",
-      "format": "uuid"
+      "format": "uuid",
+      "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
+      "title": "Address id"
     },
-    "building_address": {
-      "$anchor": "building_address",
-      "properties": {
-        "street_number": {
-          "type": "string",
-          "title": "Street number",
-          "pattern": "^\\d+$",
-          "minLength": 1,
-          "maxLength": 6
-        },
-        "street": {
-          "type": "string",
-          "title": "Street",
-          "minLength": 1
-        },
-        "city": {
-          "type": "string",
-          "title": "City",
-          "minLength": 1
-        },
-        "state": {
-          "title": "State",
-          "$comment": " https://bedes.lbl.gov/bedes-online/state",
-          "enum": [
-            "AA",
-            "AE",
-            "AK",
-            "AL",
-            "AP",
-            "AR",
-            "AS",
-            "AZ",
-            "CA",
-            "CO",
-            "CT",
-            "DC",
-            "DE",
-            "FL",
-            "FM",
-            "GA",
-            "GU",
-            "HI",
-            "IA",
-            "ID",
-            "IL",
-            "IN",
-            "KS",
-            "KY",
-            "LA",
-            "MA",
-            "MD",
-            "ME",
-            "MH",
-            "MI",
-            "MN",
-            "MO",
-            "MP",
-            "MS",
-            "MT",
-            "NC",
-            "ND",
-            "NE",
-            "NH",
-            "NJ",
-            "NM",
-            "NV",
-            "NY",
-            "OH",
-            "OK",
-            "OR",
-            "PA",
-            "PR",
-            "PW",
-            "RI",
-            "SC",
-            "SD",
-            "TN",
-            "TX",
-            "UT",
-            "VA",
-            "VI",
-            "VT",
-            "WA",
-            "WI",
-            "WV",
-            "WY"
-          ]
-        },
-        "zip_code": {
-          "type": "string",
-          "title": "Zip code",
-          "pattern": "^(\\d{5}(-\\d{4})?)$"
-        },
-        "county": {
-          "type": "string",
-          "title": "County",
-          "minLength": 1
-        }
-      },
-      "required": [
-        "street_number",
-        "street",
-        "state"
-      ],
-      "additionalProperties": false,
-      "anyOf": [
-        {
-          "required": [
-            "city"
-          ]
-        },
-        {
-          "required": [
-            "zip_code"
-          ]
-        },
-        {
-          "required": [
-            "county"
-          ]
-        }
-      ]
+    "ahri_reference_number": {
+      "$anchor": "ahri_reference_number",
+      "type": "string",
+      "title": "AHRI reference number",
+      "minLength": 6,
+      "maxLength": 8,
+      "pattern": "^\\d+$",
+      "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
     },
-    "building_type": {
-      "$anchor": "building_type",
-      "title": "Building type",
-      "enum": [
-        "SINGLE_FAMILY",
-        "MULTIFAMILY"
-      ]
+    "applicant_id": {
+      "$anchor": "applicant_id",
+      "type": "string",
+      "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant-ids endpoint.",
+      "title": "Applicant ID"
     },
-    "claimant_type": {
-      "$anchor": "claimant_type",
-      "title": "Claimant type",
-      "enum": [
-        "HOMEOWNER",
-        "MULTIFAMILY_BUILDING_OWNER",
-        "CONTRACTOR",
-        "AGGREGATOR",
-        "TENANT"
-      ]
+    "binary_file_content_base_64": {
+      "$anchor": "binary_file_content_base_64",
+      "type": "string",
+      "contentEncoding": "base64",
+      "description": "The API user must convert the binary file content to base64 encoding.",
+      "title": "Binary file content Base64"
+    },
+    "claimant_payment": {
+      "$anchor": "claimant_payment",
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "This is the amount that the state paid to an aggregator, or other claimant, for a HOMES rebate.",
+      "title": "Claimant payment"
     },
     "construction_type": {
       "$anchor": "construction_type",
       "title": "Construction type",
       "enum": [
-        "NEW",
-        "EXISTING"
-      ]
+        "EXISTING",
+        "NEW"
+      ],
+      "description": "Set to NEW if the building is less than one year old. Otherwise, set to EXISTING."
     },
-    "delivered_fuel_savings_kwh_equivalent": {
-      "type": "integer",
-      "title": "Delivered fuel savings kwh equivalent",
+    "contractor_company_name": {
+      "$anchor": "contractor_company_name",
+      "title": "Contractor company name",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the primary contracting company for the project."
+    },
+    "contractor_dac_incentive_payment": {
+      "$anchor": "contractor_dac_incentive_payment",
+      "type": "number",
+      "multipleOf": 0.01,
       "minimum": 0,
-      "$anchor": "delivered_fuel_savings_kwh_equivalent"
+      "description": "This is the amount the state paid to a contractor as a disadvantaged-community incentive.",
+      "title": "Contractor DAC incentive payment"
+    },
+    "contractor_name": {
+      "$anchor": "contractor_name",
+      "title": "Contractor name",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the primary contractor for the project."
+    },
+    "count": {
+      "$anchor": "count",
+      "title": "Count",
+      "type": "integer",
+      "minimum": 1,
+      "description": "This should be set to 1 in most cases. An example of a situation where a value greater than 1 is appropriate is when several rolls of insulation are being purchased. Another situation is for `building_project_type` MULTIFAMILY_CENTRAL and `upgrade_type` HEAT_PUMP_WATER_HEATER for which the shared water heating system upgrade consists of multiple identical heat pump water heaters."
     },
     "doe_approved_bpi_2400_compliant_software_used": {
+      "type": "string",
+      "title": "DOE approved bpi 2400 compliant software used",
+      "minLength": 2,
+      "maxLength": 64,
+      "$anchor": "doe_approved_bpi_2400_compliant_software_used",
+      "description": "This field is required when *rebate_type* is MODELED. Otherwise, this field should be omitted. A list of approved software will be publicly available along with the corresponding string that should be used here. We use a string rather than an enum because the approved list may change often."
+    },
+    "electric_building_project_type": {
+      "$anchor": "electric_building_project_type",
+      "title": "Building project type",
       "enum": [
-        "TBD"
+        "MANUFACTURED",
+        "MULTIFAMILY_CENTRAL",
+        "MULTIFAMILY_IN_UNIT",
+        "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT",
+        "SINGLE_FAMILY_ATTACHED",
+        "SINGLE_FAMILY_DETACHED"
       ],
-      "title": "Doe approved bpi 2400 compliant software used",
-      "$anchor": "doe_approved_bpi_2400_compliant_software_used"
+      "description": "This describes both the type of the building and, in the multifamily case, whether the upgrade in this reservation applies to the whole building or to a single unit. If it applies to a single unit, there is a further distinction between an upgrade that is part of a whole building project and a stand-alone upgrade. For the MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT and MULTIFAMILY_CENTRAL cases, the income bucket for the building, mf_income_bucket, is used. Otherwise, the income bucket for the dwelling unit, dwelling_unit_income_bucket, is used."
+    },
+    "electric_claimant_type": {
+      "$anchor": "electric_claimant_type",
+      "title": "Claimant type",
+      "enum": [
+        "CONTRACTOR",
+        "HOMEOWNER",
+        "MULTIFAMILY_BUILDING_OWNER",
+        "OTHER",
+        "TENANT"
+      ],
+      "description": "The type of person or entity that is initiating the rebate process on behalf of the applicant."
     },
     "electric_dwelling_unit_income_bucket": {
       "$anchor": "electric_dwelling_unit_income_bucket",
       "title": "Dwelling unit income bucket",
       "enum": [
-        "LESS_THAN_80%_AMI",
-        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI"
-      ]
-    },
-    "homes_dwelling_unit_income_bucket": {
-      "$anchor": "homes_dwelling_unit_income_bucket",
-      "title": "Dwelling unit income bucket",
-      "enum": [
-        "LESS_THAN_80%_AMI",
-        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI"
-      ]
-    },
-    "energy_data_evaluation_permission": {
-      "$anchor": "energy_data_evaluation_permission",
-      "type": "boolean",
-      "title": "Energy data evaluation permission"
-    },
-    "equipment_and_material_cost": {
-      "type": "integer",
-      "title": "Equipment and material cost",
-      "minimum": 0,
-      "$anchor": "equipment_and_material_cost"
-    },
-    "estimated_energy_savings_percent": {
-      "type": "integer",
-      "title": "Estimated energy savings percent",
-      "minimum": 0,
-      "maximum": 100,
-      "$anchor": "estimated_energy_savings_percent"
-    },
-    "estimated_post_retrofit_annual_energy_usage_kwh_equivalent": {
-      "type": "integer",
-      "title": "Estimated post retrofit annual energy usage kwh equivalent",
-      "minimum": 0,
-      "$anchor": "estimated_post_retrofit_annual_energy_usage_kwh_equivalent"
-    },
-    "foundation_type": {
-      "title": "Foundation type",
-      "description": "Pick the one with the most area",
-      "enum": [
-        "SLAB_ON_GRADE",
-        "UNCONDITIONED_CRAWLSPACE",
-        "CONDITIONED_CRAWLSPACE",
-        "UNCONDITIONED_BASEMENT",
-        "CONDITIONED_BASEMENT",
-        "TUCK_UNDER_GARAGE"
+        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI",
+        "LESS_THAN_80%_AMI"
       ],
-      "$anchor": "foundation_type"
+      "description": "The household income level of the applicant compared to the area median income (AMI)."
     },
-    "homes_upgrade_details": {
-      "$anchor": "homes_upgrade_details",
-      "type": "array",
-      "title": "Upgrade details",
-      "uniqueItems": true,
-      "items": {
-        "enum": [
-          "WALL_INSULATION",
-          "CEILING_INSULATION",
-          "FLOOR_INSULATION",
-          "FOUNDATION_INSULATION",
-          "DUCT_INSULATION",
-          "AIR_SEALING",
-          "DUCT_SEALING",
-          "ELECTRICAL_PANEL",
-          "HEAT_PUMP_WATER_HEATER",
-          "OTHER_WATER_HEATER",
-          "AIR_SOURCE_HEAT_PUMP",
-          "GROUND_SOURCE_HEAT_PUMP",
-          "OTHER_HEATING_SYSTEM",
-          "VENTILATION",
-          "HEAT_PUMP_CLOTHES_DRYER",
-          "HYDRONIC_PUMP"
-        ]
-      }
+    "electric_file_type": {
+      "$anchor": "electric_file_type",
+      "enum": [
+        "JPEG",
+        "PDF",
+        "PNG"
+      ],
+      "title": "File type"
     },
-    "installation_cost": {
-      "$anchor": "installation_cost",
-      "type": "integer",
-      "minimum": 0,
-      "title": "Installation cost"
-    },
-    "is_dac": {
-      "$anchor": "is_dac",
-      "type": "boolean",
-      "title": "Is disadvantaged community"
-    },
-    "is_do_it_yourself": {
-      "$anchor": "is_do_it_yourself",
-      "type": "boolean",
-      "title": "Is do it yourself"
-    },
-    "is_model_calibrated": {
-      "type": "boolean",
-      "title": "Is model calibrated",
-      "$anchor": "is_model_calibrated"
-    },
-    "is_part_of_whole_building_project": {
-      "$anchor": "is_part_of_whole_building_project",
-      "type": "boolean",
-      "title": "Is part of whole building project"
-    },
-    "is_whole_building_project": {
-      "type": "boolean",
-      "title": "Is whole building project",
-      "$anchor": "is_whole_building_project"
-    },
-    "electric_savings_kwh": {
-      "type": "integer",
-      "title": "Electric savings kwh",
-      "minimum": 0,
-      "$anchor": "electric_savings_kwh"
+    "electric_file_purpose": {
+      "$anchor": "electric_file_purpose",
+      "enum": [
+        "QUALITY_ASSURANCE"
+      ],
+      "title": "File purpose"
     },
     "electric_mf_building_income_bucket": {
       "$anchor": "electric_mf_building_income_bucket",
       "title": "Multifamily building income bucket",
       "enum": [
-        "LESS_THAN_80%_AMI",
-        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI"
-      ]
+        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI",
+        "LESS_THAN_80%_AMI"
+      ],
+      "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one units falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
+    },
+    "energy_data_evaluation_permission": {
+      "$anchor": "energy_data_evaluation_permission",
+      "type": "boolean",
+      "description": "Set to true if the home/building owner has given their permission to share energy data with the State and the DOE for evaluation purposes.",
+      "title": "Energy data evaluation permission"
+    },
+    "equipment_and_material_cost": {
+      "type": "number",
+      "title": "Equipment and material cost",
+      "exclusiveMinimum": 0,
+      "multipleOf": 0.01,
+      "$anchor": "equipment_and_material_cost",
+      "description": "The total cost of the equipment and materials purchased as part of a redemption."
+    },
+    "estimated_post_retrofit_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Estimated post retrofit energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "estimated_post_retrofit_energy_usage_kwh_equivalent",
+      "description": "The total estimated (expected) annual  energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
+    },
+    "file_name": {
+      "$anchor": "file_name",
+      "type": "string",
+      "pattern": "^[0-9a-zA-Z\\-.]+$",
+      "minLength": 2,
+      "maxLength": 64,
+      "description": "This file name will be associated with the uploaded file and will be shown wherever a list of the uploaded files for a reservation is returned.",
+      "title": "File name"
+    },
+    "homes_building_project_type": {
+      "$anchor": "homes_building_project_type",
+      "title": "Building project type",
+      "enum": [
+        "MANUFACTURED",
+        "MULTIFAMILY_CENTRAL",
+        "MULTIFAMILY_IN_UNIT",
+        "SINGLE_FAMILY_ATTACHED",
+        "SINGLE_FAMILY_DETACHED"
+      ],
+      "description": "This describes both the type of the building and, in the multifamily case, whether this reservation applies to the whole building or to a single unit. For the MULTIFAMILY_CENTRAL case, the income bucket for the building, mf_income_bucket, is used. Otherwise, the income bucket for the dwelling unit, dwelling_unit_income_bucket, is used."
+    },
+    "homes_claimant_type": {
+      "$anchor": "homes_claimant_type",
+      "title": "Claimant type",
+      "enum": [
+        "AGGREGATOR",
+        "CONTRACTOR",
+        "HOMEOWNER",
+        "MULTIFAMILY_BUILDING_OWNER",
+        "OTHER"
+      ],
+      "description": "The type of person or entity that is initiating the rebate process on behalf of the applicant."
+    },
+    "homes_dwelling_unit_income_bucket": {
+      "$anchor": "homes_dwelling_unit_income_bucket",
+      "title": "Dwelling unit income bucket",
+      "enum": [
+        "80%_AMI_AND_GREATER",
+        "LESS_THAN_80%_AMI"
+      ],
+      "description": "The household income level of the applicant compared to the area median income (AMI)."
+    },
+    "homes_file_purpose": {
+      "$anchor": "homes_file_purpose",
+      "enum": [
+        "POST_RETROFIT_MODEL",
+        "PRE_RETROFIT_MODEL",
+        "QUALITY_ASSURANCE"
+      ],
+      "title": "File purpose"
+    },
+    "homes_file_type": {
+      "$anchor": "homes_file_type",
+      "enum": [
+        "HPXML",
+        "JPEG",
+        "PDF",
+        "PNG"
+      ],
+      "title": "File type"
     },
     "homes_mf_building_income_bucket": {
       "$anchor": "homes_mf_building_income_bucket",
       "title": "Multifamily building income bucket",
       "enum": [
-        "LESS_THAN_80%_AMI",
-        "80%_AND_GREATER"
-      ]
+        "80%_AMI_AND_GREATER",
+        "LESS_THAN_80%_AMI"
+      ],
+      "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which two units fall in the `LESS_THAN_80%_AMI` range and three fall in the `80%_AMI_AND_GREATER`. Then the `80%_AMI_AND_GREATER` range should be chosen because more than half of the units fall into this range or lower."
+    },
+    "homes_upgrades": {
+      "$anchor": "homes_upgrades",
+      "type": "array",
+      "title": "Homes upgrades",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "AIR_SEALING",
+          "APPLIANCE",
+          "CEILING_INSULATION",
+          "COOLING_EQUIPMENT",
+          "DUCT_INSULATION",
+          "DUCT_SEALING",
+          "FLOOR_INSULATION",
+          "FOUNDATION_INSULATION",
+          "HEATING_EQUIPMENT",
+          "VENTILATION",
+          "WALL_INSULATION",
+          "WATER_HEATER",
+          "WINDOW_ATTACHMENT",
+          "WINDOW_REPLACEMENT"
+        ]
+      },
+      "description": "List all the upgrades from the enumeration that apply to the HOMES project."
+    },
+    "installation_cost": {
+      "$anchor": "installation_cost",
+      "type": "integer",
+      "minimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "title": "Installation cost"
+    },
+    "installation_type": {
+      "$anchor": "installation_type",
+      "title": "Installation type",
+      "enum": [
+        "CONTRACTOR_INSTALLED",
+        "DO_IT_YOURSELF"
+      ],
+      "description": "Indicates who performed the installation."
+    },
+    "is_contractor_eligible": {
+      "$anchor": "is_contractor_eligible",
+      "type": "boolean",
+      "description": "The contractor is eligible if they are on the state's approved list.",
+      "title": "Is contractor eligible"
+    },
+    "is_disadvantaged_community": {
+      "$anchor": "is_disadvantaged_community",
+      "type": "boolean",
+      "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
+      "title": "Is disadvantaged community"
+    },
+    "is_final_project_redemption": {
+      "$anchor": "is_final_project_redemption",
+      "type": "boolean",
+      "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
+      "title": "Is final project redemption"
+    },
+    "measured_post_retrofit_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Measured post retrofit energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "measured_post_retrofit_energy_usage_kwh_equivalent",
+      "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
+    },
+    "measured_pre_retrofit_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Measured pre-retrofit energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "measured_pre_retrofit_energy_usage_kwh_equivalent",
+      "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
     },
     "mf_conditioned_floor_area": {
       "$anchor": "mf_conditioned_floor_area",
       "type": "integer",
       "title": "Multifamily conditioned floor area",
-      "minimum": 0
+      "minimum": 1000,
+      "maximum": 1000000,
+      "description": "The conditioned floor area for the entire multifamily building including common areas."
     },
-    "modeled_energy_savings_kwh_equivalent": {
+    "mf_num_bedrooms": {
+      "$anchor": "mf_num_bedrooms",
+      "title": "Multifamily num bedrooms",
       "type": "integer",
-      "title": "Modeled energy savings kwh equivalent",
+      "description": "The number of bedrooms for the entire multifamily building.",
       "minimum": 0,
-      "$anchor": "modeled_energy_savings_kwh_equivalent"
+      "maximum": 10000
     },
-    "modeled_energy_savings_percent": {
-      "type": "integer",
-      "title": "Modeled energy savings percent",
-      "minimum": 0,
-      "maximum": 100,
-      "$anchor": "modeled_energy_savings_percent"
+    "model_number": {
+      "$anchor": "model_number",
+      "type": "string",
+      "title": "Model number",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The model number for the product being purchased."
     },
-    "nat_gas_savings_therms": {
+    "modeled_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Nat gas savings therms",
+      "title": "Modeled post retrofit energy usage kwh equivalent",
       "minimum": 0,
-      "$anchor": "nat_gas_savings_therms"
+      "$anchor": "modeled_post_retrofit_energy_usage_kwh_equivalent",
+      "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
+    },
+    "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Modeled pre energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "modeled_pre_retrofit_energy_usage_kwh_equivalent",
+      "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
+    },
+    "new_expiration_date_time": {
+      "type": "string",
+      "format": "date-time",
+      "title": "New expiration date-time",
+      "$anchor": "new_expiration_date_time",
+      "description": "The new date-time at which the reservation should be set to expire.",
+      "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
     },
     "num_units": {
       "$anchor": "num_units",
       "type": "integer",
       "title": "Num units",
       "minimum": 2,
-      "maximum": 2147483647
+      "maximum": 1000,
+      "description": "This is the total number of units in a multifamily building. This field is required when *building_project_type* is any of the enumerated values that has a \"MULTIFAMILY\" prefix. Otherwise, the field should be omitted."
     },
     "num_units_meeting_income_bucket": {
       "$anchor": "num_units_meeting_income_bucket",
       "type": "integer",
       "title": "Num units meeting income bucket",
       "minimum": 1,
-      "maximum": 1000
+      "maximum": 1000,
+      "description": "This is the number of units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
     },
     "portfolio_id": {
       "$anchor": "portfolio_id",
       "type": "string",
-      "format": "uuid"
+      "format": "uuid",
+      "description": "Multiple reservations for MEASURED HOMES projects can be tied together into a portfolio by assigning the same portfolio_id value to each reservation in the portfolio.",
+      "title": "Portfolio id"
     },
-    "post_retrofit_total_annual_energy_usage_kwh_equivalent": {
-      "type": "integer",
-      "title": "Post retrofit total annual energy usage kwh equivalent",
-      "minimum": 0,
-      "$anchor": "post_retrofit_total_annual_energy_usage_kwh_equivalent"
+    "product_description": {
+      "$anchor": "product_description",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50,
+      "title": "Product description",
+      "description": "The description of the product being purchased, as it would appear on an invoice."
     },
-    "prior_total_annual_energy_usage_kwh_equivalent": {
-      "type": "integer",
-      "title": "Prior total annual energy usage kwh equivalent",
-      "minimum": 0,
-      "$anchor": "prior_total_annual_energy_usage_kwh_equivalent"
-    },
-    "product_descriptions": {
-      "$anchor": "product_descriptions",
+    "product_info": {
+      "$anchor": "product_info",
       "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1,
-        "maxLength": 50
-      },
-      "title": "Product descriptions"
-    },
-    "product_ids": {
-      "$anchor": "product_ids",
-      "description": "UPC",
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "maxItems": 100,
       "minItems": 1,
-      "title": "Product ids"
-    },
-    "product_serial_nums": {
-      "$anchor": "product_serial_nums",
-      "type": "array",
+      "description": "Provide identifying information for the qualifying product or products that are covered by this rebate.",
       "items": {
-        "type": "string",
-        "minLength": 3,
-        "maxLength": 100
-      },
-      "title": "Product serial nums"
+        "type": "object",
+        "properties": {
+          "ahri_reference_number": {
+            "$ref": "#ahri_reference_number"
+          },
+          "count": {
+            "$ref": "#count"
+          },
+          "model_number": {
+            "$ref": "#model_number"
+          },
+          "product_description": {
+            "$ref": "#product_description"
+          },
+          "upc": {
+            "$ref": "#upc"
+          }
+        },
+        "additionalProperties": false
+      }
     },
     "project_completion_date": {
       "$anchor": "project_completion_date",
       "type": "string",
-      "format": "date",
-      "title": "Project completion date"
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Project completion date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
     },
     "project_id": {
       "$anchor": "project_id",
       "type": "string",
-      "format": "uuid",
+      "minLength": 6,
+      "maxLength": 36,
+      "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.",
       "title": "Project id"
     },
-    "purchase_date": {
-      "$anchor": "purchase_date",
+    "purchase_date_time": {
+      "$anchor": "purchase_date_time",
       "type": "string",
       "format": "date-time",
-      "title": "Purchase date"
-    },
-    "rebate_amount": {
-      "$anchor": "rebate_amount",
-      "type": "number",
-      "minimum": 0,
-      "title": "Rebate amount"
+      "title": "Purchase date-time",
+      "description": "This is the date a product was purchased. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted.",
+      "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
     },
     "rebate_deducted": {
       "$anchor": "rebate_deducted",
       "type": "number",
       "minimum": 0,
-      "title": "Rebate deducted"
+      "multipleOf": 0.01,
+      "title": "Rebate deducted",
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+    },
+    "rebate_passed_through_to_applicant": {
+      "$anchor": "rebate_passed_through_to_applicant",
+      "title": "Rebate passed through to applicant",
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "description": "Use this field when the contractor submitted a product redemption for this reservation and received a rebate on behalf of the applicant. Otherwise set this to 0. This amount must be passed on to the applicant and shown on the invoice. Do not include this in the amount for `equipment_and_material_cost`."
     },
     "rebate_type": {
       "title": "Rebate type",
@@ -425,7 +461,8 @@
         "MEASURED",
         "MODELED"
       ],
-      "$anchor": "rebate_type"
+      "$anchor": "rebate_type",
+      "description": "The HOMES rebates have two distinct options for determining savings and rebate amounts, MODELED vs MEASURED."
     },
     "redemption_type": {
       "$anchor": "redemption_type",
@@ -433,72 +470,89 @@
         "COMPLETION",
         "POINT_OF_PURCHASE"
       ],
-      "title": "Redemption type"
+      "title": "Redemption type",
+      "description": "Set this to COMPLETION for the final redemption associated with a reservation. This generally corresponds to when installation is complete. Set this to POINT_OF_PURCHASE in all other situations."
     },
     "sf_conditioned_floor_area": {
       "$anchor": "sf_conditioned_floor_area",
       "title": "Single-family conditioned floor area",
       "enum": [
-        "LESS_THAN_500SF",
-        "500SF_1500SF",
         "1500SF_2500SF",
-        "GREATER_THAN_2500SF"
-      ]
+        "500SF_1500SF",
+        "GREATER_THAN_2500SF",
+        "LESS_THAN_500SF"
+      ],
+      "description": "This is the conditioned floor area for an individual dwelling unit, either a single-family home or a unit in a multifamily building."
     },
-    "software_used_to_estimate_measured_savings": {
+    "sf_num_bedrooms": {
+      "$anchor": "sf_num_bedrooms",
+      "title": "Single-family num bedrooms",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 20,
+      "description": "The number of bedrooms in the dwelling unit."
+    },
+    "software_used_to_estimate_post_retrofit_energy_usage": {
       "type": "string",
       "title": "Software used to estimate measured savings",
-      "$anchor": "software_used_to_estimate_measured_savings"
+      "$anchor": "software_used_to_estimate_post_retrofit_energy_usage",
+      "minLength": 2,
+      "maxLength": 64,
+      "description": "This field is required when `rebate_type` is `MEASURED`."
+    },
+    "state_attests_proof_of_identity_ownership_income": {
+      "$anchor": "state_attests_proof_of_identity_ownership_income",
+      "type": "boolean",
+      "title": "State attests proof of identity ownership income",
+      "description": "The state attests that they have obtained the required proof of identify, proof of ownership, and proof of income for this rebate."
+    },
+    "state_attests_any_failed_inspection_remediated": {
+      "$anchor": "state_attests_any_failed_inspection_remediated",
+      "type": "boolean",
+      "title": "State attests any failed inspection remediated"
+    },
+    "text_file_content": {
+      "$anchor": "text_file_content",
+      "type": "string",
+      "maxLength": 1000000
     },
     "unit_name_or_number": {
       "$anchor": "unit_name_or_number",
       "type": "string",
       "title": "Unit name or number",
-      "minLength": 1
+      "minLength": 1,
+      "maxLength": 32,
+      "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
     },
-    "upgrade_applicability": {
-      "$anchor": "upgrade_applicability",
-      "title": "Upgrade applicability",
-      "enum": [
-        "SINGLE_UNIT",
-        "WHOLE_BUILDING"
-      ]
+    "upc": {
+      "$anchor": "upc",
+      "type": "string",
+      "title": "UPC",
+      "pattern": "^\\d+$",
+      "minLength": 1,
+      "maxLength": 14,
+      "description": "The universal product code (UPC) for the product being purchased."
     },
     "upgrade_type": {
       "$anchor": "upgrade_type",
       "title": "Upgrade type",
       "enum": [
-        "HEAT_PUMP_WATER_HEATER",
-        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "ELECTRICAL_PANEL",
         "ELECTRIC_COOKING_APPLIANCE",
+        "ELECTRIC_WIRING",
         "HEAT_PUMP_CLOTHES_DRYER",
-        "ELECTRIC_LOAD_SERVICE_CENTER",
-        "INSULATION_AIR_SEALING_VENTILATION",
-        "ELECTRIC_WIRING"
-      ]
-    },
-    "utility_bill_companies": {
-      "$anchor": "utility_bill_companies",
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "HEAT_PUMP_WATER_HEATER",
+        "INSULATION_AIR_SEALING_VENTILATION"
+      ],
+      "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
     },
     "vendor_id": {
       "$anchor": "vendor_id",
       "type": "string",
+      "format": "uuid",
       "title": "Vendor id",
-      "maxLength": 12
-    },
-    "year_built": {
-      "$anchor": "year_built",
-      "title": "Year built",
-      "enum": [
-        "BEFORE_1940",
-        "1940_1979",
-        "1980_2009",
-        "2010_OR_LATER"
-      ]
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
     }
   }
 }

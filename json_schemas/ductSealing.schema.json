@@ -5,28 +5,34 @@
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
-      "$ref": "#/$defs/component_details"
+      "$ref": "#/$defs/component_details",
+      "description": "The preexisting conditions associated with this improvement"
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
-      "$ref": "#/$defs/component_details"
+      "$ref": "#/$defs/component_details",
+      "description": "Details that describe this improvement"
     }
   },
   "$defs": {
     "component_details": {
       "type": "object",
       "properties": {
+        "cfm25": {
+          "description": "Total duct leakage cfm at 25 Pa pressure difference",
+          "type": "number",
+          "exclusiveminimum": 0
+        },
         "leakage_rate_known": {
           "type": "boolean"
         },
-        "cfm25": {
-          "description": "Total duct leakage",
-          "type": "number",
-          "minimum": 0
+        "upgrade_subtype": {
+          "const": "DUCT_SEALING"
         }
       },
       "required": [
-        "leakage_rate_known"
+        "leakage_rate_known",
+        "upgrade_subtype"
       ],
       "additionalProperties": false,
       "if": {

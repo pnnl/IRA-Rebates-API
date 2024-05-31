@@ -6,32 +6,38 @@
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
         "insulation": {
           "enum": [
-            "NONE",
             "CAVITY",
-            "FANFOLD",
+            "DO_NOT_KNOW",
             "EXTERIOR_CONTINUOUS",
-            "DO_NOT_KNOW"
+            "FANFOLD",
+            "NONE"
           ]
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "insulation"
+        "insulation",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
         "cavity_insulation_added": {
           "enum": [
+            "MORE_THAN_R21",
             "R13",
             "R19",
-            "R21",
-            "MORE_THAN_R21"
+            "R21"
           ]
         },
         "exterior_continuous_insulation_added": {
@@ -49,6 +55,9 @@
             75,
             100
           ]
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "anyOf": [
@@ -64,9 +73,15 @@
         }
       ],
       "required": [
-        "percent_wall_area_treated"
+        "percent_wall_area_treated",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "upgrade_subtype": {
+      "const": "WALL_INSULATION"
     }
   }
 }

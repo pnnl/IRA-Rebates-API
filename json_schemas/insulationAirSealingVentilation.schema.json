@@ -3,9 +3,40 @@
   "$id": "https://ira-rebates.labworks.org/schemas/insulationAirSealingVentilation",
   "type": "object",
   "properties": {
+    "original_component_details": {
+      "$anchor": "original_component_details",
+      "type": "array",
+      "description": "The preexisting conditions associated with this improvement",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "/schemas/airSealing#original_component_details"
+          },
+          {
+            "$ref": "/schemas/ceilingInsulation#original_component_details"
+          },
+          {
+            "$ref": "/schemas/wallInsulation#original_component_details"
+          },
+          {
+            "$ref": "/schemas/ductSealing#original_component_details"
+          },
+          {
+            "$ref": "/schemas/ductInsulation#original_component_details"
+          },
+          {
+            "$ref": "/schemas/foundationInsulation#original_component_details"
+          },
+          {
+            "$ref": "/schemas/ventilation#original_component_details"
+          }
+        ]
+      }
+    },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "array",
+      "description": "Details that describe this improvement",
       "items": {
         "anyOf": [
           {
@@ -13,9 +44,6 @@
           },
           {
             "$ref": "/schemas/ceilingInsulation#upgrade_component_details"
-          },
-          {
-            "$ref": "/schemas/windows#upgrade_component_details"
           },
           {
             "$ref": "/schemas/wallInsulation#upgrade_component_details"
@@ -27,36 +55,16 @@
             "$ref": "/schemas/ductInsulation#upgrade_component_details"
           },
           {
+            "$ref": "/schemas/floorAboveConditionedSpaceInsulation#upgrade_component_details"
+          },
+          {
             "$ref": "/schemas/floorAboveUnconditionedSpaceInsulation#upgrade_component_details"
           },
           {
             "$ref": "/schemas/foundationInsulation#upgrade_component_details"
-          }
-        ]
-      }
-    },
-    "original_component_details": {
-      "$anchor": "original_component_details",
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "$ref": "/schemas/airSealing#original_component_details"
           },
           {
-            "$ref": "/schemas/ceilingInsulation#original_component_details"
-          },
-          {
-            "$ref": "/schemas/windows#original_component_details"
-          },
-          {
-            "$ref": "/schemas/wallInsulation#original_component_details"
-          },
-          {
-            "$ref": "/schemas/ductSealing#original_component_details"
-          },
-          {
-            "$ref": "/schemas/ductInsulation#original_component_details"
+            "$ref": "/schemas/ventilation#upgrade_component_details"
           }
         ]
       }

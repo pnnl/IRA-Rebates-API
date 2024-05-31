@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationStateAddenda",
+  "type": "object",
+  "properties": {
+    "contractor_dac_incentive_payment": {
+      "$ref": "/schemas/definitions#contractor_dac_incentive_payment"
+    },
+    "state_attests_any_failed_inspection_remediated": {
+      "$ref": "/schemas/definitions#state_attests_any_failed_inspection_remediated"
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "contractor_dac_incentive_payment"
+      ]
+    },
+    {
+      "required": [
+        "state_attests_any_failed_inspection_remediated"
+      ]
+    }
+  ],
+  "additionalProperties": false
+}

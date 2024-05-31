@@ -6,17 +6,21 @@
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
-        "leakage_rate_known": {
-          "type": "boolean"
-        },
         "cfm50": {
-          "type": "number",
-          "minimum": 100
+          "$ref": "#/$defs/cfm50"
+        },
+        "leakage_rate_known": {
+          "$ref": "#/$defs/leakage_rate_known"
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "leakage_rate_known"
+        "leakage_rate_known",
+        "upgrade_subtype"
       ],
       "additionalProperties": false,
       "if": {
@@ -42,30 +46,39 @@
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
-        "leakage_rate_known": {
-          "type": "boolean"
-        },
         "cfm50": {
-          "type": "number",
-          "minimum": 0
+          "$ref": "#/$defs/cfm50"
+        },
+        "is_homeowner_aware_combustion_safety_tests_are_highly_recommended": {
+          "type": "boolean",
+          "description": "Is the homeowner aware that combustion safety tests are highly recommended for homes with any combustion appliances after air sealing projects are completed?"
+        },
+        "leakage_rate_known": {
+          "$ref": "#/$defs/leakage_rate_known"
         },
         "locations": {
           "type": "array",
           "items": {
             "enum": [
               "ATTIC",
-              "WALLS_WINDOWS_DOORS",
-              "FLOOR_FOUNDATION"
+              "FLOOR_FOUNDATION",
+              "WALLS_WINDOWS_DOORS"
             ]
           },
           "uniqueItems": true,
           "minItems": 1
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
+        "is_homeowner_aware_combustion_safety_tests_are_highly_recommended",
         "leakage_rate_known",
-        "locations"
+        "locations",
+        "upgrade_subtype"
       ],
       "additionalProperties": false,
       "if": {
@@ -87,6 +100,18 @@
           ]
         }
       }
+    }
+  },
+  "$defs": {
+    "cfm50": {
+      "type": "integer",
+      "minimum": 100
+    },
+    "leakage_rate_known": {
+      "type": "boolean"
+    },
+    "upgrade_subtype": {
+      "const": "AIR_SEALING"
     }
   }
 }
