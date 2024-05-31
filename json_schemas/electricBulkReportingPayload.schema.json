@@ -1,0 +1,671 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationBulkReporting",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "address_id": {
+        "$ref": "/schemas/definitions#address_id"
+      },
+      "ahri_reference_number": {
+        "$ref": "/schemas/definitions#ahri_reference_number"
+      },
+      "applicant_id": {
+        "$ref": "/schemas/definitions#applicant_id"
+      },
+      "building_project_type": {
+        "$ref": "/schemas/definitions#electric_building_project_type"
+      },
+      "claimant_type": {
+        "$ref": "/schemas/definitions#electric_claimant_type"
+      },
+      "construction_type": {
+        "$ref": "/schemas/definitions#construction_type"
+      },
+      "contractor_company_name": {
+        "$ref": "/schemas/definitions#contractor_company_name"
+      },
+      "contractor_dac_incentive_payment": {
+        "$ref": "/schemas/definitions#contractor_dac_incentive_payment"
+      },
+      "contractor_name": {
+        "$ref": "/schemas/definitions#contractor_name"
+      },
+      "dwelling_unit_income_bucket": {
+        "$ref": "/schemas/definitions#electric_dwelling_unit_income_bucket"
+      },
+      "energy_data_evaluation_permission": {
+        "$ref": "/schemas/definitions#energy_data_evaluation_permission"
+      },
+      "equipment_and_material_cost": {
+        "$ref": "/schemas/definitions#equipment_and_material_cost"
+      },
+      "installation_cost": {
+        "$ref": "/schemas/definitions#installation_cost"
+      },
+      "installation_type": {
+        "$ref": "/schemas/definitions#installation_type"
+      },
+      "is_contractor_eligible": {
+        "$ref": "/schemas/definitions#is_contractor_eligible"
+      },
+      "is_disadvantaged_community": {
+        "$ref": "/schemas/definitions#is_disadvantaged_community"
+      },
+      "limited_assessment": {
+        "$ref": "/schemas/electrificationLimitedAssessment"
+      },
+      "mf_building_income_bucket": {
+        "$ref": "/schemas/definitions#electric_mf_building_income_bucket"
+      },
+      "mf_conditioned_floor_area": {
+        "$ref": "/schemas/definitions#mf_conditioned_floor_area"
+      },
+      "mf_num_bedrooms": {
+        "$ref": "/schemas/definitions#mf_num_bedrooms"
+      },
+      "model_number": {
+        "$ref": "/schemas/definitions#model_number"
+      },
+      "num_units": {
+        "$ref": "/schemas/definitions#num_units"
+      },
+      "num_units_meeting_income_bucket": {
+        "$ref": "/schemas/definitions#num_units_meeting_income_bucket"
+      },
+      "original_component_details": {
+        "$ref": "/schemas/originalComponentDetails"
+      },
+      "product_description": {
+        "$ref": "/schemas/definitions#product_description"
+      },
+      "project_completion_date": {
+        "$ref": "/schemas/definitions#project_completion_date"
+      },
+      "project_id": {
+        "$ref": "/schemas/definitions#project_id"
+      },
+      "purchase_date_time": {
+        "$ref": "/schemas/definitions#purchase_date_time"
+      },
+      "rebate_deducted": {
+        "$ref": "/schemas/definitions#rebate_deducted"
+      },
+      "safety_checks": {
+        "$ref": "/schemas/safetyChecks"
+      },
+      "sf_conditioned_floor_area": {
+        "$ref": "/schemas/definitions#sf_conditioned_floor_area"
+      },
+      "sf_num_bedrooms": {
+        "$ref": "/schemas/definitions#sf_num_bedrooms"
+      },
+      "state_attests_proof_of_identity_ownership_income": {
+        "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income"
+      },
+      "state_attests_any_failed_inspection_remediated": {
+        "$ref": "/schemas/definitions#state_attests_any_failed_inspection_remediated"
+      },
+      "unit_name_or_number": {
+        "$ref": "/schemas/definitions#unit_name_or_number"
+      },
+      "upc": {
+        "$ref": "/schemas/definitions#upc"
+      },
+      "upgrade_component_details": {
+        "$ref": "/schemas/upgradeComponentDetails"
+      },
+      "upgrade_type": {
+        "$ref": "/schemas/definitions#upgrade_type"
+      },
+      "vendor_id": {
+        "$ref": "/schemas/definitions#vendor_id"
+      }
+    },
+    "required": [
+      "address_id",
+      "applicant_id",
+      "building_project_type",
+      "claimant_type",
+      "construction_type",
+      "energy_data_evaluation_permission",
+      "equipment_and_material_cost",
+      "installation_type",
+      "is_disadvantaged_community",
+      "project_completion_date",
+      "purchase_date_time",
+      "rebate_deducted",
+      "state_attests_proof_of_identity_ownership_income",
+      "state_attests_any_failed_inspection_remediated",
+      "upgrade_type",
+      "vendor_id"
+    ],
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_CENTRAL",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_CENTRAL"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "mf_building_income_bucket",
+            "num_units",
+            "num_units_meeting_income_bucket"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "dwelling_unit_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "unit_name_or_number"
+                ]
+              },
+              {
+                "required": [
+                  "sf_conditioned_floor_area"
+                ]
+              },
+              {
+                "required": [
+                  "sf_num_bedrooms"
+                ]
+              }
+            ]
+          }
+        },
+        "else": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "mf_conditioned_floor_area"
+                ]
+              },
+              {
+                "required": [
+                  "mf_num_bedrooms"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "mf_building_income_bucket",
+            "num_units",
+            "num_units_meeting_income_bucket",
+            "project_id",
+            "unit_name_or_number"
+          ],
+          "not": {
+            "required": [
+              "dwelling_unit_income_bucket"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_IN_UNIT"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "dwelling_unit_income_bucket",
+            "num_units",
+            "unit_name_or_number"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "mf_building_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "num_units_meeting_income_bucket"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed for single family building_project_type",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "enum": [
+                "MANUFACTURED",
+                "SINGLE_FAMILY_ATTACHED",
+                "SINGLE_FAMILY_DETACHED"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "dwelling_unit_income_bucket"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "mf_building_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "num_units"
+                ]
+              },
+              {
+                "required": [
+                  "num_units_meeting_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "unit_name_or_number"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "The appropriate schema must be used for original_component_details and upgrade_component_details depending on upgrade_type.",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_CLOTHES_DRYER"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "heat_pump_clothes_dryer_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "heat_pump_clothes_dryer_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "ELECTRIC_COOKING_APPLIANCE"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "electric_cooking_appliance_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "electric_cooking_appliance_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_WATER_HEATER"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "heat_pump_water_heater_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "heat_pump_water_heater_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "ELECTRICAL_PANEL"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "electrical_panel_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "electrical_panel_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "INSULATION_AIR_SEALING_VENTILATION"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "insulation_air_sealing_ventilation_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "insulation_air_sealing_ventilation_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "heat_pump_for_space_heating_or_cooling_original_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, and is_contractor_eligible are required, optional, or not allowed",
+        "if": {
+          "oneOf": [
+            {
+              "properties": {
+                "upgrade_type": {
+                  "enum": [
+                    "ELECTRICAL_PANEL",
+                    "ELECTRICAL_WIRING",
+                    "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "upgrade_type": {
+                  "const": "INSULATION_AIR_SEALING_VENTILATION"
+                },
+                "upgrade_component_details": {
+                  "properties": {
+                    "insulation_air_sealing_ventilation_upgrade_details": {
+                      "contains": {
+                        "$ref": "/schemas/airSealing#upgrade_component_details"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "then": {
+          "required": [
+            "contractor_company_name",
+            "contractor_dac_incentive_payment",
+            "contractor_name",
+            "is_contractor_eligible"
+          ],
+          "properties": {
+            "installation_type": {
+              "const": "CONTRACTOR_INSTALLED"
+            }
+          }
+        },
+        "else": {
+          "if": {
+            "installation_type": {
+              "const": "DO_IT_YOURSELF"
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "contractor_company_name"
+                  ]
+                },
+                {
+                  "required": [
+                    "contractor_dac_incentive_payment"
+                  ]
+                },
+                {
+                  "required": [
+                    "contractor_name"
+                  ]
+                },
+                {
+                  "required": [
+                    "is_contractor_eligible"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "$comment": "Determine when ahri_reference_number, model_number, product_description and upc are required, optional, or not allowed",
+        "allOf": [
+          {
+            "anyOf": [
+              {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              },
+              {
+                "required": [
+                  "model_number"
+                ]
+              },
+              {
+                "required": [
+                  "upc"
+                ]
+              }
+            ]
+          },
+          {
+            "if": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+                }
+              }
+            },
+            "then": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "model_number"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "if": {
+              "not": {
+                "properties": {
+                  "upgrade_type": {
+                    "enum": [
+                      "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                      "HEAT_PUMP_WATER_HEATER"
+                    ]
+                  }
+                }
+              }
+            },
+            "then": {
+              "not": {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "$comment": "Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                "INSULATION_AIR_SEALING_VENTILATION"
+              ]
+            }
+          }
+        },
+        "then": {
+          "if": {
+            "properties": {
+              "building_project_type": {
+                "const": "MULTIFAMILY_CENTRAL"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "mf_conditioned_floor_area"
+            ]
+          },
+          "else": {
+            "required": [
+              "sf_conditioned_floor_area"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when mf_num_bedrooms and sf_num_bedrooms are required",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_CLOTHES_DRYER",
+                "HEAT_PUMP_WATER_HEATER"
+              ]
+            }
+          }
+        },
+        "then": {
+          "if": {
+            "properties": {
+              "building_project_type": {
+                "const": "MULTIFAMILY_CENTRAL"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "mf_num_bedrooms"
+            ]
+          },
+          "else": {
+            "required": [
+              "sf_num_bedrooms"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when limited_assessment is required or not allowed",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "limited_assessment"
+          ]
+        },
+        "else": {
+          "not": {
+            "required": [
+              "limited_assessment"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

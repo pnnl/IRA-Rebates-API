@@ -6,31 +6,33 @@
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
-        "upgrade_subtype": {
-          "const": "DUCT_INSULATION"
-        },
         "primary_duct_location": {
+          "description": "The type of space in which the majority of the ducts being treated are located.",
           "enum": [
             "CONDITIONED_SPACE",
+            "DO_NOT_KNOW",
             "UNCONDITIONED_SPACE"
           ]
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "upgrade_subtype",
-        "primary_duct_location"
+        "primary_duct_location",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
-        "upgrade_subtype": {
-          "const": "DUCT_INSULATION"
-        },
         "percent_ducts_receiving_additional_insulation": {
+          "description": "The percentage of the ducts that received additional insulation in the upgrade. Choose the closest percentage.",
           "enum": [
             10,
             25,
@@ -38,13 +40,21 @@
             75,
             100
           ]
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "upgrade_subtype",
-        "percent_ducts_receiving_additional_insulation"
+        "percent_ducts_receiving_additional_insulation",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "upgrade_subtype": {
+      "const": "DUCT_INSULATION"
     }
   }
 }

@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesBulkReporting",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "address_id": {
+        "$ref": "/schemas/definitions#address_id"
+      },
+      "applicant_id": {
+        "$ref": "/schemas/definitions#applicant_id"
+      },
+      "building_project_type": {
+        "$ref": "/schemas/definitions#homes_building_project_type"
+      },
+      "claimant_payment": {
+        "$ref": "/schemas/definitions#claimant_payment"
+      },
+      "claimant_type": {
+        "$ref": "/schemas/definitions#homes_claimant_type"
+      },
+      "construction_type": {
+        "$ref": "/schemas/definitions#construction_type"
+      },
+      "contractor_company_name": {
+        "$ref": "/schemas/definitions#contractor_company_name"
+      },
+      "contractor_dac_incentive_payment": {
+        "$ref": "/schemas/definitions#contractor_dac_incentive_payment"
+      },
+      "contractor_name": {
+        "$ref": "/schemas/definitions#contractor_name"
+      },
+      "doe_approved_bpi_2400_compliant_software_used": {
+        "$ref": "/schemas/definitions#doe_approved_bpi_2400_compliant_software_used"
+      },
+      "dwelling_unit_income_bucket": {
+        "$ref": "/schemas/definitions#homes_dwelling_unit_income_bucket"
+      },
+      "equipment_and_material_cost": {
+        "$ref": "/schemas/definitions#equipment_and_material_cost"
+      },
+      "estimated_post_retrofit_energy_usage_kwh_equivalent": {
+        "$ref": "/schemas/definitions#estimated_post_retrofit_energy_usage_kwh_equivalent"
+      },
+      "installation_cost": {
+        "$ref": "/schemas/definitions#installation_cost"
+      },
+      "is_contractor_eligible": {
+        "$ref": "/schemas/definitions#is_contractor_eligible"
+      },
+      "is_disadvantaged_community": {
+        "$ref": "/schemas/definitions#is_disadvantaged_community"
+      },
+      "measured_post_retrofit_energy_usage_kwh_equivalent": {
+        "$ref": "/schemas/definitions#measured_post_retrofit_energy_usage_kwh_equivalent"
+      },
+      "measured_pre_retrofit_energy_usage_kwh_equivalent": {
+        "$ref": "/schemas/definitions#measured_pre_retrofit_energy_usage_kwh_equivalent"
+      },
+      "mf_building_income_bucket": {
+        "$ref": "/schemas/definitions#homes_mf_building_income_bucket"
+      },
+      "modeled_post_retrofit_energy_usage_kwh_equivalent": {
+        "$ref": "/schemas/definitions#modeled_post_retrofit_energy_usage_kwh_equivalent"
+      },
+      "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
+        "$ref": "/schemas/definitions#modeled_pre_retrofit_energy_usage_kwh_equivalent"
+      },
+      "num_units": {
+        "$ref": "/schemas/definitions#num_units"
+      },
+      "num_units_meeting_income_bucket": {
+        "$ref": "/schemas/definitions#num_units_meeting_income_bucket"
+      },
+      "portfolio_id": {
+        "$ref": "/schemas/definitions#portfolio_id"
+      },
+      "project_id": {
+        "$ref": "/schemas/definitions#project_id"
+      },
+      "project_completion_date": {
+        "$ref": "/schemas/definitions#project_completion_date"
+      },
+      "rebate_deducted": {
+        "$ref": "/schemas/definitions#rebate_deducted"
+      },
+      "rebate_type": {
+        "$ref": "/schemas/definitions#rebate_type"
+      },
+      "safety_checks": {
+        "$ref": "/schemas/safetyChecks"
+      },
+      "software_used_to_estimate_post_retrofit_energy_usage": {
+        "$ref": "/schemas/definitions#software_used_to_estimate_post_retrofit_energy_usage"
+      },
+      "state_attests_proof_of_identity_ownership_income": {
+        "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income"
+      },
+      "state_attests_any_failed_inspection_remediated": {
+        "$ref": "/schemas/definitions#state_attests_any_failed_inspection_remediated"
+      },
+      "unit_name_or_number": {
+        "$ref": "/schemas/definitions#unit_name_or_number"
+      },
+      "upgrades": {
+        "$ref": "/schemas/definitions#homes_upgrades"
+      },
+      "vendor_id": {
+        "$ref": "/schemas/definitions#vendor_id"
+      }
+    },
+    "required": [
+      "address_id",
+      "applicant_id",
+      "building_project_type",
+      "claimant_type",
+      "claimant_payment",
+      "construction_type",
+      "contractor_company_name",
+      "contractor_dac_incentive_payment",
+      "contractor_name",
+      "equipment_and_material_cost",
+      "installation_cost",
+      "is_contractor_eligible",
+      "project_completion_date",
+      "rebate_deducted",
+      "rebate_type",
+      "safety_checks",
+      "state_attests_proof_of_identity_ownership_income",
+      "state_attests_any_failed_inspection_remediated",
+      "upgrades",
+      "vendor_id"
+    ],
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "$comment": "Determine when portfolio_id is required or not allowed",
+        "if": {
+          "properties": {
+            "claimant_type": {
+              "const": "AGGREGATOR"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "portfolio_id"
+          ]
+        },
+        "else": {
+          "not": {
+            "required": [
+              "portfolio_id"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed when rebate_type is MODELED or MEASURED",
+        "if": {
+          "properties": {
+            "rebate_type": {
+              "const": "MODELED"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "doe_approved_bpi_2400_compliant_software_used",
+            "modeled_post_retrofit_energy_usage_kwh_equivalent",
+            "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "estimated_post_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "measured_post_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "measured_pre_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "software_used_to_estimate_post_retrofit_energy_usage"
+                ]
+              }
+            ]
+          }
+        },
+        "else": {
+          "$comment": "rebate_type is MEASURED",
+          "required": [
+            "estimated_post_retrofit_energy_usage_kwh_equivalent",
+            "measured_post_retrofit_energy_usage_kwh_equivalent",
+            "measured_pre_retrofit_energy_usage_kwh_equivalent",
+            "software_used_to_estimate_post_retrofit_energy_usage"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "doe_approved_bpi_2400_compliant_software_used"
+                ]
+              },
+              {
+                "required": [
+                  "modeled_post_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_IN_UNIT"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "dwelling_unit_income_bucket",
+            "num_units",
+            "unit_name_or_number"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "mf_building_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "num_units_meeting_income_bucket"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_CENTRAL",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_CENTRAL"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "mf_building_income_bucket",
+            "num_units",
+            "num_units_meeting_income_bucket"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "dwelling_unit_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "unit_name_or_number"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed for single family building_project_type",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "enum": [
+                "MANUFACTURED",
+                "SINGLE_FAMILY_ATTACHED",
+                "SINGLE_FAMILY_DETACHED"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "dwelling_unit_income_bucket"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "mf_building_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "num_units"
+                ]
+              },
+              {
+                "required": [
+                  "num_units_meeting_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "unit_name_or_number"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

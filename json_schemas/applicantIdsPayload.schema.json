@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/applicantId",
+  "type": "object",
+  "properties": {
+    "applicant_email": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address of the homeowner, building owner, or renter that will ultimately be receiving the benefit of the rebate."
+    },
+    "applicant_last_name": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "The applicant's last name."
+    },
+    "applicant_phone": {
+      "type": "string",
+      "pattern": "^\\d+$",
+      "minLength": 10,
+      "maxLegnth": 10,
+      "description": "The ten-digit phone number of the home owner, building owner, or renter that will ultimately be receiving the benefit of the rebate."
+    }
+  },
+  "required": [
+    "applicant_last_name"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "applicant_email"
+      ]
+    },
+    {
+      "required": [
+        "applicant_phone"
+      ]
+    }
+  ],
+  "additionalProperties": false
+}

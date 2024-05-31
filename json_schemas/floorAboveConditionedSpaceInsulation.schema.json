@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ira-rebates.labworks.org/schemas/floorAboveUnconditionedSpaceInsulation",
+  "$id": "https://ira-rebates.labworks.org/schemas/floorAboveConditionedSpaceInsulation",
   "type": "object",
   "properties": {
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
-      "description": "The preexisting conditions associated with this improvement",
+      "description": "Details that describe this improvement",
       "properties": {
         "percent_floor_receiving_additional_insulation": {
           "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
@@ -30,7 +30,7 @@
           ]
         },
         "upgrade_subtype": {
-          "const": "FLOOR_ABOVE_UNCONDITIONED_SPACE_INSULATION"
+          "const": "FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION"
         }
       },
       "required": [
