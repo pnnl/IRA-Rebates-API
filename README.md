@@ -7,13 +7,15 @@ This repository contains materials useful to users of the IRA Rebates API ***bet
 ## JSON Schema 
 The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST endpoint payloads. The schema files can also be used, together with a json schema validator (see  https://json-schema.org/implementations), to validate the POST payloads before submitting to the API. This may be especially helpful during the development of client software. 
 
+This version of the json schema files correspond to Data and Tools Guide version 1.2. (See Useful Links below.)
+
 ### API endpoint to JSON Schema table
 | API POST endpoint | JSON schema filename |
 | ---- | ---- |
 | /applicant-ids | applicantIdsPayload.schema.json |
 | /address-service | addressServicePayload.schema.json |
-| /electric/eligible-rebates | electricEligibleRebatesPayload.schema.json |
 | /electric/bulk-reporting | electricBulkReportingPayload.schema.json |
+| /electric/eligible-rebates | electricEligibleRebatesPayload.schema.json |
 | /electric/reservations | electricReservationsPayload.schema.json |
 | /electric/reservations/{reservation_id}/files | electricFilesPayload.schema.json |
 | /electric/reservations/{reservation_id}/limited-assessments | electricLimitedAssessmentsPayload.schema.json |
@@ -22,8 +24,8 @@ The `/json_schemas` folder includes JSON Schema files that are used by the IRA R
 | /electric/reservations/{reservation_id}/state-addenda | electricStateAddendaPayload.schema.json |
 | /electric/reservations/{reservation_id}/safety-checks | electricSafetyChecksPayload.schema.json
 | /electric/vendor-coupons/{vendor_coupon_id}/redemptions | electricVendorCouponRedemptionsPayload.schema.json |
-| /homes/eligible-rebates | homesEligibleRebatesPayload.schema.json |
 | /homes/bulk-reporting | homesBulkReportingPayload.schema.json |
+| /homes/eligible-rebates | homesEligibleRebatesPayload.schema.json |
 | /homes/reservations | homesReservationsPayload.schema.json | 
 | /homes/reservations/{reservation_id}/files | homesFilesPayload.schema.json |
 | /homes/reservations/{reservation_id}/redemptions | homesRedemptionsPayload.schema.json |
