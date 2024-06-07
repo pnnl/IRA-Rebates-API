@@ -25,6 +25,9 @@
       "$ref": "/schemas/definitions#energy_data_evaluation_permission",
       "const": true
     },
+    "external_rebate_id": {
+      "$ref": "/schemas/definitions#external_rebate_id"
+    },
     "installation_type": {
       "$ref": "/schemas/definitions#installation_type"
     },
@@ -70,6 +73,9 @@
     },
     "vendor_id": {
       "$ref": "/schemas/definitions#vendor_id"
+    },
+    "upgrade_subtype": {
+      "$ref": "/schemas/definitions#upgrade_subtype"
     }
   },
   "required": [

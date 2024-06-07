@@ -45,9 +45,6 @@
     "rebate_type": {
       "$ref": "/schemas/definitions#rebate_type"
     },
-    "software_used_to_estimate_post_retrofit_energy_usage": {
-      "$ref": "/schemas/definitions#software_used_to_estimate_post_retrofit_energy_usage"
-    },
     "unit_name_or_number": {
       "$ref": "/schemas/definitions#unit_name_or_number"
     },
@@ -102,8 +99,10 @@
       "then": {
         "required": [
           "dwelling_unit_income_bucket",
+          "mf_building_income_bucket",
           "num_units",
-          "unit_name_or_number"
+          "unit_name_or_number",
+          "num_units_meeting_income_bucket"
         ]
       }
     },

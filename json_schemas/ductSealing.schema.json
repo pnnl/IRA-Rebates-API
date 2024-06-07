@@ -23,7 +23,7 @@
           "type": "number",
           "exclusiveminimum": 0
         },
-        "leakage_rate_known": {
+        "is_leakage_rate_known": {
           "type": "boolean"
         },
         "upgrade_subtype": {
@@ -31,13 +31,13 @@
         }
       },
       "required": [
-        "leakage_rate_known",
+        "is_leakage_rate_known",
         "upgrade_subtype"
       ],
       "additionalProperties": false,
       "if": {
         "properties": {
-          "leakage_rate_known": {
+          "is_leakage_rate_known": {
             "const": true
           }
         }

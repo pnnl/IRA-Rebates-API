@@ -33,6 +33,9 @@
     "estimated_post_retrofit_energy_usage_kwh_equivalent": {
       "$ref": "/schemas/definitions#estimated_post_retrofit_energy_usage_kwh_equivalent"
     },
+    "external_rebate_id": {
+      "$ref": "/schemas/definitions#external_rebate_id"
+    },
     "is_contractor_eligible": {
       "$ref": "/schemas/definitions#is_contractor_eligible"
     },
@@ -192,23 +195,11 @@
       "then": {
         "required": [
           "dwelling_unit_income_bucket",
+          "mf_building_income_bucket",
           "num_units",
+          "num_units_meeting_income_bucket",
           "unit_name_or_number"
-        ],
-        "not": {
-          "anyOf": [
-            {
-              "required": [
-                "mf_building_income_bucket"
-              ]
-            },
-            {
-              "required": [
-                "num_units_meeting_income_bucket"
-              ]
-            }
-          ]
-        }
+        ]
       }
     },
     {

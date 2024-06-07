@@ -167,6 +167,14 @@
       "$anchor": "estimated_post_retrofit_energy_usage_kwh_equivalent",
       "description": "The total estimated (expected) annual  energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
     },
+    "external_rebate_id": {
+      "type": "string",
+      "title": "External rebate id",
+      "minLength": 1,
+      "maxLength": 64,
+      "$anchor": "external_rebate_id",
+      "description": "This is an optional field that a state can use for their own purposes to identify a rebate or rebate reservation."
+    },
     "file_name": {
       "$anchor": "file_name",
       "type": "string",
@@ -546,6 +554,14 @@
         "INSULATION_AIR_SEALING_VENTILATION"
       ],
       "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+    },
+    "upgrade_subtype": {
+      "$anchor": "upgrade_subtype",
+      "title": "Upgrade suptype",
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 64,
+      "description": "The use of this field is state-specific. A state could base a rebate rule on this field value."
     },
     "vendor_id": {
       "$anchor": "vendor_id",

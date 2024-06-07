@@ -41,6 +41,13 @@
       "equipment_and_material_cost": {
         "$ref": "/schemas/definitions#equipment_and_material_cost"
       },
+      "external_rebate_id": {
+        "$ref": "/schemas/definitions#external_rebate_id"
+      },
+      "install_vendor_id": {
+        "$ref": "/schemas/definitions#vendor_id",
+        "title": "Install vendor id"
+      },
       "installation_cost": {
         "$ref": "/schemas/definitions#installation_cost"
       },
@@ -80,6 +87,10 @@
       "product_description": {
         "$ref": "/schemas/definitions#product_description"
       },
+      "product_vendor_id": {
+        "$ref": "/schemas/definitions#vendor_id",
+        "title": "Product vendor id"
+      },
       "project_completion_date": {
         "$ref": "/schemas/definitions#project_completion_date"
       },
@@ -118,9 +129,6 @@
       },
       "upgrade_type": {
         "$ref": "/schemas/definitions#upgrade_type"
-      },
-      "vendor_id": {
-        "$ref": "/schemas/definitions#vendor_id"
       }
     },
     "required": [
@@ -131,15 +139,16 @@
       "construction_type",
       "energy_data_evaluation_permission",
       "equipment_and_material_cost",
+      "external_rebate_id",
       "installation_type",
       "is_disadvantaged_community",
+      "product_vendor_id",
       "project_completion_date",
       "purchase_date_time",
       "rebate_deducted",
       "state_attests_proof_of_identity_ownership_income",
       "state_attests_any_failed_inspection_remediated",
-      "upgrade_type",
-      "vendor_id"
+      "upgrade_type"
     ],
     "additionalProperties": false,
     "allOf": [

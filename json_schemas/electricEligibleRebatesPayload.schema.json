@@ -27,20 +27,11 @@
     "mf_building_income_bucket": {
       "$ref": "/schemas/definitions#electric_mf_building_income_bucket"
     },
-    "mf_conditioned_floor_area": {
-      "$ref": "/schemas/definitions#mf_conditioned_floor_area"
-    },
     "num_units": {
       "$ref": "/schemas/definitions#num_units"
     },
     "num_units_meeting_income_bucket": {
       "$ref": "/schemas/definitions#num_units_meeting_income_bucket"
-    },
-    "original_component_details": {
-      "$ref": "/schemas/originalComponentDetails"
-    },
-    "sf_conditioned_floor_area": {
-      "$ref": "/schemas/definitions#sf_conditioned_floor_area"
     },
     "unit_name_or_number": {
       "$ref": "/schemas/definitions#unit_name_or_number"
@@ -56,7 +47,6 @@
     "construction_type",
     "installation_type",
     "is_disadvantaged_community",
-    "original_component_details",
     "upgrade_type"
   ],
   "additionalProperties": true,

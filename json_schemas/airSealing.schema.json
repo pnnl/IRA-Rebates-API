@@ -11,21 +11,21 @@
         "cfm50": {
           "$ref": "#/$defs/cfm50"
         },
-        "leakage_rate_known": {
-          "$ref": "#/$defs/leakage_rate_known"
+        "is_leakage_rate_known": {
+          "$ref": "#/$defs/is_leakage_rate_known"
         },
         "upgrade_subtype": {
           "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "leakage_rate_known",
+        "is_leakage_rate_known",
         "upgrade_subtype"
       ],
       "additionalProperties": false,
       "if": {
         "properties": {
-          "leakage_rate_known": {
+          "is_leakage_rate_known": {
             "const": true
           }
         }
@@ -55,8 +55,8 @@
           "type": "boolean",
           "description": "Is the homeowner aware that combustion safety tests are highly recommended for homes with any combustion appliances after air sealing projects are completed?"
         },
-        "leakage_rate_known": {
-          "$ref": "#/$defs/leakage_rate_known"
+        "is_leakage_rate_known": {
+          "$ref": "#/$defs/is_leakage_rate_known"
         },
         "locations": {
           "type": "array",
@@ -76,14 +76,14 @@
       },
       "required": [
         "is_homeowner_aware_combustion_safety_tests_are_highly_recommended",
-        "leakage_rate_known",
+        "is_leakage_rate_known",
         "locations",
         "upgrade_subtype"
       ],
       "additionalProperties": false,
       "if": {
         "properties": {
-          "leakage_rate_known": {
+          "is_leakage_rate_known": {
             "const": true
           }
         }
@@ -107,7 +107,7 @@
       "type": "integer",
       "minimum": 100
     },
-    "leakage_rate_known": {
+    "is_leakage_rate_known": {
       "type": "boolean"
     },
     "upgrade_subtype": {
