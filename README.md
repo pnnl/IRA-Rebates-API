@@ -1,6 +1,8 @@
 # IRA-Rebates-API
 
-## Announcement: Beta v4 JSON Schema Release - 05/31/2024
+## Announcement: Beta v4 JSON Schema Release - 5/31/2024
+
+**Updated 6/7/2024**
 
 Beta v4 of our JSON schemas is now available on the `beta_v4_schema` branch as of 5/31/2024. Please be aware that those schemas are not yet integrated into our sandbox environment.
 
