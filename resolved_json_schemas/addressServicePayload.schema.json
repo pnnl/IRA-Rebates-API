@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/addressService",
+  "properties": {
+    "street_number": {
+      "type": "string",
+      "title": "Street number",
+      "pattern": "^\\d+(?:-\\d+)?$",
+      "minLength": 1,
+      "maxLength": 10,
+      "description": "The building number. This would be &ldquo;122&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+    },
+    "street": {
+      "type": "string",
+      "title": "Street",
+      "minLength": 1,
+      "description": "The name of the street, avenue, etc.. This would be &ldquo;Mayflower HIll Dr&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+    },
+    "city": {
+      "type": "string",
+      "title": "City",
+      "minLength": 1,
+      "description": "The name of the city, town, etc.. This would be &ldquo;Waterville&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+    },
+    "state": {
+      "title": "State",
+      "$comment": " https://bedes.lbl.gov/bedes-online/state",
+      "enum": [
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ],
+      "description": "The name, or two letter code, for the state. This would be &ldquo;ME&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+    },
+    "zip_code": {
+      "type": "string",
+      "title": "Zip code",
+      "pattern": "^(\\d{5}(-\\d{4})?)$",
+      "description": "The *zip_code* is the 5-digit or 9-digit zip code. This would be &ldquo;04901&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+    },
+    "county": {
+      "type": "string",
+      "title": "County",
+      "minLength": 1,
+      "description": "The name of the county containing the address."
+    }
+  },
+  "required": [
+    "street_number",
+    "street",
+    "state"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "required": [
+        "city"
+      ]
+    },
+    {
+      "required": [
+        "zip_code"
+      ]
+    },
+    {
+      "required": [
+        "county"
+      ]
+    }
+  ]
+}

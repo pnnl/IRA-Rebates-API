@@ -1,0 +1,751 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationRedemption",
+  "type": "object",
+  "properties": {
+    "installation_cost": {
+      "type": "integer",
+      "minimum": 0,
+      "title": "Installation cost",
+      "description": "This is the delivery and installation costs associated with this redemption. To qualify, the installation must be performed by an approved installer. This field should be included in any redemption that includes an installation cost. It *must* appear in at least one redemption associated with this reservation unless *is_do_it_yourself* is *true*. If there is no installation cost associated with the redemption, then this field should be omitted."
+    },
+    "project_completion_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Project completion date",
+      "description": "This is the date at which the project was completed. This field is required when *redemption_type* is COMPLETION."
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Purchase date",
+      "description": "This is the date a product was purchased. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted."
+    },
+    "equipment_and_material_cost": {
+      "type": "integer",
+      "title": "Equipment and material cost",
+      "minimum": 0,
+      "description": "The total cost of the equipment and materials used."
+    },
+    "product_ids": {
+      "description": "UPC",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Product ids"
+    },
+    "rebate_deducted": {
+      "type": "number",
+      "minimum": 0,
+      "title": "Rebate deducted",
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+    },
+    "redemption_type": {
+      "enum": [
+        "COMPLETION",
+        "POINT_OF_PURCHASE"
+      ],
+      "title": "Redemption type",
+      "description": "Set this to COMPLETION for the final redemption associated with a reservation. This generally corresponds to when installation is complete. Set this to POINT_OF_PURCHASE in all other situations."
+    },
+    "upgrade_type": {
+      "title": "Upgrade type",
+      "enum": [
+        "HEAT_PUMP_WATER_HEATER",
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "ELECTRIC_COOKING_APPLIANCE",
+        "HEAT_PUMP_CLOTHES_DRYER",
+        "ELECTRICAL_PANEL",
+        "INSULATION_AIR_SEALING_VENTILATION",
+        "ELECTRIC_WIRING"
+      ],
+      "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+    },
+    "upgrade_component_details": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://ira-rebates.labworks.org/schemas/upgradeComponentDetails",
+      "type": "object",
+      "oneOf": [
+        {
+          "properties": {
+            "insulation_air_sealing_ventilation_upgrade_details": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "upgrade_subtype": {
+                        "const": "AIR_SEALING"
+                      },
+                      "leakage_rate_known": {
+                        "type": "boolean"
+                      },
+                      "cfm50": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "locations": {
+                        "type": "array",
+                        "items": {
+                          "enum": [
+                            "ATTIC",
+                            "WALLS_WINDOWS_DOORS",
+                            "FLOOR_FOUNDATION"
+                          ]
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "upgrade_subtype",
+                      "leakage_rate_known",
+                      "locations"
+                    ],
+                    "additionalProperties": false,
+                    "if": {
+                      "properties": {
+                        "leakage_rate_known": {
+                          "const": true
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "cfm50"
+                      ]
+                    },
+                    "else": {
+                      "not": {
+                        "required": [
+                          "cfm50"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "upgrade_subtype": {
+                        "const": "CEILING_INSULATION"
+                      },
+                      "r_value_added": {
+                        "enum": [
+                          "LESS_THAN_R30",
+                          "R30",
+                          "R49",
+                          "R60",
+                          "MORE_THAN_R60"
+                        ]
+                      },
+                      "percent_ceiling_receiving_additional_insulation": {
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      }
+                    },
+                    "required": [
+                      "upgrade_subtype",
+                      "r_value_added",
+                      "percent_ceiling_receiving_additional_insulation"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "upgrade_subtype": {
+                        "const": "WINDOWS"
+                      },
+                      "upgrades": {
+                        "enum": [
+                          "NONE",
+                          "REPLACE_WITH_DOUBLE_PANE",
+                          "REPLACE_WITH_TRIPLE_PANE",
+                          "ADD_LOW_E_STORM",
+                          "ADD_EXTERIOR_SHADES",
+                          "ADD_INTERIOR_SHADES"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "upgrade_subtype",
+                      "upgrades"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "upgrade_subtype": {
+                        "const": "WALL_INSULATION"
+                      },
+                      "cavity_insulation_added": {
+                        "enum": [
+                          "R13",
+                          "R19",
+                          "R21",
+                          "MORE_THAN_R21"
+                        ]
+                      },
+                      "exterior_continuous_insulation_added": {
+                        "enum": [
+                          "1_INCH",
+                          "2_INCH",
+                          "MORE_THAN_2_INCH"
+                        ]
+                      },
+                      "percent_wall_area_treated": {
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      }
+                    },
+                    "anyOf": [
+                      {
+                        "required": [
+                          "cavity_insulation_added"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "exterior_continuous_insulation_added"
+                        ]
+                      }
+                    ],
+                    "required": [
+                      "upgrade_subtype",
+                      "percent_wall_area_treated"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {},
+                  {
+                    "type": "object",
+                    "properties": {
+                      "upgrade_subtype": {
+                        "const": "DUCT_INSULATION"
+                      },
+                      "percent_ducts_receiving_additional_insulation": {
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      }
+                    },
+                    "required": [
+                      "upgrade_subtype",
+                      "percent_ducts_receiving_additional_insulation"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "upgrade_subtype": {
+                        "const": "FLOOR_ABOVE_UNCONDITIONED_SPACE_INSULATION"
+                      },
+                      "percent_floor_receiving_additional_insulation": {
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      },
+                      "r_value_added": {
+                        "enum": [
+                          "LESS_THAN_R10",
+                          "R10",
+                          "R13",
+                          "R19",
+                          "R30",
+                          "MORE_THAN_R30"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "upgrade_subtype",
+                      "percent_floor_receiving_additional_insulation",
+                      "r_value_added"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "upgrade_subtype": {
+                        "const": "FOUNDATION_INSULATION"
+                      },
+                      "percent_foundation_perimeter_receiving_additional_insulation": {
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      },
+                      "r_value_added": {
+                        "enum": [
+                          "LESS_THAN_R5",
+                          "R5",
+                          "R10",
+                          "R13",
+                          "R19",
+                          "R30"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "upgrade_subtype",
+                      "percent_foundation_perimeter_receiving_additional_insulation",
+                      "r_value_added"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "upgrade_subtype": {
+                        "const": "VENTILATION"
+                      },
+                      "cfm_flow_rate": {
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "upgrade_subtype",
+                      "cfm_flow_rate"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "insulation_air_sealing_ventilation_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "electrical_panel_upgrade_details": {}
+          },
+          "required": [
+            "electrical_panel_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "electric_cooking_appliance_upgrade_details": {
+              "type": "object",
+              "properties": {
+                "cooking_appliance_type": {
+                  "enum": [
+                    "STANDARD_ELECTRIC",
+                    "INDUCTION_COOKTOP"
+                  ]
+                }
+              },
+              "required": [
+                "cooking_appliance_type"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "electric_cooking_appliance_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "heat_pump_clothes_dryer_upgrade_details": {
+              "type": "object",
+              "properties": {
+                "energy_guide_estimated_energy_use_kwh": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "energy_guide_estimated_energy_use_kwh"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "heat_pump_clothes_dryer_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "heat_pump_for_space_heating_or_cooling_upgrade_details": {
+              "type": "object",
+              "properties": {
+                "heat_pump_type": {
+                  "enum": [
+                    "MINI_SPLIT_WITH_BACKUP",
+                    "MINI_SPLIT_WITHOUT_BACKUP",
+                    "CENTRAL_WITH_BACKUP",
+                    "CENTRAL_WITHOUT_BACKUP",
+                    "GEOTHERMAL_WITH_BACKUP",
+                    "GEOTHERMAL_WITHOUT_BACKUP"
+                  ]
+                },
+                "heating_load_percent_cover": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "heating_capacity_btu_per_hr": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "sensible_cooling_capacity_btu_per_hr": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "is_energy_star_cold_climate": {
+                  "type": "boolean"
+                },
+                "geothermal_heat_pump_cop": {
+                  "type": "number",
+                  "minimum": 2,
+                  "maximum": 6
+                },
+                "heat_pump_heating_efficiency_hspf2": {
+                  "type": "number",
+                  "minimum": 5,
+                  "maximum": 20
+                },
+                "heat_pump_cooling_efficiency_seer2": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 25
+                }
+              },
+              "required": [
+                "heat_pump_type",
+                "heating_load_percent_cover",
+                "heating_capacity_btu_per_hr",
+                "sensible_cooling_capacity_btu_per_hr"
+              ],
+              "additionalProperties": false,
+              "if": {
+                "properties": {
+                  "heat_pump_type": {
+                    "enum": [
+                      "GEOTHERMAL_WITH_BACKUP",
+                      "GEOTHERMAL_WITHOUT_BACKUP"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "geothermal_heat_pump_cop"
+                ],
+                "not": {
+                  "required": [
+                    "is_energy_star_cold_climate",
+                    "heat_pump_heating_efficiency_hspf2",
+                    "heat_pump_cooling_efficiency_seer2"
+                  ]
+                }
+              },
+              "else": {
+                "required": [
+                  "is_energy_star_cold_climate",
+                  "heat_pump_heating_efficiency_hspf2",
+                  "heat_pump_cooling_efficiency_seer2"
+                ],
+                "not": {
+                  "required": [
+                    "geothermal_heat_pump_cop"
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "heat_pump_for_space_heating_or_cooling_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "heat_pump_water_heater_upgrade_details": {
+              "type": "object",
+              "properties": {
+                "storage_capacity": {
+                  "enum": [
+                    "LESS_THAN_45_GALLON",
+                    "45_GALLON",
+                    "50_GALLON",
+                    "60_GALLON",
+                    "80_GALLON",
+                    "MORE_THAN_80_GALLON"
+                  ]
+                }
+              },
+              "required": [
+                "storage_capacity"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "heat_pump_water_heater_upgrade_details"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "product_descriptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      },
+      "title": "Product descriptions",
+      "description": "A list of product descriptions as might be found on an invoice. A product description or a product id, or both, should be provided for each product."
+    },
+    "product_serial_numbers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "title": "Product serial nums",
+      "description": "This is a list of strings that specify the product serial number of the purchased products. The appropriate values are TBD. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted."
+    }
+  },
+  "required": [
+    "redemption_type",
+    "rebate_deducted",
+    "upgrade_type"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "redemption_type": {
+            "const": "COMPLETION"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "project_completion_date",
+          "upgrade_component_details"
+        ],
+        "not": {
+          "required": [
+            "purchase_date"
+          ]
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "HEAT_PUMP_CLOTHES_DRYER"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "upgrade_component_details": {
+                  "required": [
+                    "heat_pump_clothes_dryer_upgrade_details"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "ELECTRIC_COOKING_APPLIANCE"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "upgrade_component_details": {
+                  "required": [
+                    "electric_cooking_appliance_upgrade_details"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "HEAT_PUMP_WATER_HEATER"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "upgrade_component_details": {
+                  "required": [
+                    "heat_pump_water_heater_upgrade_details"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "upgrade_component_details": {
+                  "required": [
+                    "heat_pump_for_space_heating_or_cooling_upgrade_details"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "ELECTRICAL_PANEL"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "original_component_details": {
+                  "required": [
+                    "electrical_panel_upgrade_details"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "INSULATION_AIR_SEALING_VENTILATION"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "upgrade_component_details": {
+                  "required": [
+                    "insulation_air_sealing_ventilation_upgrade_details"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "else": {
+        "required": [
+          "purchase_date",
+          "equipment_and_material_cost"
+        ],
+        "not": {
+          "required": [
+            "project_completion_date",
+            "upgrade_component_details"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "equipment_and_material_cost"
+        ]
+      },
+      "then": {
+        "anyOf": [
+          {
+            "required": [
+              "product_ids"
+            ]
+          },
+          {
+            "required": [
+              "product_descriptions"
+            ]
+          }
+        ],
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_WATER_HEATER",
+                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                "ELECTRIC_COOKING_APPLIANCE",
+                "HEAT_PUMP_CLOTHES_DRYER"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "product_serial_numbers"
+          ]
+        },
+        "else": {
+          "if": {
+            "not": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "INSULATION_AIR_SEALING_VENTILATION"
+                }
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "product_serial_numbers"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

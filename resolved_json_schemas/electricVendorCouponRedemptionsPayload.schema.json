@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationVendorCouponRedemption",
+  "type": "object",
+  "properties": {
+    "installation_cost": {
+      "type": "integer",
+      "minimum": 0,
+      "title": "Installation cost",
+      "description": "This is the delivery and installation costs associated with this redemption. To qualify, the installation must be performed by an approved installer. This field should be included in any redemption that includes an installation cost. It *must* appear in at least one redemption associated with this reservation unless *is_do_it_yourself* is *true*. If there is no installation cost associated with the redemption, then this field should be omitted."
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Purchase date",
+      "description": "This is the date a product was purchased. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted."
+    },
+    "equipment_and_material_cost": {
+      "type": "integer",
+      "title": "Equipment and material cost",
+      "minimum": 0,
+      "description": "The total cost of the equipment and materials used."
+    },
+    "product_ids": {
+      "description": "UPC",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Product ids"
+    },
+    "rebate_deducted": {
+      "type": "number",
+      "minimum": 0,
+      "title": "Rebate deducted",
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+    },
+    "redemption_type": {
+      "enum": [
+        "COMPLETION",
+        "POINT_OF_PURCHASE"
+      ],
+      "title": "Redemption type",
+      "description": "Set this to COMPLETION for the final redemption associated with a reservation. This generally corresponds to when installation is complete. Set this to POINT_OF_PURCHASE in all other situations."
+    },
+    "upgrade_type": {
+      "title": "Upgrade type",
+      "enum": [
+        "HEAT_PUMP_WATER_HEATER",
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "ELECTRIC_COOKING_APPLIANCE",
+        "HEAT_PUMP_CLOTHES_DRYER",
+        "ELECTRICAL_PANEL",
+        "INSULATION_AIR_SEALING_VENTILATION",
+        "ELECTRIC_WIRING"
+      ],
+      "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+    },
+    "product_descriptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      },
+      "title": "Product descriptions",
+      "description": "A list of product descriptions as might be found on an invoice. A product description or a product id, or both, should be provided for each product."
+    },
+    "product_serial_numbers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "title": "Product serial nums",
+      "description": "This is a list of strings that specify the product serial number of the purchased products. The appropriate values are TBD. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted."
+    }
+  },
+  "required": [
+    "redemption_type",
+    "rebate_deducted",
+    "upgrade_type",
+    "purchase_date",
+    "equipment_and_material_cost"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "equipment_and_material_cost"
+        ]
+      },
+      "then": {
+        "anyOf": [
+          {
+            "required": [
+              "product_ids"
+            ]
+          },
+          {
+            "required": [
+              "product_descriptions"
+            ]
+          }
+        ],
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_WATER_HEATER",
+                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                "ELECTRIC_COOKING_APPLIANCE",
+                "HEAT_PUMP_CLOTHES_DRYER"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "product_serial_numbers"
+          ]
+        },
+        "else": {
+          "if": {
+            "not": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "INSULATION_AIR_SEALING_VENTILATION"
+                }
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "product_serial_numbers"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
