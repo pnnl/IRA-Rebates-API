@@ -1,0 +1,542 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesReporting",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "address_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "A unique identifier associated with address of the building at which the upgrade(s) will be installed.",
+        "title": "Address id"
+      },
+      "building_address": {
+        "properties": {
+          "street_number": {
+            "type": "string",
+            "title": "Street number",
+            "pattern": "^\\d+(?:-\\d+)?$",
+            "minLength": 1,
+            "maxLength": 10,
+            "description": "The building number. This would be &ldquo;122&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+          },
+          "street": {
+            "type": "string",
+            "title": "Street",
+            "minLength": 1,
+            "description": "The name of the street, avenue, etc.. This would be &ldquo;Mayflower HIll Dr&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+          },
+          "city": {
+            "type": "string",
+            "title": "City",
+            "minLength": 1,
+            "description": "The name of the city, town, etc.. This would be &ldquo;Waterville&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+          },
+          "state": {
+            "title": "State",
+            "$comment": " https://bedes.lbl.gov/bedes-online/state",
+            "enum": [
+              "AA",
+              "AE",
+              "AK",
+              "AL",
+              "AP",
+              "AR",
+              "AS",
+              "AZ",
+              "CA",
+              "CO",
+              "CT",
+              "DC",
+              "DE",
+              "FL",
+              "FM",
+              "GA",
+              "GU",
+              "HI",
+              "IA",
+              "ID",
+              "IL",
+              "IN",
+              "KS",
+              "KY",
+              "LA",
+              "MA",
+              "MD",
+              "ME",
+              "MH",
+              "MI",
+              "MN",
+              "MO",
+              "MP",
+              "MS",
+              "MT",
+              "NC",
+              "ND",
+              "NE",
+              "NH",
+              "NJ",
+              "NM",
+              "NV",
+              "NY",
+              "OH",
+              "OK",
+              "OR",
+              "PA",
+              "PR",
+              "PW",
+              "RI",
+              "SC",
+              "SD",
+              "TN",
+              "TX",
+              "UT",
+              "VA",
+              "VI",
+              "VT",
+              "WA",
+              "WI",
+              "WV",
+              "WY"
+            ],
+            "description": "The name, or two letter code, for the state. This would be &ldquo;ME&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+          },
+          "zip_code": {
+            "type": "string",
+            "title": "Zip code",
+            "pattern": "^(\\d{5}(-\\d{4})?)$",
+            "description": "The *zip_code* is the 5-digit or 9-digit zip code. This would be &ldquo;04901&rdquo; for the address: 122 Mayflower Hill Dr, Waterville, ME 04901."
+          },
+          "county": {
+            "type": "string",
+            "title": "County",
+            "minLength": 1,
+            "description": "The name of the county containing the address."
+          }
+        },
+        "required": [
+          "street_number",
+          "street",
+          "state"
+        ],
+        "additionalProperties": false,
+        "anyOf": [
+          {
+            "required": [
+              "city"
+            ]
+          },
+          {
+            "required": [
+              "zip_code"
+            ]
+          },
+          {
+            "required": [
+              "county"
+            ]
+          }
+        ]
+      },
+      "building_type": {
+        "title": "Building type",
+        "enum": [
+          "SINGLE_FAMILY",
+          "MULTIFAMILY"
+        ],
+        "description": "For the purposes of this API, a MULTIFAMILY building is **a single contiguous building containing 2+ dwelling units with a common owner and a main building address with unit designations**. All other buildings are SINGLE_FAMILY buildings."
+      },
+      "claimant_type": {
+        "title": "Claimant type",
+        "enum": [
+          "HOMEOWNER",
+          "MULTIFAMILY_BUILDING_OWNER",
+          "CONTRACTOR",
+          "AGGREGATOR",
+          "TENANT"
+        ],
+        "description": "The entity applying for the rebate."
+      },
+      "construction_type": {
+        "title": "Construction type",
+        "enum": [
+          "NEW",
+          "EXISTING"
+        ],
+        "description": "Set to NEW if the building is less than one year old. Otherwise, set to EXISTING."
+      },
+      "energy_data_evaluation_permission": {
+        "type": "boolean",
+        "title": "Energy data evaluation permission",
+        "description": "Set to true if the home/building owner has given their permission to share energy data with the State and the DOE for evaluation purposes."
+      },
+      "num_units": {
+        "type": "integer",
+        "title": "Num units",
+        "minimum": 2,
+        "maximum": 2147483647,
+        "description": "This is the total number of units in a multifamily building. This field is required when *building_type* is MULTIFAMILY AND *is_part_of_whole_building_project* is *true*. Otherwise, the field should be omitted."
+      },
+      "num_units_meeting_income_bucket": {
+        "type": "integer",
+        "title": "Num units meeting income bucket",
+        "minimum": 1,
+        "maximum": 1000,
+        "description": "This is the number of units in a multifamily building for which the household income falls within the income range represented by *income_bucket* or is lower. This field is required when *building_type* is MULTIFAMILY AND *is_part_of_whole_building_project* is *true*. Otherwise, the field should be omitted."
+      },
+      "unit_name_or_number": {
+        "type": "string",
+        "title": "Unit name or number",
+        "minLength": 1,
+        "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
+      },
+      "rebate_type": {
+        "title": "Rebate type",
+        "enum": [
+          "MEASURED",
+          "MODELED"
+        ],
+        "description": "The HOMES rebates have two distinct options for determining savings and rebate amounts, MODELED vs MEASURED."
+      },
+      "is_model_calibrated": {
+        "type": "boolean",
+        "title": "Is model calibrated",
+        "description": "Set to true if a modeled approach is taken and a calibrated model is being provided."
+      },
+      "doe_approved_bpi_2400_compliant_software_used": {
+        "enum": [
+          "TBD"
+        ],
+        "title": "Doe approved bpi 2400 compliant software used",
+        "description": "Choose from the enumerated list of approved software. This field is required when  *rebate_type* is MODELED_SAVINGS AND *is_model_calibrated* is *true*. Otherwise, this field should be omitted."
+      },
+      "software_used_to_estimate_measured_savings": {
+        "type": "string",
+        "title": "Software used to estimate measured savings",
+        "description": "This field is required when  *rebate_type* is MEASURED_SAVINGS."
+      },
+      "modeled_prior_energy_usage_kwh_equivalent": {
+        "type": "integer",
+        "title": "Modeled prior energy usage kwh equivalent",
+        "minimum": 0,
+        "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
+      },
+      "measured_prior_energy_usage_kwh_equivalent": {
+        "type": "integer",
+        "title": "Measured prior energy usage kwh equivalent",
+        "minimum": 0,
+        "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
+      },
+      "modeled_post_retrofit_energy_usage_kwh_equivalent": {
+        "type": "integer",
+        "title": "Modeled post retrofit energy usage kwh equivalent",
+        "minimum": 0,
+        "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
+      },
+      "measured_post_retrofit_energy_usage_kwh_equivalent": {
+        "type": "integer",
+        "title": "Measured post retrofit energy usage kwh equivalent",
+        "minimum": 0,
+        "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This is field is used for MEASURED redemptions only."
+      },
+      "estimated_post_retrofit_energy_usage_kwh_equivalent": {
+        "type": "integer",
+        "title": "Estimated post retrofit energy usage kwh equivalent",
+        "minimum": 0,
+        "description": "The total estimated (expected) annual  energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
+      },
+      "utility_bill_companies": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "This is a list of utility company names that serve the given address."
+      },
+      "upgrade_applicability": {
+        "title": "Upgrade applicability",
+        "enum": [
+          "SINGLE_UNIT",
+          "WHOLE_BUILDING"
+        ],
+        "description": "A value of SINGLE_UNIT indicates that the improvement associated with this reservation applies to a single dwelling unit. A value of WHOLE_BUILDING indicates that the improvement is for a system (hvac, domestic hot water, insulation, air sealing, etc.) that is shared by multiple units in a multifamily building. This field is required when *building_type* is MULTIFAMILY AND *is_part_of_whole_building_project* is *true*. Otherwise, this field should be omitted."
+      },
+      "mf_building_income_bucket": {
+        "title": "Multifamily building income bucket",
+        "enum": [
+          "LESS_THAN_80%_AMI",
+          "80%_AMI_AND_GREATER"
+        ],
+        "description": "This is the income range for which at least 50% of households in the building have household income that falls in or below this range. This field is required when *building_type* is (MULTIFAMILY AND *claimant_type* is not TENANT) AND *is_whole_building_project* is *true*. Otherwise, the field should be omitted."
+      },
+      "dwelling_unit_income_bucket": {
+        "title": "Dwelling unit income bucket",
+        "enum": [
+          "LESS_THAN_80%_AMI",
+          "80%_AMI_AND_GREATER"
+        ],
+        "description": "The household income falls within this range. This field is required when *building_type* is SINGLE_FAMILY OR *claimant_type* is  TENANT OR *is_whole_building_project* is *false*. Otherwise, the field should be omitted."
+      },
+      "is_whole_building_project": {
+        "type": "boolean",
+        "title": "Is whole building project",
+        "description": "Set this to *true* if this reservation is a project that qualifies as a &ldquo;whole building project&rdquo; and to *false* otherwise. The definition of &ldquo;whole building project&rdquo; is TBD. This field is required when *building_type* is MULTIFAMILY AND *claimant_type* is not TENANT. Otherwise, the field should be omitted."
+      },
+      "portfolio_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "Multiple reservations for MEASURED HOMES projects can be tied together into a portfolio by assigning the same portfolio_id value to each reservation in the portfolio.",
+        "title": "Portfolio id"
+      },
+      "rebate_deducted": {
+        "type": "number",
+        "minimum": 0,
+        "title": "Rebate deducted",
+        "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+      },
+      "equipment_and_material_cost": {
+        "type": "integer",
+        "title": "Equipment and material cost",
+        "minimum": 0,
+        "description": "The total cost of the equipment and materials used."
+      },
+      "installation_cost": {
+        "type": "integer",
+        "minimum": 0,
+        "title": "Installation cost",
+        "description": "This is the delivery and installation costs associated with this redemption. To qualify, the installation must be performed by an approved installer. This field should be included in any redemption that includes an installation cost. It *must* appear in at least one redemption associated with this reservation unless *is_do_it_yourself* is *true*. If there is no installation cost associated with the redemption, then this field should be omitted."
+      },
+      "project_completion_date": {
+        "type": "string",
+        "format": "date",
+        "title": "Project completion date",
+        "description": "This is the date at which the project was completed. This field is required when *redemption_type* is COMPLETION."
+      },
+      "rebate_amount": {
+        "type": "number",
+        "minimum": 0,
+        "title": "Rebate amount"
+      }
+    },
+    "required": [
+      "building_type",
+      "claimant_type",
+      "construction_type",
+      "energy_data_evaluation_permission",
+      "rebate_type",
+      "rebate_deducted",
+      "equipment_and_material_cost",
+      "installation_cost",
+      "project_completion_date"
+    ],
+    "additionalProperties": false,
+    "oneOf": [
+      {
+        "required": [
+          "building_address"
+        ]
+      },
+      {
+        "required": [
+          "address_id"
+        ]
+      }
+    ],
+    "allOf": [
+      {
+        "$comment": "Determine when portfolio_id is required or not allowed",
+        "if": {
+          "properties": {
+            "claimant_type": {
+              "const": "AGGREGATOR"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "portfolio_id"
+          ]
+        },
+        "else": {
+          "not": {
+            "required": [
+              "portfolio_id"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when modeled_prior_energy_usage_kwh_equivalent, modeled_retrofit_total_usage_kwh_equivalent, is_model_calibrated, and doe_approved_bpi_2400_compliant_software_used are required or not allowed",
+        "if": {
+          "properties": {
+            "rebate_type": {
+              "const": "MODELED"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "modeled_prior_energy_usage_kwh_equivalent",
+            "modeled_post_retrofit_energy_usage_kwh_equivalent",
+            "is_model_calibrated",
+            "doe_approved_bpi_2400_compliant_software_used"
+          ],
+          "not": {
+            "required": [
+              "estimated_post_retrofit_energy_usage_kwh_equivalent",
+              "measured_prior_energy_usage_kwh_equivalent",
+              "measured_post_retrofit_energy_usage_kwh_equivalent"
+            ]
+          }
+        },
+        "else": {
+          "$comment": "Rebate type is MEASURED",
+          "required": [
+            "measured_prior_energy_usage_kwh_equivalent",
+            "measured_post_retrofit_energy_usage_kwh_equivalent",
+            "estimated_post_retrofit_energy_usage_kwh_equivalent"
+          ],
+          "not": {
+            "required": [
+              "modeled_prior_energy_usage_kwh_equivalent",
+              "modeled_post_retrofit_energy_usage_kwh_equivalent",
+              "is_model_calibrated",
+              "doe_approved_bpi_2400_compliant_software_used"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when is_whole_building_project is required or not allowed",
+        "if": {
+          "allOf": [
+            {
+              "not": {
+                "properties": {
+                  "claimant_type": {
+                    "const": "TENANT"
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "building_type": {
+                  "const": "MULTIFAMILY"
+                }
+              }
+            }
+          ]
+        },
+        "then": {
+          "required": [
+            "is_whole_building_project"
+          ]
+        },
+        "else": {
+          "not": {
+            "required": [
+              "is_whole_building_project"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when num_units, num_units_meeting_income_bucket, mf_building_income_bucket, dwelling_unit_income_bucket, and upgrade_applicability are required or not allowed",
+        "if": {
+          "required": [
+            "is_whole_building_project"
+          ],
+          "properties": {
+            "is_whole_building_project": {
+              "const": true
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "num_units",
+            "num_units_meeting_income_bucket",
+            "mf_building_income_bucket",
+            "upgrade_applicability"
+          ],
+          "not": {
+            "required": [
+              "dwelling_unit_income_bucket"
+            ]
+          }
+        },
+        "else": {
+          "required": [
+            "dwelling_unit_income_bucket"
+          ],
+          "not": {
+            "required": [
+              "num_units",
+              "num_units_meeting_income_bucket",
+              "mf_building_income_bucket",
+              "upgrade_applicability"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when unit_name_or_number is required or not allowed",
+        "if": {
+          "allOf": [
+            {
+              "properties": {
+                "building_type": {
+                  "const": "MULTIFAMILY"
+                }
+              }
+            },
+            {
+              "anyOf": [
+                {
+                  "properties": {
+                    "claimant_type": {
+                      "const": "TENANT"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "is_whole_building_project"
+                  ],
+                  "properties": {
+                    "is_whole_building_project": {
+                      "const": false
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "upgrade_applicability"
+                  ],
+                  "properties": {
+                    "upgrade_applicability": {
+                      "const": "SINGLE_UNIT"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "then": {
+          "required": [
+            "unit_name_or_number"
+          ]
+        },
+        "else": {
+          "not": {
+            "required": [
+              "unit_name_or_number"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

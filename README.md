@@ -13,6 +13,8 @@ This repository contains materials useful to users of the IRA Rebates API ***bet
 ## JSON Schema 
 The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST endpoint payloads. The schema files can also be used, together with a json schema validator (see  https://json-schema.org/implementations), to validate the POST payloads before submitting to the API. This may be especially helpful during the development of client software. 
 
+Additionally, the `/resolved_json_schemas` folder includes JSON Schema payload files where all referenced definitions are resolved. This provides a way to use an online JSON schema validator (see https://www.liquid-technologies.com/online-json-schema-validator) to validate a POST payload.
+
 ### API endpoint to JSON Schema table
 | API POST endpoint | JSON schema filename |
 | ---- | ---- |
@@ -32,6 +34,7 @@ All other json schema files are referenced from those listed in the table.
 - Home Energy Rebate Tools (the high-level web page for the IRA Rebate API and related tools): https://www.pnnl.gov/projects/rebate-tools
 - JSON Schema documentation: https://json-schema.org/
 - JSON Schema validators: https://json-schema.org/implementations
+- JSON Schema online validator: https://www.liquid-technologies.com/online-json-schema-validator
 
 ## Feedback and Support
 We appreciate feedback from API users. Please email feedback to rebatetools@pnnl.gov.
