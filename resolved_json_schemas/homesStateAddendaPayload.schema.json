@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesStateAddenda",
+  "type": "object",
+  "properties": {
+    "contractor_dac_incentive_payment": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "This is the amount the state paid to a contractor as a disadvantaged-community incentive.",
+      "title": "Contractor DAC incentive payment"
+    },
+    "claimant_payment": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "This is the amount that the state paid to an aggregator, or other claimant, for a HOMES rebate.",
+      "title": "Claimant payment"
+    },
+    "state_attests_any_failed_inspection_remediated": {
+      "type": "boolean",
+      "title": "State attests any failed inspection remediated"
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "contractor_dac_incentive_payment"
+      ]
+    },
+    {
+      "required": [
+        "claimant_payment"
+      ]
+    },
+    {
+      "required": [
+        "state_attests_any_failed_inspection_remediated"
+      ]
+    }
+  ],
+  "additionalProperties": false
+}

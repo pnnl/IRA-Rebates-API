@@ -1,0 +1,618 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationInstallRedemption",
+  "type": "object",
+  "properties": {
+    "contractor_company_name": {
+      "title": "Contractor company name",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the primary contracting company for the project."
+    },
+    "contractor_name": {
+      "title": "Contractor name",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the primary contractor for the project."
+    },
+    "equipment_and_material_cost": {
+      "description": "The total cost of the equipment and materials purchased as part of a redemption.",
+      "type": "number",
+      "title": "Equipment and material cost",
+      "exclusiveMinimum": 0,
+      "multipleOf": 0.01
+    },
+    "installation_cost": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "title": "Installation cost"
+    },
+    "is_contractor_eligible": {
+      "const": true,
+      "type": "boolean",
+      "description": "The contractor is eligible if they are on the state's approved list.",
+      "title": "Is contractor eligible"
+    },
+    "is_final_project_redemption": {
+      "type": "boolean",
+      "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
+      "title": "Is final project redemption"
+    },
+    "project_completion_date": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Project completion date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+    },
+    "rebate_deducted": {
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation.",
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "title": "Rebate deducted"
+    },
+    "rebate_passed_through_to_applicant": {
+      "title": "Rebate passed through to applicant",
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "description": "Use this field when the contractor submitted a product redemption for this reservation and received a rebate on behalf of the applicant. Otherwise set this to 0. This amount must be passed on to the applicant and shown on the invoice. Do not include this in the amount for `equipment_and_material_cost`."
+    },
+    "upgrade_component_details": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://ira-rebates.labworks.org/schemas/upgradeComponentDetails",
+      "type": "object",
+      "oneOf": [
+        {
+          "properties": {
+            "insulation_air_sealing_ventilation_upgrade_details": {
+              "type": "array",
+              "description": "Details that describe this improvement",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "description": "Details that describe this improvement",
+                    "properties": {
+                      "cfm50": {
+                        "type": "integer",
+                        "minimum": 100
+                      },
+                      "is_homeowner_aware_combustion_safety_tests_are_highly_recommended": {
+                        "type": "boolean",
+                        "description": "Is the homeowner aware that combustion safety tests are highly recommended for homes with any combustion appliances after air sealing projects are completed?"
+                      },
+                      "is_leakage_rate_known": {
+                        "type": "boolean"
+                      },
+                      "locations": {
+                        "type": "array",
+                        "items": {
+                          "enum": [
+                            "ATTIC",
+                            "FLOOR_FOUNDATION",
+                            "WALLS_WINDOWS_DOORS"
+                          ]
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1
+                      },
+                      "upgrade_subtype": {
+                        "const": "AIR_SEALING"
+                      }
+                    },
+                    "required": [
+                      "is_homeowner_aware_combustion_safety_tests_are_highly_recommended",
+                      "is_leakage_rate_known",
+                      "locations",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false,
+                    "if": {
+                      "properties": {
+                        "is_leakage_rate_known": {
+                          "const": true
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "cfm50"
+                      ]
+                    },
+                    "else": {
+                      "not": {
+                        "required": [
+                          "cfm50"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "description": "Details that describe this improvement",
+                    "properties": {
+                      "percent_ceiling_receiving_additional_insulation": {
+                        "description": "Choose the closest percent of total ceiling area that will receive (additional) insulation. The ceiling is the one that is associated with the appropriate conditioned_floor_area field.",
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      },
+                      "r_value_added": {
+                        "description": "Choose the R-value that best describes the amount of insulation added.",
+                        "enum": [
+                          "LESS_THAN_R30",
+                          "MORE_THAN_R60",
+                          "R30",
+                          "R49",
+                          "R60"
+                        ]
+                      },
+                      "upgrade_subtype": {
+                        "const": "CEILING_INSULATION"
+                      }
+                    },
+                    "required": [
+                      "percent_ceiling_receiving_additional_insulation",
+                      "r_value_added",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "description": "Details that describe this improvement",
+                    "properties": {
+                      "cavity_insulation_added": {
+                        "enum": [
+                          "MORE_THAN_R21",
+                          "R13",
+                          "R19",
+                          "R21"
+                        ]
+                      },
+                      "exterior_continuous_insulation_added": {
+                        "enum": [
+                          "1_INCH",
+                          "2_INCH",
+                          "MORE_THAN_2_INCH"
+                        ]
+                      },
+                      "percent_wall_area_treated": {
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      },
+                      "upgrade_subtype": {
+                        "const": "WALL_INSULATION"
+                      }
+                    },
+                    "anyOf": [
+                      {
+                        "required": [
+                          "cavity_insulation_added"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "exterior_continuous_insulation_added"
+                        ]
+                      }
+                    ],
+                    "required": [
+                      "percent_wall_area_treated",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "description": "Details that describe this improvement"
+                  },
+                  {
+                    "type": "object",
+                    "description": "Details that describe this improvement",
+                    "properties": {
+                      "percent_ducts_receiving_additional_insulation": {
+                        "description": "The percentage of the ducts that received additional insulation in the upgrade. Choose the closest percentage.",
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      },
+                      "upgrade_subtype": {
+                        "const": "DUCT_INSULATION"
+                      }
+                    },
+                    "required": [
+                      "percent_ducts_receiving_additional_insulation",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "description": "Details that describe this improvement",
+                    "properties": {
+                      "percent_floor_receiving_additional_insulation": {
+                        "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      },
+                      "r_value_added": {
+                        "description": "Choose the R-value that best describes the amount of insulation added.",
+                        "enum": [
+                          "LESS_THAN_R10",
+                          "MORE_THAN_R30",
+                          "R10",
+                          "R13",
+                          "R19",
+                          "R30"
+                        ]
+                      },
+                      "upgrade_subtype": {
+                        "const": "FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION"
+                      }
+                    },
+                    "required": [
+                      "percent_floor_receiving_additional_insulation",
+                      "r_value_added",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "description": "The preexisting conditions associated with this improvement",
+                    "properties": {
+                      "percent_floor_receiving_additional_insulation": {
+                        "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      },
+                      "r_value_added": {
+                        "description": "Choose the R-value that best describes the amount of insulation added.",
+                        "enum": [
+                          "LESS_THAN_R10",
+                          "MORE_THAN_R30",
+                          "R10",
+                          "R13",
+                          "R19",
+                          "R30"
+                        ]
+                      },
+                      "upgrade_subtype": {
+                        "const": "FLOOR_ABOVE_UNCONDITIONED_SPACE_INSULATION"
+                      }
+                    },
+                    "required": [
+                      "percent_floor_receiving_additional_insulation",
+                      "r_value_added",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "description": "Details that describe this improvement",
+                    "properties": {
+                      "percent_foundation_perimeter_receiving_additional_insulation": {
+                        "description": "For estimating this percentage, use the distance around the footprint that is determined by either `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                        "enum": [
+                          10,
+                          25,
+                          50,
+                          75,
+                          100
+                        ]
+                      },
+                      "r_value_added": {
+                        "description": "Choose the R-value that best describes the amount of insulation added.",
+                        "enum": [
+                          "LESS_THAN_R5",
+                          "R10",
+                          "R13",
+                          "R19",
+                          "R30",
+                          "R5"
+                        ]
+                      },
+                      "upgrade_subtype": {
+                        "const": "FOUNDATION_INSULATION"
+                      }
+                    },
+                    "required": [
+                      "percent_foundation_perimeter_receiving_additional_insulation",
+                      "r_value_added",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "description": "Details that describe this improvement",
+                    "properties": {
+                      "cfm_flow_rate": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "upgrade_subtype": {
+                        "const": "VENTILATION"
+                      }
+                    },
+                    "required": [
+                      "cfm_flow_rate",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "insulation_air_sealing_ventilation_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "electrical_panel_upgrade_details": {
+              "description": "Details that describe this improvement"
+            }
+          },
+          "required": [
+            "electrical_panel_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "electric_cooking_appliance_upgrade_details": {
+              "type": "object",
+              "description": "Details that describe this improvement",
+              "properties": {
+                "cooking_appliance_type": {
+                  "enum": [
+                    "INDUCTION_COOKTOP",
+                    "STANDARD_ELECTRIC"
+                  ]
+                }
+              },
+              "required": [
+                "cooking_appliance_type"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "electric_cooking_appliance_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "heat_pump_clothes_dryer_upgrade_details": {
+              "type": "object",
+              "description": "Details that describe this improvement",
+              "properties": {
+                "energy_guide_estimated_energy_use_kwh": {
+                  "type": "integer",
+                  "exclsuiveMinimum": 0
+                }
+              },
+              "required": [
+                "energy_guide_estimated_energy_use_kwh"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "heat_pump_clothes_dryer_upgrade_details"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "heat_pump_water_heater_upgrade_details": {
+              "type": "object",
+              "description": "Details that describe this improvement",
+              "properties": {
+                "storage_capacity": {
+                  "enum": [
+                    "45_GALLON",
+                    "50_GALLON",
+                    "60_GALLON",
+                    "80_GALLON",
+                    "LESS_THAN_45_GALLON",
+                    "MORE_THAN_80_GALLON"
+                  ]
+                }
+              },
+              "required": [
+                "storage_capacity"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "heat_pump_water_heater_upgrade_details"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "upgrade_type": {
+      "title": "Upgrade type",
+      "enum": [
+        "ELECTRICAL_PANEL",
+        "ELECTRIC_COOKING_APPLIANCE",
+        "ELECTRIC_WIRING",
+        "HEAT_PUMP_CLOTHES_DRYER",
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "HEAT_PUMP_WATER_HEATER",
+        "INSULATION_AIR_SEALING_VENTILATION"
+      ],
+      "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+    },
+    "vendor_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+    }
+  },
+  "required": [
+    "contractor_company_name",
+    "contractor_name",
+    "equipment_and_material_cost",
+    "installation_cost",
+    "is_contractor_eligible",
+    "is_final_project_redemption",
+    "rebate_deducted",
+    "rebate_passed_through_to_applicant",
+    "upgrade_component_details",
+    "upgrade_type",
+    "vendor_id"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "$comment": "The appropriate schema must be used for upgrade_component_details depending on upgrade_type.",
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "HEAT_PUMP_CLOTHES_DRYER"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "heat_pump_clothes_dryer_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "ELECTRIC_COOKING_APPLIANCE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "electric_cooking_appliance_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "HEAT_PUMP_WATER_HEATER"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "heat_pump_water_heater_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "ELECTRICAL_PANEL"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "electrical_panel_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "INSULATION_AIR_SEALING_VENTILATION"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "upgrade_component_details": {
+            "required": [
+              "insulation_air_sealing_ventilation_upgrade_details"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "is_final_project_redemption": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "project_completion_date"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "project_completion_date"
+          ]
+        }
+      }
+    }
+  ]
+}

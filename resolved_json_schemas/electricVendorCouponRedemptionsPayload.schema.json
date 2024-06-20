@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationVendorCouponRedemption",
+  "type": "object",
+  "properties": {
+    "equipment_and_material_cost": {
+      "description": "The total cost of the equipment and materials purchased as part of a redemption.",
+      "type": "number",
+      "title": "Equipment and material cost",
+      "exclusiveMinimum": 0,
+      "multipleOf": 0.01
+    },
+    "installation_cost": {
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "type": "integer",
+      "minimum": 0,
+      "title": "Installation cost"
+    },
+    "purchase_date_time": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Purchase date-time",
+      "description": "This is the date a product was purchased. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted.",
+      "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
+    },
+    "rebate_deducted": {
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "title": "Rebate deducted",
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+    },
+    "upgrade_type": {
+      "title": "Upgrade type",
+      "enum": [
+        "ELECTRICAL_PANEL",
+        "ELECTRIC_COOKING_APPLIANCE",
+        "ELECTRIC_WIRING",
+        "HEAT_PUMP_CLOTHES_DRYER",
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "HEAT_PUMP_WATER_HEATER",
+        "INSULATION_AIR_SEALING_VENTILATION"
+      ],
+      "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+    },
+    "vendor_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+    }
+  },
+  "required": [
+    "equipment_and_material_cost",
+    "installation_cost",
+    "purchase_date_time",
+    "rebate_deducted",
+    "upgrade_type",
+    "vendor_id"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "properties": {
+        "product_info": {
+          "items": {
+            "anyOf": [
+              {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              },
+              {
+                "required": [
+                  "model_number"
+                ]
+              },
+              {
+                "required": [
+                  "upc"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "product_info": {
+            "items": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "model_number"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "not": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                "HEAT_PUMP_WATER_HEATER"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "product_info": {
+            "items": {
+              "not": {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

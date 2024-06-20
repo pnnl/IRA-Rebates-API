@@ -1,0 +1,2149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationBulkReporting",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "address_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
+        "title": "Address id"
+      },
+      "ahri_reference_number": {
+        "type": "string",
+        "title": "AHRI reference number",
+        "minLength": 6,
+        "maxLength": 8,
+        "pattern": "^\\d+$",
+        "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
+      },
+      "applicant_id": {
+        "type": "string",
+        "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant-ids endpoint.",
+        "title": "Applicant ID"
+      },
+      "building_project_type": {
+        "title": "Building project type",
+        "enum": [
+          "MANUFACTURED",
+          "MULTIFAMILY_CENTRAL",
+          "MULTIFAMILY_IN_UNIT",
+          "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT",
+          "SINGLE_FAMILY_ATTACHED",
+          "SINGLE_FAMILY_DETACHED"
+        ],
+        "description": "This describes both the type of the building and, in the multifamily case, whether the upgrade in this reservation applies to the whole building or to a single unit. If it applies to a single unit, there is a further distinction between an upgrade that is part of a whole building project and a stand-alone upgrade. For the MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT and MULTIFAMILY_CENTRAL cases, the income bucket for the building, mf_income_bucket, is used. Otherwise, the income bucket for the dwelling unit, dwelling_unit_income_bucket, is used."
+      },
+      "claimant_type": {
+        "title": "Claimant type",
+        "enum": [
+          "CONTRACTOR",
+          "HOMEOWNER",
+          "MULTIFAMILY_BUILDING_OWNER",
+          "OTHER",
+          "TENANT"
+        ],
+        "description": "The type of person or entity that is initiating the rebate process on behalf of the applicant."
+      },
+      "construction_type": {
+        "title": "Construction type",
+        "enum": [
+          "EXISTING",
+          "NEW"
+        ],
+        "description": "Set to NEW if the building is less than one year old. Otherwise, set to EXISTING."
+      },
+      "contractor_company_name": {
+        "title": "Contractor company name",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 64,
+        "description": "The name of the primary contracting company for the project."
+      },
+      "contractor_dac_incentive_payment": {
+        "type": "number",
+        "multipleOf": 0.01,
+        "minimum": 0,
+        "description": "This is the amount the state paid to a contractor as a disadvantaged-community incentive.",
+        "title": "Contractor DAC incentive payment"
+      },
+      "contractor_name": {
+        "title": "Contractor name",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 64,
+        "description": "The name of the primary contractor for the project."
+      },
+      "dwelling_unit_income_bucket": {
+        "title": "Dwelling unit income bucket",
+        "enum": [
+          "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI",
+          "LESS_THAN_80%_AMI"
+        ],
+        "description": "The household income level of the applicant compared to the area median income (AMI)."
+      },
+      "energy_data_evaluation_permission": {
+        "type": "boolean",
+        "description": "Set to true if the home/building owner has given their permission to share energy data with the State and the DOE for evaluation purposes.",
+        "title": "Energy data evaluation permission"
+      },
+      "equipment_and_material_cost": {
+        "type": "number",
+        "title": "Equipment and material cost",
+        "exclusiveMinimum": 0,
+        "multipleOf": 0.01,
+        "description": "The total cost of the equipment and materials purchased as part of a redemption."
+      },
+      "external_rebate_id": {
+        "type": "string",
+        "title": "External rebate id",
+        "minLength": 1,
+        "maxLength": 64,
+        "description": "This is an optional field that a state can use for their own purposes to identify a rebate or rebate reservation."
+      },
+      "install_vendor_id": {
+        "title": "Vendor id",
+        "type": "string",
+        "format": "uuid",
+        "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+      },
+      "installation_cost": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+        "title": "Installation cost"
+      },
+      "installation_type": {
+        "title": "Installation type",
+        "enum": [
+          "CONTRACTOR_INSTALLED",
+          "DO_IT_YOURSELF"
+        ],
+        "description": "Indicates who performed the installation."
+      },
+      "is_contractor_eligible": {
+        "type": "boolean",
+        "description": "The contractor is eligible if they are on the state's approved list.",
+        "title": "Is contractor eligible"
+      },
+      "is_disadvantaged_community": {
+        "type": "boolean",
+        "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
+        "title": "Is disadvantaged community"
+      },
+      "limited_assessment": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://ira-rebates.labworks.org/schemas/electrificationLimitedAssessment",
+        "type": "object",
+        "properties": {
+          "assessment_date": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 10,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "The calendar date when the assessment was performed. Note: time zone is immaterial.",
+            "title": "Assessment date"
+          },
+          "ceiling_insulation_r_value": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Estimate of the R-value of the as-found ceiling insulation.",
+            "title": "Ceiling insulation r-value"
+          },
+          "ceiling_insulation_type": {
+            "description": "The preexisting insulation type for the area to receive (additional) insulation. See https://www.energy.gov/energysaver/types-insulation for information about insulation types.",
+            "enum": [
+              "BATT",
+              "BLOWN_IN",
+              "CLOSED_CELL_SPRAY_FOAM",
+              "DO_NOT_KNOW",
+              "NONE",
+              "RIGID_BOARD"
+            ],
+            "title": "Ceiling insulation type"
+          },
+          "conditioned_floor_area_sq_ft": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "title": "Multifamily conditioned floor area",
+                "minimum": 1000,
+                "maximum": 1000000,
+                "description": "The conditioned floor area for the entire multifamily building including common areas."
+              },
+              {
+                "title": "Single-family conditioned floor area",
+                "enum": [
+                  "1500SF_2500SF",
+                  "500SF_1500SF",
+                  "GREATER_THAN_2500SF",
+                  "LESS_THAN_500SF"
+                ],
+                "description": "This is the conditioned floor area for an individual dwelling unit, either a single-family home or a unit in a multifamily building."
+              }
+            ],
+            "description": "The conditioned floor area, in square feet, of the building or multifamily dwelling unit corresponding to the reservation. If the reservation is for an upgrade in an individual unit of a multifamily building, then this is the conditioned floor area of that unit. Otherwise, this is the conditioned floor area of the building.",
+            "title": "Conditioned floor area sq. ft"
+          },
+          "cooling_systems": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "efficiency_seer": {
+                  "type": "number",
+                  "minimum": 1
+                },
+                "is_efficiency_known": {
+                  "type": "boolean",
+                  "title": "Is efficiency known"
+                },
+                "is_percent_conditioned_floor_area_served_known": {
+                  "type": "boolean",
+                  "title": "Is percent conditioned floor area served known"
+                },
+                "percent_conditioned_floor_area_served": {
+                  "type": "integer",
+                  "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "system_type": {
+                  "enum": [
+                    "CENTRAL",
+                    "HEAT_PUMP",
+                    "WINDOW"
+                  ]
+                }
+              },
+              "required": [
+                "is_efficiency_known",
+                "is_percent_conditioned_floor_area_served_known",
+                "system_type"
+              ],
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "is_efficiency_known": {
+                        "const": true
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "efficiency_seer"
+                    ]
+                  },
+                  "else": {
+                    "not": {
+                      "required": [
+                        "efficiency_seer"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "is_percent_conditioned_floor_area_served_known": {
+                        "const": true
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "percent_conditioned_floor_area_served"
+                    ]
+                  },
+                  "else": {
+                    "not": {
+                      "required": [
+                        "percent_conditioned_floor_area_served"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "title": "Cooling systems",
+            "description": "Provide information for each existing cooling system."
+          },
+          "ducts_are_insulated": {
+            "enum": [
+              "DO_NOT_KNOW",
+              "NA",
+              "NO",
+              "YES"
+            ],
+            "title": "Ducts are insulated",
+            "description": "Choose `NA` if there are no ducts associated with this system. Choose `YES` only if visually verified."
+          },
+          "ducts_are_sealed": {
+            "enum": [
+              "DO_NOT_KNOW",
+              "NA",
+              "NO",
+              "YES"
+            ],
+            "title": "Ducts are sealed",
+            "description": "Choose `NA` if there are no ducts associated with this system. Choose `YES` only if visually verified or they are located in a concrete slab."
+          },
+          "electrical_panel_max_amps": {
+            "type": "integer",
+            "minimum": 50,
+            "description": "The maximum amperage rating for the electrical panel as-found. This is only required if adding electrical load.",
+            "title": "Electrical panel max amps"
+          },
+          "envelope_professionally_air_sealed": {
+            "enum": [
+              "DO_NOT_KNOW",
+              "NO",
+              "YES"
+            ],
+            "description": "Has the building (or dwelling unit) been professionally air sealed?",
+            "title": "Envelope professionally air sealed"
+          },
+          "heating_systems": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "efficiency_afue": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1,
+                  "title": "Efficiency AFUE"
+                },
+                "efficiency_hspf": {
+                  "type": "number",
+                  "minimum": 1,
+                  "title": "Efficiency HSPF"
+                },
+                "fuel_and_system_type": {
+                  "enum": [
+                    "ELECTRIC_HEAT_PUMP",
+                    "ELECTRIC_RESISTANCE_BASEBOARD",
+                    "ELECTRIC_RESISTANCE_BOILER",
+                    "ELECTRIC_RESISTANCE_FURNACE",
+                    "GAS_PROPANE_BOILER",
+                    "GAS_PROPANE_FURNACE",
+                    "OIL_BOILER",
+                    "OIL_FURNACE",
+                    "OTHER"
+                  ],
+                  "title": "Fuel and system type"
+                },
+                "is_efficiency_known": {
+                  "type": "boolean",
+                  "title": "Is efficiency known"
+                },
+                "is_percent_conditioned_floor_area_served_known": {
+                  "type": "boolean",
+                  "title": "Is percent conditioned floor area served known"
+                },
+                "percent_conditioned_floor_area_served": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "title": "Percent conditioned floor area served",
+                  "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation."
+                }
+              },
+              "required": [
+                "fuel_and_system_type",
+                "is_efficiency_known",
+                "is_percent_conditioned_floor_area_served_known"
+              ],
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "is_efficiency_known": {
+                      "const": true
+                    }
+                  },
+                  "then": {
+                    "if": {
+                      "properties": {
+                        "fuel_and_system_type": {
+                          "const": "ELECTRIC_HEAT_PUMP"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "efficiency_hspf"
+                      ]
+                    },
+                    "else": {
+                      "required": [
+                        "efficiency_afue"
+                      ]
+                    }
+                  },
+                  "else": {
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "efficiency_hspf"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "efficiency_afue"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "is_percent_conditioned_floor_area_served_known": {
+                        "const": true
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "percent_conditioned_floor_area_served"
+                    ]
+                  },
+                  "else": {
+                    "not": {
+                      "required": [
+                        "percent_conditioned_floor_area_served"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "title": "Heating systems",
+            "description": "Provide information for each existing heating system."
+          },
+          "is_ceiling_insulation_r_value_known": {
+            "type": "boolean",
+            "title": "Is ceiling insulation r-value known"
+          },
+          "is_whole_home_ventilation_system_rated_flow_cfm_known": {
+            "type": "boolean",
+            "title": "Is whole home ventilation system rated flow CFM known"
+          },
+          "whole_home_ventilation_system_rated_flow_cfm": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Whole home ventilation system rated flow CFM"
+          },
+          "whole_home_ventilation_system_type": {
+            "enum": [
+              "BALANCED",
+              "CFIS",
+              "ERV",
+              "EXHAUST",
+              "HRV",
+              "NONE",
+              "SUPPLY"
+            ],
+            "title": "Whole home ventilation system type"
+          },
+          "year_built": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 4,
+                "maxLength": 4,
+                "pattern": "^\\d+$"
+              },
+              {
+                "const": "DO_NOT_KNOW"
+              }
+            ],
+            "description": "The year the building was built.",
+            "title": "Year built"
+          }
+        },
+        "required": [
+          "assessment_date",
+          "conditioned_floor_area_sq_ft",
+          "cooling_systems",
+          "ducts_are_insulated",
+          "ducts_are_sealed",
+          "electrical_panel_max_amps",
+          "heating_systems",
+          "is_ceiling_insulation_r_value_known",
+          "is_whole_home_ventilation_system_rated_flow_cfm_known",
+          "whole_home_ventilation_system_type",
+          "year_built"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "is_ceiling_insulation_r_value_known": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "ceiling_insulation_r_value"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "ceiling_insulation_r_value"
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "is_whole_home_ventilation_system_rated_flow_cfm_known": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "whole_home_ventilation_system_rated_flow_cfm"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "whole_home_ventilation_system_rated_flow_cfm"
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "is_envelope_professionally_air_sealed_known": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "envelope_professionally_air_sealed"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "envelope_professionally_air_sealed"
+                ]
+              }
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "$defs": {
+          "is_efficiency_known": {
+            "type": "boolean",
+            "title": "Is efficiency known"
+          },
+          "is_percent_conditioned_floor_area_served_known": {
+            "type": "boolean",
+            "title": "Is percent conditioned floor area served known"
+          }
+        }
+      },
+      "mf_building_income_bucket": {
+        "title": "Multifamily building income bucket",
+        "enum": [
+          "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI",
+          "LESS_THAN_80%_AMI"
+        ],
+        "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one units falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
+      },
+      "mf_conditioned_floor_area": {
+        "type": "integer",
+        "title": "Multifamily conditioned floor area",
+        "minimum": 1000,
+        "maximum": 1000000,
+        "description": "The conditioned floor area for the entire multifamily building including common areas."
+      },
+      "mf_num_bedrooms": {
+        "title": "Multifamily num bedrooms",
+        "type": "integer",
+        "description": "The number of bedrooms for the entire multifamily building.",
+        "minimum": 0,
+        "maximum": 10000
+      },
+      "model_number": {
+        "type": "string",
+        "title": "Model number",
+        "minLength": 1,
+        "maxLength": 64,
+        "description": "The model number for the product being purchased."
+      },
+      "num_units": {
+        "type": "integer",
+        "title": "Num units",
+        "minimum": 2,
+        "maximum": 1000,
+        "description": "This is the total number of units in a multifamily building. This field is required when *building_project_type* is any of the enumerated values that has a \"MULTIFAMILY\" prefix. Otherwise, the field should be omitted."
+      },
+      "num_units_meeting_income_bucket": {
+        "type": "integer",
+        "title": "Num units meeting income bucket",
+        "minimum": 1,
+        "maximum": 1000,
+        "description": "This is the number of units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
+      },
+      "original_component_details": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://ira-rebates.labworks.org/schemas/originalComponentDetails",
+        "type": "object",
+        "oneOf": [
+          {
+            "properties": {
+              "insulation_air_sealing_ventilation_original_details": {
+                "type": "array",
+                "description": "The preexisting conditions associated with this improvement",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "description": "The preexisting conditions associated with this improvement",
+                      "properties": {
+                        "cfm50": {
+                          "type": "integer",
+                          "minimum": 100
+                        },
+                        "is_leakage_rate_known": {
+                          "type": "boolean"
+                        },
+                        "upgrade_subtype": {
+                          "const": "AIR_SEALING"
+                        }
+                      },
+                      "required": [
+                        "is_leakage_rate_known",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false,
+                      "if": {
+                        "properties": {
+                          "is_leakage_rate_known": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "then": {
+                        "required": [
+                          "cfm50"
+                        ]
+                      },
+                      "else": {
+                        "not": {
+                          "required": [
+                            "cfm50"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "description": "The preexisting conditions associated with this improvement",
+                      "properties": {
+                        "insulation_type": {
+                          "description": "The preexisting insulation type for the area to receive (additional) insulation. See https://www.energy.gov/energysaver/types-insulation for information about insulation types.",
+                          "enum": [
+                            "BATT",
+                            "BLOWN_IN",
+                            "CLOSED_CELL_SPRAY_FOAM",
+                            "DO_NOT_KNOW",
+                            "NONE",
+                            "RIGID_BOARD"
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "CEILING_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "insulation_type",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "description": "The preexisting conditions associated with this improvement",
+                      "properties": {
+                        "insulation": {
+                          "enum": [
+                            "CAVITY",
+                            "DO_NOT_KNOW",
+                            "EXTERIOR_CONTINUOUS",
+                            "FANFOLD",
+                            "NONE"
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "WALL_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "insulation",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "description": "The preexisting conditions associated with this improvement"
+                    },
+                    {
+                      "type": "object",
+                      "description": "The preexisting conditions associated with this improvement",
+                      "properties": {
+                        "primary_duct_location": {
+                          "description": "The type of space in which the majority of the ducts being treated are located.",
+                          "enum": [
+                            "CONDITIONED_SPACE",
+                            "DO_NOT_KNOW",
+                            "UNCONDITIONED_SPACE"
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "DUCT_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "primary_duct_location",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "description": "The preexisting conditions associated with this improvement",
+                      "properties": {
+                        "foundation_type": {
+                          "description": "Pick the one with the most area",
+                          "enum": [
+                            "CONDITIONED_BASEMENT",
+                            "CONDITIONED_CRAWLSPACE",
+                            "SLAB_ON_GRADE",
+                            "UNCONDITIONED_BASEMENT",
+                            "UNCONDITIONED_CRAWLSPACE"
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "FOUNDATION_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "foundation_type",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "description": "The preexisting conditions associated with this improvement",
+                      "properties": {
+                        "has_whole_house_ventilation": {
+                          "type": "boolean",
+                          "description": "Set to true if there is any existing exhaust fan, supply fan, HRV, ERV, or similar system in the home or building that automatically runs at least once every three hours."
+                        },
+                        "upgrade_subtype": {
+                          "const": "VENTILATION"
+                        }
+                      },
+                      "required": [
+                        "has_whole_house_ventilation",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "insulation_air_sealing_ventilation_original_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "electrical_panel_original_details": {
+                "description": "The preexisting conditions associated with this improvement"
+              }
+            },
+            "required": [
+              "electrical_panel_original_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "electric_cooking_appliance_original_details": {
+                "type": "object",
+                "description": "The preexisting conditions associated with this improvement",
+                "properties": {
+                  "fuel_type": {
+                    "enum": [
+                      "ELECTRIC",
+                      "GAS",
+                      "NONE"
+                    ]
+                  }
+                },
+                "required": [
+                  "fuel_type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "electric_cooking_appliance_original_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "heat_pump_clothes_dryer_original_details": {
+                "type": "object",
+                "description": "The preexisting conditions associated with this improvement",
+                "properties": {
+                  "fuel_type": {
+                    "enum": [
+                      "ELECTRIC",
+                      "GAS",
+                      "NONE"
+                    ]
+                  }
+                },
+                "required": [
+                  "fuel_type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "heat_pump_clothes_dryer_original_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "heat_pump_for_space_heating_or_cooling_original_details": {
+                "type": "object",
+                "description": "The preexisting conditions associated with this improvement",
+                "properties": {
+                  "primary_heating_fuel_and_system_type": {
+                    "enum": [
+                      "ELECTRIC_RESISTANCE_BASEBOARD",
+                      "ELECTRIC_RESISTANCE_BOILER",
+                      "ELECTRIC_RESISTANCE_FURNACE",
+                      "GAS_PROPANE_BOILER",
+                      "GAS_PROPANE_FURNACE",
+                      "NONE",
+                      "OIL_BOILER",
+                      "OIL_FURNACE",
+                      "OTHER"
+                    ]
+                  }
+                },
+                "required": [
+                  "primary_heating_fuel_and_system_type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "heat_pump_for_space_heating_or_cooling_original_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "heat_pump_water_heater_original_details": {
+                "type": "object",
+                "description": "The preexisting conditions associated with this improvement",
+                "properties": {
+                  "storage_capacity": {
+                    "enum": [
+                      "45_GALLON",
+                      "50_GALLON",
+                      "60_GALLON",
+                      "80_GALLON",
+                      "DO_NOT_KNOW",
+                      "LESS_THAN_45_GALLON",
+                      "MORE_THAN_80_GALLON"
+                    ]
+                  },
+                  "water_heater_fuel_and_system_type": {
+                    "enum": [
+                      "DO_NOT_KNOW",
+                      "ELECTRIC_RESISTANCE_STORAGE",
+                      "ELECTRIC_RESISTANCE_TANKLESS",
+                      "GAS_PROPANE_STORAGE",
+                      "GAS_PROPANE_TANKLESS",
+                      "NONE",
+                      "OIL_STORAGE",
+                      "OIL_TANKLESS"
+                    ]
+                  }
+                },
+                "required": [
+                  "storage_capacity",
+                  "water_heater_fuel_and_system_type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "heat_pump_water_heater_original_details"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "product_description": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50,
+        "title": "Product description",
+        "description": "The description of the product being purchased, as it would appear on an invoice."
+      },
+      "product_vendor_id": {
+        "title": "Vendor id",
+        "type": "string",
+        "format": "uuid",
+        "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+      },
+      "project_completion_date": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 10,
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "title": "Project completion date",
+        "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+      },
+      "project_id": {
+        "type": "string",
+        "minLength": 6,
+        "maxLength": 36,
+        "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.",
+        "title": "Project id"
+      },
+      "purchase_date_time": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Purchase date-time",
+        "description": "This is the date a product was purchased. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted.",
+        "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
+      },
+      "rebate_deducted": {
+        "type": "number",
+        "minimum": 0,
+        "multipleOf": 0.01,
+        "title": "Rebate deducted",
+        "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+      },
+      "safety_checks": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://ira-rebates.labworks.org/schemas/safetyChecks",
+        "type": "object",
+        "properties": {
+          "ambient_co_test_result": {
+            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Ambient CO test result",
+            "enum": [
+              "FAILED",
+              "NA",
+              "PASSED",
+              "WARNING"
+            ]
+          },
+          "ashrae_62_2_ventilation_calculated": {
+            "title": "ASHRAE 62.2 ventilation calculated",
+            "enum": [
+              "NA",
+              "NO",
+              "YES"
+            ]
+          },
+          "confirm_all_safety_check_results_disclosed_to_homeowner": {
+            "type": "boolean",
+            "title": "Confirm all safety check results disclosed to homeowner"
+          },
+          "drainage_system_condition": {
+            "title": "Drainage system condition",
+            "enum": [
+              "GOOD",
+              "POTENTIAL_ISSUES"
+            ]
+          },
+          "gas_leak_detection_test_result": {
+            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Gas leak detection test result",
+            "enum": [
+              "FAILED",
+              "NA",
+              "PASSED",
+              "WARNING"
+            ]
+          },
+          "roof_condition": {
+            "title": "Roof condition",
+            "enum": [
+              "GOOD",
+              "POTENTIAL_ISSUES"
+            ]
+          },
+          "signs_of_mold_or_moisture": {
+            "type": "boolean",
+            "description": "Contractor should not proceed with energy efficiency measures until mold and moisture issues are mitigated.",
+            "title": "Signs of mold or moisture"
+          },
+          "spillage_test_result": {
+            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Spillage test result",
+            "enum": [
+              "FAILED",
+              "NA",
+              "PASSED",
+              "WARNING"
+            ]
+          },
+          "undiluted_co_test_result": {
+            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Undiluted CO test result",
+            "enum": [
+              "FAILED",
+              "NA",
+              "PASSED",
+              "WARNING"
+            ]
+          },
+          "venting_test_result": {
+            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Venting test result",
+            "enum": [
+              "FAILED",
+              "NA",
+              "PASSED",
+              "WARNING"
+            ]
+          }
+        },
+        "required": [
+          "ambient_co_test_result",
+          "ashrae_62_2_ventilation_calculated",
+          "confirm_all_safety_check_results_disclosed_to_homeowner",
+          "drainage_system_condition",
+          "gas_leak_detection_test_result",
+          "roof_condition",
+          "signs_of_mold_or_moisture",
+          "spillage_test_result",
+          "undiluted_co_test_result",
+          "venting_test_result"
+        ],
+        "additionalProperties": false,
+        "$defs": {
+          "safety_checks_good_potential_issues": {
+            "enum": [
+              "GOOD",
+              "POTENTIAL_ISSUES"
+            ]
+          },
+          "safety_checks_passed_failed_warning_na": {
+            "enum": [
+              "FAILED",
+              "NA",
+              "PASSED",
+              "WARNING"
+            ]
+          },
+          "safety_checks_yes_no": {
+            "enum": [
+              "NO",
+              "YES"
+            ]
+          },
+          "safety_checks_yes_no_na": {
+            "enum": [
+              "NA",
+              "NO",
+              "YES"
+            ]
+          }
+        }
+      },
+      "sf_conditioned_floor_area": {
+        "title": "Single-family conditioned floor area",
+        "enum": [
+          "1500SF_2500SF",
+          "500SF_1500SF",
+          "GREATER_THAN_2500SF",
+          "LESS_THAN_500SF"
+        ],
+        "description": "This is the conditioned floor area for an individual dwelling unit, either a single-family home or a unit in a multifamily building."
+      },
+      "sf_num_bedrooms": {
+        "title": "Single-family num bedrooms",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 20,
+        "description": "The number of bedrooms in the dwelling unit."
+      },
+      "state_attests_proof_of_identity_ownership_income": {
+        "type": "boolean",
+        "title": "State attests proof of identity ownership income",
+        "description": "The state attests that they have obtained the required proof of identify, proof of ownership, and proof of income for this rebate."
+      },
+      "state_attests_any_failed_inspection_remediated": {
+        "type": "boolean",
+        "title": "State attests any failed inspection remediated"
+      },
+      "unit_name_or_number": {
+        "type": "string",
+        "title": "Unit name or number",
+        "minLength": 1,
+        "maxLength": 32,
+        "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
+      },
+      "upc": {
+        "type": "string",
+        "title": "UPC",
+        "pattern": "^\\d+$",
+        "minLength": 1,
+        "maxLength": 14,
+        "description": "The universal product code (UPC) for the product being purchased."
+      },
+      "upgrade_component_details": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://ira-rebates.labworks.org/schemas/upgradeComponentDetails",
+        "type": "object",
+        "oneOf": [
+          {
+            "properties": {
+              "insulation_air_sealing_ventilation_upgrade_details": {
+                "type": "array",
+                "description": "Details that describe this improvement",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "description": "Details that describe this improvement",
+                      "properties": {
+                        "cfm50": {
+                          "type": "integer",
+                          "minimum": 100
+                        },
+                        "is_homeowner_aware_combustion_safety_tests_are_highly_recommended": {
+                          "type": "boolean",
+                          "description": "Is the homeowner aware that combustion safety tests are highly recommended for homes with any combustion appliances after air sealing projects are completed?"
+                        },
+                        "is_leakage_rate_known": {
+                          "type": "boolean"
+                        },
+                        "locations": {
+                          "type": "array",
+                          "items": {
+                            "enum": [
+                              "ATTIC",
+                              "FLOOR_FOUNDATION",
+                              "WALLS_WINDOWS_DOORS"
+                            ]
+                          },
+                          "uniqueItems": true,
+                          "minItems": 1
+                        },
+                        "upgrade_subtype": {
+                          "const": "AIR_SEALING"
+                        }
+                      },
+                      "required": [
+                        "is_homeowner_aware_combustion_safety_tests_are_highly_recommended",
+                        "is_leakage_rate_known",
+                        "locations",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false,
+                      "if": {
+                        "properties": {
+                          "is_leakage_rate_known": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "then": {
+                        "required": [
+                          "cfm50"
+                        ]
+                      },
+                      "else": {
+                        "not": {
+                          "required": [
+                            "cfm50"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "description": "Details that describe this improvement",
+                      "properties": {
+                        "percent_ceiling_receiving_additional_insulation": {
+                          "description": "Choose the closest percent of total ceiling area that will receive (additional) insulation. The ceiling is the one that is associated with the appropriate conditioned_floor_area field.",
+                          "enum": [
+                            10,
+                            25,
+                            50,
+                            75,
+                            100
+                          ]
+                        },
+                        "r_value_added": {
+                          "description": "Choose the R-value that best describes the amount of insulation added.",
+                          "enum": [
+                            "LESS_THAN_R30",
+                            "MORE_THAN_R60",
+                            "R30",
+                            "R49",
+                            "R60"
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "CEILING_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "percent_ceiling_receiving_additional_insulation",
+                        "r_value_added",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "description": "Details that describe this improvement",
+                      "properties": {
+                        "cavity_insulation_added": {
+                          "enum": [
+                            "MORE_THAN_R21",
+                            "R13",
+                            "R19",
+                            "R21"
+                          ]
+                        },
+                        "exterior_continuous_insulation_added": {
+                          "enum": [
+                            "1_INCH",
+                            "2_INCH",
+                            "MORE_THAN_2_INCH"
+                          ]
+                        },
+                        "percent_wall_area_treated": {
+                          "enum": [
+                            10,
+                            25,
+                            50,
+                            75,
+                            100
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "WALL_INSULATION"
+                        }
+                      },
+                      "anyOf": [
+                        {
+                          "required": [
+                            "cavity_insulation_added"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "exterior_continuous_insulation_added"
+                          ]
+                        }
+                      ],
+                      "required": [
+                        "percent_wall_area_treated",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "description": "Details that describe this improvement"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Details that describe this improvement",
+                      "properties": {
+                        "percent_ducts_receiving_additional_insulation": {
+                          "description": "The percentage of the ducts that received additional insulation in the upgrade. Choose the closest percentage.",
+                          "enum": [
+                            10,
+                            25,
+                            50,
+                            75,
+                            100
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "DUCT_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "percent_ducts_receiving_additional_insulation",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "description": "Details that describe this improvement",
+                      "properties": {
+                        "percent_floor_receiving_additional_insulation": {
+                          "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                          "enum": [
+                            10,
+                            25,
+                            50,
+                            75,
+                            100
+                          ]
+                        },
+                        "r_value_added": {
+                          "description": "Choose the R-value that best describes the amount of insulation added.",
+                          "enum": [
+                            "LESS_THAN_R10",
+                            "MORE_THAN_R30",
+                            "R10",
+                            "R13",
+                            "R19",
+                            "R30"
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "percent_floor_receiving_additional_insulation",
+                        "r_value_added",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "description": "The preexisting conditions associated with this improvement",
+                      "properties": {
+                        "percent_floor_receiving_additional_insulation": {
+                          "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                          "enum": [
+                            10,
+                            25,
+                            50,
+                            75,
+                            100
+                          ]
+                        },
+                        "r_value_added": {
+                          "description": "Choose the R-value that best describes the amount of insulation added.",
+                          "enum": [
+                            "LESS_THAN_R10",
+                            "MORE_THAN_R30",
+                            "R10",
+                            "R13",
+                            "R19",
+                            "R30"
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "FLOOR_ABOVE_UNCONDITIONED_SPACE_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "percent_floor_receiving_additional_insulation",
+                        "r_value_added",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "description": "Details that describe this improvement",
+                      "properties": {
+                        "percent_foundation_perimeter_receiving_additional_insulation": {
+                          "description": "For estimating this percentage, use the distance around the footprint that is determined by either `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                          "enum": [
+                            10,
+                            25,
+                            50,
+                            75,
+                            100
+                          ]
+                        },
+                        "r_value_added": {
+                          "description": "Choose the R-value that best describes the amount of insulation added.",
+                          "enum": [
+                            "LESS_THAN_R5",
+                            "R10",
+                            "R13",
+                            "R19",
+                            "R30",
+                            "R5"
+                          ]
+                        },
+                        "upgrade_subtype": {
+                          "const": "FOUNDATION_INSULATION"
+                        }
+                      },
+                      "required": [
+                        "percent_foundation_perimeter_receiving_additional_insulation",
+                        "r_value_added",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "description": "Details that describe this improvement",
+                      "properties": {
+                        "cfm_flow_rate": {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        },
+                        "upgrade_subtype": {
+                          "const": "VENTILATION"
+                        }
+                      },
+                      "required": [
+                        "cfm_flow_rate",
+                        "upgrade_subtype"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "insulation_air_sealing_ventilation_upgrade_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "electrical_panel_upgrade_details": {
+                "description": "Details that describe this improvement"
+              }
+            },
+            "required": [
+              "electrical_panel_upgrade_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "electric_cooking_appliance_upgrade_details": {
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "cooking_appliance_type": {
+                    "enum": [
+                      "INDUCTION_COOKTOP",
+                      "STANDARD_ELECTRIC"
+                    ]
+                  }
+                },
+                "required": [
+                  "cooking_appliance_type"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "electric_cooking_appliance_upgrade_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "heat_pump_clothes_dryer_upgrade_details": {
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "energy_guide_estimated_energy_use_kwh": {
+                    "type": "integer",
+                    "exclsuiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "energy_guide_estimated_energy_use_kwh"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "heat_pump_clothes_dryer_upgrade_details"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "properties": {
+              "heat_pump_water_heater_upgrade_details": {
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "storage_capacity": {
+                    "enum": [
+                      "45_GALLON",
+                      "50_GALLON",
+                      "60_GALLON",
+                      "80_GALLON",
+                      "LESS_THAN_45_GALLON",
+                      "MORE_THAN_80_GALLON"
+                    ]
+                  }
+                },
+                "required": [
+                  "storage_capacity"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "heat_pump_water_heater_upgrade_details"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "upgrade_type": {
+        "title": "Upgrade type",
+        "enum": [
+          "ELECTRICAL_PANEL",
+          "ELECTRIC_COOKING_APPLIANCE",
+          "ELECTRIC_WIRING",
+          "HEAT_PUMP_CLOTHES_DRYER",
+          "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+          "HEAT_PUMP_WATER_HEATER",
+          "INSULATION_AIR_SEALING_VENTILATION"
+        ],
+        "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+      }
+    },
+    "required": [
+      "address_id",
+      "applicant_id",
+      "building_project_type",
+      "claimant_type",
+      "construction_type",
+      "energy_data_evaluation_permission",
+      "equipment_and_material_cost",
+      "external_rebate_id",
+      "installation_type",
+      "is_disadvantaged_community",
+      "product_vendor_id",
+      "project_completion_date",
+      "purchase_date_time",
+      "rebate_deducted",
+      "state_attests_proof_of_identity_ownership_income",
+      "state_attests_any_failed_inspection_remediated",
+      "upgrade_type"
+    ],
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_CENTRAL",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_CENTRAL"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "mf_building_income_bucket",
+            "num_units",
+            "num_units_meeting_income_bucket"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "dwelling_unit_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "unit_name_or_number"
+                ]
+              },
+              {
+                "required": [
+                  "sf_conditioned_floor_area"
+                ]
+              },
+              {
+                "required": [
+                  "sf_num_bedrooms"
+                ]
+              }
+            ]
+          }
+        },
+        "else": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "mf_conditioned_floor_area"
+                ]
+              },
+              {
+                "required": [
+                  "mf_num_bedrooms"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "mf_building_income_bucket",
+            "num_units",
+            "num_units_meeting_income_bucket",
+            "project_id",
+            "unit_name_or_number"
+          ],
+          "not": {
+            "required": [
+              "dwelling_unit_income_bucket"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "const": "MULTIFAMILY_IN_UNIT"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "dwelling_unit_income_bucket",
+            "num_units",
+            "unit_name_or_number"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "mf_building_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "num_units_meeting_income_bucket"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine which fields are required or not allowed for single family building_project_type",
+        "if": {
+          "properties": {
+            "building_project_type": {
+              "enum": [
+                "MANUFACTURED",
+                "SINGLE_FAMILY_ATTACHED",
+                "SINGLE_FAMILY_DETACHED"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "dwelling_unit_income_bucket"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "mf_building_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "num_units"
+                ]
+              },
+              {
+                "required": [
+                  "num_units_meeting_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "unit_name_or_number"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "The appropriate schema must be used for original_component_details and upgrade_component_details depending on upgrade_type.",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_CLOTHES_DRYER"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "heat_pump_clothes_dryer_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "heat_pump_clothes_dryer_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "ELECTRIC_COOKING_APPLIANCE"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "electric_cooking_appliance_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "electric_cooking_appliance_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_WATER_HEATER"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "heat_pump_water_heater_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "heat_pump_water_heater_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "ELECTRICAL_PANEL"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "electrical_panel_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "electrical_panel_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "INSULATION_AIR_SEALING_VENTILATION"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "insulation_air_sealing_ventilation_original_details"
+              ]
+            },
+            "upgrade_component_details": {
+              "required": [
+                "insulation_air_sealing_ventilation_upgrade_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "original_component_details": {
+              "required": [
+                "heat_pump_for_space_heating_or_cooling_original_details"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, and is_contractor_eligible are required, optional, or not allowed",
+        "if": {
+          "oneOf": [
+            {
+              "properties": {
+                "upgrade_type": {
+                  "enum": [
+                    "ELECTRICAL_PANEL",
+                    "ELECTRICAL_WIRING",
+                    "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "upgrade_type": {
+                  "const": "INSULATION_AIR_SEALING_VENTILATION"
+                },
+                "upgrade_component_details": {
+                  "properties": {
+                    "insulation_air_sealing_ventilation_upgrade_details": {
+                      "contains": {
+                        "type": "object",
+                        "description": "Details that describe this improvement",
+                        "properties": {
+                          "cfm50": {
+                            "type": "integer",
+                            "minimum": 100
+                          },
+                          "is_homeowner_aware_combustion_safety_tests_are_highly_recommended": {
+                            "type": "boolean",
+                            "description": "Is the homeowner aware that combustion safety tests are highly recommended for homes with any combustion appliances after air sealing projects are completed?"
+                          },
+                          "is_leakage_rate_known": {
+                            "type": "boolean"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "enum": [
+                                "ATTIC",
+                                "FLOOR_FOUNDATION",
+                                "WALLS_WINDOWS_DOORS"
+                              ]
+                            },
+                            "uniqueItems": true,
+                            "minItems": 1
+                          },
+                          "upgrade_subtype": {
+                            "const": "AIR_SEALING"
+                          }
+                        },
+                        "required": [
+                          "is_homeowner_aware_combustion_safety_tests_are_highly_recommended",
+                          "is_leakage_rate_known",
+                          "locations",
+                          "upgrade_subtype"
+                        ],
+                        "additionalProperties": false,
+                        "if": {
+                          "properties": {
+                            "is_leakage_rate_known": {
+                              "const": true
+                            }
+                          }
+                        },
+                        "then": {
+                          "required": [
+                            "cfm50"
+                          ]
+                        },
+                        "else": {
+                          "not": {
+                            "required": [
+                              "cfm50"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "then": {
+          "required": [
+            "contractor_company_name",
+            "contractor_dac_incentive_payment",
+            "contractor_name",
+            "is_contractor_eligible"
+          ],
+          "properties": {
+            "installation_type": {
+              "const": "CONTRACTOR_INSTALLED"
+            }
+          }
+        },
+        "else": {
+          "if": {
+            "installation_type": {
+              "const": "DO_IT_YOURSELF"
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "contractor_company_name"
+                  ]
+                },
+                {
+                  "required": [
+                    "contractor_dac_incentive_payment"
+                  ]
+                },
+                {
+                  "required": [
+                    "contractor_name"
+                  ]
+                },
+                {
+                  "required": [
+                    "is_contractor_eligible"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "$comment": "Determine when ahri_reference_number, model_number, product_description and upc are required, optional, or not allowed",
+        "allOf": [
+          {
+            "anyOf": [
+              {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              },
+              {
+                "required": [
+                  "model_number"
+                ]
+              },
+              {
+                "required": [
+                  "upc"
+                ]
+              }
+            ]
+          },
+          {
+            "if": {
+              "properties": {
+                "upgrade_type": {
+                  "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+                }
+              }
+            },
+            "then": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "model_number"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "if": {
+              "not": {
+                "properties": {
+                  "upgrade_type": {
+                    "enum": [
+                      "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                      "HEAT_PUMP_WATER_HEATER"
+                    ]
+                  }
+                }
+              }
+            },
+            "then": {
+              "not": {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "$comment": "Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                "INSULATION_AIR_SEALING_VENTILATION"
+              ]
+            }
+          }
+        },
+        "then": {
+          "if": {
+            "properties": {
+              "building_project_type": {
+                "const": "MULTIFAMILY_CENTRAL"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "mf_conditioned_floor_area"
+            ]
+          },
+          "else": {
+            "required": [
+              "sf_conditioned_floor_area"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when mf_num_bedrooms and sf_num_bedrooms are required",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_CLOTHES_DRYER",
+                "HEAT_PUMP_WATER_HEATER"
+              ]
+            }
+          }
+        },
+        "then": {
+          "if": {
+            "properties": {
+              "building_project_type": {
+                "const": "MULTIFAMILY_CENTRAL"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "mf_num_bedrooms"
+            ]
+          },
+          "else": {
+            "required": [
+              "sf_num_bedrooms"
+            ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when limited_assessment is required or not allowed",
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "limited_assessment"
+          ]
+        },
+        "else": {
+          "not": {
+            "required": [
+              "limited_assessment"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

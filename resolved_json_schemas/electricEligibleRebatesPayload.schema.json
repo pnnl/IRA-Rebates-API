@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationEligibleRebate",
+  "type": "object",
+  "properties": {
+    "address_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
+      "title": "Address id"
+    },
+    "building_project_type": {
+      "title": "Building project type",
+      "enum": [
+        "MANUFACTURED",
+        "MULTIFAMILY_CENTRAL",
+        "MULTIFAMILY_IN_UNIT",
+        "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT",
+        "SINGLE_FAMILY_ATTACHED",
+        "SINGLE_FAMILY_DETACHED"
+      ],
+      "description": "This describes both the type of the building and, in the multifamily case, whether the upgrade in this reservation applies to the whole building or to a single unit. If it applies to a single unit, there is a further distinction between an upgrade that is part of a whole building project and a stand-alone upgrade. For the MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT and MULTIFAMILY_CENTRAL cases, the income bucket for the building, mf_income_bucket, is used. Otherwise, the income bucket for the dwelling unit, dwelling_unit_income_bucket, is used."
+    },
+    "claimant_type": {
+      "title": "Claimant type",
+      "enum": [
+        "CONTRACTOR",
+        "HOMEOWNER",
+        "MULTIFAMILY_BUILDING_OWNER",
+        "OTHER",
+        "TENANT"
+      ],
+      "description": "The type of person or entity that is initiating the rebate process on behalf of the applicant."
+    },
+    "construction_type": {
+      "title": "Construction type",
+      "enum": [
+        "EXISTING",
+        "NEW"
+      ],
+      "description": "Set to NEW if the building is less than one year old. Otherwise, set to EXISTING."
+    },
+    "dwelling_unit_income_bucket": {
+      "title": "Dwelling unit income bucket",
+      "enum": [
+        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI",
+        "LESS_THAN_80%_AMI"
+      ],
+      "description": "The household income level of the applicant compared to the area median income (AMI)."
+    },
+    "installation_type": {
+      "title": "Installation type",
+      "enum": [
+        "CONTRACTOR_INSTALLED",
+        "DO_IT_YOURSELF"
+      ],
+      "description": "Indicates who performed the installation."
+    },
+    "is_disadvantaged_community": {
+      "type": "boolean",
+      "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
+      "title": "Is disadvantaged community"
+    },
+    "mf_building_income_bucket": {
+      "title": "Multifamily building income bucket",
+      "enum": [
+        "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI",
+        "LESS_THAN_80%_AMI"
+      ],
+      "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one units falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
+    },
+    "num_units": {
+      "type": "integer",
+      "title": "Num units",
+      "minimum": 2,
+      "maximum": 1000,
+      "description": "This is the total number of units in a multifamily building. This field is required when *building_project_type* is any of the enumerated values that has a \"MULTIFAMILY\" prefix. Otherwise, the field should be omitted."
+    },
+    "num_units_meeting_income_bucket": {
+      "type": "integer",
+      "title": "Num units meeting income bucket",
+      "minimum": 1,
+      "maximum": 1000,
+      "description": "This is the number of units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
+    },
+    "unit_name_or_number": {
+      "type": "string",
+      "title": "Unit name or number",
+      "minLength": 1,
+      "maxLength": 32,
+      "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
+    },
+    "upgrade_type": {
+      "title": "Upgrade type",
+      "enum": [
+        "ELECTRICAL_PANEL",
+        "ELECTRIC_COOKING_APPLIANCE",
+        "ELECTRIC_WIRING",
+        "HEAT_PUMP_CLOTHES_DRYER",
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "HEAT_PUMP_WATER_HEATER",
+        "INSULATION_AIR_SEALING_VENTILATION"
+      ],
+      "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+    }
+  },
+  "required": [
+    "address_id",
+    "building_project_type",
+    "claimant_type",
+    "construction_type",
+    "installation_type",
+    "is_disadvantaged_community",
+    "upgrade_type"
+  ],
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "$comment": "Determine which fields are required when building_project_type is MULTIFAMILY_CENTRAL",
+      "if": {
+        "properties": {
+          "building_project_type": {
+            "const": "MULTIFAMILY_CENTRAL"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "mf_building_income_bucket",
+          "num_units",
+          "num_units_meeting_income_bucket"
+        ]
+      }
+    },
+    {
+      "$comment": "Determine which fields are required when building_project_type is MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT",
+      "if": {
+        "properties": {
+          "building_project_type": {
+            "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "mf_building_income_bucket",
+          "num_units",
+          "num_units_meeting_income_bucket",
+          "unit_name_or_number"
+        ]
+      }
+    },
+    {
+      "$comment": "Determine which fields are required when building_project_type is MULTIFAMILY_IN_UNIT",
+      "if": {
+        "properties": {
+          "building_project_type": {
+            "const": "MULTIFAMILY_IN_UNIT"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "dwelling_unit_income_bucket",
+          "num_units",
+          "unit_name_or_number"
+        ]
+      }
+    },
+    {
+      "$comment": "Determine which fields are required for single family building_project_type",
+      "if": {
+        "properties": {
+          "building_project_type": {
+            "enum": [
+              "MANUFACTURED",
+              "SINGLE_FAMILY_ATTACHED",
+              "SINGLE_FAMILY_DETACHED"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "dwelling_unit_income_bucket"
+        ]
+      }
+    }
+  ]
+}
