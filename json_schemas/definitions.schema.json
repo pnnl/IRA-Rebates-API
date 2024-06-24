@@ -79,6 +79,23 @@
       "minimum": 1,
       "description": "This should be set to 1 in most cases. An example of a situation where a value greater than 1 is appropriate is when several rolls of insulation are being purchased. Another situation is for `building_project_type` MULTIFAMILY_CENTRAL and `upgrade_type` HEAT_PUMP_WATER_HEATER for which the shared water heating system upgrade consists of multiple identical heat pump water heaters."
     },
+    "deletion_reason": {
+      "$anchor": "deletion_reason",
+      "title": "Deletion reason",
+      "type": "string",
+      "oneOf": [
+        {
+          "minLength": 4
+        },
+        {
+          "enum": [
+            "CANCEL_RESERVATION",
+            "CORRECT_RESERVATION"
+          ]
+        }
+      ],
+      "description": "Provide a reason for deleting the reservation. CANCEL_RESERVATION indicates that the intention is to delete the reservation with no immediate intention of replacing it. CORRECT_RESERVATION indicates that the intention is to delete the reservation in order to replace it with another."
+    },
     "doe_approved_bpi_2400_compliant_software_used": {
       "type": "string",
       "title": "DOE approved bpi 2400 compliant software used",

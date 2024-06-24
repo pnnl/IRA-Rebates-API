@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesReservationDeletion",
+  "type": "object",
+  "properties": {
+    "deletion_reason": {
+      "$ref": "/schemas/definitions#deletion_reason"
+    }
+  },
+  "required": [
+    "deletion_reason"
+  ],
+  "additionalProperties": false
+}
