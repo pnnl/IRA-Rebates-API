@@ -317,6 +317,10 @@
           }
         },
         "then": {
+          "required": [
+            "original_component_details",
+            "upgrade_component_details"
+          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -340,6 +344,10 @@
           }
         },
         "then": {
+          "required": [
+            "original_component_details",
+            "upgrade_component_details"
+          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -363,6 +371,10 @@
           }
         },
         "then": {
+          "required": [
+            "original_component_details",
+            "upgrade_component_details"
+          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -386,6 +398,10 @@
           }
         },
         "then": {
+          "required": [
+            "original_component_details",
+            "upgrade_component_details"
+          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -409,6 +425,10 @@
           }
         },
         "then": {
+          "required": [
+            "original_component_details",
+            "upgrade_component_details"
+          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -432,12 +452,45 @@
           }
         },
         "then": {
+          "required": [
+            "original_component_details"
+          ],
+          "not": {
+            "required": [
+              "upgrade_component_details"
+            ]
+          },
           "properties": {
             "original_component_details": {
               "required": [
                 "heat_pump_for_space_heating_or_cooling_original_details"
               ]
             }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "ELECTRIC_WIRING"
+            }
+          }
+        },
+        "then": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "original_component_details"
+                ]
+              },
+              {
+                "required": [
+                  "upgrade_component_details"
+                ]
+              }
+            ]
           }
         }
       },
@@ -450,7 +503,7 @@
                 "upgrade_type": {
                   "enum": [
                     "ELECTRICAL_PANEL",
-                    "ELECTRICAL_WIRING",
+                    "ELECTRIC_WIRING",
                     "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
                   ]
                 }

@@ -86,7 +86,6 @@
     "construction_type",
     "energy_data_evaluation_permission",
     "installation_type",
-    "original_component_details",
     "state_attests_proof_of_identity_ownership_income",
     "upgrade_type"
   ],
@@ -257,6 +256,9 @@
         }
       },
       "then": {
+        "required": [
+          "original_component_details"
+        ],
         "properties": {
           "original_component_details": {
             "required": [
@@ -275,6 +277,9 @@
         }
       },
       "then": {
+        "required": [
+          "original_component_details"
+        ],
         "properties": {
           "original_component_details": {
             "required": [
@@ -293,6 +298,9 @@
         }
       },
       "then": {
+        "required": [
+          "original_component_details"
+        ],
         "properties": {
           "original_component_details": {
             "required": [
@@ -311,6 +319,9 @@
         }
       },
       "then": {
+        "required": [
+          "original_component_details"
+        ],
         "properties": {
           "original_component_details": {
             "required": [
@@ -329,6 +340,9 @@
         }
       },
       "then": {
+        "required": [
+          "original_component_details"
+        ],
         "properties": {
           "original_component_details": {
             "required": [
@@ -347,12 +361,31 @@
         }
       },
       "then": {
+        "required": [
+          "original_component_details"
+        ],
         "properties": {
           "original_component_details": {
             "required": [
               "heat_pump_water_heater_original_details"
             ]
           }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "ELECTRIC_WIRING"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "original_component_details"
+          ]
         }
       }
     },
@@ -365,7 +398,7 @@
               "upgrade_type": {
                 "enum": [
                   "ELECTRICAL_PANEL",
-                  "ELECTRICAL_WIRING",
+                  "ELECTRIC_WIRING",
                   "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
                 ]
               }

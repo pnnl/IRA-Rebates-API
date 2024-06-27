@@ -52,7 +52,6 @@
     "is_final_project_redemption",
     "rebate_deducted",
     "rebate_passed_through_to_applicant",
-    "upgrade_component_details",
     "upgrade_type",
     "vendor_id"
   ],
@@ -68,6 +67,9 @@
         }
       },
       "then": {
+        "required": [
+          "upgrade_component_details"
+        ],
         "properties": {
           "upgrade_component_details": {
             "required": [
@@ -86,6 +88,9 @@
         }
       },
       "then": {
+        "required": [
+          "upgrade_component_details"
+        ],
         "properties": {
           "upgrade_component_details": {
             "required": [
@@ -104,6 +109,9 @@
         }
       },
       "then": {
+        "required": [
+          "upgrade_component_details"
+        ],
         "properties": {
           "upgrade_component_details": {
             "required": [
@@ -122,6 +130,9 @@
         }
       },
       "then": {
+        "required": [
+          "upgrade_component_details"
+        ],
         "properties": {
           "upgrade_component_details": {
             "required": [
@@ -140,12 +151,34 @@
         }
       },
       "then": {
+        "required": [
+          "upgrade_component_details"
+        ],
         "properties": {
           "upgrade_component_details": {
             "required": [
               "insulation_air_sealing_ventilation_upgrade_details"
             ]
           }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "enum": [
+              "ELECTRIC_WIRING",
+              "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            ]
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "upgrade_component_details"
+          ]
         }
       }
     },

@@ -102,9 +102,9 @@
       "type": "string",
       "title": "Zip code",
       "minLength": 5,
-      "maxLength": 10,
-      "pattern": "^(\\d{5}(-\\d{4})?)$",
-      "description": "The *zip_code* is the 5-digit or 9-digit zip code. This would be &ldquo;99354&rdquo; for the address: 650 Horn Rapids Road, Richland, WA 99354."
+      "maxLength": 5,
+      "pattern": "^\\d{5}$",
+      "description": "The *zip_code* is the 5-digit zip code. This would be &ldquo;99354&rdquo; for the address: 650 Horn Rapids Road, Richland, WA 99354."
     }
   },
   "required": [
