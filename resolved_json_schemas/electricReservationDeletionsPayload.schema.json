@@ -6,7 +6,7 @@
     "deletion_reason": {
       "title": "Deletion reason",
       "type": "string",
-      "oneOf": [
+      "anyOf": [
         {
           "minLength": 4
         },

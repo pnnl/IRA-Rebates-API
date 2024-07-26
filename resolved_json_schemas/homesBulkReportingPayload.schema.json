@@ -13,8 +13,8 @@
       },
       "applicant_id": {
         "type": "string",
-        "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant-ids endpoint.",
-        "title": "Applicant ID"
+        "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.",
+        "title": "Applicant id"
       },
       "building_project_type": {
         "title": "Building project type",
@@ -209,7 +209,6 @@
       },
       "safety_checks": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "$id": "https://ira-rebates.labworks.org/schemas/safetyChecks",
         "type": "object",
         "properties": {
           "ambient_co_test_result": {
@@ -386,9 +385,10 @@
       },
       "vendor_id": {
         "type": "string",
-        "format": "uuid",
+        "minLength": 6,
+        "maxLength": 64,
         "title": "Vendor id",
-        "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+        "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
       }
     },
     "required": [

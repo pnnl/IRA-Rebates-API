@@ -139,7 +139,6 @@
       "construction_type",
       "energy_data_evaluation_permission",
       "equipment_and_material_cost",
-      "external_rebate_id",
       "installation_type",
       "is_disadvantaged_community",
       "product_vendor_id",
@@ -177,32 +176,6 @@
               {
                 "required": [
                   "unit_name_or_number"
-                ]
-              },
-              {
-                "required": [
-                  "sf_conditioned_floor_area"
-                ]
-              },
-              {
-                "required": [
-                  "sf_num_bedrooms"
-                ]
-              }
-            ]
-          }
-        },
-        "else": {
-          "not": {
-            "anyOf": [
-              {
-                "required": [
-                  "mf_conditioned_floor_area"
-                ]
-              },
-              {
-                "required": [
-                  "mf_num_bedrooms"
                 ]
               }
             ]

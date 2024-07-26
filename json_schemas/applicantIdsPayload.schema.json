@@ -3,37 +3,57 @@
   "$id": "https://ira-rebates.labworks.org/schemas/applicantId",
   "type": "object",
   "properties": {
-    "applicant_email": {
+    "email": {
       "type": "string",
-      "format": "email",
+      "anyOf": [
+        {
+          "format": "email"
+        },
+        {
+          "const": "NOT AVAILABLE"
+        }
+      ],
       "description": "The email address of the homeowner, building owner, or renter that will ultimately be receiving the benefit of the rebate."
     },
-    "applicant_last_name": {
+    "last_name": {
       "type": "string",
+      "minLength": 1,
       "maxLength": 64,
+      "pattern": "^[a-zA-Z\\-\\s']+$",
       "description": "The applicant's last name."
     },
-    "applicant_phone": {
+    "phone": {
       "type": "string",
-      "pattern": "^\\d+$",
-      "minLength": 10,
-      "maxLegnth": 10,
+      "anyOf": [
+        {
+          "pattern": "^\\d+$",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        {
+          "const": "NOT AVAILABLE"
+        }
+      ],
       "description": "The ten-digit phone number of the home owner, building owner, or renter that will ultimately be receiving the benefit of the rebate."
     }
   },
   "required": [
-    "applicant_last_name"
+    "email",
+    "phone",
+    "last_name"
   ],
   "anyOf": [
     {
-      "required": [
-        "applicant_email"
-      ]
-    },
-    {
-      "required": [
-        "applicant_phone"
-      ]
+      "not": {
+        "properties": {
+          "email": {
+            "const": "NOT AVAILABLE"
+          },
+          "phone": {
+            "const": "NOT AVAILABLE"
+          }
+        }
+      }
     }
   ],
   "additionalProperties": false

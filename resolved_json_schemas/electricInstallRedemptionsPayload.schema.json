@@ -21,12 +21,12 @@
       "description": "The total cost of the equipment and materials purchased as part of a redemption.",
       "type": "number",
       "title": "Equipment and material cost",
-      "exclusiveMinimum": 0,
+      "minimum": 0,
       "multipleOf": 0.01
     },
     "installation_cost": {
       "type": "integer",
-      "minimum": 0,
+      "exclusiveMinimum": 0,
       "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
       "title": "Installation cost"
     },
@@ -219,7 +219,45 @@
                     "additionalProperties": false
                   },
                   {
-                    "description": "Details that describe this improvement"
+                    "description": "Details that describe this improvement",
+                    "type": "object",
+                    "properties": {
+                      "cfm25": {
+                        "description": "Total duct leakage cfm at 25 Pa pressure difference",
+                        "type": "number",
+                        "exclusiveminimum": 0
+                      },
+                      "is_leakage_rate_known": {
+                        "type": "boolean"
+                      },
+                      "upgrade_subtype": {
+                        "const": "DUCT_SEALING"
+                      }
+                    },
+                    "required": [
+                      "is_leakage_rate_known",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false,
+                    "if": {
+                      "properties": {
+                        "is_leakage_rate_known": {
+                          "const": true
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "cfm25"
+                      ]
+                    },
+                    "else": {
+                      "not": {
+                        "required": [
+                          "cfm25"
+                        ]
+                      }
+                    }
                   },
                   {
                     "type": "object",
@@ -383,7 +421,23 @@
         {
           "properties": {
             "electrical_panel_upgrade_details": {
-              "description": "Details that describe this improvement"
+              "description": "Details that describe this improvement",
+              "type": "object",
+              "properties": {
+                "max_amps": {
+                  "type": "integer",
+                  "minimum": 50
+                },
+                "num_open_breaker_spots": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "max_amps",
+                "num_open_breaker_spots"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -482,9 +536,10 @@
     },
     "vendor_id": {
       "type": "string",
-      "format": "uuid",
+      "minLength": 6,
+      "maxLength": 64,
       "title": "Vendor id",
-      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     }
   },
   "required": [

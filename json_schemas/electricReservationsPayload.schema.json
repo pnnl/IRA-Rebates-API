@@ -117,32 +117,6 @@
               "required": [
                 "unit_name_or_number"
               ]
-            },
-            {
-              "required": [
-                "sf_conditioned_floor_area"
-              ]
-            },
-            {
-              "required": [
-                "sf_num_bedrooms"
-              ]
-            }
-          ]
-        }
-      },
-      "else": {
-        "not": {
-          "anyOf": [
-            {
-              "required": [
-                "mf_conditioned_floor_area"
-              ]
-            },
-            {
-              "required": [
-                "mf_num_bedrooms"
-              ]
             }
           ]
         }

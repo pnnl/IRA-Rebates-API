@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ira-rebates.labworks.org/schemas/safetyChecks",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationsafetyChecks",
   "type": "object",
   "properties": {
     "ambient_co_test_result": {

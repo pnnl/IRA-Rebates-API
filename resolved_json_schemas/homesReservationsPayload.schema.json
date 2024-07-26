@@ -11,8 +11,8 @@
     },
     "applicant_id": {
       "type": "string",
-      "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant-ids endpoint.",
-      "title": "Applicant ID"
+      "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.",
+      "title": "Applicant id"
     },
     "building_project_type": {
       "title": "Building project type",

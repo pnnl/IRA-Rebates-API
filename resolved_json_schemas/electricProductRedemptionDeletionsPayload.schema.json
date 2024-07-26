@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ira-rebates.labworks.org/schemas/homesReservationDeletion",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationProductRedemptionDeletion",
   "type": "object",
   "properties": {
     "deletion_reason": {

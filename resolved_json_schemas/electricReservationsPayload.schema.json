@@ -11,8 +11,8 @@
     },
     "applicant_id": {
       "type": "string",
-      "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant-ids endpoint.",
-      "title": "Applicant ID"
+      "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.",
+      "title": "Applicant id"
     },
     "building_project_type": {
       "title": "Building project type",
@@ -216,7 +216,45 @@
                     "additionalProperties": false
                   },
                   {
-                    "description": "The preexisting conditions associated with this improvement"
+                    "description": "The preexisting conditions associated with this improvement",
+                    "type": "object",
+                    "properties": {
+                      "cfm25": {
+                        "description": "Total duct leakage cfm at 25 Pa pressure difference",
+                        "type": "number",
+                        "exclusiveminimum": 0
+                      },
+                      "is_leakage_rate_known": {
+                        "type": "boolean"
+                      },
+                      "upgrade_subtype": {
+                        "const": "DUCT_SEALING"
+                      }
+                    },
+                    "required": [
+                      "is_leakage_rate_known",
+                      "upgrade_subtype"
+                    ],
+                    "additionalProperties": false,
+                    "if": {
+                      "properties": {
+                        "is_leakage_rate_known": {
+                          "const": true
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "cfm25"
+                      ]
+                    },
+                    "else": {
+                      "not": {
+                        "required": [
+                          "cfm25"
+                        ]
+                      }
+                    }
                   },
                   {
                     "type": "object",
@@ -294,7 +332,23 @@
         {
           "properties": {
             "electrical_panel_original_details": {
-              "description": "The preexisting conditions associated with this improvement"
+              "description": "The preexisting conditions associated with this improvement",
+              "type": "object",
+              "properties": {
+                "max_amps": {
+                  "type": "integer",
+                  "minimum": 50
+                },
+                "num_open_breaker_spots": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "max_amps",
+                "num_open_breaker_spots"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -310,7 +364,6 @@
               "properties": {
                 "fuel_type": {
                   "enum": [
-                    "ELECTRIC",
                     "GAS",
                     "NONE"
                   ]
@@ -479,9 +532,10 @@
     },
     "vendor_id": {
       "type": "string",
-      "format": "uuid",
+      "minLength": 6,
+      "maxLength": 64,
       "title": "Vendor id",
-      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     },
     "upgrade_subtype": {
       "title": "Upgrade suptype",
@@ -529,32 +583,6 @@
             {
               "required": [
                 "unit_name_or_number"
-              ]
-            },
-            {
-              "required": [
-                "sf_conditioned_floor_area"
-              ]
-            },
-            {
-              "required": [
-                "sf_num_bedrooms"
-              ]
-            }
-          ]
-        }
-      },
-      "else": {
-        "not": {
-          "anyOf": [
-            {
-              "required": [
-                "mf_conditioned_floor_area"
-              ]
-            },
-            {
-              "required": [
-                "mf_num_bedrooms"
               ]
             }
           ]

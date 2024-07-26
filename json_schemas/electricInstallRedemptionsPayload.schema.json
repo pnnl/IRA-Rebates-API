@@ -10,11 +10,11 @@
       "$ref": "/schemas/definitions#contractor_name"
     },
     "equipment_and_material_cost": {
-      "$ref": "/schemas/definitions#equipment_and_material_cost",
+      "$ref": "/schemas/definitions#electric_install_redemptions_equipment_and_material_cost",
       "description": "This should not include the cost of the qualifying product(s) for this rebate. Those should be provided using the `/electric/reservations/{reservation_id}/product-redemptions` endpoint. Include incidental equipment and materials costs directly related to installation here."
     },
     "installation_cost": {
-      "$ref": "/schemas/definitions#installation_cost"
+      "$ref": "/schemas/definitions#electric_install_redemptions_installation_cost"
     },
     "is_contractor_eligible": {
       "$ref": "/schemas/definitions#is_contractor_eligible",

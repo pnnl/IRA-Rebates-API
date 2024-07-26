@@ -10,7 +10,6 @@
       "properties": {
         "fuel_type": {
           "enum": [
-            "ELECTRIC",
             "GAS",
             "NONE"
           ]

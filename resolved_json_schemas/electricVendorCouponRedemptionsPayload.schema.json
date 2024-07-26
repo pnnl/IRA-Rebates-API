@@ -16,6 +16,53 @@
       "minimum": 0,
       "title": "Installation cost"
     },
+    "product_info": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Provide identifying information for the qualifying product or products that are covered by this rebate.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ahri_reference_number": {
+            "type": "string",
+            "title": "AHRI reference number",
+            "minLength": 6,
+            "maxLength": 8,
+            "pattern": "^\\d+$",
+            "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer",
+            "minimum": 1,
+            "description": "This should be set to 1 in most cases. An example of a situation where a value greater than 1 is appropriate is when several rolls of insulation are being purchased. Another situation is for `building_project_type` MULTIFAMILY_CENTRAL and `upgrade_type` HEAT_PUMP_WATER_HEATER for which the shared water heating system upgrade consists of multiple identical heat pump water heaters."
+          },
+          "model_number": {
+            "type": "string",
+            "title": "Model number",
+            "minLength": 1,
+            "maxLength": 64,
+            "description": "The model number for the product being purchased."
+          },
+          "product_description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50,
+            "title": "Product description",
+            "description": "The description of the product being purchased, as it would appear on an invoice."
+          },
+          "upc": {
+            "type": "string",
+            "title": "UPC",
+            "pattern": "^\\d+$",
+            "minLength": 1,
+            "maxLength": 14,
+            "description": "The universal product code (UPC) for the product being purchased."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "purchase_date_time": {
       "type": "string",
       "format": "date-time",
@@ -45,9 +92,10 @@
     },
     "vendor_id": {
       "type": "string",
-      "format": "uuid",
+      "minLength": 6,
+      "maxLength": 64,
       "title": "Vendor id",
-      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     }
   },
   "required": [

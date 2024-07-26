@@ -21,8 +21,8 @@
     "applicant_id": {
       "$anchor": "applicant_id",
       "type": "string",
-      "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant-ids endpoint.",
-      "title": "Applicant ID"
+      "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.",
+      "title": "Applicant id"
     },
     "binary_file_content_base_64": {
       "$anchor": "binary_file_content_base_64",
@@ -154,6 +154,21 @@
       ],
       "title": "File purpose"
     },
+    "electric_install_redemptions_equipment_and_material_cost": {
+      "type": "number",
+      "title": "Equipment and material cost",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "$anchor": "electric_install_redemptions_equipment_and_material_cost",
+      "description": "The total cost of the equipment and materials purchased as part of a redemption."
+    },
+    "electric_install_redemptions_installation_cost": {
+      "$anchor": "electric_install_redemptions_installation_cost",
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "title": "Installation cost"
+    },
     "electric_mf_building_income_bucket": {
       "$anchor": "electric_mf_building_income_bucket",
       "title": "Multifamily building income bucket",
@@ -195,7 +210,7 @@
     "file_name": {
       "$anchor": "file_name",
       "type": "string",
-      "pattern": "^[0-9a-zA-Z\\-.]+$",
+      "pattern": "^[0-9a-zA-Z\\-._ ]+$",
       "minLength": 2,
       "maxLength": 64,
       "description": "This file name will be associated with the uploaded file and will be shown wherever a list of the uploaded files for a reservation is returned.",
@@ -246,6 +261,7 @@
     "homes_file_type": {
       "$anchor": "homes_file_type",
       "enum": [
+        "CSV",
         "HPXML",
         "JPEG",
         "PDF",
@@ -583,9 +599,10 @@
     "vendor_id": {
       "$anchor": "vendor_id",
       "type": "string",
-      "format": "uuid",
+      "minLength": 6,
+      "maxLength": 64,
       "title": "Vendor id",
-      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption. The ID will be assigned by the DOE."
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     }
   }
 }
