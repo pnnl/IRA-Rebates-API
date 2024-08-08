@@ -60,13 +60,6 @@
         "maxLength": 64,
         "description": "The name of the primary contracting company for the project."
       },
-      "contractor_dac_incentive_payment": {
-        "type": "number",
-        "multipleOf": 0.01,
-        "minimum": 0,
-        "description": "This is the amount the state paid to a contractor as a disadvantaged-community incentive.",
-        "title": "Contractor DAC incentive payment"
-      },
       "contractor_name": {
         "title": "Contractor name",
         "type": "string",
@@ -110,7 +103,8 @@
         "description": "This is an optional field that a state can use for their own purposes to identify a rebate or rebate reservation."
       },
       "installation_cost": {
-        "type": "integer",
+        "type": "number",
+        "multipleOf": 0.01,
         "minimum": 0,
         "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
         "title": "Installation cost"
@@ -207,8 +201,14 @@
         ],
         "description": "The HOMES rebates have two distinct options for determining savings and rebate amounts, MODELED vs MEASURED."
       },
+      "reservation_amount": {
+        "type": "number",
+        "multipleOf": 0.01,
+        "exclusiveMinimum": 0,
+        "title": "Reservation amount",
+        "description": "This is the maximum rebate amount."
+      },
       "safety_checks": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "properties": {
           "ambient_co_test_result": {
@@ -242,7 +242,7 @@
           },
           "gas_leak_detection_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Gas leak detection test result",
+            "title": "Ambient CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -251,7 +251,7 @@
             ]
           },
           "roof_condition": {
-            "title": "Roof condition",
+            "title": "Drainage system condition",
             "enum": [
               "GOOD",
               "POTENTIAL_ISSUES"
@@ -264,7 +264,7 @@
           },
           "spillage_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Spillage test result",
+            "title": "Ambient CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -274,7 +274,7 @@
           },
           "undiluted_co_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Undiluted CO test result",
+            "title": "Ambient CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -284,7 +284,7 @@
           },
           "venting_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Venting test result",
+            "title": "Ambient CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -305,36 +305,7 @@
           "undiluted_co_test_result",
           "venting_test_result"
         ],
-        "additionalProperties": false,
-        "$defs": {
-          "safety_checks_good_potential_issues": {
-            "enum": [
-              "GOOD",
-              "POTENTIAL_ISSUES"
-            ]
-          },
-          "safety_checks_passed_failed_warning_na": {
-            "enum": [
-              "FAILED",
-              "NA",
-              "PASSED",
-              "WARNING"
-            ]
-          },
-          "safety_checks_yes_no": {
-            "enum": [
-              "NO",
-              "YES"
-            ]
-          },
-          "safety_checks_yes_no_na": {
-            "enum": [
-              "NA",
-              "NO",
-              "YES"
-            ]
-          }
-        }
+        "additionalProperties": false
       },
       "software_used_to_estimate_post_retrofit_energy_usage": {
         "type": "string",
@@ -399,7 +370,6 @@
       "claimant_payment",
       "construction_type",
       "contractor_company_name",
-      "contractor_dac_incentive_payment",
       "contractor_name",
       "equipment_and_material_cost",
       "external_rebate_id",
@@ -408,6 +378,7 @@
       "project_completion_date",
       "rebate_deducted",
       "rebate_type",
+      "reservation_amount",
       "safety_checks",
       "state_attests_proof_of_identity_ownership_income",
       "state_attests_any_failed_inspection_remediated",
@@ -472,6 +443,11 @@
               },
               {
                 "required": [
+                  "reservation_amount"
+                ]
+              },
+              {
+                "required": [
                   "software_used_to_estimate_post_retrofit_energy_usage"
                 ]
               }
@@ -484,6 +460,7 @@
             "estimated_post_retrofit_energy_usage_kwh_equivalent",
             "measured_post_retrofit_energy_usage_kwh_equivalent",
             "measured_pre_retrofit_energy_usage_kwh_equivalent",
+            "reservation_amount",
             "software_used_to_estimate_post_retrofit_energy_usage"
           ],
           "not": {

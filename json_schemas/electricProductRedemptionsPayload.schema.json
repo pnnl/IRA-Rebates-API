@@ -30,6 +30,7 @@
   "required": [
     "equipment_and_material_cost",
     "installation_cost",
+    "product_info",
     "purchase_date_time",
     "rebate_deducted",
     "upgrade_type",

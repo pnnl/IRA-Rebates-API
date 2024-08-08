@@ -11,14 +11,6 @@
         "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
         "title": "Address id"
       },
-      "ahri_reference_number": {
-        "type": "string",
-        "title": "AHRI reference number",
-        "minLength": 6,
-        "maxLength": 8,
-        "pattern": "^\\d+$",
-        "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
-      },
       "applicant_id": {
         "type": "string",
         "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.",
@@ -62,12 +54,19 @@
         "maxLength": 64,
         "description": "The name of the primary contracting company for the project."
       },
-      "contractor_dac_incentive_payment": {
+      "contractor_dac_incentive": {
         "type": "number",
         "multipleOf": 0.01,
         "minimum": 0,
-        "description": "This is the amount the state paid to a contractor as a disadvantaged-community incentive.",
-        "title": "Contractor DAC incentive payment"
+        "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive.",
+        "title": "Contractor DAC incentive"
+      },
+      "contractor_incentive": {
+        "type": "number",
+        "multipleOf": 0.01,
+        "minimum": 0,
+        "description": "This is the amount the state will pay to a contractor as an incentive. This is separate from any contractor DAC incentive.",
+        "title": "Contractor incentive"
       },
       "contractor_name": {
         "title": "Contractor name",
@@ -111,7 +110,8 @@
         "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
       },
       "installation_cost": {
-        "type": "integer",
+        "type": "number",
+        "multipleOf": 0.01,
         "minimum": 0,
         "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
         "title": "Installation cost"
@@ -363,8 +363,10 @@
               "allOf": [
                 {
                   "if": {
-                    "is_efficiency_known": {
-                      "const": true
+                    "properties": {
+                      "is_efficiency_known": {
+                        "const": true
+                      }
                     }
                   },
                   "then": {
@@ -581,13 +583,6 @@
         "description": "The number of bedrooms for the entire multifamily building.",
         "minimum": 0,
         "maximum": 10000
-      },
-      "model_number": {
-        "type": "string",
-        "title": "Model number",
-        "minLength": 1,
-        "maxLength": 64,
-        "description": "The model number for the product being purchased."
       },
       "num_units": {
         "type": "integer",
@@ -968,12 +963,52 @@
           }
         ]
       },
-      "product_description": {
-        "type": "string",
-        "minLength": 1,
-        "maxLength": 50,
-        "title": "Product description",
-        "description": "The description of the product being purchased, as it would appear on an invoice."
+      "product_info": {
+        "type": "array",
+        "minItems": 1,
+        "description": "Provide identifying information for the qualifying product or products that are covered by this rebate.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "ahri_reference_number": {
+              "type": "string",
+              "title": "AHRI reference number",
+              "minLength": 6,
+              "maxLength": 8,
+              "pattern": "^\\d+$",
+              "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
+            },
+            "count": {
+              "title": "Count",
+              "type": "integer",
+              "minimum": 1,
+              "description": "This should be set to 1 in most cases. An example of a situation where a value greater than 1 is appropriate is when several rolls of insulation are being purchased. Another situation is for `building_project_type` MULTIFAMILY_CENTRAL and `upgrade_type` HEAT_PUMP_WATER_HEATER for which the shared water heating system upgrade consists of multiple identical heat pump water heaters."
+            },
+            "model_number": {
+              "type": "string",
+              "title": "Model number",
+              "minLength": 1,
+              "maxLength": 64,
+              "description": "The model number for the product being purchased."
+            },
+            "product_description": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50,
+              "title": "Product description",
+              "description": "The description of the product being purchased, as it would appear on an invoice."
+            },
+            "upc": {
+              "type": "string",
+              "title": "UPC",
+              "pattern": "^\\d+$",
+              "minLength": 1,
+              "maxLength": 14,
+              "description": "The universal product code (UPC) for the product being purchased."
+            }
+          },
+          "additionalProperties": false
+        }
       },
       "product_vendor_id": {
         "title": "Vendor id",
@@ -1012,7 +1047,6 @@
         "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
       },
       "safety_checks": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "properties": {
           "ambient_co_test_result": {
@@ -1046,7 +1080,7 @@
           },
           "gas_leak_detection_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Gas leak detection test result",
+            "title": "Ambient CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -1055,7 +1089,7 @@
             ]
           },
           "roof_condition": {
-            "title": "Roof condition",
+            "title": "Drainage system condition",
             "enum": [
               "GOOD",
               "POTENTIAL_ISSUES"
@@ -1068,7 +1102,7 @@
           },
           "spillage_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Spillage test result",
+            "title": "Ambient CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -1078,7 +1112,7 @@
           },
           "undiluted_co_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Undiluted CO test result",
+            "title": "Ambient CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -1088,7 +1122,7 @@
           },
           "venting_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Venting test result",
+            "title": "Ambient CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -1109,36 +1143,7 @@
           "undiluted_co_test_result",
           "venting_test_result"
         ],
-        "additionalProperties": false,
-        "$defs": {
-          "safety_checks_good_potential_issues": {
-            "enum": [
-              "GOOD",
-              "POTENTIAL_ISSUES"
-            ]
-          },
-          "safety_checks_passed_failed_warning_na": {
-            "enum": [
-              "FAILED",
-              "NA",
-              "PASSED",
-              "WARNING"
-            ]
-          },
-          "safety_checks_yes_no": {
-            "enum": [
-              "NO",
-              "YES"
-            ]
-          },
-          "safety_checks_yes_no_na": {
-            "enum": [
-              "NA",
-              "NO",
-              "YES"
-            ]
-          }
-        }
+        "additionalProperties": false
       },
       "sf_conditioned_floor_area": {
         "title": "Single-family conditioned floor area",
@@ -1172,14 +1177,6 @@
         "minLength": 1,
         "maxLength": 32,
         "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
-      },
-      "upc": {
-        "type": "string",
-        "title": "UPC",
-        "pattern": "^\\d+$",
-        "minLength": 1,
-        "maxLength": 14,
-        "description": "The universal product code (UPC) for the product being purchased."
       },
       "upgrade_component_details": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -1663,6 +1660,7 @@
       "equipment_and_material_cost",
       "installation_type",
       "is_disadvantaged_community",
+      "product_info",
       "product_vendor_id",
       "project_completion_date",
       "purchase_date_time",
@@ -1990,7 +1988,7 @@
         }
       },
       {
-        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, and is_contractor_eligible are required, optional, or not allowed",
+        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, contractor_dac_incentive, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed",
         "if": {
           "oneOf": [
             {
@@ -2080,9 +2078,11 @@
         "then": {
           "required": [
             "contractor_company_name",
-            "contractor_dac_incentive_payment",
+            "contractor_dac_incentive",
+            "contractor_incentive",
             "contractor_name",
-            "is_contractor_eligible"
+            "is_contractor_eligible",
+            "safety_checks"
           ],
           "properties": {
             "installation_type": {
@@ -2106,7 +2106,12 @@
                 },
                 {
                   "required": [
-                    "contractor_dac_incentive_payment"
+                    "contractor_dac_incentive"
+                  ]
+                },
+                {
+                  "required": [
+                    "contractor_incentive"
                   ]
                 },
                 {
@@ -2123,74 +2128,6 @@
             }
           }
         }
-      },
-      {
-        "$comment": "Determine when ahri_reference_number, model_number, product_description and upc are required, optional, or not allowed",
-        "allOf": [
-          {
-            "anyOf": [
-              {
-                "required": [
-                  "ahri_reference_number"
-                ]
-              },
-              {
-                "required": [
-                  "model_number"
-                ]
-              },
-              {
-                "required": [
-                  "upc"
-                ]
-              }
-            ]
-          },
-          {
-            "if": {
-              "properties": {
-                "upgrade_type": {
-                  "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
-                }
-              }
-            },
-            "then": {
-              "anyOf": [
-                {
-                  "required": [
-                    "ahri_reference_number"
-                  ]
-                },
-                {
-                  "required": [
-                    "model_number"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "if": {
-              "not": {
-                "properties": {
-                  "upgrade_type": {
-                    "enum": [
-                      "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
-                      "HEAT_PUMP_WATER_HEATER"
-                    ]
-                  }
-                }
-              }
-            },
-            "then": {
-              "not": {
-                "required": [
-                  "ahri_reference_number"
-                ]
-              }
-            }
-          }
-        ]
       },
       {
         "$comment": "Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required",
@@ -2275,6 +2212,88 @@
             "required": [
               "limited_assessment"
             ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when ahri_reference_number, model_number, product_description and upc in product_info are required, optional, or not allowed",
+        "properties": {
+          "product_info": {
+            "items": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "model_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "upc"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "product_info": {
+              "items": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "ahri_reference_number"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "model_number"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "not": {
+            "properties": {
+              "upgrade_type": {
+                "enum": [
+                  "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                  "HEAT_PUMP_WATER_HEATER"
+                ]
+              }
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "product_info": {
+              "items": {
+                "not": {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                }
+              }
+            }
           }
         }
       }

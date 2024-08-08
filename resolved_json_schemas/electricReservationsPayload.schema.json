@@ -45,6 +45,20 @@
       ],
       "description": "Set to NEW if the building is less than one year old. Otherwise, set to EXISTING."
     },
+    "contractor_dac_incentive": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive.",
+      "title": "Contractor DAC incentive"
+    },
+    "contractor_incentive": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "This is the amount the state will pay to a contractor as an incentive. This is separate from any contractor DAC incentive.",
+      "title": "Contractor incentive"
+    },
     "dwelling_unit_income_bucket": {
       "title": "Dwelling unit income bucket",
       "enum": [
@@ -905,6 +919,38 @@
           "installation_type": {
             "const": "CONTRACTOR_INSTALLED"
           }
+        }
+      }
+    },
+    {
+      "$comment": "Determine when contractor_dac_incentive and contractor_incentive are required or not allowed",
+      "if": {
+        "properties": {
+          "installation_type": {
+            "const": "CONTRACTOR_INSTALLED"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "contractor_dac_incentive",
+          "contractor_incentive"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "contractor_dac_incentive"
+              ]
+            },
+            {
+              "required": [
+                "contractor_incentive"
+              ]
+            }
+          ]
         }
       }
     },

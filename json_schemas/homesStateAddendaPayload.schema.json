@@ -3,9 +3,6 @@
   "$id": "https://ira-rebates.labworks.org/schemas/homesStateAddenda",
   "type": "object",
   "properties": {
-    "contractor_dac_incentive_payment": {
-      "$ref": "/schemas/definitions#contractor_dac_incentive_payment"
-    },
     "claimant_payment": {
       "$ref": "/schemas/definitions#claimant_payment"
     },
@@ -14,11 +11,6 @@
     }
   },
   "anyOf": [
-    {
-      "required": [
-        "contractor_dac_incentive_payment"
-      ]
-    },
     {
       "required": [
         "claimant_payment"

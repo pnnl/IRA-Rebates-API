@@ -18,6 +18,12 @@
     "construction_type": {
       "$ref": "/schemas/definitions#construction_type"
     },
+    "contractor_dac_incentive": {
+      "$ref": "/schemas/definitions#contractor_dac_incentive"
+    },
+    "contractor_incentive": {
+      "$ref": "/schemas/definitions#contractor_incentive"
+    },
     "dwelling_unit_income_bucket": {
       "$ref": "/schemas/definitions#electric_dwelling_unit_income_bucket"
     },
@@ -401,6 +407,38 @@
           "installation_type": {
             "const": "CONTRACTOR_INSTALLED"
           }
+        }
+      }
+    },
+    {
+      "$comment": "Determine when contractor_dac_incentive and contractor_incentive are required or not allowed",
+      "if": {
+        "properties": {
+          "installation_type": {
+            "const": "CONTRACTOR_INSTALLED"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "contractor_dac_incentive",
+          "contractor_incentive"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "contractor_dac_incentive"
+              ]
+            },
+            {
+              "required": [
+                "contractor_incentive"
+              ]
+            }
+          ]
         }
       }
     },

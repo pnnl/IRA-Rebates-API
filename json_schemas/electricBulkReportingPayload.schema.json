@@ -8,9 +8,6 @@
       "address_id": {
         "$ref": "/schemas/definitions#address_id"
       },
-      "ahri_reference_number": {
-        "$ref": "/schemas/definitions#ahri_reference_number"
-      },
       "applicant_id": {
         "$ref": "/schemas/definitions#applicant_id"
       },
@@ -26,8 +23,11 @@
       "contractor_company_name": {
         "$ref": "/schemas/definitions#contractor_company_name"
       },
-      "contractor_dac_incentive_payment": {
-        "$ref": "/schemas/definitions#contractor_dac_incentive_payment"
+      "contractor_dac_incentive": {
+        "$ref": "/schemas/definitions#contractor_dac_incentive"
+      },
+      "contractor_incentive": {
+        "$ref": "/schemas/definitions#contractor_incentive"
       },
       "contractor_name": {
         "$ref": "/schemas/definitions#contractor_name"
@@ -72,9 +72,6 @@
       "mf_num_bedrooms": {
         "$ref": "/schemas/definitions#mf_num_bedrooms"
       },
-      "model_number": {
-        "$ref": "/schemas/definitions#model_number"
-      },
       "num_units": {
         "$ref": "/schemas/definitions#num_units"
       },
@@ -84,8 +81,8 @@
       "original_component_details": {
         "$ref": "/schemas/originalComponentDetails"
       },
-      "product_description": {
-        "$ref": "/schemas/definitions#product_description"
+      "product_info": {
+        "$ref": "/schemas/definitions#product_info"
       },
       "product_vendor_id": {
         "$ref": "/schemas/definitions#vendor_id",
@@ -104,7 +101,7 @@
         "$ref": "/schemas/definitions#rebate_deducted"
       },
       "safety_checks": {
-        "$ref": "/schemas/safetyChecks"
+        "$ref": "/schemas/definitions#safety_checks"
       },
       "sf_conditioned_floor_area": {
         "$ref": "/schemas/definitions#sf_conditioned_floor_area"
@@ -120,9 +117,6 @@
       },
       "unit_name_or_number": {
         "$ref": "/schemas/definitions#unit_name_or_number"
-      },
-      "upc": {
-        "$ref": "/schemas/definitions#upc"
       },
       "upgrade_component_details": {
         "$ref": "/schemas/upgradeComponentDetails"
@@ -141,6 +135,7 @@
       "equipment_and_material_cost",
       "installation_type",
       "is_disadvantaged_community",
+      "product_info",
       "product_vendor_id",
       "project_completion_date",
       "purchase_date_time",
@@ -468,7 +463,7 @@
         }
       },
       {
-        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, and is_contractor_eligible are required, optional, or not allowed",
+        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, contractor_dac_incentive, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed",
         "if": {
           "oneOf": [
             {
@@ -503,9 +498,11 @@
         "then": {
           "required": [
             "contractor_company_name",
-            "contractor_dac_incentive_payment",
+            "contractor_dac_incentive",
+            "contractor_incentive",
             "contractor_name",
-            "is_contractor_eligible"
+            "is_contractor_eligible",
+            "safety_checks"
           ],
           "properties": {
             "installation_type": {
@@ -529,7 +526,12 @@
                 },
                 {
                   "required": [
-                    "contractor_dac_incentive_payment"
+                    "contractor_dac_incentive"
+                  ]
+                },
+                {
+                  "required": [
+                    "contractor_incentive"
                   ]
                 },
                 {
@@ -546,74 +548,6 @@
             }
           }
         }
-      },
-      {
-        "$comment": "Determine when ahri_reference_number, model_number, product_description and upc are required, optional, or not allowed",
-        "allOf": [
-          {
-            "anyOf": [
-              {
-                "required": [
-                  "ahri_reference_number"
-                ]
-              },
-              {
-                "required": [
-                  "model_number"
-                ]
-              },
-              {
-                "required": [
-                  "upc"
-                ]
-              }
-            ]
-          },
-          {
-            "if": {
-              "properties": {
-                "upgrade_type": {
-                  "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
-                }
-              }
-            },
-            "then": {
-              "anyOf": [
-                {
-                  "required": [
-                    "ahri_reference_number"
-                  ]
-                },
-                {
-                  "required": [
-                    "model_number"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "if": {
-              "not": {
-                "properties": {
-                  "upgrade_type": {
-                    "enum": [
-                      "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
-                      "HEAT_PUMP_WATER_HEATER"
-                    ]
-                  }
-                }
-              }
-            },
-            "then": {
-              "not": {
-                "required": [
-                  "ahri_reference_number"
-                ]
-              }
-            }
-          }
-        ]
       },
       {
         "$comment": "Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required",
@@ -698,6 +632,88 @@
             "required": [
               "limited_assessment"
             ]
+          }
+        }
+      },
+      {
+        "$comment": "Determine when ahri_reference_number, model_number, product_description and upc in product_info are required, optional, or not allowed",
+        "properties": {
+          "product_info": {
+            "items": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "model_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "upc"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "upgrade_type": {
+              "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "product_info": {
+              "items": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "ahri_reference_number"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "model_number"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "not": {
+            "properties": {
+              "upgrade_type": {
+                "enum": [
+                  "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                  "HEAT_PUMP_WATER_HEATER"
+                ]
+              }
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "product_info": {
+              "items": {
+                "not": {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                }
+              }
+            }
           }
         }
       }

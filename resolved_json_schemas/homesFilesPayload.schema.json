@@ -20,7 +20,9 @@
     "file_type": {
       "enum": [
         "CSV",
-        "HPXML",
+        "HPXML_MEASURED",
+        "HPXML_MODELED_RECOMMENDED",
+        "HPXML_MODELED_REQUIRED",
         "JPEG",
         "PDF",
         "PNG"
@@ -30,6 +32,7 @@
     "file_purpose": {
       "enum": [
         "POST_RETROFIT_MODEL",
+        "PRE_AND_POST_RETROFIT_MODELS",
         "PRE_RETROFIT_MODEL",
         "QUALITY_ASSURANCE"
       ],

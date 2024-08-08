@@ -26,9 +26,6 @@
       "contractor_company_name": {
         "$ref": "/schemas/definitions#contractor_company_name"
       },
-      "contractor_dac_incentive_payment": {
-        "$ref": "/schemas/definitions#contractor_dac_incentive_payment"
-      },
       "contractor_name": {
         "$ref": "/schemas/definitions#contractor_name"
       },
@@ -92,8 +89,11 @@
       "rebate_type": {
         "$ref": "/schemas/definitions#rebate_type"
       },
+      "reservation_amount": {
+        "$ref": "/schemas/definitions#reservation_amount"
+      },
       "safety_checks": {
-        "$ref": "/schemas/safetyChecks"
+        "$ref": "/schemas/definitions#safety_checks"
       },
       "software_used_to_estimate_post_retrofit_energy_usage": {
         "$ref": "/schemas/definitions#software_used_to_estimate_post_retrofit_energy_usage"
@@ -122,7 +122,6 @@
       "claimant_payment",
       "construction_type",
       "contractor_company_name",
-      "contractor_dac_incentive_payment",
       "contractor_name",
       "equipment_and_material_cost",
       "external_rebate_id",
@@ -131,6 +130,7 @@
       "project_completion_date",
       "rebate_deducted",
       "rebate_type",
+      "reservation_amount",
       "safety_checks",
       "state_attests_proof_of_identity_ownership_income",
       "state_attests_any_failed_inspection_remediated",
@@ -195,6 +195,11 @@
               },
               {
                 "required": [
+                  "reservation_amount"
+                ]
+              },
+              {
+                "required": [
                   "software_used_to_estimate_post_retrofit_energy_usage"
                 ]
               }
@@ -207,6 +212,7 @@
             "estimated_post_retrofit_energy_usage_kwh_equivalent",
             "measured_post_retrofit_energy_usage_kwh_equivalent",
             "measured_pre_retrofit_energy_usage_kwh_equivalent",
+            "reservation_amount",
             "software_used_to_estimate_post_retrofit_energy_usage"
           ],
           "not": {

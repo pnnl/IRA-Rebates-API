@@ -212,8 +212,10 @@
         "allOf": [
           {
             "if": {
-              "is_efficiency_known": {
-                "const": true
+              "properties": {
+                "is_efficiency_known": {
+                  "const": true
+                }
               }
             },
             "then": {

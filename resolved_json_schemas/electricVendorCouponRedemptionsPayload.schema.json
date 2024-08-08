@@ -12,7 +12,8 @@
     },
     "installation_cost": {
       "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
-      "type": "integer",
+      "type": "number",
+      "multipleOf": 0.01,
       "minimum": 0,
       "title": "Installation cost"
     },
@@ -101,6 +102,7 @@
   "required": [
     "equipment_and_material_cost",
     "installation_cost",
+    "product_info",
     "purchase_date_time",
     "rebate_deducted",
     "upgrade_type",

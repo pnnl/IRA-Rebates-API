@@ -93,7 +93,7 @@
     "street_number": {
       "type": "string",
       "title": "Street number",
-      "pattern": "^\\d+[a-zA-Z]?(-(\\d+[a-zA-Z]?))?$",
+      "pattern": "^[0-9a-zA-Z/\\- ]+$",
       "minLength": 1,
       "maxLength": 12,
       "description": "The building number. This would be &ldquo;650&rdquo; for the address: 650 Horn Rapids Road, Richland, WA 99354."

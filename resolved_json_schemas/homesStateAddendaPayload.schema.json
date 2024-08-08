@@ -3,13 +3,6 @@
   "$id": "https://ira-rebates.labworks.org/schemas/homesStateAddenda",
   "type": "object",
   "properties": {
-    "contractor_dac_incentive_payment": {
-      "type": "number",
-      "multipleOf": 0.01,
-      "minimum": 0,
-      "description": "This is the amount the state paid to a contractor as a disadvantaged-community incentive.",
-      "title": "Contractor DAC incentive payment"
-    },
     "claimant_payment": {
       "type": "number",
       "multipleOf": 0.01,
@@ -23,11 +16,6 @@
     }
   },
   "anyOf": [
-    {
-      "required": [
-        "contractor_dac_incentive_payment"
-      ]
-    },
     {
       "required": [
         "claimant_payment"

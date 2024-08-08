@@ -33,6 +33,9 @@
     "rebate_passed_through_to_applicant": {
       "$ref": "/schemas/definitions#rebate_passed_through_to_applicant"
     },
+    "safety_checks": {
+      "$ref": "/schemas/definitions#safety_checks"
+    },
     "upgrade_component_details": {
       "$ref": "/schemas/upgradeComponentDetails"
     },
@@ -52,6 +55,7 @@
     "is_final_project_redemption",
     "rebate_deducted",
     "rebate_passed_through_to_applicant",
+    "safety_checks",
     "upgrade_type",
     "vendor_id"
   ],
