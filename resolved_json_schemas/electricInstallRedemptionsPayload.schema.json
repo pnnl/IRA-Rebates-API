@@ -526,7 +526,7 @@
               "properties": {
                 "max_amps": {
                   "type": "integer",
-                  "minimum": 50
+                  "minimum": 30
                 },
                 "num_open_breaker_spots": {
                   "type": "integer",

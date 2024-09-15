@@ -28,8 +28,7 @@
       "$ref": "/schemas/definitions#electric_dwelling_unit_income_bucket"
     },
     "energy_data_evaluation_permission": {
-      "$ref": "/schemas/definitions#energy_data_evaluation_permission",
-      "const": true
+      "$ref": "/schemas/definitions#energy_data_evaluation_permission"
     },
     "external_rebate_id": {
       "$ref": "/schemas/definitions#external_rebate_id"

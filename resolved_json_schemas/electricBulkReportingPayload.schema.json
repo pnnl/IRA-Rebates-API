@@ -295,7 +295,7 @@
           },
           "electrical_panel_max_amps": {
             "type": "integer",
-            "minimum": 50,
+            "minimum": 30,
             "description": "The maximum amperage rating for the electrical panel as-found. This is only required if adding electrical load.",
             "title": "Electrical panel max amps"
           },
@@ -479,6 +479,7 @@
           "ducts_are_insulated",
           "ducts_are_sealed",
           "electrical_panel_max_amps",
+          "envelope_professionally_air_sealed",
           "heating_systems",
           "is_ceiling_insulation_r_value_known",
           "is_whole_home_ventilation_system_rated_flow_cfm_known",
@@ -524,27 +525,6 @@
               "not": {
                 "required": [
                   "whole_home_ventilation_system_rated_flow_cfm"
-                ]
-              }
-            }
-          },
-          {
-            "if": {
-              "properties": {
-                "is_envelope_professionally_air_sealed_known": {
-                  "const": true
-                }
-              }
-            },
-            "then": {
-              "required": [
-                "envelope_professionally_air_sealed"
-              ]
-            },
-            "else": {
-              "not": {
-                "required": [
-                  "envelope_professionally_air_sealed"
                 ]
               }
             }
@@ -820,7 +800,7 @@
                 "properties": {
                   "max_amps": {
                     "type": "integer",
-                    "minimum": 50
+                    "minimum": 30
                   },
                   "num_open_breaker_spots": {
                     "type": "integer",
@@ -1541,7 +1521,7 @@
                 "properties": {
                   "max_amps": {
                     "type": "integer",
-                    "minimum": 50
+                    "minimum": 30
                   },
                   "num_open_breaker_spots": {
                     "type": "integer",

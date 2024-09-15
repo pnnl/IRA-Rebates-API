@@ -1,5 +1,7 @@
 # IRA-Rebates-API
 
+**Updated 9/15/2024**
+
 **Current API version:** beta v4.2
 
 This repository contains materials useful to users of the IRA Rebates API ***beta version 4.2***. The IRA Rebates API supports the HOMES (section 50121) and HEEHRA (section 50122) DOE rebate programs authorized by the Inflation Reduction Act (IRA) of 2022. See https://www.energy.gov/scep/home-energy-rebates-programs for program descriptions and updates.

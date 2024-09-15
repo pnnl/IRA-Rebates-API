@@ -17,6 +17,12 @@
       "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
       "title": "Installation cost"
     },
+    "is_contractor_eligible": {
+      "const": true,
+      "type": "boolean",
+      "description": "The contractor is eligible if they are on the state's approved list.",
+      "title": "Is contractor eligible"
+    },
     "measured_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Measured post retrofit energy usage kwh equivalent",
@@ -154,6 +160,7 @@
     }
   },
   "required": [
+    "is_contractor_eligible",
     "project_completion_date",
     "rebate_deducted",
     "rebate_type",

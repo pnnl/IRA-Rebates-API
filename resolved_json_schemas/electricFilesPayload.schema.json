@@ -11,7 +11,7 @@
     },
     "file_name": {
       "type": "string",
-      "pattern": "^[0-9a-zA-Z\\-._ ]+$",
+      "pattern": "^[0-9a-zA-Z\\-.\\(\\)_ ]+$",
       "minLength": 2,
       "maxLength": 64,
       "description": "This file name will be associated with the uploaded file and will be shown wherever a list of the uploaded files for a reservation is returned.",
@@ -25,6 +25,7 @@
     },
     "file_type": {
       "enum": [
+        "HEIC",
         "JPEG",
         "PDF",
         "PNG"

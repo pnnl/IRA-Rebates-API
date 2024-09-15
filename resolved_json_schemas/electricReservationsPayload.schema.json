@@ -68,7 +68,6 @@
       "description": "The household income level of the applicant compared to the area median income (AMI)."
     },
     "energy_data_evaluation_permission": {
-      "const": true,
       "type": "boolean",
       "description": "Set to true if the home/building owner has given their permission to share energy data with the State and the DOE for evaluation purposes.",
       "title": "Energy data evaluation permission"
@@ -351,7 +350,7 @@
               "properties": {
                 "max_amps": {
                   "type": "integer",
-                  "minimum": 50
+                  "minimum": 30
                 },
                 "num_open_breaker_spots": {
                   "type": "integer",
