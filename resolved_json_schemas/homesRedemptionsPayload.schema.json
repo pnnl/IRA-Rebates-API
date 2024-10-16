@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesRedemption",
+  "type": "object",
+  "properties": {
+    "equipment_and_material_cost": {
+      "type": "number",
+      "title": "Equipment and material cost",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "description": "The total cost of the equipment and materials purchased as part of a redemption."
+    },
+    "installation_cost": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "title": "Installation cost"
+    },
+    "is_contractor_eligible": {
+      "const": true,
+      "type": "boolean",
+      "description": "The contractor is eligible if they are on the state's approved list.",
+      "title": "Is contractor eligible"
+    },
+    "measured_post_retrofit_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Measured post retrofit energy usage kwh equivalent",
+      "minimum": 0,
+      "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
+    },
+    "project_completion_date": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Project completion date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+    },
+    "rebate_deducted": {
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "title": "Rebate deducted",
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+    },
+    "rebate_type": {
+      "title": "Rebate type",
+      "enum": [
+        "MEASURED",
+        "MODELED"
+      ],
+      "description": "The HOMES rebates have two distinct options for determining savings and rebate amounts, MODELED vs MEASURED."
+    },
+    "safety_checks": {
+      "type": "object",
+      "properties": {
+        "ambient_co_test_result": {
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Ambient CO test result",
+          "enum": [
+            "FAILED",
+            "NA",
+            "PASSED",
+            "WARNING"
+          ]
+        },
+        "ashrae_62_2_ventilation_calculated": {
+          "title": "ASHRAE 62.2 ventilation calculated",
+          "enum": [
+            "NA",
+            "NO",
+            "YES"
+          ]
+        },
+        "confirm_all_safety_check_results_disclosed_to_homeowner": {
+          "type": "boolean",
+          "title": "Confirm all safety check results disclosed to homeowner"
+        },
+        "drainage_system_condition": {
+          "title": "Drainage system condition",
+          "enum": [
+            "GOOD",
+            "POTENTIAL_ISSUES"
+          ]
+        },
+        "gas_leak_detection_test_result": {
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Ambient CO test result",
+          "enum": [
+            "FAILED",
+            "NA",
+            "PASSED",
+            "WARNING"
+          ]
+        },
+        "roof_condition": {
+          "title": "Drainage system condition",
+          "enum": [
+            "GOOD",
+            "POTENTIAL_ISSUES"
+          ]
+        },
+        "signs_of_mold_or_moisture": {
+          "type": "boolean",
+          "description": "Contractor should not proceed with energy efficiency measures until mold and moisture issues are mitigated.",
+          "title": "Signs of mold or moisture"
+        },
+        "spillage_test_result": {
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Ambient CO test result",
+          "enum": [
+            "FAILED",
+            "NA",
+            "PASSED",
+            "WARNING"
+          ]
+        },
+        "undiluted_co_test_result": {
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Ambient CO test result",
+          "enum": [
+            "FAILED",
+            "NA",
+            "PASSED",
+            "WARNING"
+          ]
+        },
+        "venting_test_result": {
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Ambient CO test result",
+          "enum": [
+            "FAILED",
+            "NA",
+            "PASSED",
+            "WARNING"
+          ]
+        }
+      },
+      "required": [
+        "ambient_co_test_result",
+        "ashrae_62_2_ventilation_calculated",
+        "confirm_all_safety_check_results_disclosed_to_homeowner",
+        "drainage_system_condition",
+        "gas_leak_detection_test_result",
+        "roof_condition",
+        "signs_of_mold_or_moisture",
+        "spillage_test_result",
+        "undiluted_co_test_result",
+        "venting_test_result"
+      ],
+      "additionalProperties": false
+    },
+    "vendor_id": {
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 64,
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    }
+  },
+  "required": [
+    "is_contractor_eligible",
+    "project_completion_date",
+    "rebate_deducted",
+    "rebate_type",
+    "safety_checks",
+    "vendor_id"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "equipment_and_material_cost"
+      ]
+    },
+    {
+      "required": [
+        "installation_cost"
+      ]
+    }
+  ],
+  "if": {
+    "properties": {
+      "rebate_type": {
+        "const": "MEASURED"
+      }
+    }
+  },
+  "then": {
+    "required": [
+      "measured_post_retrofit_energy_usage_kwh_equivalent"
+    ]
+  },
+  "else": {
+    "not": {
+      "required": [
+        "measured_post_retrofit_energy_usage_kwh_equivalent"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

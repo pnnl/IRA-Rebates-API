@@ -6,11 +6,11 @@
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
         "fuel_type": {
           "enum": [
             "GAS",
-            "ELECTRIC",
             "NONE"
           ]
         }
@@ -23,11 +23,12 @@
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
         "cooking_appliance_type": {
           "enum": [
-            "STANDARD_ELECTRIC",
-            "INDUCTION_COOKTOP"
+            "INDUCTION_COOKTOP",
+            "STANDARD_ELECTRIC"
           ]
         }
       },

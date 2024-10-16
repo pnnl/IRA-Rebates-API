@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationStateAddenda",
+  "type": "object",
+  "properties": {
+    "state_attests_any_failed_inspection_remediated": {
+      "$ref": "/schemas/definitions#state_attests_any_failed_inspection_remediated"
+    }
+  },
+  "required": [
+    "state_attests_any_failed_inspection_remediated"
+  ],
+  "additionalProperties": false
+}

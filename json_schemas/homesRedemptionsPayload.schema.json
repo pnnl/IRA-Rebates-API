@@ -3,40 +3,61 @@
   "$id": "https://ira-rebates.labworks.org/schemas/homesRedemption",
   "type": "object",
   "properties": {
-    "rebate_type": {
-      "$ref": "/schemas/definitions#rebate_type"
-    },
-    "rebate_deducted": {
-      "$ref": "/schemas/definitions#rebate_deducted"
-    },
     "equipment_and_material_cost": {
-      "$ref": "/schemas/definitions#equipment_and_material_cost"
+      "$ref": "/schemas/definitions#homes_equipment_and_material_cost"
     },
     "installation_cost": {
       "$ref": "/schemas/definitions#installation_cost"
     },
-    "project_completion_date": {
-      "$ref": "/schemas/definitions#project_completion_date"
+    "is_contractor_eligible": {
+      "$ref": "/schemas/definitions#is_contractor_eligible",
+      "const": true
     },
     "measured_post_retrofit_energy_usage_kwh_equivalent": {
       "$ref": "/schemas/definitions#measured_post_retrofit_energy_usage_kwh_equivalent"
+    },
+    "project_completion_date": {
+      "$ref": "/schemas/definitions#project_completion_date"
+    },
+    "rebate_deducted": {
+      "$ref": "/schemas/definitions#rebate_deducted"
+    },
+    "rebate_type": {
+      "$ref": "/schemas/definitions#rebate_type"
+    },
+    "safety_checks": {
+      "$ref": "/schemas/definitions#safety_checks"
+    },
+    "vendor_id": {
+      "$ref": "/schemas/definitions#vendor_id"
     }
   },
   "required": [
+    "is_contractor_eligible",
+    "project_completion_date",
     "rebate_deducted",
-    "equipment_and_material_cost",
-    "installation_cost",
-    "project_completion_date"
+    "rebate_type",
+    "safety_checks",
+    "vendor_id"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "equipment_and_material_cost"
+      ]
+    },
+    {
+      "required": [
+        "installation_cost"
+      ]
+    }
   ],
   "if": {
     "properties": {
       "rebate_type": {
         "const": "MEASURED"
       }
-    },
-    "required": [
-      "rebate_type"
-    ]
+    }
   },
   "then": {
     "required": [

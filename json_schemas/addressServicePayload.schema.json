@@ -1,5 +1,133 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/addressService",
-  "$ref": "/schemas/definitions#building_address"
+  "type": "object",
+  "properties": {
+    "city": {
+      "type": "string",
+      "title": "City",
+      "minLength": 1,
+      "description": "The name of the city, town, etc.. This would be &ldquo;Richland&rdquo; for the address: 650 Horn Rapids Road, Richland, WA 99354."
+    },
+    "county": {
+      "type": "string",
+      "title": "County",
+      "minLength": 1,
+      "description": "The name of the county containing the address."
+    },
+    "state": {
+      "title": "State",
+      "$comment": " https://bedes.lbl.gov/bedes-online/state",
+      "enum": [
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ],
+      "description": "The two letter code for the state. This would be &ldquo;WA&rdquo; for the address: 650 Horn Rapids Road, Richland, WA 99354."
+    },
+    "street": {
+      "type": "string",
+      "title": "Street",
+      "minLength": 1,
+      "description": "The name of the street, avenue, etc.. This would be &ldquo;Horn Rapids Road&rdquo; for the address: 650 Horn Rapids Road, Richland, WA 99354."
+    },
+    "street_number": {
+      "type": "string",
+      "title": "Street number",
+      "pattern": "^[0-9a-zA-Z/\\- ]+$",
+      "minLength": 1,
+      "maxLength": 12,
+      "description": "The building number. This would be &ldquo;650&rdquo; for the address: 650 Horn Rapids Road, Richland, WA 99354."
+    },
+    "zip_code": {
+      "type": "string",
+      "title": "Zip code",
+      "minLength": 5,
+      "maxLength": 5,
+      "pattern": "^\\d{5}$",
+      "description": "The *zip_code* is the 5-digit zip code. This would be &ldquo;99354&rdquo; for the address: 650 Horn Rapids Road, Richland, WA 99354."
+    }
+  },
+  "required": [
+    "state",
+    "street",
+    "street_number"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "required": [
+        "city"
+      ]
+    },
+    {
+      "required": [
+        "county"
+      ]
+    },
+    {
+      "required": [
+        "zip_code"
+      ]
+    }
+  ]
 }

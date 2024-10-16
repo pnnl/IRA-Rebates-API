@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesStateAddenda",
+  "type": "object",
+  "properties": {
+    "claimant_payment": {
+      "$ref": "/schemas/definitions#claimant_payment"
+    },
+    "state_attests_any_failed_inspection_remediated": {
+      "$ref": "/schemas/definitions#state_attests_any_failed_inspection_remediated"
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "claimant_payment"
+      ]
+    },
+    {
+      "required": [
+        "state_attests_any_failed_inspection_remediated"
+      ]
+    }
+  ],
+  "additionalProperties": false
+}

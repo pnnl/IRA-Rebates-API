@@ -6,11 +6,10 @@
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
-        "upgrade_subtype": {
-          "const": "FLOOR_ABOVE_UNCONDITIONED_SPACE_INSULATION"
-        },
         "percent_floor_receiving_additional_insulation": {
+          "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
           "enum": [
             10,
             25,
@@ -20,20 +19,24 @@
           ]
         },
         "r_value_added": {
+          "description": "Choose the R-value that best describes the amount of insulation added.",
           "enum": [
             "LESS_THAN_R10",
+            "MORE_THAN_R30",
             "R10",
             "R13",
             "R19",
-            "R30",
-            "MORE_THAN_R30"
+            "R30"
           ]
+        },
+        "upgrade_subtype": {
+          "const": "FLOOR_ABOVE_UNCONDITIONED_SPACE_INSULATION"
         }
       },
       "required": [
-        "upgrade_subtype",
         "percent_floor_receiving_additional_insulation",
-        "r_value_added"
+        "r_value_added",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
     }
