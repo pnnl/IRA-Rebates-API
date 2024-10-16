@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesReservationExpirationDateUpdate",
+  "type": "object",
+  "properties": {
+    "new_expiration_date_time": {
+      "type": "string",
+      "format": "date-time",
+      "title": "New expiration date-time",
+      "description": "The new date-time at which the reservation should be set to expire.",
+      "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
+    }
+  }
+}

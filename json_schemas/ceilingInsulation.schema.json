@@ -6,44 +6,36 @@
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
-        "upgrade_subtype": {
-          "const": "CEILING_INSULATION"
-        },
         "insulation_type": {
+          "description": "The preexisting insulation type for the area to receive (additional) insulation. See https://www.energy.gov/energysaver/types-insulation for information about insulation types.",
           "enum": [
+            "BATT",
+            "BLOWN_IN",
+            "CLOSED_CELL_SPRAY_FOAM",
+            "DO_NOT_KNOW",
             "NONE",
-            "BATT_INSULATION",
-            "BLOWN_IN_INSULATION",
-            "RIGID_BOARD_INSULATION",
-            "CLOSED_CELL_SPRAY_FOAM_INSULATION",
-            "DO_NOT_KNOW"
+            "RIGID_BOARD"
           ]
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "upgrade_subtype",
-        "insulation_type"
+        "insulation_type",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
-        "upgrade_subtype": {
-          "const": "CEILING_INSULATION"
-        },
-        "r_value_added": {
-          "enum": [
-            "LESS_THAN_R30",
-            "R30",
-            "R49",
-            "R60",
-            "MORE_THAN_R60"
-          ]
-        },
         "percent_ceiling_receiving_additional_insulation": {
+          "description": "Choose the closest percent of total ceiling area that will receive (additional) insulation. The ceiling is the one that is associated with the appropriate conditioned_floor_area field.",
           "enum": [
             10,
             25,
@@ -51,14 +43,32 @@
             75,
             100
           ]
+        },
+        "r_value_added": {
+          "description": "Choose the R-value that best describes the amount of insulation added.",
+          "enum": [
+            "LESS_THAN_R30",
+            "MORE_THAN_R60",
+            "R30",
+            "R49",
+            "R60"
+          ]
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "upgrade_subtype",
+        "percent_ceiling_receiving_additional_insulation",
         "r_value_added",
-        "percent_ceiling_receiving_additional_insulation"
+        "upgrade_subtype"
       ],
       "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "upgrade_subtype": {
+      "const": "CEILING_INSULATION"
     }
   }
 }

@@ -49,17 +49,6 @@
     },
     {
       "properties": {
-        "heat_pump_for_space_heating_or_cooling_upgrade_details": {
-          "$ref": "/schemas/heatPumpForSpaceHeatingOrCooling#upgrade_component_details"
-        }
-      },
-      "required": [
-        "heat_pump_for_space_heating_or_cooling_upgrade_details"
-      ],
-      "additionalProperties": false
-    },
-    {
-      "properties": {
         "heat_pump_water_heater_upgrade_details": {
           "$ref": "/schemas/heatPumpWaterHeater#upgrade_component_details"
         }

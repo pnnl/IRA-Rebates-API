@@ -3,14 +3,38 @@
   "$id": "https://ira-rebates.labworks.org/schemas/foundationInsulation",
   "type": "object",
   "properties": {
+    "original_component_details": {
+      "$anchor": "original_component_details",
+      "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
+      "properties": {
+        "foundation_type": {
+          "description": "Pick the one with the most area",
+          "enum": [
+            "CONDITIONED_BASEMENT",
+            "CONDITIONED_CRAWLSPACE",
+            "SLAB_ON_GRADE",
+            "UNCONDITIONED_BASEMENT",
+            "UNCONDITIONED_CRAWLSPACE"
+          ]
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
+        }
+      },
+      "required": [
+        "foundation_type",
+        "upgrade_subtype"
+      ],
+      "additionalProperties": false
+    },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
-        "upgrade_subtype": {
-          "const": "FOUNDATION_INSULATION"
-        },
         "percent_foundation_perimeter_receiving_additional_insulation": {
+          "description": "For estimating this percentage, use the distance around the footprint that is determined by either `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
           "enum": [
             10,
             25,
@@ -20,22 +44,31 @@
           ]
         },
         "r_value_added": {
+          "description": "Choose the R-value that best describes the amount of insulation added.",
           "enum": [
             "LESS_THAN_R5",
-            "R5",
             "R10",
             "R13",
             "R19",
-            "R30"
+            "R30",
+            "R5"
           ]
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "upgrade_subtype",
         "percent_foundation_perimeter_receiving_additional_insulation",
-        "r_value_added"
+        "r_value_added",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "upgrade_subtype": {
+      "const": "FOUNDATION_INSULATION"
     }
   }
 }

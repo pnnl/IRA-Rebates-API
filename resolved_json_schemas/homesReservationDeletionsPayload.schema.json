@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesReservationDeletion",
+  "type": "object",
+  "properties": {
+    "deletion_reason": {
+      "title": "Deletion reason",
+      "type": "string",
+      "anyOf": [
+        {
+          "minLength": 4
+        },
+        {
+          "enum": [
+            "CANCEL_RESERVATION",
+            "CORRECT_RESERVATION"
+          ]
+        }
+      ],
+      "description": "Provide a reason for deleting the reservation. CANCEL_RESERVATION indicates that the intention is to delete the reservation with no immediate intention of replacing it. CORRECT_RESERVATION indicates that the intention is to delete the reservation in order to replace it with another."
+    },
+    "delete_redemptions": {
+      "title": "Delete redemptions",
+      "type": "boolean",
+      "description": "A boolean flag to determine if the redemption(s) for this reservation will be deleted. When this flag is set to true, any associated redemption for the reservation will also be deleted."
+    }
+  },
+  "required": [
+    "deletion_reason"
+  ],
+  "additionalProperties": false
+}

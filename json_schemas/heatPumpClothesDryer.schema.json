@@ -6,11 +6,12 @@
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
         "fuel_type": {
           "enum": [
-            "GAS",
             "ELECTRIC",
+            "GAS",
             "NONE"
           ]
         }
@@ -23,10 +24,11 @@
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
         "energy_guide_estimated_energy_use_kwh": {
-          "type": "number",
-          "minimum": 0
+          "type": "integer",
+          "exclsuiveMinimum": 0
         }
       },
       "required": [

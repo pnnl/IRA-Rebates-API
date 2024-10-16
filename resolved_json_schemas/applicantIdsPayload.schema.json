@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/applicantId",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "email",
+          "pattern": "(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+        },
+        {
+          "const": "NOT AVAILABLE"
+        }
+      ],
+      "$comment": "https://datatracker.ietf.org/doc/html/rfc5322",
+      "description": "The email address of the homeowner, building owner, or renter that will ultimately be receiving the benefit of the rebate."
+    },
+    "last_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-zA-Z\\-\\s']+$",
+      "description": "The applicant's last name."
+    },
+    "phone": {
+      "type": "string",
+      "anyOf": [
+        {
+          "pattern": "^\\d+$",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        {
+          "const": "NOT AVAILABLE"
+        }
+      ],
+      "description": "The ten-digit phone number of the home owner, building owner, or renter that will ultimately be receiving the benefit of the rebate."
+    }
+  },
+  "required": [
+    "email",
+    "phone",
+    "last_name"
+  ],
+  "anyOf": [
+    {
+      "not": {
+        "properties": {
+          "email": {
+            "const": "NOT AVAILABLE"
+          },
+          "phone": {
+            "const": "NOT AVAILABLE"
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

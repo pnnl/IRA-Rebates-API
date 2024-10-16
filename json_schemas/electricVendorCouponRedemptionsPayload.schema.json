@@ -3,93 +3,121 @@
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationVendorCouponRedemption",
   "type": "object",
   "properties": {
-    "installation_cost": {
-      "$ref": "/schemas/definitions#installation_cost"
-    },
-    "purchase_date": {
-      "$ref": "/schemas/definitions#purchase_date"
-    },
     "equipment_and_material_cost": {
-      "$ref": "/schemas/definitions#equipment_and_material_cost"
+      "$ref": "/schemas/definitions#electric_equipment_and_material_cost",
+      "description": "The total cost of the qualifying products purchased."
     },
-    "product_ids": {
-      "$ref": "/schemas/definitions#product_ids"
+    "installation_cost": {
+      "$ref": "/schemas/definitions#installation_cost",
+      "description": "Use this if installation cost is included at the point of purchase of the qualifying product(s), otherwise set this to 0."
+    },
+    "product_info": {
+      "$ref": "/schemas/definitions#product_info"
+    },
+    "purchase_date_time": {
+      "$ref": "/schemas/definitions#purchase_date_time"
     },
     "rebate_deducted": {
       "$ref": "/schemas/definitions#rebate_deducted"
     },
-    "redemption_type": {
-      "$ref": "/schemas/definitions#redemption_type"
-    },
     "upgrade_type": {
       "$ref": "/schemas/definitions#upgrade_type"
     },
-    "product_descriptions": {
-      "$ref": "/schemas/definitions#product_descriptions"
+    "vendor_id": {
+      "$ref": "/schemas/definitions#vendor_id"
     },
-    "product_serial_numbers": {
-      "$ref": "/schemas/definitions#product_serial_numbers"
+    "vendor_coupon_id": {
+      "$ref": "/schemas/definitions#vendor_coupon_id"
     }
   },
   "required": [
-    "redemption_type",
+    "equipment_and_material_cost",
+    "installation_cost",
+    "product_info",
+    "purchase_date_time",
     "rebate_deducted",
     "upgrade_type",
-    "purchase_date",
-    "equipment_and_material_cost"
+    "vendor_id",
+    "vendor_coupon_id"
   ],
+  "additionalProperties": false,
   "allOf": [
     {
-      "if": {
-        "required": [
-          "equipment_and_material_cost"
-        ]
-      },
-      "then": {
-        "anyOf": [
-          {
-            "required": [
-              "product_ids"
-            ]
-          },
-          {
-            "required": [
-              "product_descriptions"
+      "properties": {
+        "product_info": {
+          "items": {
+            "anyOf": [
+              {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              },
+              {
+                "required": [
+                  "model_number"
+                ]
+              },
+              {
+                "required": [
+                  "upc"
+                ]
+              }
             ]
           }
-        ],
-        "if": {
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "product_info": {
+            "items": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "model_number"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "not": {
           "properties": {
             "upgrade_type": {
               "enum": [
-                "HEAT_PUMP_WATER_HEATER",
                 "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
-                "ELECTRIC_COOKING_APPLIANCE",
-                "HEAT_PUMP_CLOTHES_DRYER"
+                "HEAT_PUMP_WATER_HEATER"
               ]
             }
           }
-        },
-        "then": {
-          "required": [
-            "product_serial_numbers"
-          ]
-        },
-        "else": {
-          "if": {
-            "not": {
-              "properties": {
-                "upgrade_type": {
-                  "const": "INSULATION_AIR_SEALING_VENTILATION"
-                }
+        }
+      },
+      "then": {
+        "properties": {
+          "product_info": {
+            "items": {
+              "not": {
+                "required": [
+                  "ahri_reference_number"
+                ]
               }
-            }
-          },
-          "then": {
-            "not": {
-              "required": [
-                "product_serial_numbers"
-              ]
             }
           }
         }

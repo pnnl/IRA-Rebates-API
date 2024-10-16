@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/floorAboveConditionedSpaceInsulation",
+  "type": "object",
+  "properties": {
+    "upgrade_component_details": {
+      "$anchor": "upgrade_component_details",
+      "type": "object",
+      "description": "Details that describe this improvement",
+      "properties": {
+        "percent_floor_receiving_additional_insulation": {
+          "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+          "enum": [
+            10,
+            25,
+            50,
+            75,
+            100
+          ]
+        },
+        "r_value_added": {
+          "description": "Choose the R-value that best describes the amount of insulation added.",
+          "enum": [
+            "LESS_THAN_R10",
+            "MORE_THAN_R30",
+            "R10",
+            "R13",
+            "R19",
+            "R30"
+          ]
+        },
+        "upgrade_subtype": {
+          "const": "FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION"
+        }
+      },
+      "required": [
+        "percent_floor_receiving_additional_insulation",
+        "r_value_added",
+        "upgrade_subtype"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

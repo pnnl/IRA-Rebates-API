@@ -6,37 +6,45 @@
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
-        "upgrade_subtype": {
-          "const": "VENTILATION"
-        },
         "has_whole_house_ventilation": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Set to true if there is any existing exhaust fan, supply fan, HRV, ERV, or similar system in the home or building that automatically runs at least once every three hours."
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "upgrade_subtype",
-        "has_whole_house_ventilation"
+        "has_whole_house_ventilation",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
-        "upgrade_subtype": {
-          "const": "VENTILATION"
-        },
         "cfm_flow_rate": {
           "type": "number",
-          "minimum": 0
+          "exclusiveMinimum": 0
+        },
+        "upgrade_subtype": {
+          "$ref": "#/$defs/upgrade_subtype"
         }
       },
       "required": [
-        "upgrade_subtype",
-        "cfm_flow_rate"
+        "cfm_flow_rate",
+        "upgrade_subtype"
       ],
       "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "upgrade_subtype": {
+      "const": "VENTILATION"
     }
   }
 }

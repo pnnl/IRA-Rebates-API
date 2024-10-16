@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationFile",
+  "type": "object",
+  "properties": {
+    "binary_file_content_base_64": {
+      "type": "string",
+      "contentEncoding": "base64",
+      "description": "The API user must convert the binary file content to base64 encoding.",
+      "title": "Binary file content Base64"
+    },
+    "file_name": {
+      "type": "string",
+      "pattern": "^[0-9a-zA-Z\\-.\\(\\)_ ]+$",
+      "minLength": 2,
+      "maxLength": 64,
+      "description": "This file name will be associated with the uploaded file and will be shown wherever a list of the uploaded files for a reservation is returned.",
+      "title": "File name"
+    },
+    "file_purpose": {
+      "enum": [
+        "QUALITY_ASSURANCE"
+      ],
+      "title": "File purpose"
+    },
+    "file_type": {
+      "enum": [
+        "HEIC",
+        "JPEG",
+        "PDF",
+        "PNG"
+      ],
+      "title": "File type"
+    }
+  },
+  "required": [
+    "binary_file_content_base_64",
+    "file_name",
+    "file_type",
+    "file_purpose"
+  ],
+  "additionalProperties": false
+}

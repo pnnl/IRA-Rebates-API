@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesFile",
+  "type": "object",
+  "properties": {
+    "binary_file_content_base_64": {
+      "type": "string",
+      "contentEncoding": "base64",
+      "description": "The API user must convert the binary file content to base64 encoding.",
+      "title": "Binary file content Base64"
+    },
+    "file_name": {
+      "type": "string",
+      "pattern": "^[0-9a-zA-Z\\-.\\(\\)_ ]+$",
+      "minLength": 2,
+      "maxLength": 64,
+      "description": "This file name will be associated with the uploaded file and will be shown wherever a list of the uploaded files for a reservation is returned.",
+      "title": "File name"
+    },
+    "file_type": {
+      "enum": [
+        "CSV",
+        "HEIC",
+        "HPXML_MEASURED",
+        "HPXML_MODELED_RECOMMENDED",
+        "HPXML_MODELED_REQUIRED",
+        "JPEG",
+        "PDF",
+        "PNG"
+      ],
+      "title": "File type"
+    },
+    "file_purpose": {
+      "enum": [
+        "POST_RETROFIT_MODEL",
+        "PRE_AND_POST_RETROFIT_MODELS",
+        "PRE_RETROFIT_MODEL",
+        "QUALITY_ASSURANCE"
+      ],
+      "title": "File purpose"
+    }
+  },
+  "required": [
+    "binary_file_content_base_64",
+    "file_name",
+    "file_type",
+    "file_purpose"
+  ],
+  "additionalProperties": false
+}

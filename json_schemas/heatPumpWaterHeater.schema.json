@@ -6,52 +6,58 @@
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "description": "The preexisting conditions associated with this improvement",
       "properties": {
-        "dwh_system_type": {
+        "storage_capacity": {
           "enum": [
-            "GAS_STORAGE",
-            "GAS_TANKLESS",
-            "STANDARD_ELECTRIC_STORAGE",
-            "STANDARD_ELECTRIC_TANKLESS",
-            "OIL_STORAGE",
-            "OIL_TANKLESS",
-            "NONE"
+            "45_GALLON",
+            "50_GALLON",
+            "60_GALLON",
+            "80_GALLON",
+            "DO_NOT_KNOW",
+            "LESS_THAN_45_GALLON",
+            "MORE_THAN_80_GALLON"
           ]
         },
-        "storage_capacity": {
-          "$ref": "#/$defs/storage_capacity"
+        "water_heater_fuel_and_system_type": {
+          "enum": [
+            "DO_NOT_KNOW",
+            "ELECTRIC_RESISTANCE_STORAGE",
+            "ELECTRIC_RESISTANCE_TANKLESS",
+            "GAS_PROPANE_STORAGE",
+            "GAS_PROPANE_TANKLESS",
+            "NONE",
+            "OIL_STORAGE",
+            "OIL_TANKLESS"
+          ]
         }
       },
       "required": [
-        "dwh_system_type",
-        "storage_capacity"
+        "storage_capacity",
+        "water_heater_fuel_and_system_type"
       ],
       "additionalProperties": false
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "description": "Details that describe this improvement",
       "properties": {
         "storage_capacity": {
-          "$ref": "#/$defs/storage_capacity"
+          "enum": [
+            "45_GALLON",
+            "50_GALLON",
+            "60_GALLON",
+            "80_GALLON",
+            "LESS_THAN_45_GALLON",
+            "MORE_THAN_80_GALLON"
+          ]
         }
       },
       "required": [
         "storage_capacity"
       ],
       "additionalProperties": false
-    }
-  },
-  "$defs": {
-    "storage_capacity": {
-      "enum": [
-        "LESS_THAN_45_GALLON",
-        "45_GALLON",
-        "50_GALLON",
-        "60_GALLON",
-        "80_GALLON",
-        "MORE_THAN_80_GALLON"
-      ]
     }
   }
 }

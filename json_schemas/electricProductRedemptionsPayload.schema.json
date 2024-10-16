@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/electrificationProductRedemption",
+  "type": "object",
+  "properties": {
+    "equipment_and_material_cost": {
+      "$ref": "/schemas/definitions#electric_equipment_and_material_cost",
+      "description": "The total cost of the qualifying products purchased."
+    },
+    "installation_cost": {
+      "$ref": "/schemas/definitions#installation_cost",
+      "description": "Use this if installation cost is included at the point of purchase of the qualifying product(s), otherwise set this to 0."
+    },
+    "product_info": {
+      "$ref": "/schemas/definitions#product_info"
+    },
+    "purchase_date_time": {
+      "$ref": "/schemas/definitions#purchase_date_time"
+    },
+    "rebate_deducted": {
+      "$ref": "/schemas/definitions#rebate_deducted"
+    },
+    "upgrade_type": {
+      "$ref": "/schemas/definitions#upgrade_type"
+    },
+    "vendor_id": {
+      "$ref": "/schemas/definitions#vendor_id"
+    }
+  },
+  "required": [
+    "equipment_and_material_cost",
+    "installation_cost",
+    "product_info",
+    "purchase_date_time",
+    "rebate_deducted",
+    "upgrade_type",
+    "vendor_id"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "properties": {
+        "product_info": {
+          "items": {
+            "anyOf": [
+              {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              },
+              {
+                "required": [
+                  "model_number"
+                ]
+              },
+              {
+                "required": [
+                  "upc"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "upgrade_type": {
+            "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "product_info": {
+            "items": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ahri_reference_number"
+                  ]
+                },
+                {
+                  "required": [
+                    "model_number"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "not": {
+          "properties": {
+            "upgrade_type": {
+              "enum": [
+                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+                "HEAT_PUMP_WATER_HEATER"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "product_info": {
+            "items": {
+              "not": {
+                "required": [
+                  "ahri_reference_number"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
