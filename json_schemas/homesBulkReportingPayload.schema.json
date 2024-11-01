@@ -26,6 +26,9 @@
       "contractor_company_name": {
         "$ref": "/schemas/definitions#contractor_company_name"
       },
+      "contractor_dac_incentive": {
+        "$ref": "/schemas/definitions#contractor_dac_incentive"
+      },
       "contractor_name": {
         "$ref": "/schemas/definitions#contractor_name"
       },

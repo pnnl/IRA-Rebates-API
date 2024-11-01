@@ -97,6 +97,13 @@
       "maxLength": 64,
       "title": "Vendor id",
       "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "vendor_coupon_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "title": "Vendor coupon id",
+      "description": "The unique identifier for the vendor coupon."
     }
   },
   "required": [
@@ -106,7 +113,8 @@
     "purchase_date_time",
     "rebate_deducted",
     "upgrade_type",
-    "vendor_id"
+    "vendor_id",
+    "vendor_coupon_id"
   ],
   "additionalProperties": false,
   "allOf": [

@@ -51,6 +51,13 @@
       "maxLength": 64,
       "description": "The name of the primary contracting company for the project."
     },
+    "contractor_dac_incentive": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive. This field is required if the address of the building is within a DAC.",
+      "title": "Contractor DAC incentive"
+    },
     "contractor_name": {
       "title": "Contractor name",
       "type": "string",

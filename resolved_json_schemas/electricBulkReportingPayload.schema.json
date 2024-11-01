@@ -58,7 +58,7 @@
         "type": "number",
         "multipleOf": 0.01,
         "minimum": 0,
-        "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive.",
+        "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive. This field is required if the address of the building is within a DAC.",
         "title": "Contractor DAC incentive"
       },
       "contractor_incentive": {
@@ -1048,13 +1048,18 @@
             ]
           },
           "confirm_all_safety_check_results_disclosed_to_homeowner": {
-            "type": "boolean",
-            "title": "Confirm all safety check results disclosed to homeowner"
+            "title": "ASHRAE 62.2 ventilation calculated",
+            "enum": [
+              "NA",
+              "NO",
+              "YES"
+            ]
           },
           "drainage_system_condition": {
             "title": "Drainage system condition",
             "enum": [
               "GOOD",
+              "NA",
               "POTENTIAL_ISSUES"
             ]
           },
@@ -1072,13 +1077,18 @@
             "title": "Drainage system condition",
             "enum": [
               "GOOD",
+              "NA",
               "POTENTIAL_ISSUES"
             ]
           },
           "signs_of_mold_or_moisture": {
-            "type": "boolean",
             "description": "Contractor should not proceed with energy efficiency measures until mold and moisture issues are mitigated.",
-            "title": "Signs of mold or moisture"
+            "title": "ASHRAE 62.2 ventilation calculated",
+            "enum": [
+              "NA",
+              "NO",
+              "YES"
+            ]
           },
           "spillage_test_result": {
             "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
@@ -2188,13 +2198,6 @@
           "required": [
             "limited_assessment"
           ]
-        },
-        "else": {
-          "not": {
-            "required": [
-              "limited_assessment"
-            ]
-          }
         }
       },
       {
