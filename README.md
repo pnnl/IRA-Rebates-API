@@ -1,6 +1,6 @@
 # IRA-Rebates-API
 
-**Updated 10/16/2024**
+**Updated 11/01/2024**
 
 **Current API version:** beta v4.2
 
