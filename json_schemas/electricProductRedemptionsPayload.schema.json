@@ -14,6 +14,9 @@
     "product_info": {
       "$ref": "/schemas/definitions#product_info"
     },
+    "purchase_date": {
+      "$ref": "/schemas/definitions#purchase_date"
+    },
     "purchase_date_time": {
       "$ref": "/schemas/definitions#purchase_date_time"
     },
@@ -31,10 +34,31 @@
     "equipment_and_material_cost",
     "installation_cost",
     "product_info",
-    "purchase_date_time",
     "rebate_deducted",
     "upgrade_type",
     "vendor_id"
+  ],
+  "oneOf": [
+    {
+      "required": [
+        "purchase_date_time"
+      ],
+      "not": {
+        "required": [
+          "purchase_date"
+        ]
+      }
+    },
+    {
+      "required": [
+        "purchase_date"
+      ],
+      "not": {
+        "required": [
+          "purchase_date_time"
+        ]
+      }
+    }
   ],
   "additionalProperties": false,
   "allOf": [

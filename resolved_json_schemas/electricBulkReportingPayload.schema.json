@@ -1012,11 +1012,20 @@
         "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.",
         "title": "Project id"
       },
+      "purchase_date": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 10,
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "title": "Purchase date",
+        "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial. This represents the date the product was purchased. Either this field or 'purchase_date_time' is required for product redemption."
+      },
       "purchase_date_time": {
         "type": "string",
-        "format": "date-time",
+        "minLength": 10,
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(Z|([+-]\\d{2}:\\d{2})))?$|^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
         "title": "Purchase date-time",
-        "description": "This is the date a product was purchased. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted.",
+        "description": "This is the date and time a product was purchased. Either this field or the 'purchase_date' field is required for product redemption. Note that the 'purchase_date_time' field will be deprecated in the future.",
         "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
       },
       "rebate_deducted": {
@@ -1653,11 +1662,32 @@
       "product_info",
       "product_vendor_id",
       "project_completion_date",
-      "purchase_date_time",
       "rebate_deducted",
       "state_attests_proof_of_identity_ownership_income",
       "state_attests_any_failed_inspection_remediated",
       "upgrade_type"
+    ],
+    "oneOf": [
+      {
+        "required": [
+          "purchase_date_time"
+        ],
+        "not": {
+          "required": [
+            "purchase_date"
+          ]
+        }
+      },
+      {
+        "required": [
+          "purchase_date"
+        ],
+        "not": {
+          "required": [
+            "purchase_date_time"
+          ]
+        }
+      }
     ],
     "additionalProperties": false,
     "allOf": [

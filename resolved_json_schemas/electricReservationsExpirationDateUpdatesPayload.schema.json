@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ira-rebates.labworks.org/schemas/homesReservationExpirationDateUpdate",
+  "$id": "https://ira-rebates.labworks.org/schemas/electricReservationExpirationDateUpdate",
   "type": "object",
   "properties": {
     "new_expiration_date": {

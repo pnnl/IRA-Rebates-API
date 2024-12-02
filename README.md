@@ -1,10 +1,10 @@
 # IRA-Rebates-API
 
-**Updated 11/01/2024**
+**Updated 12/02/2024**
 
-**Current API version:** beta v4.2
+**Current API version:** 20241202
 
-This repository contains materials useful to users of the IRA Rebates API ***beta version 4***. The IRA Rebates API supports the HOMES (section 50121) and HEEHRA (section 50122) DOE rebate programs authorized by the Inflation Reduction Act (IRA) of 2022. See https://www.energy.gov/scep/home-energy-rebates-programs for program descriptions and updates.
+This repository contains materials useful to users of the IRA Rebates API **20241202**. The IRA Rebates API supports the HOMES (section 50121) and HEEHRA (section 50122) DOE rebate programs authorized by the Inflation Reduction Act (IRA) of 2022. See https://www.energy.gov/scep/home-energy-rebates-programs for program descriptions and updates.
 
 ## JSON Schema 
 The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST endpoint payloads. The schema files can also be used, together with a JSON Schema validator (see  https://json-schema.org/implementations), to validate the POST payloads before submitting to the API. This may be especially helpful during the development of client software.
@@ -20,6 +20,7 @@ This version of the json schema files correspond to Data and Tools Guide version
 | /address-service/addresses | addressServicePayload.schema.json |
 | /electric/reporting | electricBulkReportingPayload.schema.json |
 | /electric/reservations | electricReservationsPayload.schema.json |
+| /electric/reservations/{reservation_id}/extend | electricReservationsExpirationDateUpdatesPayload.schema.json |
 | /electric/reservations/{reservation_id}/files | electricFilesPayload.schema.json |
 | /electric/reservations/{reservation_id}/limited-assessments | electricLimitedAssessmentsPayload.schema.json |
 | /electric/reservations/{reservation_id}/install-redemptions | electricInstallRedemptionsPayload.schema.json |
