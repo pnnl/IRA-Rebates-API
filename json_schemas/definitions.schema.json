@@ -483,13 +483,14 @@
       "$anchor": "modeled_pre_retrofit_energy_usage_kwh_equivalent",
       "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
     },
-    "new_expiration_date_time": {
+    "new_expiration_date": {
       "type": "string",
-      "format": "date-time",
-      "title": "New expiration date-time",
-      "$anchor": "new_expiration_date_time",
-      "description": "The new date-time at which the reservation should be set to expire.",
-      "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
+      "format": "date",
+      "title": "New expiration date",
+      "$anchor": "new_expiration_date",
+      "description": "The new date at which the reservation should be set to expire.",
+      "$comment": "The date format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time.",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}"
     },
     "num_units": {
       "$anchor": "num_units",
@@ -566,12 +567,23 @@
       "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.",
       "title": "Project id"
     },
+    "purchase_date": {
+      "$anchor": "purchase_date",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Purchase date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial. This represents the date the product was purchased. Either this field or 'purchase_date_time' is required for product redemption."
+    },
     "purchase_date_time": {
       "$anchor": "purchase_date_time",
       "type": "string",
+      "minLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(Z|([+-]\\d{2}:\\d{2})))?$|^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
       "format": "date-time",
       "title": "Purchase date-time",
-      "description": "This is the date a product was purchased. This field is required when *redemption_type* is POINT_OF_PURCHASE and should otherwise be omitted.",
+      "description": "This is the date and time a product was purchased. Either this field or the 'purchase_date' field is required for product redemption. Note that the 'purchase_date_time' field will be deprecated in the future.",
       "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
     },
     "rebate_deducted": {

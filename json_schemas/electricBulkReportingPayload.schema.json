@@ -94,6 +94,9 @@
       "project_id": {
         "$ref": "/schemas/definitions#project_id"
       },
+      "purchase_date": {
+        "$ref": "/schemas/definitions#purchase_date"
+      },
       "purchase_date_time": {
         "$ref": "/schemas/definitions#purchase_date_time"
       },
@@ -138,11 +141,32 @@
       "product_info",
       "product_vendor_id",
       "project_completion_date",
-      "purchase_date_time",
       "rebate_deducted",
       "state_attests_proof_of_identity_ownership_income",
       "state_attests_any_failed_inspection_remediated",
       "upgrade_type"
+    ],
+    "oneOf": [
+      {
+        "required": [
+          "purchase_date_time"
+        ],
+        "not": {
+          "required": [
+            "purchase_date"
+          ]
+        }
+      },
+      {
+        "required": [
+          "purchase_date"
+        ],
+        "not": {
+          "required": [
+            "purchase_date_time"
+          ]
+        }
+      }
     ],
     "additionalProperties": false,
     "allOf": [
