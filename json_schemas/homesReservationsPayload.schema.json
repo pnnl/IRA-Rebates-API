@@ -206,11 +206,7 @@
       },
       "then": {
         "required": [
-          "dwelling_unit_income_bucket",
-          "mf_building_income_bucket",
-          "num_units",
-          "num_units_meeting_income_bucket",
-          "unit_name_or_number"
+          "dwelling_unit_income_bucket"
         ]
       }
     },
