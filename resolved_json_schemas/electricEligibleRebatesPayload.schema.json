@@ -69,6 +69,13 @@
       ],
       "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one units falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
     },
+    "num_occupied_units": {
+      "type": "integer",
+      "title": "Num occupied units",
+      "minimum": 0,
+      "maximum": 1000,
+      "description": "This is the number of occupied units in a multifamily building. "
+    },
     "num_units": {
       "type": "integer",
       "title": "Num units",
@@ -81,7 +88,7 @@
       "title": "Num units meeting income bucket",
       "minimum": 1,
       "maximum": 1000,
-      "description": "This is the number of units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
+      "description": "This is the number of occupied units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
     },
     "unit_name_or_number": {
       "type": "string",
@@ -144,6 +151,7 @@
       "then": {
         "required": [
           "mf_building_income_bucket",
+          "project_id",
           "num_units",
           "num_units_meeting_income_bucket",
           "unit_name_or_number"
@@ -164,7 +172,26 @@
           "dwelling_unit_income_bucket",
           "num_units",
           "unit_name_or_number"
-        ]
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "mf_building_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_occupied_units"
+              ]
+            },
+            {
+              "required": [
+                "num_units_meeting_income_bucket"
+              ]
+            }
+          ]
+        }
       }
     },
     {
@@ -183,7 +210,36 @@
       "then": {
         "required": [
           "dwelling_unit_income_bucket"
-        ]
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "mf_building_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_occupied_units"
+              ]
+            },
+            {
+              "required": [
+                "num_units"
+              ]
+            },
+            {
+              "required": [
+                "num_units_meeting_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "unit_name_or_number"
+              ]
+            }
+          ]
+        }
       }
     }
   ]
