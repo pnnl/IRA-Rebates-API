@@ -57,6 +57,9 @@
     "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
       "$ref": "/schemas/definitions#modeled_pre_retrofit_energy_usage_kwh_equivalent"
     },
+    "num_occupied_units": {
+      "$ref": "/schemas/definitions#num_occupied_units"
+    },
     "num_units": {
       "$ref": "/schemas/definitions#num_units"
     },
@@ -207,11 +210,27 @@
       "then": {
         "required": [
           "dwelling_unit_income_bucket",
-          "mf_building_income_bucket",
-          "num_units",
-          "num_units_meeting_income_bucket",
           "unit_name_or_number"
-        ]
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "mf_building_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_units_meeting_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_occupied_units"
+              ]
+            }
+          ]
+        }
       }
     },
     {
@@ -267,6 +286,11 @@
             {
               "required": [
                 "mf_building_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_occupied_units"
               ]
             },
             {
