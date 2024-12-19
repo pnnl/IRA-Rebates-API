@@ -114,6 +114,13 @@
       "minimum": 0,
       "maximum": 10000
     },
+    "num_occupied_units": {
+      "type": "integer",
+      "title": "Num occupied units",
+      "minimum": 0,
+      "maximum": 1000,
+      "description": "This is the number of occupied units in a multifamily building. "
+    },
     "num_units": {
       "type": "integer",
       "title": "Num units",
@@ -126,7 +133,7 @@
       "title": "Num units meeting income bucket",
       "minimum": 1,
       "maximum": 1000,
-      "description": "This is the number of units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
+      "description": "This is the number of occupied units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
     },
     "original_component_details": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -650,6 +657,11 @@
             },
             {
               "required": [
+                "num_occupied_units"
+              ]
+            },
+            {
+              "required": [
                 "num_units_meeting_income_bucket"
               ]
             }
@@ -679,6 +691,11 @@
             {
               "required": [
                 "mf_building_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_occupied_units"
               ]
             },
             {
