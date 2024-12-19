@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/vendorCoupon",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "coupon_uuid": {
+      "type": "string",
+      "format": "uuid",
+      "readOnly": true
+    },
+    "vendor_coupon_provider": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "vendor_coupon_id": {
+      "type": "string",
+      "maxLength": 15
+    },
+    "upgrade_type": {
+      "type": "string"
+    },
+    "vendor_percent_cost_limit": {
+      "type": "integer",
+      "minimum": 20,
+      "maximum": 100
+    },
+    "state": {
+      "type": "string"
+    },
+    "coupon_expiration_date_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "discount_value": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 14000.0,
+      "multipleOf": 0.01
+    },
+    "status": {
+      "type": "string",
+      "default": "available",
+      "enum": [
+        "available",
+        "reserved",
+        "redeemed",
+        "expired",
+        "revoked",
+        "invalid"
+      ]
+    },
+    "reservation_id": {
+      "type": "string",
+      "format": "uuid",
+      "readOnly": true
+    },
+    "redemption_id": {
+      "type": "string",
+      "format": "uuid",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "upgrade_type",
+    "vendor_percent_cost_limit",
+    "state",
+    "coupon_expiration_date_time",
+    "discount_value",
+    "vendor_coupon_id"
+  ]
+}

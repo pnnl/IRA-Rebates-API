@@ -492,6 +492,14 @@
       "$comment": "The date format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time.",
       "pattern": "^\\d{4}-\\d{2}-\\d{2}"
     },
+    "num_occupied_units": {
+      "$anchor": "num_occupied_units",
+      "type": "integer",
+      "title": "Num occupied units",
+      "minimum": 0,
+      "maximum": 1000,
+      "description": "This is the number of occupied units in a multifamily building. "
+    },
     "num_units": {
       "$anchor": "num_units",
       "type": "integer",
@@ -506,7 +514,28 @@
       "title": "Num units meeting income bucket",
       "minimum": 1,
       "maximum": 1000,
-      "description": "This is the number of units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
+      "description": "This is the number of occupied units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
+    },
+    "original_component_details": {
+      "$anchor": "original_component_details",
+      "type": "json",
+      "title": "original component details",
+      "description": "This object describes the details of the component being replaced. The required fields depend on the upgrade_type and are fully described at https://github.com/pnnl/IRA-Rebates-API/blob/main/json_schemas/electricEligibleRebatesPayload.schema.json."
+    },
+    "percent_cost_limit": {
+      "type": "integer",
+      "readOnly": true,
+      "$anchor": "percent_cost_limit",
+      "description": "This integer is either 50 or 100 (for electrification) or 50 or 80 (for homes), depending on the income_bucket. It is the percent of project cost that can be covered by the rebate. The actual rebate amount allowed is *min(reservation_amount, percent_cost_limit x project_cost / 100)*.",
+      "title": "Percent cost limit",
+      "$comment": "This is a read-only field, automatically populated by the API in the response."
+    },
+    "vendor_percent_cost_limit": {
+      "type": "integer",
+      "$anchor": "percent_cost_limit",
+      "description": "This integer is either 50 or 100 (for electrification) or 50 or 80 (for homes), depending on the income_bucket. It is the percent of project cost that can be covered by the rebate. The actual rebate amount allowed is *min(reservation_amount, percent_cost_limit x project_cost / 100)*.",
+      "title": "Percent cost limit",
+      "$comment": "This is a read-only field, automatically populated by the API in the response."
     },
     "portfolio_id": {
       "$anchor": "portfolio_id",
@@ -611,14 +640,19 @@
       "$anchor": "rebate_type",
       "description": "The HOMES rebates have two distinct options for determining savings and rebate amounts, MODELED vs MEASURED."
     },
-    "redemption_type": {
-      "$anchor": "redemption_type",
-      "enum": [
-        "COMPLETION",
-        "POINT_OF_PURCHASE"
-      ],
-      "title": "Redemption type",
-      "description": "Set this to COMPLETION for the final redemption associated with a reservation. This generally corresponds to when installation is complete. Set this to POINT_OF_PURCHASE in all other situations."
+    "remaining_reservation_amount": {
+      "type": "number",
+      "readOnly": true,
+      "$anchor": "remaining_reservation_amount",
+      "description": "This is the maximum rebate amount. The rebate amount is also limited to a percentage of the project cost which is given by the *percent_cost_limit* field. Thus, the rebate amount is the smaller of the *reservation_amount* and the percent of the project cost, given by *percent_cost_limit*.",
+      "title": "Remaining reservation amount",
+      "$comment": "This is a read-only field, automatically populated by the API in the response."
+    },
+    "redemption_notes": {
+      "type": "string",
+      "readOnly": true,
+      "description": "This will be an array of strings explaining how the rebate_amount was calculated.",
+      "$comment": "This is a read-only field, automatically populated by the API in the response."
     },
     "reservation_amount": {
       "$anchor": "reservation_amount",
@@ -627,6 +661,16 @@
       "exclusiveMinimum": 0,
       "title": "Reservation amount",
       "description": "This is the maximum rebate amount."
+    },
+    "reservation_amount_note": {
+      "type": "string",
+      "readOnly": true,
+      "description": "This is an array of strings explaining how the reservation amount was determined.",
+      "$comment": "This is a read-only field, automatically populated by the API in the response."
+    },
+    "reservation_expiration_date_time": {
+      "type": "date-time",
+      "description": "If the reservation is not redeemed by this date, the reservation will be automatically canceled."
     },
     "safety_checks_good_potential_issues_na": {
       "$anchor": "safety_checks_good_potential_issues_na",
@@ -719,6 +763,12 @@
       "minLength": 1,
       "maxLength": 14,
       "description": "The universal product code (UPC) for the product being purchased."
+    },
+    "upgrade_component_details": {
+      "$anchor": "upgrade_component_details",
+      "type": "json",
+      "title": "Upgrade component details",
+      "description": "This is a JSON object containing the upgrade information specific to the upgrade being installed. The form of these objects will follow the Data and Tools Guide Appendix https://www.energy.gov/scep/articles/ira-home-energy-rebates-data-and-tools-requirements-guide  and will be fully documented here in the next release version."
     },
     "upgrade_type": {
       "$anchor": "upgrade_type",
