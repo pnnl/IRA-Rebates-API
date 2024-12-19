@@ -1,5 +1,22 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationVendorCouponRedemption",
-  "$ref": "/schemas/electrificationProductRedemptionDeletion"
+  "type": "object",
+  "properties": {
+    "vendor_coupon_id": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string"
+    },
+    "deletion_reason": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "vendor_coupon_id",
+    "vendor_id",
+    "deletion_reason"
+  ],
+  "additionalProperties": false
 }
