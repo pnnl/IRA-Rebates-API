@@ -48,6 +48,9 @@
     "mf_num_bedrooms": {
       "$ref": "/schemas/definitions#mf_num_bedrooms"
     },
+    "num_occupied_units": {
+      "$ref": "/schemas/definitions#num_occupied_units"
+    },
     "num_units": {
       "$ref": "/schemas/definitions#num_units"
     },
@@ -175,6 +178,11 @@
             },
             {
               "required": [
+                "num_occupied_units"
+              ]
+            },
+            {
+              "required": [
                 "num_units_meeting_income_bucket"
               ]
             }
@@ -204,6 +212,11 @@
             {
               "required": [
                 "mf_building_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "num_occupied_units"
               ]
             },
             {
