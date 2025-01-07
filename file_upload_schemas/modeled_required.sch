@@ -377,10 +377,10 @@
       <sch:assert role="ERROR" test="h:ConsumptionDetails">Expected ConsumptionDetails</sch:assert>
     </sch:rule>
   </sch:pattern>
-  <sch:pattern>
+  <sch:pattern ira:remove-measured="true">
     <sch:title>[ConsumptionInfo]</sch:title>
     <sch:rule context="/h:HPXML/h:Consumption/h:ConsumptionDetails/h:ConsumptionInfo">
-      <sch:assert role="ERROR" test="h:BPI2400Inputs"/>
+      <sch:assert role="ERROR" test="h:BPI2400Inputs">Expected BPI2400Inputs</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern ira:remove-measured="true">
