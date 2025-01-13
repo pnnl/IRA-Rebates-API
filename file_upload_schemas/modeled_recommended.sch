@@ -480,12 +480,6 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>[WallInsulation]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Enclosure/h:Walls/h:Wall/h:Insulation">
-      <sch:assert role="ERROR" test="h:Layer">Expected Layer</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
     <sch:title>[WallInsulationLayer]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Enclosure/h:Walls/h:Wall/h:Insulation/h:Layer">
       <sch:assert role="ERROR" test="h:InstallationType" ira:remove-req-modeled="true" ira:remove-measured="true">Expected InstallationType</sch:assert>
