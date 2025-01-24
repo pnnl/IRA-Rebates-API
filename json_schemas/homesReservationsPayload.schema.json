@@ -76,7 +76,7 @@
       "$ref": "/schemas/definitions#rebate_type"
     },
     "reservation_amount": {
-      "$ref": "/schemas/definitions#reservation_amount"
+      "$ref": "/schemas/definitions#homes_reservation_amount"
     },
     "software_used_to_estimate_post_retrofit_energy_usage": {
       "$ref": "/schemas/definitions#software_used_to_estimate_post_retrofit_energy_usage"
