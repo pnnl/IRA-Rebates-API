@@ -63,6 +63,9 @@
     "project_id": {
       "$ref": "/schemas/definitions#project_id"
     },
+    "reservation_amount": {
+      "$ref": "/schemas/definitions#electric_reservation_amount"
+    },
     "sf_conditioned_floor_area": {
       "$ref": "/schemas/definitions#sf_conditioned_floor_area"
     },
@@ -433,9 +436,23 @@
       },
       "then": {
         "required": [
-          "contractor_dac_incentive",
           "contractor_incentive"
-        ]
+        ],
+        "if": {
+          "properties": {
+            "is_disadvantaged_community": {
+              "const": true
+            }
+          },
+          "required": [
+            "is_disadvantaged_community"
+          ]
+        },
+        "then": {
+          "required": [
+            "contractor_dac_incentive"
+          ]
+        }
       },
       "else": {
         "not": {
