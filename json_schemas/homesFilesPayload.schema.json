@@ -6,6 +6,9 @@
     "binary_file_content_base_64": {
       "$ref": "/schemas/definitions#binary_file_content_base_64"
     },
+    "description": {
+      "$ref": "/schemas/definitions#description"
+    },
     "file_name": {
       "$ref": "/schemas/definitions#file_name"
     },
