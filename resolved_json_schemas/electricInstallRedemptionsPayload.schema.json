@@ -175,7 +175,6 @@
     },
     "upgrade_component_details": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "https://ira-rebates.labworks.org/schemas/upgradeComponentDetails",
       "type": "object",
       "oneOf": [
         {

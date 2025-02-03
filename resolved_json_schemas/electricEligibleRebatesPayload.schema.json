@@ -90,6 +90,13 @@
       "maximum": 1000,
       "description": "This is the number of occupied units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
     },
+    "reservation_amount": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "exclusiveMinimum": 0,
+      "title": "Requested reservation amount",
+      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
+    },
     "unit_name_or_number": {
       "type": "string",
       "title": "Unit name or number",
