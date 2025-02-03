@@ -137,7 +137,6 @@
     },
     "original_component_details": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "https://ira-rebates.labworks.org/schemas/originalComponentDetails",
       "type": "object",
       "oneOf": [
         {
@@ -506,6 +505,13 @@
       "maxLength": 36,
       "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.",
       "title": "Project id"
+    },
+    "reservation_amount": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "exclusiveMinimum": 0,
+      "title": "Requested reservation amount",
+      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
     },
     "sf_conditioned_floor_area": {
       "title": "Single-family conditioned floor area",
@@ -949,9 +955,23 @@
       },
       "then": {
         "required": [
-          "contractor_dac_incentive",
           "contractor_incentive"
-        ]
+        ],
+        "if": {
+          "properties": {
+            "is_disadvantaged_community": {
+              "const": true
+            }
+          },
+          "required": [
+            "is_disadvantaged_community"
+          ]
+        },
+        "then": {
+          "required": [
+            "contractor_dac_incentive"
+          ]
+        }
       },
       "else": {
         "not": {

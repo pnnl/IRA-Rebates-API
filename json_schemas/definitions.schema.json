@@ -14,7 +14,7 @@
       "type": "string",
       "title": "AHRI reference number",
       "minLength": 6,
-      "maxLength": 8,
+      "maxLength": 9,
       "pattern": "^\\d+$",
       "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
     },
@@ -202,6 +202,14 @@
       ],
       "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one units falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
     },
+    "electric_reservation_amount": {
+      "$anchor": "electric_reservation_amount",
+      "type": "number",
+      "multipleOf": 0.01,
+      "exclusiveMinimum": 0,
+      "title": "Requested reservation amount",
+      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
+    },
     "safety_checks": {
       "$anchor": "safety_checks",
       "type": "object",
@@ -371,6 +379,14 @@
       ],
       "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which two units fall in the `LESS_THAN_80%_AMI` range and three fall in the `80%_AMI_AND_GREATER`. Then the `80%_AMI_AND_GREATER` range should be chosen because more than half of the units fall into this range or lower."
     },
+    "homes_reservation_amount": {
+      "$anchor": "homes_reservation_amount",
+      "type": "number",
+      "multipleOf": 0.01,
+      "exclusiveMinimum": 0,
+      "title": "Measured reservation amount",
+      "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate."
+    },
     "homes_upgrades": {
       "$anchor": "homes_upgrades",
       "type": "array",
@@ -530,6 +546,13 @@
       "title": "Percent cost limit",
       "$comment": "This is a read-only field, automatically populated by the API in the response."
     },
+    "vendor_percent_cost_limit": {
+      "type": "integer",
+      "$anchor": "percent_cost_limit",
+      "description": "This integer is either 50 or 100 (for electrification) or 50 or 80 (for homes), depending on the income_bucket. It is the percent of project cost that can be covered by the rebate. The actual rebate amount allowed is *min(reservation_amount, percent_cost_limit x project_cost / 100)*.",
+      "title": "Percent cost limit",
+      "$comment": "This is a read-only field, automatically populated by the API in the response."
+    },
     "portfolio_id": {
       "$anchor": "portfolio_id",
       "type": "string",
@@ -646,14 +669,6 @@
       "readOnly": true,
       "description": "This will be an array of strings explaining how the rebate_amount was calculated.",
       "$comment": "This is a read-only field, automatically populated by the API in the response."
-    },
-    "reservation_amount": {
-      "$anchor": "reservation_amount",
-      "type": "number",
-      "multipleOf": 0.01,
-      "exclusiveMinimum": 0,
-      "title": "Reservation amount",
-      "description": "This is the maximum rebate amount."
     },
     "reservation_amount_note": {
       "type": "string",

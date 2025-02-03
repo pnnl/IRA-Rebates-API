@@ -175,8 +175,8 @@
       "type": "number",
       "multipleOf": 0.01,
       "exclusiveMinimum": 0,
-      "title": "Reservation amount",
-      "description": "This is the maximum rebate amount."
+      "title": "Measured reservation amount",
+      "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate."
     },
     "software_used_to_estimate_post_retrofit_energy_usage": {
       "type": "string",

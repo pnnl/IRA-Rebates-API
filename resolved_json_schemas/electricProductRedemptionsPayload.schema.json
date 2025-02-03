@@ -28,7 +28,7 @@
             "type": "string",
             "title": "AHRI reference number",
             "minLength": 6,
-            "maxLength": 8,
+            "maxLength": 9,
             "pattern": "^\\d+$",
             "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
           },
