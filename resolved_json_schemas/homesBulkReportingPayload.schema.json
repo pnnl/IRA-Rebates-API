@@ -96,11 +96,61 @@
         "multipleOf": 0.01,
         "description": "The total cost of the equipment and materials purchased as part of a redemption."
       },
+      "estimated_percent_energy_savings": {
+        "type": "number",
+        "maximum": 100,
+        "description": "An estimate for the percent measured energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed \u2013 either this field or the two fields measured_pre_retrofit_energy_usage_kwh_equivalent and  estimated_post_retrofit_energy_usage_kwh_equivalent must be specified when rebate_type is MEASURED. The behavior starting mid to late January 2025 will be: this field is required for rebate_type MEASURED and otherwise not allowed."
+      },
       "estimated_post_retrofit_energy_usage_kwh_equivalent": {
         "type": "integer",
         "title": "Estimated post retrofit energy usage kwh equivalent",
         "minimum": 0,
+        "deprecated": true,
         "description": "The total estimated (expected) annual  energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
+      },
+      "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+          "properties": {
+            "annual_consumption": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The annual site usage for the specified fuel type."
+            },
+            "energy_type": {
+              "enum": [
+                "COAL",
+                "ELECTRICITY",
+                "FUEL_OIL",
+                "KEROSENE",
+                "NATURAL_GAS",
+                "PROPANE",
+                "SOLAR_HOT_WATER",
+                "WOOD"
+              ],
+              "description": "A site fuel type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/EnergyType . In the case of a district-type fuel, the source fuel must be used."
+            },
+            "unit_of_measure": {
+              "enum": [
+                "BTU",
+                "KBTU",
+                "KWH",
+                "MWH",
+                "THERMS"
+              ],
+              "description": "The energy unit for the energy_type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/UnitofMeasure."
+            }
+          },
+          "required": [
+            "annual_consumption",
+            "energy_type",
+            "unit_of_measure"
+          ],
+          "additionalProperties": false
+        },
+        "description": "An array of estimated post-retrofit site energy usage objects. Each entry represents a different fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed. Please begin using this field asap."
       },
       "external_rebate_id": {
         "type": "string",
@@ -126,17 +176,112 @@
         "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
         "title": "Is disadvantaged community"
       },
+      "measured_percent_energy_savings": {
+        "type": "number",
+        "maximum": 100,
+        "description": "The calculated percent measured energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed \u2013 either this field or measured_post_retrofit_energy_usage_kwh_equivalent must be specified when rebate_type is MEASURED. The behavior starting mid to late January 2025 will be: this field is required for rebate_type MEASURED and otherwise not allowed."
+      },
       "measured_post_retrofit_energy_usage_kwh_equivalent": {
         "type": "integer",
         "title": "Measured post retrofit energy usage kwh equivalent",
         "minimum": 0,
+        "deprecated": true,
         "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
+      },
+      "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+          "properties": {
+            "annual_consumption": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The annual site usage for the specified fuel type."
+            },
+            "energy_type": {
+              "enum": [
+                "COAL",
+                "ELECTRICITY",
+                "FUEL_OIL",
+                "KEROSENE",
+                "NATURAL_GAS",
+                "PROPANE",
+                "SOLAR_HOT_WATER",
+                "WOOD"
+              ],
+              "description": "A site fuel type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/EnergyType . In the case of a district-type fuel, the source fuel must be used."
+            },
+            "unit_of_measure": {
+              "enum": [
+                "BTU",
+                "KBTU",
+                "KWH",
+                "MWH",
+                "THERMS"
+              ],
+              "description": "The energy unit for the energy_type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/UnitofMeasure."
+            }
+          },
+          "required": [
+            "annual_consumption",
+            "energy_type",
+            "unit_of_measure"
+          ],
+          "additionalProperties": false
+        },
+        "description": "An array of measured site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed."
       },
       "measured_pre_retrofit_energy_usage_kwh_equivalent": {
         "type": "integer",
         "title": "Measured pre-retrofit energy usage kwh equivalent",
         "minimum": 0,
+        "deprecated": true,
         "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
+      },
+      "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+          "properties": {
+            "annual_consumption": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The annual site usage for the specified fuel type."
+            },
+            "energy_type": {
+              "enum": [
+                "COAL",
+                "ELECTRICITY",
+                "FUEL_OIL",
+                "KEROSENE",
+                "NATURAL_GAS",
+                "PROPANE",
+                "SOLAR_HOT_WATER",
+                "WOOD"
+              ],
+              "description": "A site fuel type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/EnergyType . In the case of a district-type fuel, the source fuel must be used."
+            },
+            "unit_of_measure": {
+              "enum": [
+                "BTU",
+                "KBTU",
+                "KWH",
+                "MWH",
+                "THERMS"
+              ],
+              "description": "The energy unit for the energy_type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/UnitofMeasure."
+            }
+          },
+          "required": [
+            "annual_consumption",
+            "energy_type",
+            "unit_of_measure"
+          ],
+          "additionalProperties": false
+        },
+        "description": "An array of measured pre-retrofit site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed. Please begin using this field asap."
       },
       "mf_building_income_bucket": {
         "title": "Multifamily building income bucket",
@@ -146,17 +291,112 @@
         ],
         "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which two units fall in the `LESS_THAN_80%_AMI` range and three fall in the `80%_AMI_AND_GREATER`. Then the `80%_AMI_AND_GREATER` range should be chosen because more than half of the units fall into this range or lower."
       },
+      "modeled_percent_energy_savings": {
+        "type": "number",
+        "maximum": 100,
+        "description": "The calculated percent modeled energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed \u2013 either this field or the two modeled_...kwh_equalent fields must be specified when _rebate_type is MODELED. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
+      },
       "modeled_post_retrofit_energy_usage_kwh_equivalent": {
         "type": "integer",
         "title": "Modeled post retrofit energy usage kwh equivalent",
         "minimum": 0,
+        "deprecated": true,
         "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
+      },
+      "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+          "properties": {
+            "annual_consumption": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The annual site usage for the specified fuel type."
+            },
+            "energy_type": {
+              "enum": [
+                "COAL",
+                "ELECTRICITY",
+                "FUEL_OIL",
+                "KEROSENE",
+                "NATURAL_GAS",
+                "PROPANE",
+                "SOLAR_HOT_WATER",
+                "WOOD"
+              ],
+              "description": "A site fuel type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/EnergyType . In the case of a district-type fuel, the source fuel must be used."
+            },
+            "unit_of_measure": {
+              "enum": [
+                "BTU",
+                "KBTU",
+                "KWH",
+                "MWH",
+                "THERMS"
+              ],
+              "description": "The energy unit for the energy_type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/UnitofMeasure."
+            }
+          },
+          "required": [
+            "annual_consumption",
+            "energy_type",
+            "unit_of_measure"
+          ],
+          "additionalProperties": false
+        },
+        "description": "An array of modeled post-retrofit site energy usage objects. Each entry represents a different fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
       },
       "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
         "type": "integer",
-        "title": "Modeled pre energy usage kwh equivalent",
+        "title": "Modeled pre-retrofit energy usage kwh equivalent",
         "minimum": 0,
+        "deprecated": true,
         "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
+      },
+      "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+          "properties": {
+            "annual_consumption": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The annual site usage for the specified fuel type."
+            },
+            "energy_type": {
+              "enum": [
+                "COAL",
+                "ELECTRICITY",
+                "FUEL_OIL",
+                "KEROSENE",
+                "NATURAL_GAS",
+                "PROPANE",
+                "SOLAR_HOT_WATER",
+                "WOOD"
+              ],
+              "description": "A site fuel type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/EnergyType . In the case of a district-type fuel, the source fuel must be used."
+            },
+            "unit_of_measure": {
+              "enum": [
+                "BTU",
+                "KBTU",
+                "KWH",
+                "MWH",
+                "THERMS"
+              ],
+              "description": "The energy unit for the energy_type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/UnitofMeasure."
+            }
+          },
+          "required": [
+            "annual_consumption",
+            "energy_type",
+            "unit_of_measure"
+          ],
+          "additionalProperties": false
+        },
+        "description": "An array of modeled pre-retrofit site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
       },
       "num_occupied_units": {
         "type": "integer",
@@ -443,15 +683,41 @@
         },
         "then": {
           "required": [
-            "doe_approved_bpi_2400_compliant_software_used",
-            "modeled_post_retrofit_energy_usage_kwh_equivalent",
-            "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+            "doe_approved_bpi_2400_compliant_software_used"
+          ],
+          "oneOf": [
+            {
+              "required": [
+                "modeled_post_retrofit_energy_usage_kwh_equivalent",
+                "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+              ]
+            },
+            {
+              "required": [
+                "modeled_percent_energy_savings"
+              ]
+            }
           ],
           "not": {
             "anyOf": [
               {
                 "required": [
+                  "estimated_percent_energy_savings"
+                ]
+              },
+              {
+                "required": [
                   "estimated_post_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "estimated_post_retrofit_site_energy_usages_by_fuel_type"
+                ]
+              },
+              {
+                "required": [
+                  "measured_percent_energy_savings"
                 ]
               },
               {
@@ -461,7 +727,17 @@
               },
               {
                 "required": [
+                  "measured_post_retrofit_site_energy_usages_by_fuel_type"
+                ]
+              },
+              {
+                "required": [
                   "measured_pre_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "measured_pre_retrofit_site_energy_usages_by_fuel_type"
                 ]
               },
               {
@@ -480,11 +756,39 @@
         "else": {
           "$comment": "rebate_type is MEASURED",
           "required": [
-            "estimated_post_retrofit_energy_usage_kwh_equivalent",
-            "measured_post_retrofit_energy_usage_kwh_equivalent",
-            "measured_pre_retrofit_energy_usage_kwh_equivalent",
             "reservation_amount",
             "software_used_to_estimate_post_retrofit_energy_usage"
+          ],
+          "allOf": [
+            {
+              "oneOf": [
+                {
+                  "required": [
+                    "estimated_post_retrofit_energy_usage_kwh_equivalent",
+                    "measured_pre_retrofit_energy_usage_kwh_equivalent"
+                  ]
+                },
+                {
+                  "required": [
+                    "estimated_percent_energy_savings"
+                  ]
+                }
+              ]
+            },
+            {
+              "oneOf": [
+                {
+                  "required": [
+                    "measured_post_retrofit_energy_usage_kwh_equivalent"
+                  ]
+                },
+                {
+                  "required": [
+                    "measured_percent_energy_savings"
+                  ]
+                }
+              ]
+            }
           ],
           "not": {
             "anyOf": [
@@ -495,12 +799,27 @@
               },
               {
                 "required": [
+                  "modeled_percent_energy_savings"
+                ]
+              },
+              {
+                "required": [
                   "modeled_post_retrofit_energy_usage_kwh_equivalent"
                 ]
               },
               {
                 "required": [
+                  "modeled_post_retrofit_site_energy_usages_by_fuel_type"
+                ]
+              },
+              {
+                "required": [
                   "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "modeled_pre_retrofit_site_energy_usages_by_fuel_type"
                 ]
               }
             ]
