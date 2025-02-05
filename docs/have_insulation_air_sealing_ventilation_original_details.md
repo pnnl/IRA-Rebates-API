@@ -17,6 +17,6 @@ The preexisting conditions associated with this improvement
   
 
 - is required
-- Type: `[insulation_air_sealing_ventilation_original_details](insulation_air_sealing_ventilation_original_details.md)`
+- Type: [insulation_air_sealing_ventilation_original_details](insulation_air_sealing_ventilation_original_details.md)
 - can not be null
   

@@ -17,7 +17,7 @@ storage_capacity
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 

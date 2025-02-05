@@ -10,7 +10,7 @@ Additional Properties Allowed: `False`
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[cfm25](#cfm25)|`number`||False|||
 |[is_leakage_rate_known](#is_leakage_rate_known)|`boolean`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`DUCT_SEALING`|:white_check_mark:|False|||
 
 cfm25
 =====
@@ -19,7 +19,7 @@ Total duct leakage cfm at 25 Pa pressure difference
   
 
 - is not required
-- Type: ``number``
+- Type: `number`
 - can not be null
   
 
@@ -30,7 +30,7 @@ is_leakage_rate_known
   
 
 - is required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -41,6 +41,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `DUCT_SEALING`
 - can not be null
   

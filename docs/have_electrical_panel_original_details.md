@@ -17,6 +17,6 @@ The preexisting conditions associated with this improvement
   
 
 - is required
-- Type: `[electrical_panel_original_details](electrical_panel_original_details.md)`
+- Type: [electrical_panel_original_details](electrical_panel_original_details.md)
 - can not be null
   

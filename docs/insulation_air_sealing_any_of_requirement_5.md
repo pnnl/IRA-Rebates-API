@@ -9,7 +9,7 @@ Additional Properties Allowed: `False`
 |Property|Type|Required|Nullable|Format|Title|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[primary_duct_location](#primary_duct_location)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`DUCT_INSULATION`|:white_check_mark:|False|||
 
 primary_duct_location
 =====================
@@ -18,7 +18,7 @@ The type of space in which the majority of the ducts being treated are located.
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -36,6 +36,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `DUCT_INSULATION`
 - can not be null
   

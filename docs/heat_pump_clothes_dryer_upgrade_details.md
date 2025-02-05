@@ -17,6 +17,6 @@ energy_guide_estimated_energy_use_kwh
   
 
 - is required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   

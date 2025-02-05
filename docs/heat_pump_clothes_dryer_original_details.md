@@ -17,7 +17,7 @@ fuel_type
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 

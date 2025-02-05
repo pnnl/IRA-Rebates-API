@@ -18,7 +18,7 @@ max_amps
   
 
 - is required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -29,6 +29,6 @@ num_open_breaker_spots
   
 
 - is required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   

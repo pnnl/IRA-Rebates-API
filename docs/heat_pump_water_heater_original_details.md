@@ -18,7 +18,7 @@ storage_capacity
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -40,7 +40,7 @@ water_heater_fuel_and_system_type
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 

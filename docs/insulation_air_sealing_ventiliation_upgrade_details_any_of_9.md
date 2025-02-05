@@ -9,7 +9,7 @@ Additional Properties Allowed: `False`
 |Property|Type|Required|Nullable|Format|Title|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[cfm_flow_rate](#cfm_flow_rate)|`number`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`VENTILATION`|:white_check_mark:|False|||
 
 cfm_flow_rate
 =============
@@ -18,7 +18,7 @@ cfm_flow_rate
   
 
 - is required
-- Type: ``number``
+- Type: `number`
 - can not be null
   
 
@@ -29,6 +29,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `VENTILATION`
 - can not be null
   

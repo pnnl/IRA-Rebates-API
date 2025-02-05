@@ -11,7 +11,7 @@ Additional Properties Allowed: `False`
 |[cavity_insulation_added](#cavity_insulation_added)|`enum`||False|||
 |[exterior_continuous_insulation_added](#exterior_continuous_insulation_added)|`enum`||False|||
 |[percent_wall_area_treated](#percent_wall_area_treated)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`WALL_INSULATION`|:white_check_mark:|False|||
 
 cavity_insulation_added
 =======================
@@ -20,7 +20,7 @@ cavity_insulation_added
   
 
 - is not required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -39,7 +39,7 @@ exterior_continuous_insulation_added
   
 
 - is not required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -57,7 +57,7 @@ percent_wall_area_treated
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -77,6 +77,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `WALL_INSULATION`
 - can not be null
   

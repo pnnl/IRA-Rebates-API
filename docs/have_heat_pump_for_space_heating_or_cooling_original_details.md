@@ -17,6 +17,6 @@ The preexisting conditions associated with this improvement
   
 
 - is required
-- Type: `[heat_pump_for_space_heating_or_cooling_original_details](heat_pump_for_space_heating_or_cooling_original_details.md)`
+- Type: [heat_pump_for_space_heating_or_cooling_original_details](heat_pump_for_space_heating_or_cooling_original_details.md)
 - can not be null
   

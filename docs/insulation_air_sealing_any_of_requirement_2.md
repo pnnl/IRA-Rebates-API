@@ -9,7 +9,7 @@ Additional Properties Allowed: `False`
 |Property|Type|Required|Nullable|Format|Title|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[insulation_type](#insulation_type)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`CEILING_INSULATION`|:white_check_mark:|False|||
 
 insulation_type
 ===============
@@ -18,7 +18,7 @@ The preexisting insulation type for the area to receive (additional) insulation.
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -39,6 +39,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `CEILING_INSULATION`
 - can not be null
   

@@ -26,7 +26,7 @@ Testing is only required if the home has one or more combustion appliances post-
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -45,7 +45,7 @@ ashrae_62_2_ventilation_calculated
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -63,7 +63,7 @@ confirm_all_safety_check_results_disclosed_to_homeowner
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -81,7 +81,7 @@ drainage_system_condition
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -99,7 +99,7 @@ Testing is only required if the home has one or more combustion appliances post-
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -118,7 +118,7 @@ roof_condition
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -136,7 +136,7 @@ Contractor should not proceed with energy efficiency measures until mold and moi
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -154,7 +154,7 @@ Testing is only required if the home has one or more combustion appliances post-
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -173,7 +173,7 @@ Testing is only required if the home has one or more combustion appliances post-
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -192,7 +192,7 @@ Testing is only required if the home has one or more combustion appliances post-
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 

@@ -17,7 +17,7 @@ primary_heating_fuel_and_system_type
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 

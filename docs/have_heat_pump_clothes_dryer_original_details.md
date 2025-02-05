@@ -17,6 +17,6 @@ The preexisting conditions associated with this improvement
   
 
 - is required
-- Type: `[heat_pump_clothes_dryer_original_details](heat_pump_clothes_dryer_original_details.md)`
+- Type: [heat_pump_clothes_dryer_original_details](heat_pump_clothes_dryer_original_details.md)
 - can not be null
   

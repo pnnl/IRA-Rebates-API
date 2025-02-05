@@ -74,23 +74,23 @@ Conditional Validation
 
 |`if`|`then` should be present|should `not` be present|comment|
 | :---: | :---: | :---: | :---: |
-|`building_project_type` is `MULTIFAMILY_CENTRAL`|`mf_building_income_bucket`<br>`num_units`<br>`num_units_meeting_income_bucket`|`dwelling_unit_income_bucket`<br>`unit_name_or_number`|Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_CENTRAL|
-|`building_project_type` is `MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT`|`mf_building_income_bucket`<br>`num_units`<br>`num_units_meeting_income_bucket`<br>`project_id`<br>`unit_name_or_number`|`dwelling_unit_income_bucket`|Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT|
-|`building_project_type` is `MULTIFAMILY_IN_UNIT`|`dwelling_unit_income_bucket`<br>`num_units`<br>`unit_name_or_number`|`mf_building_income_bucket`<br>`num_occupied_units`<br>`num_units_meeting_income_bucket`|Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT|
-|`building_project_type` is one of [`MANUFACTURED`, `SINGLE_FAMILY_ATTACHED`, `SINGLE_FAMILY_DETACHED`]|`dwelling_unit_income_bucket`|`mf_building_income_bucket`<br>`num_units`<br>`num_occupied_units`<br>`num_units_meeting_income_bucket`<br>`unit_name_or_number`|Determine which fields are required or not allowed for single family building_project_type|
-|`upgrade_type` is `HEAT_PUMP_CLOTHES_DRYER`|`original_component_details`<br>`upgrade_component_details`||The appropriate schema must be used for original_component_details and upgrade_component_details depending on upgrade_type.|
-|`upgrade_type` is `ELECTRIC_COOKING_APPLIANCE`|`original_component_details`<br>`upgrade_component_details`|||
-|`upgrade_type` is `HEAT_PUMP_WATER_HEATER`|`original_component_details`<br>`upgrade_component_details`|||
-|`upgrade_type` is `ELECTRICAL_PANEL`|`original_component_details`<br>`upgrade_component_details`|||
-|`upgrade_type` is `INSULATION_AIR_SEALING_VENTILATION`|`original_component_details`<br>`upgrade_component_details`|||
-|`upgrade_type` is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`|`original_component_details`|`upgrade_component_details`||
-|`upgrade_type` is `ELECTRIC_WIRING`||`original_component_details`<br>`upgrade_component_details`||
-|`upgrade_type` is one of [`ELECTRICAL_PANEL`, `ELECTRIC_WIRING`, `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`]`upgrade_type` is `INSULATION_AIR_SEALING_VENTILATION``insulation_air_sealing_ventilation_upgrade_details`  contains [insulation_air_sealing_ventilation_upgrade_details_conditional_requirement](insulation_air_sealing_ventilation_upgrade_details_conditional_requirement.md)|`contractor_company_name`<br>`contractor_dac_incentive`<br>`contractor_incentive`<br>`contractor_name`<br>`is_contractor_eligible`<br>`safety_checks`||Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, contractor_dac_incentive, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed|
-|`upgrade_type` is one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `INSULATION_AIR_SEALING_VENTILATION`]|||Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required|
-|`upgrade_type` is one of [`HEAT_PUMP_CLOTHES_DRYER`, `HEAT_PUMP_WATER_HEATER`]|||Determine when mf_num_bedrooms and sf_num_bedrooms are required|
-|`upgrade_type` is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`|`limited_assessment`||Determine when limited_assessment is required or not allowed|
-|`upgrade_type` is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`||||
-|`upgrade_type` is one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `HEAT_PUMP_WATER_HEATER`]||||
+|[building_project_type](#building_project_type) is `MULTIFAMILY_CENTRAL`|[mf_building_income_bucket](#mf_building_income_bucket)<br>[num_units](#num_units)<br>[num_units_meeting_income_bucket](#num_units_meeting_income_bucket)|[dwelling_unit_income_bucket](#dwelling_unit_income_bucket)<br>[unit_name_or_number](#unit_name_or_number)|Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_CENTRAL|
+|[building_project_type](#building_project_type) is `MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT`|[mf_building_income_bucket](#mf_building_income_bucket)<br>[num_units](#num_units)<br>[num_units_meeting_income_bucket](#num_units_meeting_income_bucket)<br>[project_id](#project_id)<br>[unit_name_or_number](#unit_name_or_number)|[dwelling_unit_income_bucket](#dwelling_unit_income_bucket)|Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT|
+|[building_project_type](#building_project_type) is `MULTIFAMILY_IN_UNIT`|[dwelling_unit_income_bucket](#dwelling_unit_income_bucket)<br>[num_units](#num_units)<br>[unit_name_or_number](#unit_name_or_number)|[mf_building_income_bucket](#mf_building_income_bucket)<br>[num_occupied_units](#num_occupied_units)<br>[num_units_meeting_income_bucket](#num_units_meeting_income_bucket)|Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT|
+|[building_project_type](#building_project_type) is one of [`MANUFACTURED`, `SINGLE_FAMILY_ATTACHED`, `SINGLE_FAMILY_DETACHED`]|[dwelling_unit_income_bucket](#dwelling_unit_income_bucket)|[mf_building_income_bucket](#mf_building_income_bucket)<br>[num_units](#num_units)<br>[num_occupied_units](#num_occupied_units)<br>[num_units_meeting_income_bucket](#num_units_meeting_income_bucket)<br>[unit_name_or_number](#unit_name_or_number)|Determine which fields are required or not allowed for single family building_project_type|
+|[upgrade_type](#upgrade_type) is `HEAT_PUMP_CLOTHES_DRYER`|[original_component_details](#original_component_details)<br>[upgrade_component_details](#upgrade_component_details)||The appropriate schema must be used for original_component_details and upgrade_component_details depending on upgrade_type.|
+|[upgrade_type](#upgrade_type) is `ELECTRIC_COOKING_APPLIANCE`|[original_component_details](#original_component_details)<br>[upgrade_component_details](#upgrade_component_details)|||
+|[upgrade_type](#upgrade_type) is `HEAT_PUMP_WATER_HEATER`|[original_component_details](#original_component_details)<br>[upgrade_component_details](#upgrade_component_details)|||
+|[upgrade_type](#upgrade_type) is `ELECTRICAL_PANEL`|[original_component_details](#original_component_details)<br>[upgrade_component_details](#upgrade_component_details)|||
+|[upgrade_type](#upgrade_type) is `INSULATION_AIR_SEALING_VENTILATION`|[original_component_details](#original_component_details)<br>[upgrade_component_details](#upgrade_component_details)|||
+|[upgrade_type](#upgrade_type) is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`|[original_component_details](#original_component_details)|[upgrade_component_details](#upgrade_component_details)||
+|[upgrade_type](#upgrade_type) is `ELECTRIC_WIRING`||[original_component_details](#original_component_details)<br>[upgrade_component_details](#upgrade_component_details)||
+|[upgrade_type](#upgrade_type) is one of [`ELECTRICAL_PANEL`, `ELECTRIC_WIRING`, `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`][upgrade_type](#upgrade_type) is `INSULATION_AIR_SEALING_VENTILATION`[insulation_air_sealing_ventilation_upgrade_details](#insulation_air_sealing_ventilation_upgrade_details)  contains [insulation_air_sealing_ventilation_upgrade_details_conditional_requirement](insulation_air_sealing_ventilation_upgrade_details_conditional_requirement.md)|[contractor_company_name](#contractor_company_name)<br>[contractor_dac_incentive](#contractor_dac_incentive)<br>[contractor_incentive](#contractor_incentive)<br>[contractor_name](#contractor_name)<br>[is_contractor_eligible](#is_contractor_eligible)<br>[safety_checks](#safety_checks)||Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, contractor_dac_incentive, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed|
+|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `INSULATION_AIR_SEALING_VENTILATION`]|||Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required|
+|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_CLOTHES_DRYER`, `HEAT_PUMP_WATER_HEATER`]|||Determine when mf_num_bedrooms and sf_num_bedrooms are required|
+|[upgrade_type](#upgrade_type) is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`|[limited_assessment](#limited_assessment)||Determine when limited_assessment is required or not allowed|
+|[upgrade_type](#upgrade_type) is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`||||
+|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `HEAT_PUMP_WATER_HEATER`]||||
 
 address_id
 ==========
@@ -99,7 +99,7 @@ A unique identifier associated with the address of the building at which the upg
   
 
 - is required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -110,7 +110,7 @@ This identifier is unique to the applicant (the building owner or renter that is
   
 
 - is required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -121,7 +121,7 @@ This describes both the type of the building and, in the multifamily case, wheth
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -142,7 +142,7 @@ The type of person or entity that is initiating the rebate process on behalf of 
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -162,7 +162,7 @@ Set to NEW if the building is less than one year old. Otherwise, set to EXISTING
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -179,7 +179,7 @@ The name of the primary contracting company for the project.
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -190,7 +190,7 @@ This is the amount the state will pay to a contractor as a disadvantaged-communi
   
 
 - is not required
-- Type: ``number``
+- Type: `number`
 - can not be null
   
 
@@ -201,7 +201,7 @@ This is the amount the state will pay to a contractor as an incentive. This is s
   
 
 - is not required
-- Type: ``number``
+- Type: `number`
 - can not be null
   
 
@@ -212,7 +212,7 @@ The name of the primary contractor for the project.
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -223,7 +223,7 @@ The household income level of the applicant compared to the area median income (
   
 
 - is not required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -240,7 +240,7 @@ Set to true if the home/building owner has given their permission to share energ
   
 
 - is required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -251,7 +251,7 @@ The total cost of the equipment and materials purchased as part of a redemption.
   
 
 - is required
-- Type: ``number``
+- Type: `number`
 - can not be null
   
 
@@ -262,7 +262,7 @@ This is an optional field that a state can use for their own purposes to identif
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -273,7 +273,7 @@ This is a unique identifier for a vendor that the state will reimburse in connec
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -284,7 +284,7 @@ The installation costs associated with this redemption. To qualify, the installa
   
 
 - is not required
-- Type: ``number``
+- Type: `number`
 - can not be null
   
 
@@ -295,7 +295,7 @@ Indicates who performed the installation.
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -312,7 +312,7 @@ The contractor is eligible if they are on the state's approved list.
   
 
 - is not required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -323,7 +323,7 @@ This field should only be used by states that have been approved by the DOE to d
   
 
 - is required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -334,7 +334,7 @@ limited_assessment
   
 
 - is not required
-- Type: `[limited_assessment](limited_assessment.md)`
+- Type: [limited_assessment](limited_assessment.md)
 - can not be null
   
 
@@ -345,7 +345,7 @@ Choose the lowest area median income (AMI) range for which at least 50% of the h
   
 
 - is not required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -362,7 +362,7 @@ The conditioned floor area for the entire multifamily building including common 
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -373,7 +373,7 @@ The number of bedrooms for the entire multifamily building.
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -384,7 +384,7 @@ This is the number of occupied units in a multifamily building.
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -395,7 +395,7 @@ This is the total number of units in a multifamily building. This field is requi
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -406,7 +406,7 @@ This is the number of occupied units in a multifamily building for which the hou
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -417,7 +417,7 @@ original_component_details
   
 
 - is not required
-- Type: `[original_component_details](original_component_details.md)`
+- Type: [original_component_details](original_component_details.md)
 - can not be null
   
 
@@ -428,7 +428,7 @@ Provide identifying information for the qualifying product or products that are 
   
 
 - is required
-- Type: `[buildinging_product_info](buildinging_product_info.md)`
+- Type: [buildinging_product_info](buildinging_product_info.md)
 - can not be null
   
 
@@ -439,7 +439,7 @@ This is a unique identifier for a vendor that the state will reimburse in connec
   
 
 - is required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -450,7 +450,7 @@ This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial.
   
 
 - is required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -461,7 +461,7 @@ This is a unique string supplied by the API user that is used to associate one o
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -472,7 +472,7 @@ This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial. This re
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -483,7 +483,7 @@ This is the date and time a product was purchased. Either this field or the 'pur
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -494,7 +494,7 @@ This is the amount that was deducted from the customer's/homeowner's purchase pr
   
 
 - is required
-- Type: ``number``
+- Type: `number`
 - can not be null
   
 
@@ -505,7 +505,7 @@ safety_checks
   
 
 - is not required
-- Type: `[building_safety_checks](building_safety_checks.md)`
+- Type: [building_safety_checks](building_safety_checks.md)
 - can not be null
   
 
@@ -516,7 +516,7 @@ This is the conditioned floor area for an individual dwelling unit, either a sin
   
 
 - is not required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -535,7 +535,7 @@ The number of bedrooms in the dwelling unit.
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -546,7 +546,7 @@ The state attests that they have obtained the required proof of identify, proof 
   
 
 - is required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -557,7 +557,7 @@ state_attests_any_failed_inspection_remediated
   
 
 - is required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -568,7 +568,7 @@ This is the unit designator for a unit in a multifamily building. Do NOT include
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -579,7 +579,7 @@ upgrade_component_details
   
 
 - is not required
-- Type: `[building_upgrade_component_details](building_upgrade_component_details.md)`
+- Type: [building_upgrade_component_details](building_upgrade_component_details.md)
 - can not be null
   
 
@@ -590,7 +590,7 @@ The upgrade covered by this reservation. These upgrade types are the ones specif
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 

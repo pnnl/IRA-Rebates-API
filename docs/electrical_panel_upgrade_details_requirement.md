@@ -17,6 +17,6 @@ Details that describe this improvement
   
 
 - is required
-- Type: `[electrical_panel_upgrade_details](electrical_panel_upgrade_details.md)`
+- Type: [electrical_panel_upgrade_details](electrical_panel_upgrade_details.md)
 - can not be null
   

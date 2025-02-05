@@ -9,7 +9,7 @@ Additional Properties Allowed: `False`
 |Property|Type|Required|Nullable|Format|Title|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[insulation](#insulation)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`WALL_INSULATION`|:white_check_mark:|False|||
 
 insulation
 ==========
@@ -18,7 +18,7 @@ insulation
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -38,6 +38,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `WALL_INSULATION`
 - can not be null
   

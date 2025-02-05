@@ -17,6 +17,6 @@ Details that describe this improvement
   
 
 - is required
-- Type: `[electric_cooking_appliance_upgrade_details](electric_cooking_appliance_upgrade_details.md)`
+- Type: [electric_cooking_appliance_upgrade_details](electric_cooking_appliance_upgrade_details.md)
 - can not be null
   

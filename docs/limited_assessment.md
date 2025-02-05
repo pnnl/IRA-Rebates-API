@@ -12,7 +12,7 @@ Additional Properties Allowed: `False`
 |[assessment_date](#assessment_date)|`string`|:white_check_mark:|False||Assessment date|
 |[ceiling_insulation_r_value](#ceiling_insulation_r_value)|`integer`||False||Ceiling insulation r-value|
 |[ceiling_insulation_type](#ceiling_insulation_type)|`enum`||False||Ceiling insulation type|
-|[conditioned_floor_area_sq_ft](#conditioned_floor_area_sq_ft)|`unknown`|:white_check_mark:|False||Conditioned floor area sq. ft|
+|[conditioned_floor_area_sq_ft](#conditioned_floor_area_sq_ft)|`integer \| enum`|:white_check_mark:|False||Conditioned floor area sq. ft|
 |[cooling_systems](#cooling_systems)|[cooling_systems](cooling_systems.md)|:white_check_mark:|False||Cooling systems|
 |[ducts_are_insulated](#ducts_are_insulated)|`enum`|:white_check_mark:|False||Ducts are insulated|
 |[ducts_are_sealed](#ducts_are_sealed)|`enum`|:white_check_mark:|False||Ducts are sealed|
@@ -23,7 +23,7 @@ Additional Properties Allowed: `False`
 |[is_whole_home_ventilation_system_rated_flow_cfm_known](#is_whole_home_ventilation_system_rated_flow_cfm_known)|`boolean`|:white_check_mark:|False||Is whole home ventilation system rated flow CFM known|
 |[whole_home_ventilation_system_rated_flow_cfm](#whole_home_ventilation_system_rated_flow_cfm)|`integer`||False||Whole home ventilation system rated flow CFM|
 |[whole_home_ventilation_system_type](#whole_home_ventilation_system_type)|`enum`|:white_check_mark:|False||Whole home ventilation system type|
-|[year_built](#year_built)|`unknown`|:white_check_mark:|False||Year built|
+|[year_built](#year_built)|`string \| DO_NOT_KNOW`|:white_check_mark:|False||Year built|
   
 
 allOf Requirement
@@ -36,8 +36,8 @@ Conditional Validation
 
 |`if`|`then` should be present|should `not` be present|comment|
 | :---: | :---: | :---: | :---: |
-|`is_ceiling_insulation_r_value_known` is `True`|`ceiling_insulation_r_value`|||
-|`is_whole_home_ventilation_system_rated_flow_cfm_known` is `True`|`whole_home_ventilation_system_rated_flow_cfm`|||
+|[is_ceiling_insulation_r_value_known](#is_ceiling_insulation_r_value_known) is `True`|[ceiling_insulation_r_value](#ceiling_insulation_r_value)|||
+|[is_whole_home_ventilation_system_rated_flow_cfm_known](#is_whole_home_ventilation_system_rated_flow_cfm_known) is `True`|[whole_home_ventilation_system_rated_flow_cfm](#whole_home_ventilation_system_rated_flow_cfm)|||
 
 assessment_date
 ===============
@@ -46,7 +46,7 @@ The calendar date when the assessment was performed. Note: time zone is immateri
   
 
 - is required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -57,7 +57,7 @@ Estimate of the R-value of the as-found ceiling insulation.
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -68,7 +68,7 @@ The preexisting insulation type for the area to receive (additional) insulation.
   
 
 - is not required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -89,8 +89,16 @@ The conditioned floor area, in square feet, of the building or multifamily dwell
   
 
 - is required
-- Type: ``unknown``
+- Type: `integer | enum`
 - can not be null
+  
+
+|Value|
+| :--- |
+|`1500SF_2500SF`|
+|`500SF_1500SF`|
+|`GREATER_THAN_2500SF`|
+|`LESS_THAN_500SF`|
   
 
 cooling_systems
@@ -100,7 +108,7 @@ Provide information for each existing cooling system.
   
 
 - is required
-- Type: `[cooling_systems](cooling_systems.md)`
+- Type: [cooling_systems](cooling_systems.md)
 - can not be null
   
 
@@ -111,7 +119,7 @@ Choose `NA` if there are no ducts associated with this system. Choose `YES` only
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -130,7 +138,7 @@ Choose `NA` if there are no ducts associated with this system. Choose `YES` only
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -149,7 +157,7 @@ The maximum amperage rating for the electrical panel as-found. This is only requ
   
 
 - is required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -160,7 +168,7 @@ Has the building (or dwelling unit) been professionally air sealed?
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -178,7 +186,7 @@ Provide information for each existing heating system.
   
 
 - is required
-- Type: `[heating_systems](heating_systems.md)`
+- Type: [heating_systems](heating_systems.md)
 - can not be null
   
 
@@ -189,7 +197,7 @@ is_ceiling_insulation_r_value_known
   
 
 - is required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -200,7 +208,7 @@ is_whole_home_ventilation_system_rated_flow_cfm_known
   
 
 - is required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -211,7 +219,7 @@ whole_home_ventilation_system_rated_flow_cfm
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -222,7 +230,7 @@ whole_home_ventilation_system_type
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -244,6 +252,6 @@ The year the building was built.
   
 
 - is required
-- Type: ``unknown``
+- Type: `string | DO_NOT_KNOW`
 - can not be null
   

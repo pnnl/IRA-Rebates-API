@@ -10,7 +10,7 @@ Additional Properties Allowed: `False`
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[percent_foundation_perimeter_receiving_additional_insulation](#percent_foundation_perimeter_receiving_additional_insulation)|`enum`|:white_check_mark:|False|||
 |[r_value_added](#r_value_added)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`FOUNDATION_INSULATION`|:white_check_mark:|False|||
 
 percent_foundation_perimeter_receiving_additional_insulation
 ============================================================
@@ -19,7 +19,7 @@ For estimating this percentage, use the distance around the footprint that is de
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -39,7 +39,7 @@ Choose the R-value that best describes the amount of insulation added.
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -60,6 +60,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `FOUNDATION_INSULATION`
 - can not be null
   

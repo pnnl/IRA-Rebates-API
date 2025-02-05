@@ -17,6 +17,6 @@ The preexisting conditions associated with this improvement
   
 
 - is required
-- Type: `[electrical_cooking_appliance_details](electrical_cooking_appliance_details.md)`
+- Type: [electrical_cooking_appliance_details](electrical_cooking_appliance_details.md)
 - can not be null
   

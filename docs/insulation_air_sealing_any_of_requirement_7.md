@@ -9,7 +9,7 @@ Additional Properties Allowed: `False`
 |Property|Type|Required|Nullable|Format|Title|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[has_whole_house_ventilation](#has_whole_house_ventilation)|`boolean`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`VENTILATION`|:white_check_mark:|False|||
 
 has_whole_house_ventilation
 ===========================
@@ -18,7 +18,7 @@ Set to true if there is any existing exhaust fan, supply fan, HRV, ERV, or simil
   
 
 - is required
-- Type: ``boolean``
+- Type: `boolean`
 - can not be null
   
 
@@ -29,6 +29,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `VENTILATION`
 - can not be null
   

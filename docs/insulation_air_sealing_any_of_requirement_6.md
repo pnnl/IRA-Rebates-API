@@ -9,7 +9,7 @@ Additional Properties Allowed: `False`
 |Property|Type|Required|Nullable|Format|Title|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[foundation_type](#foundation_type)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`FOUNDATION_INSULATION`|:white_check_mark:|False|||
 
 foundation_type
 ===============
@@ -18,7 +18,7 @@ Pick the one with the most area
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -38,6 +38,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `FOUNDATION_INSULATION`
 - can not be null
   

@@ -10,7 +10,7 @@ Additional Properties Allowed: `False`
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[percent_ceiling_receiving_additional_insulation](#percent_ceiling_receiving_additional_insulation)|`enum`|:white_check_mark:|False|||
 |[r_value_added](#r_value_added)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`unknown`|:white_check_mark:|False|||
+|[upgrade_subtype](#upgrade_subtype)|`CEILING_INSULATION`|:white_check_mark:|False|||
 
 percent_ceiling_receiving_additional_insulation
 ===============================================
@@ -19,7 +19,7 @@ Choose the closest percent of total ceiling area that will receive (additional) 
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -39,7 +39,7 @@ Choose the R-value that best describes the amount of insulation added.
   
 
 - is required
-- Type: ``enum``
+- Type: `enum`
 - can not be null
   
 
@@ -59,6 +59,6 @@ upgrade_subtype
   
 
 - is required
-- Type: ``unknown``
+- Type: `CEILING_INSULATION`
 - can not be null
   

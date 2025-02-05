@@ -17,6 +17,6 @@ Details that describe this improvement
   
 
 - is required
-- Type: `[heat_pump_water_heater_upgrade_details](heat_pump_water_heater_upgrade_details.md)`
+- Type: [heat_pump_water_heater_upgrade_details](heat_pump_water_heater_upgrade_details.md)
 - can not be null
   

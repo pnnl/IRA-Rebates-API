@@ -17,6 +17,6 @@ Details that describe this improvement
   
 
 - is required
-- Type: `[insulation_air_sealing_ventilation_upgrade_details](insulation_air_sealing_ventilation_upgrade_details.md)`
+- Type: [insulation_air_sealing_ventilation_upgrade_details](insulation_air_sealing_ventilation_upgrade_details.md)
 - can not be null
   

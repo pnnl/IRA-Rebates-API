@@ -21,7 +21,7 @@ The AHRA Reference Number associated with a heat pump or heat pump water heater.
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -32,7 +32,7 @@ This should be set to 1 in most cases. An example of a situation where a value g
   
 
 - is not required
-- Type: ``integer``
+- Type: `integer`
 - can not be null
   
 
@@ -43,7 +43,7 @@ The model number for the product being purchased.
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -54,7 +54,7 @@ The description of the product being purchased, as it would appear on an invoice
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
 
@@ -65,6 +65,6 @@ The universal product code (UPC) for the product being purchased.
   
 
 - is not required
-- Type: ``string``
+- Type: `string`
 - can not be null
   
