@@ -9,6 +9,10 @@
       "description": "The API user must convert the binary file content to base64 encoding.",
       "title": "Binary file content Base64"
     },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
     "file_name": {
       "type": "string",
       "pattern": "^[0-9a-zA-Z\\-.\\(\\)_ ]+$",
