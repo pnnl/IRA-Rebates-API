@@ -42,6 +42,15 @@
       "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
       "title": "Is final project redemption"
     },
+    "post_retrofit_inspection_passed": {
+      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+      "title": "Post retrofit inspection passed",
+      "enum": [
+        "NA",
+        "NO",
+        "YES"
+      ]
+    },
     "project_completion_date": {
       "type": "string",
       "minLength": 10,

@@ -110,6 +110,11 @@
       "type": "boolean",
       "description": "A boolean flag to determine if the redemption(s) for this reservation will be deleted. When this flag is set to true, any associated redemption for the reservation will also be deleted."
     },
+    "description": {
+      "$anchor": "description",
+      "title": "Description",
+      "type": "string"
+    },
     "doe_approved_bpi_2400_compliant_software_used": {
       "type": "string",
       "title": "DOE approved bpi 2400 compliant software used",
@@ -210,83 +215,33 @@
       "title": "Requested reservation amount",
       "description": "Optional API user-specified reservation amount. Use this to request a reservation amount that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
     },
-    "safety_checks": {
-      "$anchor": "safety_checks",
-      "type": "object",
-      "properties": {
-        "ambient_co_test_result": {
-          "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Ambient CO test result"
-        },
-        "ashrae_62_2_ventilation_calculated": {
-          "$ref": "#safety_checks_yes_no_na",
-          "title": "ASHRAE 62.2 ventilation calculated"
-        },
-        "confirm_all_safety_check_results_disclosed_to_homeowner": {
-          "$ref": "#safety_checks_yes_no_na",
-          "title": "Confirm all safety check results disclosed to homeowner"
-        },
-        "drainage_system_condition": {
-          "$ref": "#safety_checks_good_potential_issues_na",
-          "title": "Drainage system condition"
-        },
-        "gas_leak_detection_test_result": {
-          "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Gas leak detection test result"
-        },
-        "roof_condition": {
-          "$ref": "#safety_checks_good_potential_issues_na",
-          "title": "Roof condition"
-        },
-        "signs_of_mold_or_moisture": {
-          "$ref": "#safety_checks_yes_no_na",
-          "description": "Contractor should not proceed with energy efficiency measures until mold and moisture issues are mitigated.",
-          "title": "Signs of mold or moisture"
-        },
-        "spillage_test_result": {
-          "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Spillage test result"
-        },
-        "undiluted_co_test_result": {
-          "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Undiluted CO test result"
-        },
-        "venting_test_result": {
-          "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Venting test result"
-        }
-      },
-      "required": [
-        "ambient_co_test_result",
-        "ashrae_62_2_ventilation_calculated",
-        "confirm_all_safety_check_results_disclosed_to_homeowner",
-        "drainage_system_condition",
-        "gas_leak_detection_test_result",
-        "roof_condition",
-        "signs_of_mold_or_moisture",
-        "spillage_test_result",
-        "undiluted_co_test_result",
-        "venting_test_result"
-      ],
-      "additionalProperties": false
-    },
     "energy_data_evaluation_permission": {
       "$anchor": "energy_data_evaluation_permission",
       "type": "boolean",
       "description": "Set to true if the home/building owner has given their permission to share energy data with the State and the DOE for evaluation purposes.",
       "title": "Energy data evaluation permission"
     },
+    "estimated_percent_energy_savings": {
+      "$anchor": "estimated_percent_energy_savings",
+      "type": "number",
+      "maximum": 100,
+      "description": "An estimate for the percent measured energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed \u2013 either this field or the two fields measured_pre_retrofit_energy_usage_kwh_equivalent and  estimated_post_retrofit_energy_usage_kwh_equivalent must be specified when rebate_type is MEASURED. The behavior starting mid to late January 2025 will be: this field is required for rebate_type MEASURED and otherwise not allowed."
+    },
     "estimated_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Estimated post retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "estimated_post_retrofit_energy_usage_kwh_equivalent",
+      "deprecated": true,
       "description": "The total estimated (expected) annual  energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
+    },
+    "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+      "$anchor": "estimated_post_retrofit_site_energy_usages_by_fuel_type",
+      "type": "array",
+      "items": {
+        "$ref": "#site_energy_usage"
+      },
+      "description": "An array of estimated post-retrofit site energy usage objects. Each entry represents a different fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed. Please begin using this field asap."
     },
     "external_rebate_id": {
       "type": "string",
@@ -403,6 +358,12 @@
           "FLOOR_INSULATION",
           "FOUNDATION_INSULATION",
           "HEATING_EQUIPMENT",
+          "LIGHTING",
+          "MOTORS",
+          "PUMPS",
+          "ROOF_INSULATION",
+          "THERMOSTATS",
+          "VARIABLE_FREQUENCY_DRIVES",
           "VENTILATION",
           "WALL_INSULATION",
           "WATER_HEATER",
@@ -447,19 +408,43 @@
       "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
       "title": "Is final project redemption"
     },
+    "measured_percent_energy_savings": {
+      "$anchor": "measured_percent_energy_savings",
+      "type": "number",
+      "maximum": 100,
+      "description": "The calculated percent measured energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed \u2013 either this field or measured_post_retrofit_energy_usage_kwh_equivalent must be specified when rebate_type is MEASURED. The behavior starting mid to late January 2025 will be: this field is required for rebate_type MEASURED and otherwise not allowed."
+    },
     "measured_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Measured post retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "measured_post_retrofit_energy_usage_kwh_equivalent",
+      "deprecated": true,
       "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
+    },
+    "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+      "$anchor": "measured_post_retrofit_site_energy_usages_by_fuel_type",
+      "type": "array",
+      "items": {
+        "$ref": "#site_energy_usage"
+      },
+      "description": "An array of measured site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed."
     },
     "measured_pre_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Measured pre-retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "measured_pre_retrofit_energy_usage_kwh_equivalent",
+      "deprecated": true,
       "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
+    },
+    "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+      "$anchor": "measured_pre_retrofit_site_energy_usages_by_fuel_type",
+      "type": "array",
+      "items": {
+        "$ref": "#site_energy_usage"
+      },
+      "description": "An array of measured pre-retrofit site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed. Please begin using this field asap."
     },
     "mf_conditioned_floor_area": {
       "$anchor": "mf_conditioned_floor_area",
@@ -485,19 +470,43 @@
       "maxLength": 64,
       "description": "The model number for the product being purchased."
     },
+    "modeled_percent_energy_savings": {
+      "$anchor": "modeled_percent_energy_savings",
+      "type": "number",
+      "maximum": 100,
+      "description": "The calculated percent modeled energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed \u2013 either this field or the two modeled_...kwh_equalent fields must be specified when _rebate_type is MODELED. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
+    },
     "modeled_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Modeled post retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "modeled_post_retrofit_energy_usage_kwh_equivalent",
+      "deprecated": true,
       "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
+    },
+    "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+      "$anchor": "modeled_post_retrofit_site_energy_usages_by_fuel_type",
+      "type": "array",
+      "items": {
+        "$ref": "#site_energy_usage"
+      },
+      "description": "An array of modeled post-retrofit site energy usage objects. Each entry represents a different fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
     },
     "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Modeled pre energy usage kwh equivalent",
+      "title": "Modeled pre-retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "modeled_pre_retrofit_energy_usage_kwh_equivalent",
+      "deprecated": true,
       "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
+    },
+    "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+      "$anchor": "modeled_pre_retrofit_site_energy_usages_by_fuel_type",
+      "type": "array",
+      "items": {
+        "$ref": "#site_energy_usage"
+      },
+      "description": "An array of modeled pre-retrofit site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
     },
     "new_expiration_date": {
       "type": "string",
@@ -559,6 +568,12 @@
       "format": "uuid",
       "description": "Multiple reservations for MEASURED HOMES projects can be tied together into a portfolio by assigning the same portfolio_id value to each reservation in the portfolio.",
       "title": "Portfolio id"
+    },
+    "post_retrofit_inspection_passed": {
+      "$anchor": "post_retrofit_inspection_passed",
+      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+      "title": "Post retrofit inspection passed",
+      "$ref": "#safety_checks_yes_no_na"
     },
     "product_description": {
       "$anchor": "product_description",
@@ -680,6 +695,71 @@
       "type": "date-time",
       "description": "If the reservation is not redeemed by this date, the reservation will be automatically canceled."
     },
+    "safety_checks": {
+      "$anchor": "safety_checks",
+      "type": "object",
+      "properties": {
+        "ambient_co_test_result": {
+          "$ref": "#safety_checks_passed_failed_warning_na",
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Ambient CO test result"
+        },
+        "ashrae_62_2_ventilation_calculated": {
+          "$ref": "#safety_checks_yes_no_na",
+          "title": "ASHRAE 62.2 ventilation calculated"
+        },
+        "confirm_all_safety_check_results_disclosed_to_homeowner": {
+          "$ref": "#safety_checks_yes_no_na",
+          "title": "Confirm all safety check results disclosed to homeowner"
+        },
+        "drainage_system_condition": {
+          "$ref": "#safety_checks_good_potential_issues_na",
+          "title": "Drainage system condition"
+        },
+        "gas_leak_detection_test_result": {
+          "$ref": "#safety_checks_passed_failed_warning_na",
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Gas leak detection test result"
+        },
+        "roof_condition": {
+          "$ref": "#safety_checks_good_potential_issues_na",
+          "title": "Roof condition"
+        },
+        "signs_of_mold_or_moisture": {
+          "$ref": "#safety_checks_yes_no_na",
+          "description": "Contractor should not proceed with energy efficiency measures until mold and moisture issues are mitigated.",
+          "title": "Signs of mold or moisture"
+        },
+        "spillage_test_result": {
+          "$ref": "#safety_checks_passed_failed_warning_na",
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Spillage test result"
+        },
+        "undiluted_co_test_result": {
+          "$ref": "#safety_checks_passed_failed_warning_na",
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Undiluted CO test result"
+        },
+        "venting_test_result": {
+          "$ref": "#safety_checks_passed_failed_warning_na",
+          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Venting test result"
+        }
+      },
+      "required": [
+        "ambient_co_test_result",
+        "ashrae_62_2_ventilation_calculated",
+        "confirm_all_safety_check_results_disclosed_to_homeowner",
+        "drainage_system_condition",
+        "gas_leak_detection_test_result",
+        "roof_condition",
+        "signs_of_mold_or_moisture",
+        "spillage_test_result",
+        "undiluted_co_test_result",
+        "venting_test_result"
+      ],
+      "additionalProperties": false
+    },
     "safety_checks_good_potential_issues_na": {
       "$anchor": "safety_checks_good_potential_issues_na",
       "enum": [
@@ -730,6 +810,48 @@
       "minimum": 0,
       "maximum": 20,
       "description": "The number of bedrooms in the dwelling unit."
+    },
+    "site_energy_usage": {
+      "$anchor": "site_energy_usage",
+      "type": "object",
+      "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+      "properties": {
+        "annual_consumption": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "The annual site usage for the specified fuel type."
+        },
+        "energy_type": {
+          "enum": [
+            "COAL",
+            "ELECTRICITY",
+            "FUEL_OIL",
+            "KEROSENE",
+            "NATURAL_GAS",
+            "PROPANE",
+            "SOLAR_HOT_WATER",
+            "WOOD"
+          ],
+          "description": "A site fuel type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/EnergyType . In the case of a district-type fuel, the source fuel must be used."
+        },
+        "unit_of_measure": {
+          "$anchor": "unit_of_measure",
+          "enum": [
+            "BTU",
+            "KBTU",
+            "KWH",
+            "MWH",
+            "THERMS"
+          ],
+          "description": "The energy unit for the energy_type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/UnitofMeasure."
+        }
+      },
+      "required": [
+        "annual_consumption",
+        "energy_type",
+        "unit_of_measure"
+      ],
+      "additionalProperties": false
     },
     "software_used_to_estimate_post_retrofit_energy_usage": {
       "type": "string",
