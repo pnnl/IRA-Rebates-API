@@ -23,6 +23,9 @@
     "is_final_project_redemption": {
       "$ref": "/schemas/definitions#is_final_project_redemption"
     },
+    "post_retrofit_inspection_passed": {
+      "$ref": "/schemas/definitions#post_retrofit_inspection_passed"
+    },
     "project_completion_date": {
       "$ref": "/schemas/definitions#project_completion_date"
     },
