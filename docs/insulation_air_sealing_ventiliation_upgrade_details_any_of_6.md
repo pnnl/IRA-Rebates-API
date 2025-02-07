@@ -12,8 +12,7 @@ Additional Properties Allowed: `False`
 |[r_value_added](#r_value_added)|`enum`|:white_check_mark:|False|||
 |[upgrade_subtype](#upgrade_subtype)|`FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION`|:white_check_mark:|False|||
 
-percent_floor_receiving_additional_insulation
-=============================================
+## percent_floor_receiving_additional_insulation
   
 For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.  
   
@@ -30,10 +29,8 @@ For estimating this percentage, use the total conditioned floor area `mf_conditi
 |`50`|
 |`75`|
 |`100`|
-  
 
-r_value_added
-=============
+## r_value_added
   
 Choose the R-value that best describes the amount of insulation added.  
   
@@ -51,10 +48,8 @@ Choose the R-value that best describes the amount of insulation added.
 |`R13`|
 |`R19`|
 |`R30`|
-  
 
-upgrade_subtype
-===============
+## upgrade_subtype
   
   
   
@@ -62,4 +57,3 @@ upgrade_subtype
 - is required
 - Type: `FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION`
 - can not be null
-  

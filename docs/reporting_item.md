@@ -50,26 +50,23 @@ Additional Properties Allowed: `False`
 |[upgrade_component_details](#upgrade_component_details)|[building_upgrade_component_details](building_upgrade_component_details.md)||False||Building Upgrade Component Details|
 |[upgrade_type](#upgrade_type)|`enum`|:white_check_mark:|False||Upgrade type|
 
-# One Of
+## One Of
   
   
 
-Mutual Exclusivity Requirement
-==============================
+### Mutual Exclusivity Requirement
   
 
 |`if` present|should `not` be present|
 | :--- | :--- |
-|`purchase_date_time`|`purchase_date`|
-|`purchase_date`|`purchase_date_time`|
+|[purchase_date_time](#purchase_date_time)|[purchase_date](#purchase_date)|
+|[purchase_date](#purchase_date)|[purchase_date_time](#purchase_date_time)|
   
 
-allOf Requirement
-=================
+## allOf Requirement
   
 
-Conditional Validation
-======================
+### Conditional Validation
   
 
 |`if`|`then` should be present|should `not` be present|comment|
@@ -85,15 +82,16 @@ Conditional Validation
 |[upgrade_type](#upgrade_type) is `INSULATION_AIR_SEALING_VENTILATION`|[original_component_details](#original_component_details)<br>[upgrade_component_details](#upgrade_component_details)|||
 |[upgrade_type](#upgrade_type) is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`|[original_component_details](#original_component_details)|[upgrade_component_details](#upgrade_component_details)||
 |[upgrade_type](#upgrade_type) is `ELECTRIC_WIRING`||[original_component_details](#original_component_details)<br>[upgrade_component_details](#upgrade_component_details)||
-|[upgrade_type](#upgrade_type) is one of [`ELECTRICAL_PANEL`, `ELECTRIC_WIRING`, `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`][upgrade_type](#upgrade_type) is `INSULATION_AIR_SEALING_VENTILATION`[insulation_air_sealing_ventilation_upgrade_details](#insulation_air_sealing_ventilation_upgrade_details)  contains [insulation_air_sealing_ventilation_upgrade_details_conditional_requirement](insulation_air_sealing_ventilation_upgrade_details_conditional_requirement.md)|[contractor_company_name](#contractor_company_name)<br>[contractor_dac_incentive](#contractor_dac_incentive)<br>[contractor_incentive](#contractor_incentive)<br>[contractor_name](#contractor_name)<br>[is_contractor_eligible](#is_contractor_eligible)<br>[safety_checks](#safety_checks)||Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, contractor_dac_incentive, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed|
-|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `INSULATION_AIR_SEALING_VENTILATION`]|||Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required|
-|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_CLOTHES_DRYER`, `HEAT_PUMP_WATER_HEATER`]|||Determine when mf_num_bedrooms and sf_num_bedrooms are required|
+|[upgrade_type](#upgrade_type) is one of [`ELECTRICAL_PANEL`, `ELECTRIC_WIRING`, `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`]<br><br> OR <br><br>[upgrade_type](#upgrade_type) is `INSULATION_AIR_SEALING_VENTILATION` AND [upgrade_component_details](#upgrade_component_details).[insulation_air_sealing_ventilation_upgrade_details](#insulation_air_sealing_ventilation_upgrade_details)  contains [insulation_air_sealing_ventilation_upgrade_details_conditional_requirement](insulation_air_sealing_ventilation_upgrade_details_conditional_requirement.md) AND [installation_type](#installation_type) is `DO_IT_YOURSELF`||[contractor_company_name](#contractor_company_name)<br>[contractor_dac_incentive](#contractor_dac_incentive)<br>[contractor_incentive](#contractor_incentive)<br>[contractor_name](#contractor_name)<br>[is_contractor_eligible](#is_contractor_eligible)||
+|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `INSULATION_AIR_SEALING_VENTILATION`] AND [building_project_type](#building_project_type) is `MULTIFAMILY_CENTRAL`|[mf_conditioned_floor_area](#mf_conditioned_floor_area)|||
+|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `INSULATION_AIR_SEALING_VENTILATION`] AND [building_project_type](#building_project_type) is not `MULTIFAMILY_CENTRAL`|[sf_conditioned_floor_area](#sf_conditioned_floor_area)|||
+|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_CLOTHES_DRYER`, `HEAT_PUMP_WATER_HEATER`] AND [building_project_type](#building_project_type) is `MULTIFAMILY_CENTRAL`|[mf_num_bedrooms](#mf_num_bedrooms)|||
+|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_CLOTHES_DRYER`, `HEAT_PUMP_WATER_HEATER`] AND [building_project_type](#building_project_type) is not `MULTIFAMILY_CENTRAL`|[sf_num_bedrooms](#sf_num_bedrooms)|||
 |[upgrade_type](#upgrade_type) is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`|[limited_assessment](#limited_assessment)||Determine when limited_assessment is required or not allowed|
 |[upgrade_type](#upgrade_type) is `HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`||||
-|[upgrade_type](#upgrade_type) is one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `HEAT_PUMP_WATER_HEATER`]||||
+|[upgrade_type](#upgrade_type) is not one of [`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`, `HEAT_PUMP_WATER_HEATER`]||||
 
-address_id
-==========
+## address_id
   
 A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.  
   
@@ -101,10 +99,8 @@ A unique identifier associated with the address of the building at which the upg
 - is required
 - Type: `string`
 - can not be null
-  
 
-applicant_id
-============
+## applicant_id
   
 This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.  
   
@@ -112,10 +108,8 @@ This identifier is unique to the applicant (the building owner or renter that is
 - is required
 - Type: `string`
 - can not be null
-  
 
-building_project_type
-=====================
+## building_project_type
   
 This describes both the type of the building and, in the multifamily case, whether the upgrade in this reservation applies to the whole building or to a single unit. If it applies to a single unit, there is a further distinction between an upgrade that is part of a whole building project and a stand-alone upgrade. For the MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT and MULTIFAMILY_CENTRAL cases, the income bucket for the building, mf_income_bucket, is used. Otherwise, the income bucket for the dwelling unit, dwelling_unit_income_bucket, is used.  
   
@@ -133,10 +127,8 @@ This describes both the type of the building and, in the multifamily case, wheth
 |`MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT`|
 |`SINGLE_FAMILY_ATTACHED`|
 |`SINGLE_FAMILY_DETACHED`|
-  
 
-claimant_type
-=============
+## claimant_type
   
 The type of person or entity that is initiating the rebate process on behalf of the applicant.  
   
@@ -153,10 +145,8 @@ The type of person or entity that is initiating the rebate process on behalf of 
 |`MULTIFAMILY_BUILDING_OWNER`|
 |`OTHER`|
 |`TENANT`|
-  
 
-construction_type
-=================
+## construction_type
   
 Set to NEW if the building is less than one year old. Otherwise, set to EXISTING.  
   
@@ -170,10 +160,8 @@ Set to NEW if the building is less than one year old. Otherwise, set to EXISTING
 | :--- |
 |`EXISTING`|
 |`NEW`|
-  
 
-contractor_company_name
-=======================
+## contractor_company_name
   
 The name of the primary contracting company for the project.  
   
@@ -182,9 +170,9 @@ The name of the primary contracting company for the project.
 - Type: `string`
 - can not be null
   
-
-contractor_dac_incentive
-========================
+Minimum Length: `1`  
+Maximum Length: `64`
+## contractor_dac_incentive
   
 This is the amount the state will pay to a contractor as a disadvantaged-community incentive. This field is required if the address of the building is within a DAC.  
   
@@ -193,9 +181,9 @@ This is the amount the state will pay to a contractor as a disadvantaged-communi
 - Type: `number`
 - can not be null
   
-
-contractor_incentive
-====================
+Must be multiple of: `0.01`  
+Minimum Number: `0`
+## contractor_incentive
   
 This is the amount the state will pay to a contractor as an incentive. This is separate from any contractor DAC incentive.  
   
@@ -204,9 +192,9 @@ This is the amount the state will pay to a contractor as an incentive. This is s
 - Type: `number`
 - can not be null
   
-
-contractor_name
-===============
+Must be multiple of: `0.01`  
+Minimum Number: `0`
+## contractor_name
   
 The name of the primary contractor for the project.  
   
@@ -215,9 +203,9 @@ The name of the primary contractor for the project.
 - Type: `string`
 - can not be null
   
-
-dwelling_unit_income_bucket
-===========================
+Minimum Length: `1`  
+Maximum Length: `64`
+## dwelling_unit_income_bucket
   
 The household income level of the applicant compared to the area median income (AMI).  
   
@@ -231,10 +219,8 @@ The household income level of the applicant compared to the area median income (
 | :--- |
 |`80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`|
 |`LESS_THAN_80%_AMI`|
-  
 
-energy_data_evaluation_permission
-=================================
+## energy_data_evaluation_permission
   
 Set to true if the home/building owner has given their permission to share energy data with the State and the DOE for evaluation purposes.  
   
@@ -242,10 +228,8 @@ Set to true if the home/building owner has given their permission to share energ
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-equipment_and_material_cost
-===========================
+## equipment_and_material_cost
   
 The total cost of the equipment and materials purchased as part of a redemption.  
   
@@ -254,9 +238,9 @@ The total cost of the equipment and materials purchased as part of a redemption.
 - Type: `number`
 - can not be null
   
-
-external_rebate_id
-==================
+Must be multiple of: `0.01`  
+Exclusive Minimum: `0`
+## external_rebate_id
   
 This is an optional field that a state can use for their own purposes to identify a rebate or rebate reservation.  
   
@@ -265,9 +249,9 @@ This is an optional field that a state can use for their own purposes to identif
 - Type: `string`
 - can not be null
   
-
-install_vendor_id
-=================
+Minimum Length: `1`  
+Maximum Length: `64`
+## install_vendor_id
   
 This is a unique identifier for a vendor that the state will reimburse in connection with a redemption.  
   
@@ -276,9 +260,9 @@ This is a unique identifier for a vendor that the state will reimburse in connec
 - Type: `string`
 - can not be null
   
-
-installation_cost
-=================
+Minimum Length: `6`  
+Maximum Length: `64`
+## installation_cost
   
 The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.  
   
@@ -287,9 +271,9 @@ The installation costs associated with this redemption. To qualify, the installa
 - Type: `number`
 - can not be null
   
-
-installation_type
-=================
+Must be multiple of: `0.01`  
+Minimum Number: `0`
+## installation_type
   
 Indicates who performed the installation.  
   
@@ -303,10 +287,8 @@ Indicates who performed the installation.
 | :--- |
 |`CONTRACTOR_INSTALLED`|
 |`DO_IT_YOURSELF`|
-  
 
-is_contractor_eligible
-======================
+## is_contractor_eligible
   
 The contractor is eligible if they are on the state's approved list.  
   
@@ -314,10 +296,8 @@ The contractor is eligible if they are on the state's approved list.
 - is not required
 - Type: `boolean`
 - can not be null
-  
 
-is_disadvantaged_community
-==========================
+## is_disadvantaged_community
   
 This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.  
   
@@ -325,10 +305,8 @@ This field should only be used by states that have been approved by the DOE to d
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-limited_assessment
-==================
+## limited_assessment
   
   
   
@@ -336,10 +314,8 @@ limited_assessment
 - is not required
 - Type: [limited_assessment](limited_assessment.md)
 - can not be null
-  
 
-mf_building_income_bucket
-=========================
+## mf_building_income_bucket
   
 Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one units falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower.  
   
@@ -353,10 +329,8 @@ Choose the lowest area median income (AMI) range for which at least 50% of the h
 | :--- |
 |`80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`|
 |`LESS_THAN_80%_AMI`|
-  
 
-mf_conditioned_floor_area
-=========================
+## mf_conditioned_floor_area
   
 The conditioned floor area for the entire multifamily building including common areas.  
   
@@ -365,9 +339,9 @@ The conditioned floor area for the entire multifamily building including common 
 - Type: `integer`
 - can not be null
   
-
-mf_num_bedrooms
-===============
+Minimum Number: `1000`  
+Maximum Number: `1000000`
+## mf_num_bedrooms
   
 The number of bedrooms for the entire multifamily building.  
   
@@ -376,9 +350,9 @@ The number of bedrooms for the entire multifamily building.
 - Type: `integer`
 - can not be null
   
-
-num_occupied_units
-==================
+Minimum Number: `0`  
+Maximum Number: `10000`
+## num_occupied_units
   
 This is the number of occupied units in a multifamily building.   
   
@@ -387,9 +361,9 @@ This is the number of occupied units in a multifamily building.
 - Type: `integer`
 - can not be null
   
-
-num_units
-=========
+Minimum Number: `0`  
+Maximum Number: `1000`
+## num_units
   
 This is the total number of units in a multifamily building. This field is required when *building_project_type* is any of the enumerated values that has a "MULTIFAMILY" prefix. Otherwise, the field should be omitted.  
   
@@ -398,9 +372,9 @@ This is the total number of units in a multifamily building. This field is requi
 - Type: `integer`
 - can not be null
   
-
-num_units_meeting_income_bucket
-===============================
+Minimum Number: `2`  
+Maximum Number: `1000`
+## num_units_meeting_income_bucket
   
 This is the number of occupied units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower.  
   
@@ -409,9 +383,9 @@ This is the number of occupied units in a multifamily building for which the hou
 - Type: `integer`
 - can not be null
   
-
-original_component_details
-==========================
+Minimum Number: `1`  
+Maximum Number: `1000`
+## original_component_details
   
   
   
@@ -419,10 +393,8 @@ original_component_details
 - is not required
 - Type: [original_component_details](original_component_details.md)
 - can not be null
-  
 
-product_info
-============
+## product_info
   
 Provide identifying information for the qualifying product or products that are covered by this rebate.  
   
@@ -431,9 +403,8 @@ Provide identifying information for the qualifying product or products that are 
 - Type: [buildinging_product_info](buildinging_product_info.md)
 - can not be null
   
-
-product_vendor_id
-=================
+Minimum number of items: `1`
+## product_vendor_id
   
 This is a unique identifier for a vendor that the state will reimburse in connection with a redemption.  
   
@@ -442,9 +413,9 @@ This is a unique identifier for a vendor that the state will reimburse in connec
 - Type: `string`
 - can not be null
   
-
-project_completion_date
-=======================
+Minimum Length: `6`  
+Maximum Length: `64`
+## project_completion_date
   
 This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial.  
   
@@ -453,9 +424,10 @@ This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial.
 - Type: `string`
 - can not be null
   
-
-project_id
-==========
+Minimum Length: `10`  
+Maximum Length: `10`  
+Regex Pattern: `^\d{4}-\d{2}-\d{2}$`
+## project_id
   
 This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.  
   
@@ -464,9 +436,9 @@ This is a unique string supplied by the API user that is used to associate one o
 - Type: `string`
 - can not be null
   
-
-purchase_date
-=============
+Minimum Length: `6`  
+Maximum Length: `36`
+## purchase_date
   
 This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial. This represents the date the product was purchased. Either this field or 'purchase_date_time' is required for product redemption.  
   
@@ -475,9 +447,10 @@ This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial. This re
 - Type: `string`
 - can not be null
   
-
-purchase_date_time
-==================
+Minimum Length: `10`  
+Maximum Length: `10`  
+Regex Pattern: `^\d{4}-\d{2}-\d{2}$`
+## purchase_date_time
   
 This is the date and time a product was purchased. Either this field or the 'purchase_date' field is required for product redemption. Note that the 'purchase_date_time' field will be deprecated in the future.  
   
@@ -486,9 +459,10 @@ This is the date and time a product was purchased. Either this field or the 'pur
 - Type: `string`
 - can not be null
   
-
-rebate_deducted
-===============
+Minimum Length: `10`  
+Regex Pattern: `^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(Z|([+-]\d{2}:\d{2})))?$|^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$`  
+Comment: The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time.
+## rebate_deducted
   
 This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation.  
   
@@ -497,9 +471,9 @@ This is the amount that was deducted from the customer's/homeowner's purchase pr
 - Type: `number`
 - can not be null
   
-
-safety_checks
-=============
+Must be multiple of: `0.01`  
+Minimum Number: `0`
+## safety_checks
   
   
   
@@ -507,10 +481,8 @@ safety_checks
 - is not required
 - Type: [building_safety_checks](building_safety_checks.md)
 - can not be null
-  
 
-sf_conditioned_floor_area
-=========================
+## sf_conditioned_floor_area
   
 This is the conditioned floor area for an individual dwelling unit, either a single-family home or a unit in a multifamily building.  
   
@@ -526,10 +498,8 @@ This is the conditioned floor area for an individual dwelling unit, either a sin
 |`500SF_1500SF`|
 |`GREATER_THAN_2500SF`|
 |`LESS_THAN_500SF`|
-  
 
-sf_num_bedrooms
-===============
+## sf_num_bedrooms
   
 The number of bedrooms in the dwelling unit.  
   
@@ -538,9 +508,9 @@ The number of bedrooms in the dwelling unit.
 - Type: `integer`
 - can not be null
   
-
-state_attests_proof_of_identity_ownership_income
-================================================
+Minimum Number: `0`  
+Maximum Number: `20`
+## state_attests_proof_of_identity_ownership_income
   
 The state attests that they have obtained the required proof of identify, proof of ownership, and proof of income for this rebate.  
   
@@ -548,10 +518,8 @@ The state attests that they have obtained the required proof of identify, proof 
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-state_attests_any_failed_inspection_remediated
-==============================================
+## state_attests_any_failed_inspection_remediated
   
   
   
@@ -559,10 +527,8 @@ state_attests_any_failed_inspection_remediated
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-unit_name_or_number
-===================
+## unit_name_or_number
   
 This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'.  
   
@@ -571,9 +537,9 @@ This is the unit designator for a unit in a multifamily building. Do NOT include
 - Type: `string`
 - can not be null
   
-
-upgrade_component_details
-=========================
+Minimum Length: `1`  
+Maximum Length: `32`
+## upgrade_component_details
   
   
   
@@ -581,10 +547,8 @@ upgrade_component_details
 - is not required
 - Type: [building_upgrade_component_details](building_upgrade_component_details.md)
 - can not be null
-  
 
-upgrade_type
-============
+## upgrade_type
   
 The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation.  
   
@@ -603,4 +567,3 @@ The upgrade covered by this reservation. These upgrade types are the ones specif
 |`HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING`|
 |`HEAT_PUMP_WATER_HEATER`|
 |`INSULATION_AIR_SEALING_VENTILATION`|
-  

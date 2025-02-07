@@ -16,32 +16,20 @@ Additional Properties Allowed: `False`
 |[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)|`integer`||False||Percent conditioned floor area served|
   
 
-allOf Requirement
-=================
+## allOf Requirement
   
 
-Conditional Validation
-======================
+### Conditional Validation
   
 
 |`if`|`then` should be present|should `not` be present|comment|
 | :---: | :---: | :---: | :---: |
-|[is_efficiency_known](#is_efficiency_known) is `True`||||
+|[is_efficiency_known](#is_efficiency_known) is `True` AND [fuel_and_system_type](#fuel_and_system_type) is `ELECTRIC_HEAT_PUMP`|[efficiency_hspf](#efficiency_hspf)|||
+|[is_efficiency_known](#is_efficiency_known) is `True` AND [fuel_and_system_type](#fuel_and_system_type) is not `ELECTRIC_HEAT_PUMP`|[efficiency_afue](#efficiency_afue)|||
 |[is_percent_conditioned_floor_area_served_known](#is_percent_conditioned_floor_area_served_known) is `True`|[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)|||
+|[is_percent_conditioned_floor_area_served_known](#is_percent_conditioned_floor_area_served_known) is not `True`||[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)||
 
-efficiency_afue
-===============
-  
-  
-  
-
-- is not required
-- Type: `number`
-- can not be null
-  
-
-efficiency_hspf
-===============
+## efficiency_afue
   
   
   
@@ -50,9 +38,19 @@ efficiency_hspf
 - Type: `number`
 - can not be null
   
+Maximum Number: `1`  
+Exclusive Minimum: `0`
+## efficiency_hspf
+  
+  
+  
 
-fuel_and_system_type
-====================
+- is not required
+- Type: `number`
+- can not be null
+  
+Minimum Number: `1`
+## fuel_and_system_type
   
   
   
@@ -73,10 +71,8 @@ fuel_and_system_type
 |`OIL_BOILER`|
 |`OIL_FURNACE`|
 |`OTHER`|
-  
 
-is_efficiency_known
-===================
+## is_efficiency_known
   
   
   
@@ -84,10 +80,8 @@ is_efficiency_known
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-is_percent_conditioned_floor_area_served_known
-==============================================
+## is_percent_conditioned_floor_area_served_known
   
   
   
@@ -95,10 +89,8 @@ is_percent_conditioned_floor_area_served_known
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-percent_conditioned_floor_area_served
-=====================================
+## percent_conditioned_floor_area_served
   
 For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.  
   
@@ -107,3 +99,5 @@ For estimating this percentage, use the total conditioned floor area `mf_conditi
 - Type: `integer`
 - can not be null
   
+Minimum Number: `0`  
+Maximum Number: `100`

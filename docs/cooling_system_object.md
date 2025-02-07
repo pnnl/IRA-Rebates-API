@@ -15,21 +15,20 @@ Additional Properties Allowed: `False`
 |[system_type](#system_type)|`enum`|:white_check_mark:|False|||
   
 
-allOf Requirement
-=================
+## allOf Requirement
   
 
-Conditional Validation
-======================
+### Conditional Validation
   
 
 |`if`|`then` should be present|should `not` be present|comment|
 | :---: | :---: | :---: | :---: |
 |[is_efficiency_known](#is_efficiency_known) is `True`|[efficiency_seer](#efficiency_seer)|||
+|[is_efficiency_known](#is_efficiency_known) is not `True`||[efficiency_seer](#efficiency_seer)||
 |[is_percent_conditioned_floor_area_served_known](#is_percent_conditioned_floor_area_served_known) is `True`|[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)|||
+|[is_percent_conditioned_floor_area_served_known](#is_percent_conditioned_floor_area_served_known) is not `True`||[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)||
 
-efficiency_seer
-===============
+## efficiency_seer
   
   
   
@@ -38,9 +37,8 @@ efficiency_seer
 - Type: `number`
 - can not be null
   
-
-is_efficiency_known
-===================
+Minimum Number: `1`
+## is_efficiency_known
   
   
   
@@ -48,10 +46,8 @@ is_efficiency_known
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-is_percent_conditioned_floor_area_served_known
-==============================================
+## is_percent_conditioned_floor_area_served_known
   
   
   
@@ -59,10 +55,8 @@ is_percent_conditioned_floor_area_served_known
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-percent_conditioned_floor_area_served
-=====================================
+## percent_conditioned_floor_area_served
   
 For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.  
   
@@ -71,9 +65,9 @@ For estimating this percentage, use the total conditioned floor area `mf_conditi
 - Type: `integer`
 - can not be null
   
-
-system_type
-===========
+Minimum Number: `0`  
+Maximum Number: `100`
+## system_type
   
   
   
@@ -88,4 +82,3 @@ system_type
 |`CENTRAL`|
 |`HEAT_PUMP`|
 |`WINDOW`|
-  

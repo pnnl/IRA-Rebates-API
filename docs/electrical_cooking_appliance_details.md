@@ -10,8 +10,7 @@ Additional Properties Allowed: `False`
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[fuel_type](#fuel_type)|`enum`|:white_check_mark:|False|||
 
-fuel_type
-=========
+## fuel_type
   
   
   
@@ -25,4 +24,3 @@ fuel_type
 | :--- |
 |`GAS`|
 |`NONE`|
-  

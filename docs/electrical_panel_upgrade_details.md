@@ -11,8 +11,7 @@ Additional Properties Allowed: `False`
 |[max_amps](#max_amps)|`integer`|:white_check_mark:|False|||
 |[num_open_breaker_spots](#num_open_breaker_spots)|`integer`|:white_check_mark:|False|||
 
-max_amps
-========
+## max_amps
   
   
   
@@ -21,9 +20,8 @@ max_amps
 - Type: `integer`
 - can not be null
   
-
-num_open_breaker_spots
-======================
+Minimum Number: `30`
+## num_open_breaker_spots
   
   
   
@@ -32,3 +30,4 @@ num_open_breaker_spots
 - Type: `integer`
 - can not be null
   
+Minimum Number: `0`

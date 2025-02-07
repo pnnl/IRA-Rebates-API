@@ -5,7 +5,7 @@ Building Upgrade Component Details
 Defined in: [upgradeComponentDetails.schema.json](https://ira-rebates.labworks.org/schemas/upgradeComponentDetails)  
 Type: `object`  
 Additional Properties Allowed: `True`
-# One Of
+## One Of
   
   
 [insulation_air_sealing_ventilation_upgrade_details_requirement](insulation_air_sealing_ventilation_upgrade_details_requirement.md)  

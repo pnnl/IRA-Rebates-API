@@ -13,9 +13,20 @@ Additional Properties Allowed: `False`
 |[is_leakage_rate_known](#is_leakage_rate_known)|`boolean`|:white_check_mark:|False|||
 |[locations](#locations)|[locations](locations.md)|:white_check_mark:|False||Locations|
 |[upgrade_subtype](#upgrade_subtype)|`AIR_SEALING`|:white_check_mark:|False|||
+  
 
-cfm50
-=====
+## allOf Requirement
+  
+
+### Conditional Validation
+  
+
+|`if`|`then` should be present|should `not` be present|comment|
+| :---: | :---: | :---: | :---: |
+|[is_leakage_rate_known](#is_leakage_rate_known) is `True`|[cfm50](#cfm50)|||
+|[is_leakage_rate_known](#is_leakage_rate_known) is not `True`||[cfm50](#cfm50)||
+
+## cfm50
   
   
   
@@ -24,9 +35,8 @@ cfm50
 - Type: `integer`
 - can not be null
   
-
-is_homeowner_aware_combustion_safety_tests_are_highly_recommended
-=================================================================
+Minimum Number: `100`
+## is_homeowner_aware_combustion_safety_tests_are_highly_recommended
   
 Is the homeowner aware that combustion safety tests are highly recommended for homes with any combustion appliances after air sealing projects are completed?  
   
@@ -34,10 +44,8 @@ Is the homeowner aware that combustion safety tests are highly recommended for h
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-is_leakage_rate_known
-=====================
+## is_leakage_rate_known
   
   
   
@@ -45,10 +53,8 @@ is_leakage_rate_known
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-locations
-=========
+## locations
   
   
   
@@ -57,9 +63,9 @@ locations
 - Type: [locations](locations.md)
 - can not be null
   
-
-upgrade_subtype
-===============
+Items should be unique: `True`  
+Minimum number of items: `1`
+## upgrade_subtype
   
   
   
@@ -67,4 +73,3 @@ upgrade_subtype
 - is required
 - Type: `AIR_SEALING`
 - can not be null
-  

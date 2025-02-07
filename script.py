@@ -79,10 +79,33 @@ def handle_enums(enums: list[str], md_file: MdUtils):
     md_file.new_line()
     md_file.new_table(columns=1, rows=len(list_of_texts), text=list_of_texts, text_align='left')
 
+
+def handle_inline_constraints(ppty_dict: dict, md_file: MdUtils):
+    constraints = {
+            "minLength": "Minimum Length",
+            "maxLength": "Maximum Length",
+            "multipleOf": "Must be multiple of",
+            "minimum": "Minimum Number",
+            "maximum": "Maximum Number",
+            "exclusiveMinimum": "Exclusive Minimum",
+            "pattern": "Regex Pattern",
+            "$comment": "Comment",
+            "uniqueItems": "Items should be unique",
+            "minItems": "Minimum number of items"
+        }
+
+    for key, label in constraints.items():
+        if key in ppty_dict:
+            if key in ["$comment"]:
+                md_file.new_line(f"{label}: {ppty_dict[key]}")
+            else:
+                md_file.new_line(f"{label}: `{ppty_dict[key]}`")
+
+
 def add_ppty_details(contents: dict, md_file: MdUtils):
     
     for ppty, ppty_dict in contents['properties'].items():
-        md_file.new_header(level=1, title=ppty, style='setext')
+        md_file.new_header(level=2, title=ppty, add_table_of_contents='n')
         md_file.new_line()
         md_file.write(ppty_dict.get('description', ''))
         md_file.new_line()
@@ -98,7 +121,9 @@ def add_ppty_details(contents: dict, md_file: MdUtils):
             for oneof in ppty_dict.get('oneOf'):
                 if 'enum' in oneof:
                     handle_enums(oneof['enum'], md_file)
-        md_file.new_line()
+                handle_inline_constraints(oneof, md_file)
+
+        handle_inline_constraints(ppty_dict, md_file)
 
 
 def check_if_mutually_exclusive_requirement_exists(oneof: dict):
@@ -111,13 +136,13 @@ def generate_mutually_exlcusive_requirement_table(oneofs: list[dict], md_file:  
         return
     
     md_file.new_line()
-    md_file.new_header(level=1, title='Mutual Exclusivity Requirement', style='setext')
+    md_file.new_header(level=3, title='Mutual Exclusivity Requirement', add_table_of_contents='n')
     list_of_strings = ['`if` present', 'should `not` be present']
     for item in one_ofs_with_exclusive_required:
         list_of_strings.extend(
             [
-                ' '.join([f"`{el}`" for el in item['required']]),
-                ' '.join([f"`{el}`" for el in item['not']['required']])
+                ' '.join([f"{get_inline_link(el, md_file)}" for el in item['required']]),
+                ' '.join([f"{get_inline_link(el, md_file)}" for el in item['not']['required']])
             ]
         )
     md_file.new_line()
@@ -126,7 +151,7 @@ def generate_mutually_exlcusive_requirement_table(oneofs: list[dict], md_file:  
 
 
 def handle_anyof(anyofs: list[dict], md_file: MdUtils, export_folder: Path):
-    md_file.new_header(level=1, title="Any Of")
+    md_file.new_header(level=2, title="Any Of", add_table_of_contents='n')
     md_file.new_line()
     for anyof in anyofs:
         if "properties" in anyof:
@@ -134,7 +159,7 @@ def handle_anyof(anyofs: list[dict], md_file: MdUtils, export_folder: Path):
             generate_markdown_for_object(anyof, export_folder)
 
 def handle_oneofs(oneofs: list[dict], md_file: MdUtils, export_folder: Path):
-    md_file.new_header(level=1, title="One Of")
+    md_file.new_header(level=2, title="One Of", add_table_of_contents='n')
     md_file.new_line()
     for one_of_item in oneofs:
         if "properties" in one_of_item:
@@ -143,6 +168,19 @@ def handle_oneofs(oneofs: list[dict], md_file: MdUtils, export_folder: Path):
         if one_of_item.get('type') == "array":
             generate_markdown_for_object(one_of_item)
     generate_mutually_exlcusive_requirement_table(oneofs, md_file)
+
+def handle_anyofs(anyofs: list[dict], md_file: MdUtils, export_folder: Path):
+    md_file.new_header(level=2, title="Any Of", add_table_of_contents='n')
+    md_file.new_line()
+    for any_of_item in anyofs:
+        if "properties" in any_of_item:
+            md_file.new_line(get_hyperlinked_object_text(any_of_item.get('title'), md_file))
+            generate_markdown_for_object(any_of_item, export_folder)
+        if any_of_item.get('type') == "array":
+            generate_markdown_for_object(any_of_item)
+        if "required" in any_of_item:
+            for req_item in any_of_item['required']:
+                md_file.new_line(get_inline_link(req_item, md_file))
 
 
 def check_if_conditional_validation(content: dict) -> bool:
@@ -165,26 +203,30 @@ def get_if_property_text(key: str, value: dict, md_file: MdUtils, export_folder:
     else:
         raise Exception(f"{key=}, {value=}")
     
-def get_if_properties_text(if_content: dict, md_file: MdUtils, export_folder: Path):
-    if_present_text = ""
+def get_if_properties_text(if_content: dict, md_file: MdUtils, export_folder: Path, not_: bool=False):
+    if_present_texts = []
     for key, value in if_content['properties'].items():
         if "properties" in value:
-            if_present_text += get_if_condition_text(value, md_file, export_folder)
+            key_text = get_inline_link(key, md_file)
+            ppty_text  = get_if_condition_text(value, md_file, export_folder, not_)
+            if_present_texts.append(f"{key_text}.{ppty_text}")
         else:
-            if_present_text += get_if_property_text(key, value, md_file, export_folder) 
-    return if_present_text
+            if_present_texts.append(get_if_property_text(key, value, md_file, export_folder, not_))
+    return ' AND '.join(if_present_texts)
 
-def get_if_condition_text(if_content: dict, md_file: MdUtils, export_folder: Path) -> str:
+def get_if_condition_text(if_content: dict, md_file: MdUtils, export_folder: Path, not_: bool = False) -> str:
     
     if_present_text = ""
     if 'not' in if_content:
-        if_present_text += get_if_condition_text(if_content['not'], md_file, export_folder)
+        if_present_text += get_if_condition_text(if_content['not'], md_file, export_folder, not_=True)
     if "properties" in if_content:
-        if_present_text += get_if_properties_text(if_content, md_file, export_folder)
+        if_present_text += get_if_properties_text(if_content, md_file, export_folder, not_= not_)
 
     if "oneOf" in if_content:
+        oneof_texts = []
         for oneof in if_content['oneOf']:
-            if_present_text += get_if_condition_text(oneof, md_file, export_folder)
+            oneof_texts.append(get_if_condition_text(oneof, md_file, export_folder))
+        if_present_text += '<br><br> OR <br><br>'.join(oneof_texts)
     return if_present_text
 
 def get_then_not_text(then_not_content: list[dict], md_file: MdUtils)-> str:
@@ -197,30 +239,64 @@ def get_then_not_text(then_not_content: list[dict], md_file: MdUtils)-> str:
         then_not_text += '<br>'.join([f"{get_inline_link(el, md_file)}" for el in all_req_items])
     return then_not_text
 
+def get_conditional_table_record(conditional_content: dict, md_file: MdUtils, export_folder: Path, prev_if_text: str = ''):
+    conditional_records = []
+    if_text = get_if_condition_text(conditional_content['if'], md_file, export_folder)
+    if prev_if_text:
+        if_text = f'{prev_if_text} AND {if_text}'
+    if "then" in conditional_content and 'if' in conditional_content['then']:
+        return get_conditional_table_record(
+            conditional_content['then'], md_file, export_folder, prev_if_text=if_text
+        )
+    then_not_text = get_then_not_text(conditional_content["then"]["not"], md_file) if "not" in conditional_content['then'] else ""
+    conditional_records.append(
+        [
+            if_text,
+            '<br>'.join([f"{get_inline_link(el, md_file)}" for el in conditional_content['then'].get('required', [])]),
+            then_not_text,
+            conditional_content.get('$comment') or ''
+        ]
+    )
+    if "else" in conditional_content:
+        elseif_text = get_if_condition_text(conditional_content['if'], md_file, export_folder, not_=True)
+        if prev_if_text:
+            elseif_text = f'{prev_if_text} AND {elseif_text}'
+        if "if" in conditional_content["else"]:
+            return get_conditional_table_record(
+                conditional_content['else'], md_file, export_folder, prev_if_text=elseif_text
+            )
+        should_not_text = ""
+        if "not" in conditional_content['else']:
+            should_not_text = get_then_not_text(conditional_content["else"]["not"], md_file) if "not" in conditional_content['else'] else ""
+        conditional_records.append(
+            [
+                elseif_text,
+                '<br>'.join([f"{get_inline_link(el, md_file)}" for el in conditional_content.get('else', {}).get('required', [])]),
+                should_not_text,
+                conditional_content.get('$comment') or ''
+            ]
+        )
+    return conditional_records
+
+
 def handle_conditional_allofs(allof_contents: list[dict], md_file: MdUtils, export_folder: Path):
     md_file.new_line()
-    md_file.new_header(level=1, title='Conditional Validation', style='setext')
+    md_file.new_header(level=3, title='Conditional Validation', add_table_of_contents='n')
     list_of_strings = ['`if`', '`then` should be present', 'should `not` be present', 'comment']
     num_rows = 1
     for item in allof_contents:
-        if_present_text = get_if_condition_text(item['if'], md_file, export_folder)
-        then_not_text = get_then_not_text(item["then"]["not"], md_file) if "not" in item['then'] else ""
-        list_of_strings.extend(
-                        [
-                            if_present_text,
-                            '<br>'.join([f"{get_inline_link(el, md_file)}" for el in item['then'].get('required', [])]),
-                            then_not_text,
-                            item.get('$comment') or ''
-                        ]
-                    )
-        num_rows +=1
+        records = get_conditional_table_record(item, md_file, export_folder)
+        for record in records:
+            list_of_strings.extend(record)
+            num_rows += 1
+
     md_file.new_line()
     md_file.new_table(columns=4, rows=num_rows, text=list_of_strings, text_align='center')
 
 def handle_allofs(allofs: list[dict], md_file: MdUtils, export_folder: Path):
 
     md_file.new_line()
-    md_file.new_header(level=1, title='allOf Requirement', style='setext')
+    md_file.new_header(level=2, title='allOf Requirement',add_table_of_contents="n")
     conditional_allofs = [allof for allof in allofs if check_if_conditional_validation(allof)]
     if conditional_allofs:
         handle_conditional_allofs(conditional_allofs, md_file, export_folder)
@@ -238,7 +314,8 @@ def generate_markdown_for_object(contents: dict, export_folder: Path):
     
     if contents.get('type') == "array":
         items = contents.get("items")
-        md_file.new_line(f"Type: array[{get_hyperlinked_object_text(items.get('title'), md_file)}]")
+        type_text = get_hyperlinked_object_text(items.get('title'), md_file) if 'enum' not in items else 'string'
+        md_file.new_line(f"Type: array[{type_text}]")
         if items.get('type') == "object":
             generate_markdown_for_object(items, export_folder)
 
@@ -252,7 +329,7 @@ def generate_markdown_for_object(contents: dict, export_folder: Path):
 
         
     elif contents.get('type') == "object":
-        md_file.new_line(f"Type: `object`")
+        md_file.new_line("Type: `object`")
         md_file.new_line(f"Additional Properties Allowed: `{contents.get('additionalProperties', True)}`")
         if "properties" in contents:
             add_table_of_properties(contents, md_file)
@@ -265,6 +342,12 @@ def generate_markdown_for_object(contents: dict, export_folder: Path):
 
         if "allOf" in contents:
             handle_allofs(contents.get('allOf'), md_file, export_folder)
+
+        if 'if' in contents:
+            handle_allofs([contents], md_file, export_folder)
+
+        if 'anyOf' in contents:
+            handle_anyofs(contents.get('anyOf'), md_file, export_folder)
 
         if "properties" in contents:
             add_ppty_details(contents, md_file)
@@ -287,3 +370,8 @@ if __name__ == "__main__":
         json_schema_file,
         Path("docs")
     )
+    # json_schema_file = Path(r'../../../../Grid Atlas/schemas/dehydration-metadata-schema/dehydration-metadata.v1.schema.json')
+    # generate_markdown_files(
+    #     json_schema_file,
+    #     Path("../../../../Grid Atlas/schemas/dehydration-metadata-schema/docs/v1")
+    # )

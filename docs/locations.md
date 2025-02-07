@@ -2,7 +2,7 @@
 Locations
 =========
   
-Type: array[[locations_item](locations_item.md)]  
+Type: array[string]  
 
 |Value|
 | :--- |

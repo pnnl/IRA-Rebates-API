@@ -12,8 +12,7 @@ Additional Properties Allowed: `False`
 |[r_value_added](#r_value_added)|`enum`|:white_check_mark:|False|||
 |[upgrade_subtype](#upgrade_subtype)|`CEILING_INSULATION`|:white_check_mark:|False|||
 
-percent_ceiling_receiving_additional_insulation
-===============================================
+## percent_ceiling_receiving_additional_insulation
   
 Choose the closest percent of total ceiling area that will receive (additional) insulation. The ceiling is the one that is associated with the appropriate conditioned_floor_area field.  
   
@@ -30,10 +29,8 @@ Choose the closest percent of total ceiling area that will receive (additional) 
 |`50`|
 |`75`|
 |`100`|
-  
 
-r_value_added
-=============
+## r_value_added
   
 Choose the R-value that best describes the amount of insulation added.  
   
@@ -50,10 +47,8 @@ Choose the R-value that best describes the amount of insulation added.
 |`R30`|
 |`R49`|
 |`R60`|
-  
 
-upgrade_subtype
-===============
+## upgrade_subtype
   
   
   
@@ -61,4 +56,3 @@ upgrade_subtype
 - is required
 - Type: `CEILING_INSULATION`
 - can not be null
-  

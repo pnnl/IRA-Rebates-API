@@ -10,8 +10,7 @@ Additional Properties Allowed: `False`
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[heat_pump_clothes_dryer_upgrade_details](#heat_pump_clothes_dryer_upgrade_details)|[heat_pump_clothes_dryer_upgrade_details](heat_pump_clothes_dryer_upgrade_details.md)|:white_check_mark:|False||Heat Pump Clothes Dryer Upgrade Details|
 
-heat_pump_clothes_dryer_upgrade_details
-=======================================
+## heat_pump_clothes_dryer_upgrade_details
   
 Details that describe this improvement  
   
@@ -19,4 +18,3 @@ Details that describe this improvement
 - is required
 - Type: [heat_pump_clothes_dryer_upgrade_details](heat_pump_clothes_dryer_upgrade_details.md)
 - can not be null
-  

@@ -11,8 +11,7 @@ Additional Properties Allowed: `False`
 |[insulation_type](#insulation_type)|`enum`|:white_check_mark:|False|||
 |[upgrade_subtype](#upgrade_subtype)|`CEILING_INSULATION`|:white_check_mark:|False|||
 
-insulation_type
-===============
+## insulation_type
   
 The preexisting insulation type for the area to receive (additional) insulation. See https://www.energy.gov/energysaver/types-insulation for information about insulation types.  
   
@@ -30,10 +29,8 @@ The preexisting insulation type for the area to receive (additional) insulation.
 |`DO_NOT_KNOW`|
 |`NONE`|
 |`RIGID_BOARD`|
-  
 
-upgrade_subtype
-===============
+## upgrade_subtype
   
   
   
@@ -41,4 +38,3 @@ upgrade_subtype
 - is required
 - Type: `CEILING_INSULATION`
 - can not be null
-  

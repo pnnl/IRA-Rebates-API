@@ -11,8 +11,7 @@ Additional Properties Allowed: `False`
 |[storage_capacity](#storage_capacity)|`enum`|:white_check_mark:|False|||
 |[water_heater_fuel_and_system_type](#water_heater_fuel_and_system_type)|`enum`|:white_check_mark:|False|||
 
-storage_capacity
-================
+## storage_capacity
   
   
   
@@ -31,10 +30,8 @@ storage_capacity
 |`DO_NOT_KNOW`|
 |`LESS_THAN_45_GALLON`|
 |`MORE_THAN_80_GALLON`|
-  
 
-water_heater_fuel_and_system_type
-=================================
+## water_heater_fuel_and_system_type
   
   
   
@@ -54,4 +51,3 @@ water_heater_fuel_and_system_type
 |`NONE`|
 |`OIL_STORAGE`|
 |`OIL_TANKLESS`|
-  

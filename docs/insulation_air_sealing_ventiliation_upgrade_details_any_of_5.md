@@ -11,8 +11,7 @@ Additional Properties Allowed: `False`
 |[percent_ducts_receiving_additional_insulation](#percent_ducts_receiving_additional_insulation)|`enum`|:white_check_mark:|False|||
 |[upgrade_subtype](#upgrade_subtype)|`DUCT_INSULATION`|:white_check_mark:|False|||
 
-percent_ducts_receiving_additional_insulation
-=============================================
+## percent_ducts_receiving_additional_insulation
   
 The percentage of the ducts that received additional insulation in the upgrade. Choose the closest percentage.  
   
@@ -29,10 +28,8 @@ The percentage of the ducts that received additional insulation in the upgrade. 
 |`50`|
 |`75`|
 |`100`|
-  
 
-upgrade_subtype
-===============
+## upgrade_subtype
   
   
   
@@ -40,4 +37,3 @@ upgrade_subtype
 - is required
 - Type: `DUCT_INSULATION`
 - can not be null
-  

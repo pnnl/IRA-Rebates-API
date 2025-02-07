@@ -10,8 +10,7 @@ Additional Properties Allowed: `False`
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[storage_capacity](#storage_capacity)|`enum`|:white_check_mark:|False|||
 
-storage_capacity
-================
+## storage_capacity
   
   
   
@@ -29,4 +28,3 @@ storage_capacity
 |`80_GALLON`|
 |`LESS_THAN_45_GALLON`|
 |`MORE_THAN_80_GALLON`|
-  

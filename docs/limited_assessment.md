@@ -26,21 +26,20 @@ Additional Properties Allowed: `False`
 |[year_built](#year_built)|`string \| DO_NOT_KNOW`|:white_check_mark:|False||Year built|
   
 
-allOf Requirement
-=================
+## allOf Requirement
   
 
-Conditional Validation
-======================
+### Conditional Validation
   
 
 |`if`|`then` should be present|should `not` be present|comment|
 | :---: | :---: | :---: | :---: |
 |[is_ceiling_insulation_r_value_known](#is_ceiling_insulation_r_value_known) is `True`|[ceiling_insulation_r_value](#ceiling_insulation_r_value)|||
+|[is_ceiling_insulation_r_value_known](#is_ceiling_insulation_r_value_known) is not `True`||[ceiling_insulation_r_value](#ceiling_insulation_r_value)||
 |[is_whole_home_ventilation_system_rated_flow_cfm_known](#is_whole_home_ventilation_system_rated_flow_cfm_known) is `True`|[whole_home_ventilation_system_rated_flow_cfm](#whole_home_ventilation_system_rated_flow_cfm)|||
+|[is_whole_home_ventilation_system_rated_flow_cfm_known](#is_whole_home_ventilation_system_rated_flow_cfm_known) is not `True`||[whole_home_ventilation_system_rated_flow_cfm](#whole_home_ventilation_system_rated_flow_cfm)||
 
-assessment_date
-===============
+## assessment_date
   
 The calendar date when the assessment was performed. Note: time zone is immaterial.  
   
@@ -49,9 +48,10 @@ The calendar date when the assessment was performed. Note: time zone is immateri
 - Type: `string`
 - can not be null
   
-
-ceiling_insulation_r_value
-==========================
+Minimum Length: `10`  
+Maximum Length: `10`  
+Regex Pattern: `^\d{4}-\d{2}-\d{2}$`
+## ceiling_insulation_r_value
   
 Estimate of the R-value of the as-found ceiling insulation.  
   
@@ -60,9 +60,8 @@ Estimate of the R-value of the as-found ceiling insulation.
 - Type: `integer`
 - can not be null
   
-
-ceiling_insulation_type
-=======================
+Minimum Number: `0`
+## ceiling_insulation_type
   
 The preexisting insulation type for the area to receive (additional) insulation. See https://www.energy.gov/energysaver/types-insulation for information about insulation types.  
   
@@ -80,10 +79,8 @@ The preexisting insulation type for the area to receive (additional) insulation.
 |`DO_NOT_KNOW`|
 |`NONE`|
 |`RIGID_BOARD`|
-  
 
-conditioned_floor_area_sq_ft
-============================
+## conditioned_floor_area_sq_ft
   
 The conditioned floor area, in square feet, of the building or multifamily dwelling unit corresponding to the reservation. If the reservation is for an upgrade in an individual unit of a multifamily building, then this is the conditioned floor area of that unit. Otherwise, this is the conditioned floor area of the building.  
   
@@ -92,6 +89,8 @@ The conditioned floor area, in square feet, of the building or multifamily dwell
 - Type: `integer | enum`
 - can not be null
   
+Minimum Number: `1000`  
+Maximum Number: `1000000`  
 
 |Value|
 | :--- |
@@ -99,10 +98,8 @@ The conditioned floor area, in square feet, of the building or multifamily dwell
 |`500SF_1500SF`|
 |`GREATER_THAN_2500SF`|
 |`LESS_THAN_500SF`|
-  
 
-cooling_systems
-===============
+## cooling_systems
   
 Provide information for each existing cooling system.  
   
@@ -110,10 +107,8 @@ Provide information for each existing cooling system.
 - is required
 - Type: [cooling_systems](cooling_systems.md)
 - can not be null
-  
 
-ducts_are_insulated
-===================
+## ducts_are_insulated
   
 Choose `NA` if there are no ducts associated with this system. Choose `YES` only if visually verified.  
   
@@ -129,10 +124,8 @@ Choose `NA` if there are no ducts associated with this system. Choose `YES` only
 |`NA`|
 |`NO`|
 |`YES`|
-  
 
-ducts_are_sealed
-================
+## ducts_are_sealed
   
 Choose `NA` if there are no ducts associated with this system. Choose `YES` only if visually verified or they are located in a concrete slab.  
   
@@ -148,10 +141,8 @@ Choose `NA` if there are no ducts associated with this system. Choose `YES` only
 |`NA`|
 |`NO`|
 |`YES`|
-  
 
-electrical_panel_max_amps
-=========================
+## electrical_panel_max_amps
   
 The maximum amperage rating for the electrical panel as-found. This is only required if adding electrical load.  
   
@@ -160,9 +151,8 @@ The maximum amperage rating for the electrical panel as-found. This is only requ
 - Type: `integer`
 - can not be null
   
-
-envelope_professionally_air_sealed
-==================================
+Minimum Number: `30`
+## envelope_professionally_air_sealed
   
 Has the building (or dwelling unit) been professionally air sealed?  
   
@@ -177,10 +167,8 @@ Has the building (or dwelling unit) been professionally air sealed?
 |`DO_NOT_KNOW`|
 |`NO`|
 |`YES`|
-  
 
-heating_systems
-===============
+## heating_systems
   
 Provide information for each existing heating system.  
   
@@ -188,10 +176,8 @@ Provide information for each existing heating system.
 - is required
 - Type: [heating_systems](heating_systems.md)
 - can not be null
-  
 
-is_ceiling_insulation_r_value_known
-===================================
+## is_ceiling_insulation_r_value_known
   
   
   
@@ -199,10 +185,8 @@ is_ceiling_insulation_r_value_known
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-is_whole_home_ventilation_system_rated_flow_cfm_known
-=====================================================
+## is_whole_home_ventilation_system_rated_flow_cfm_known
   
   
   
@@ -210,10 +194,8 @@ is_whole_home_ventilation_system_rated_flow_cfm_known
 - is required
 - Type: `boolean`
 - can not be null
-  
 
-whole_home_ventilation_system_rated_flow_cfm
-============================================
+## whole_home_ventilation_system_rated_flow_cfm
   
   
   
@@ -222,9 +204,8 @@ whole_home_ventilation_system_rated_flow_cfm
 - Type: `integer`
 - can not be null
   
-
-whole_home_ventilation_system_type
-==================================
+Minimum Number: `0`
+## whole_home_ventilation_system_type
   
   
   
@@ -243,10 +224,8 @@ whole_home_ventilation_system_type
 |`HRV`|
 |`NONE`|
 |`SUPPLY`|
-  
 
-year_built
-==========
+## year_built
   
 The year the building was built.  
   
@@ -255,3 +234,6 @@ The year the building was built.
 - Type: `string | DO_NOT_KNOW`
 - can not be null
   
+Minimum Length: `4`  
+Maximum Length: `4`  
+Regex Pattern: `^\d+$`

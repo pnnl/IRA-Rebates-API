@@ -10,8 +10,7 @@ Additional Properties Allowed: `False`
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[cooking_appliance_type](#cooking_appliance_type)|`enum`|:white_check_mark:|False|||
 
-cooking_appliance_type
-======================
+## cooking_appliance_type
   
   
   
@@ -25,4 +24,3 @@ cooking_appliance_type
 | :--- |
 |`INDUCTION_COOKTOP`|
 |`STANDARD_ELECTRIC`|
-  

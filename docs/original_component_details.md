@@ -5,7 +5,7 @@ Original Component Details
 Defined in: [originalComponentDetails.schema.json](https://ira-rebates.labworks.org/schemas/originalComponentDetails)  
 Type: `object`  
 Additional Properties Allowed: `True`
-# One Of
+## One Of
   
   
 [have_insulation_air_sealing_ventilation_original_details](have_insulation_air_sealing_ventilation_original_details.md)  

@@ -11,8 +11,7 @@ Additional Properties Allowed: `False`
 |[foundation_type](#foundation_type)|`enum`|:white_check_mark:|False|||
 |[upgrade_subtype](#upgrade_subtype)|`FOUNDATION_INSULATION`|:white_check_mark:|False|||
 
-foundation_type
-===============
+## foundation_type
   
 Pick the one with the most area  
   
@@ -29,10 +28,8 @@ Pick the one with the most area
 |`SLAB_ON_GRADE`|
 |`UNCONDITIONED_BASEMENT`|
 |`UNCONDITIONED_CRAWLSPACE`|
-  
 
-upgrade_subtype
-===============
+## upgrade_subtype
   
   
   
@@ -40,4 +37,3 @@ upgrade_subtype
 - is required
 - Type: `FOUNDATION_INSULATION`
 - can not be null
-  

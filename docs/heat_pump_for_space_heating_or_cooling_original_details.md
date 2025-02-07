@@ -10,8 +10,7 @@ Additional Properties Allowed: `False`
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |[primary_heating_fuel_and_system_type](#primary_heating_fuel_and_system_type)|`enum`|:white_check_mark:|False|||
 
-primary_heating_fuel_and_system_type
-====================================
+## primary_heating_fuel_and_system_type
   
   
   
@@ -32,4 +31,3 @@ primary_heating_fuel_and_system_type
 |`OIL_BOILER`|
 |`OIL_FURNACE`|
 |`OTHER`|
-  
