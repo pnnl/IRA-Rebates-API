@@ -6,10 +6,10 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[percent_ducts_receiving_additional_insulation](#percent_ducts_receiving_additional_insulation)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`DUCT_INSULATION`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[percent_ducts_receiving_additional_insulation](#percent_ducts_receiving_additional_insulation)|`enum`|:white_check_mark:|||
+|[upgrade_subtype](#upgrade_subtype)|`DUCT_INSULATION`|:white_check_mark:|||
 
 ## percent_ducts_receiving_additional_insulation
   

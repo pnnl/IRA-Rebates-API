@@ -6,14 +6,15 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[cavity_insulation_added](#cavity_insulation_added)|`enum`||False|||
-|[exterior_continuous_insulation_added](#exterior_continuous_insulation_added)|`enum`||False|||
-|[percent_wall_area_treated](#percent_wall_area_treated)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`WALL_INSULATION`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[cavity_insulation_added](#cavity_insulation_added)|`enum`||||
+|[exterior_continuous_insulation_added](#exterior_continuous_insulation_added)|`enum`||||
+|[percent_wall_area_treated](#percent_wall_area_treated)|`enum`|:white_check_mark:|||
+|[upgrade_subtype](#upgrade_subtype)|`WALL_INSULATION`|:white_check_mark:|||
 
 ## Any Of
+  
   
 [cavity_insulation_added](#cavity_insulation_added)  
 [exterior_continuous_insulation_added](#exterior_continuous_insulation_added)

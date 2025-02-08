@@ -6,10 +6,10 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[insulation_type](#insulation_type)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`CEILING_INSULATION`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[insulation_type](#insulation_type)|`enum`|:white_check_mark:|||
+|[upgrade_subtype](#upgrade_subtype)|`CEILING_INSULATION`|:white_check_mark:|||
 
 ## insulation_type
   

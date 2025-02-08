@@ -6,10 +6,10 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[max_amps](#max_amps)|`integer`|:white_check_mark:|False|||
-|[num_open_breaker_spots](#num_open_breaker_spots)|`integer`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[max_amps](#max_amps)|`integer`|:white_check_mark:|||
+|[num_open_breaker_spots](#num_open_breaker_spots)|`integer`|:white_check_mark:|||
 
 ## max_amps
   

@@ -7,23 +7,23 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[assessment_date](#assessment_date)|`string`|:white_check_mark:|False||Assessment date|
-|[ceiling_insulation_r_value](#ceiling_insulation_r_value)|`integer`||False||Ceiling insulation r-value|
-|[ceiling_insulation_type](#ceiling_insulation_type)|`enum`||False||Ceiling insulation type|
-|[conditioned_floor_area_sq_ft](#conditioned_floor_area_sq_ft)|`integer \| enum`|:white_check_mark:|False||Conditioned floor area sq. ft|
-|[cooling_systems](#cooling_systems)|[cooling_systems](cooling_systems.md)|:white_check_mark:|False||Cooling systems|
-|[ducts_are_insulated](#ducts_are_insulated)|`enum`|:white_check_mark:|False||Ducts are insulated|
-|[ducts_are_sealed](#ducts_are_sealed)|`enum`|:white_check_mark:|False||Ducts are sealed|
-|[electrical_panel_max_amps](#electrical_panel_max_amps)|`integer`|:white_check_mark:|False||Electrical panel max amps|
-|[envelope_professionally_air_sealed](#envelope_professionally_air_sealed)|`enum`|:white_check_mark:|False||Envelope professionally air sealed|
-|[heating_systems](#heating_systems)|[heating_systems](heating_systems.md)|:white_check_mark:|False||Heating systems|
-|[is_ceiling_insulation_r_value_known](#is_ceiling_insulation_r_value_known)|`boolean`|:white_check_mark:|False||Is ceiling insulation r-value known|
-|[is_whole_home_ventilation_system_rated_flow_cfm_known](#is_whole_home_ventilation_system_rated_flow_cfm_known)|`boolean`|:white_check_mark:|False||Is whole home ventilation system rated flow CFM known|
-|[whole_home_ventilation_system_rated_flow_cfm](#whole_home_ventilation_system_rated_flow_cfm)|`integer`||False||Whole home ventilation system rated flow CFM|
-|[whole_home_ventilation_system_type](#whole_home_ventilation_system_type)|`enum`|:white_check_mark:|False||Whole home ventilation system type|
-|[year_built](#year_built)|`string \| DO_NOT_KNOW`|:white_check_mark:|False||Year built|
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[assessment_date](#assessment_date)|`string`|:white_check_mark:||Assessment date|
+|[ceiling_insulation_r_value](#ceiling_insulation_r_value)|`integer`|||Ceiling insulation r-value|
+|[ceiling_insulation_type](#ceiling_insulation_type)|`enum`|||Ceiling insulation type|
+|[conditioned_floor_area_sq_ft](#conditioned_floor_area_sq_ft)|`integer \| enum`|:white_check_mark:||Conditioned floor area sq. ft|
+|[cooling_systems](#cooling_systems)|[cooling_systems](cooling_systems.md)|:white_check_mark:||Cooling systems|
+|[ducts_are_insulated](#ducts_are_insulated)|`enum`|:white_check_mark:||Ducts are insulated|
+|[ducts_are_sealed](#ducts_are_sealed)|`enum`|:white_check_mark:||Ducts are sealed|
+|[electrical_panel_max_amps](#electrical_panel_max_amps)|`integer`|:white_check_mark:||Electrical panel max amps|
+|[envelope_professionally_air_sealed](#envelope_professionally_air_sealed)|`enum`|:white_check_mark:||Envelope professionally air sealed|
+|[heating_systems](#heating_systems)|[heating_systems](heating_systems.md)|:white_check_mark:||Heating systems|
+|[is_ceiling_insulation_r_value_known](#is_ceiling_insulation_r_value_known)|`boolean`|:white_check_mark:||Is ceiling insulation r-value known|
+|[is_whole_home_ventilation_system_rated_flow_cfm_known](#is_whole_home_ventilation_system_rated_flow_cfm_known)|`boolean`|:white_check_mark:||Is whole home ventilation system rated flow CFM known|
+|[whole_home_ventilation_system_rated_flow_cfm](#whole_home_ventilation_system_rated_flow_cfm)|`integer`|||Whole home ventilation system rated flow CFM|
+|[whole_home_ventilation_system_type](#whole_home_ventilation_system_type)|`enum`|:white_check_mark:||Whole home ventilation system type|
+|[year_built](#year_built)|`string \| DO_NOT_KNOW`|:white_check_mark:||Year built|
   
 
 ## allOf Requirement

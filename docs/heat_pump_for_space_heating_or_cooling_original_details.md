@@ -6,9 +6,9 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[primary_heating_fuel_and_system_type](#primary_heating_fuel_and_system_type)|`enum`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[primary_heating_fuel_and_system_type](#primary_heating_fuel_and_system_type)|`enum`|:white_check_mark:|||
 
 ## primary_heating_fuel_and_system_type
   

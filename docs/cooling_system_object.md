@@ -6,13 +6,13 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[efficiency_seer](#efficiency_seer)|`number`||False|||
-|[is_efficiency_known](#is_efficiency_known)|`boolean`|:white_check_mark:|False||Is efficiency known|
-|[is_percent_conditioned_floor_area_served_known](#is_percent_conditioned_floor_area_served_known)|`boolean`|:white_check_mark:|False||Is percent conditioned floor area served known|
-|[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)|`integer`||False|||
-|[system_type](#system_type)|`enum`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[efficiency_seer](#efficiency_seer)|`number`||||
+|[is_efficiency_known](#is_efficiency_known)|`boolean`|:white_check_mark:||Is efficiency known|
+|[is_percent_conditioned_floor_area_served_known](#is_percent_conditioned_floor_area_served_known)|`boolean`|:white_check_mark:||Is percent conditioned floor area served known|
+|[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)|`integer`||||
+|[system_type](#system_type)|`enum`|:white_check_mark:|||
   
 
 ## allOf Requirement

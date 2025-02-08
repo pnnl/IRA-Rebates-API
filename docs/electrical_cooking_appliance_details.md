@@ -6,9 +6,9 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[fuel_type](#fuel_type)|`enum`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[fuel_type](#fuel_type)|`enum`|:white_check_mark:|||
 
 ## fuel_type
   

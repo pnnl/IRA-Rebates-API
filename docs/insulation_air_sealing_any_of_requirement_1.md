@@ -6,11 +6,11 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[cfm50](#cfm50)|`integer`||False|||
-|[is_leakage_rate_known](#is_leakage_rate_known)|`boolean`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`AIR_SEALING`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[cfm50](#cfm50)|`integer`||||
+|[is_leakage_rate_known](#is_leakage_rate_known)|`boolean`|:white_check_mark:|||
+|[upgrade_subtype](#upgrade_subtype)|`AIR_SEALING`|:white_check_mark:|||
   
 
 ## allOf Requirement

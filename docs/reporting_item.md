@@ -6,49 +6,49 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[address_id](#address_id)|`string`|:white_check_mark:|False|`uuid`|Address id|
-|[applicant_id](#applicant_id)|`string`|:white_check_mark:|False||Applicant id|
-|[building_project_type](#building_project_type)|`enum`|:white_check_mark:|False||Building project type|
-|[claimant_type](#claimant_type)|`enum`|:white_check_mark:|False||Claimant type|
-|[construction_type](#construction_type)|`enum`|:white_check_mark:|False||Construction type|
-|[contractor_company_name](#contractor_company_name)|`string`||False||Contractor company name|
-|[contractor_dac_incentive](#contractor_dac_incentive)|`number`||False||Contractor DAC incentive|
-|[contractor_incentive](#contractor_incentive)|`number`||False||Contractor incentive|
-|[contractor_name](#contractor_name)|`string`||False||Contractor name|
-|[dwelling_unit_income_bucket](#dwelling_unit_income_bucket)|`enum`||False||Dwelling unit income bucket|
-|[energy_data_evaluation_permission](#energy_data_evaluation_permission)|`boolean`|:white_check_mark:|False||Energy data evaluation permission|
-|[equipment_and_material_cost](#equipment_and_material_cost)|`number`|:white_check_mark:|False||Equipment and material cost|
-|[external_rebate_id](#external_rebate_id)|`string`||False||External rebate id|
-|[install_vendor_id](#install_vendor_id)|`string`||False||Vendor id|
-|[installation_cost](#installation_cost)|`number`||False||Installation cost|
-|[installation_type](#installation_type)|`enum`|:white_check_mark:|False||Installation type|
-|[is_contractor_eligible](#is_contractor_eligible)|`boolean`||False||Is contractor eligible|
-|[is_disadvantaged_community](#is_disadvantaged_community)|`boolean`|:white_check_mark:|False||Is disadvantaged community|
-|[limited_assessment](#limited_assessment)|[limited_assessment](limited_assessment.md)||False||Limited Assessment|
-|[mf_building_income_bucket](#mf_building_income_bucket)|`enum`||False||Multifamily building income bucket|
-|[mf_conditioned_floor_area](#mf_conditioned_floor_area)|`integer`||False||Multifamily conditioned floor area|
-|[mf_num_bedrooms](#mf_num_bedrooms)|`integer`||False||Multifamily num bedrooms|
-|[num_occupied_units](#num_occupied_units)|`integer`||False||Num occupied units|
-|[num_units](#num_units)|`integer`||False||Num units|
-|[num_units_meeting_income_bucket](#num_units_meeting_income_bucket)|`integer`||False||Num units meeting income bucket|
-|[original_component_details](#original_component_details)|[original_component_details](original_component_details.md)||False||Original Component Details|
-|[product_info](#product_info)|[buildinging_product_info](buildinging_product_info.md)|:white_check_mark:|False||Buildinging Product Info|
-|[product_vendor_id](#product_vendor_id)|`string`|:white_check_mark:|False||Vendor id|
-|[project_completion_date](#project_completion_date)|`string`|:white_check_mark:|False||Project completion date|
-|[project_id](#project_id)|`string`||False||Project id|
-|[purchase_date](#purchase_date)|`string`||False||Purchase date|
-|[purchase_date_time](#purchase_date_time)|`string`||False|`date-time`|Purchase date-time|
-|[rebate_deducted](#rebate_deducted)|`number`|:white_check_mark:|False||Rebate deducted|
-|[safety_checks](#safety_checks)|[building_safety_checks](building_safety_checks.md)||False||Building Safety Checks|
-|[sf_conditioned_floor_area](#sf_conditioned_floor_area)|`enum`||False||Single-family conditioned floor area|
-|[sf_num_bedrooms](#sf_num_bedrooms)|`integer`||False||Single-family num bedrooms|
-|[state_attests_proof_of_identity_ownership_income](#state_attests_proof_of_identity_ownership_income)|`boolean`|:white_check_mark:|False||State attests proof of identity ownership income|
-|[state_attests_any_failed_inspection_remediated](#state_attests_any_failed_inspection_remediated)|`boolean`|:white_check_mark:|False||State attests any failed inspection remediated|
-|[unit_name_or_number](#unit_name_or_number)|`string`||False||Unit name or number|
-|[upgrade_component_details](#upgrade_component_details)|[building_upgrade_component_details](building_upgrade_component_details.md)||False||Building Upgrade Component Details|
-|[upgrade_type](#upgrade_type)|`enum`|:white_check_mark:|False||Upgrade type|
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[address_id](#address_id)|`string`|:white_check_mark:|`uuid`|Address id|
+|[applicant_id](#applicant_id)|`string`|:white_check_mark:||Applicant id|
+|[building_project_type](#building_project_type)|`enum`|:white_check_mark:||Building project type|
+|[claimant_type](#claimant_type)|`enum`|:white_check_mark:||Claimant type|
+|[construction_type](#construction_type)|`enum`|:white_check_mark:||Construction type|
+|[contractor_company_name](#contractor_company_name)|`string`|||Contractor company name|
+|[contractor_dac_incentive](#contractor_dac_incentive)|`number`|||Contractor DAC incentive|
+|[contractor_incentive](#contractor_incentive)|`number`|||Contractor incentive|
+|[contractor_name](#contractor_name)|`string`|||Contractor name|
+|[dwelling_unit_income_bucket](#dwelling_unit_income_bucket)|`enum`|||Dwelling unit income bucket|
+|[energy_data_evaluation_permission](#energy_data_evaluation_permission)|`boolean`|:white_check_mark:||Energy data evaluation permission|
+|[equipment_and_material_cost](#equipment_and_material_cost)|`number`|:white_check_mark:||Equipment and material cost|
+|[external_rebate_id](#external_rebate_id)|`string`|||External rebate id|
+|[install_vendor_id](#install_vendor_id)|`string`|||Vendor id|
+|[installation_cost](#installation_cost)|`number`|||Installation cost|
+|[installation_type](#installation_type)|`enum`|:white_check_mark:||Installation type|
+|[is_contractor_eligible](#is_contractor_eligible)|`boolean`|||Is contractor eligible|
+|[is_disadvantaged_community](#is_disadvantaged_community)|`boolean`|:white_check_mark:||Is disadvantaged community|
+|[limited_assessment](#limited_assessment)|[limited_assessment](limited_assessment.md)|||Limited Assessment|
+|[mf_building_income_bucket](#mf_building_income_bucket)|`enum`|||Multifamily building income bucket|
+|[mf_conditioned_floor_area](#mf_conditioned_floor_area)|`integer`|||Multifamily conditioned floor area|
+|[mf_num_bedrooms](#mf_num_bedrooms)|`integer`|||Multifamily num bedrooms|
+|[num_occupied_units](#num_occupied_units)|`integer`|||Num occupied units|
+|[num_units](#num_units)|`integer`|||Num units|
+|[num_units_meeting_income_bucket](#num_units_meeting_income_bucket)|`integer`|||Num units meeting income bucket|
+|[original_component_details](#original_component_details)|[original_component_details](original_component_details.md)|||Original Component Details|
+|[product_info](#product_info)|[buildinging_product_info](buildinging_product_info.md)|:white_check_mark:||Buildinging Product Info|
+|[product_vendor_id](#product_vendor_id)|`string`|:white_check_mark:||Vendor id|
+|[project_completion_date](#project_completion_date)|`string`|:white_check_mark:||Project completion date|
+|[project_id](#project_id)|`string`|||Project id|
+|[purchase_date](#purchase_date)|`string`|||Purchase date|
+|[purchase_date_time](#purchase_date_time)|`string`||`date-time`|Purchase date-time|
+|[rebate_deducted](#rebate_deducted)|`number`|:white_check_mark:||Rebate deducted|
+|[safety_checks](#safety_checks)|[building_safety_checks](building_safety_checks.md)|||Building Safety Checks|
+|[sf_conditioned_floor_area](#sf_conditioned_floor_area)|`enum`|||Single-family conditioned floor area|
+|[sf_num_bedrooms](#sf_num_bedrooms)|`integer`|||Single-family num bedrooms|
+|[state_attests_proof_of_identity_ownership_income](#state_attests_proof_of_identity_ownership_income)|`boolean`|:white_check_mark:||State attests proof of identity ownership income|
+|[state_attests_any_failed_inspection_remediated](#state_attests_any_failed_inspection_remediated)|`boolean`|:white_check_mark:||State attests any failed inspection remediated|
+|[unit_name_or_number](#unit_name_or_number)|`string`|||Unit name or number|
+|[upgrade_component_details](#upgrade_component_details)|[building_upgrade_component_details](building_upgrade_component_details.md)|||Building Upgrade Component Details|
+|[upgrade_type](#upgrade_type)|`enum`|:white_check_mark:||Upgrade type|
 
 ## One Of
   

@@ -6,9 +6,9 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[heat_pump_water_heater_upgrade_details](#heat_pump_water_heater_upgrade_details)|[heat_pump_water_heater_upgrade_details](heat_pump_water_heater_upgrade_details.md)|:white_check_mark:|False||Heat Pump Water Heater Upgrade Details|
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[heat_pump_water_heater_upgrade_details](#heat_pump_water_heater_upgrade_details)|[heat_pump_water_heater_upgrade_details](heat_pump_water_heater_upgrade_details.md)|:white_check_mark:||Heat Pump Water Heater Upgrade Details|
 
 ## heat_pump_water_heater_upgrade_details
   

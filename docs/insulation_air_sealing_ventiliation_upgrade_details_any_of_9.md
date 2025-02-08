@@ -6,10 +6,10 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[cfm_flow_rate](#cfm_flow_rate)|`number`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`VENTILATION`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[cfm_flow_rate](#cfm_flow_rate)|`number`|:white_check_mark:|||
+|[upgrade_subtype](#upgrade_subtype)|`VENTILATION`|:white_check_mark:|||
 
 ## cfm_flow_rate
   

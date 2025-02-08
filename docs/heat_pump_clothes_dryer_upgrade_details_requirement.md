@@ -6,9 +6,9 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[heat_pump_clothes_dryer_upgrade_details](#heat_pump_clothes_dryer_upgrade_details)|[heat_pump_clothes_dryer_upgrade_details](heat_pump_clothes_dryer_upgrade_details.md)|:white_check_mark:|False||Heat Pump Clothes Dryer Upgrade Details|
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[heat_pump_clothes_dryer_upgrade_details](#heat_pump_clothes_dryer_upgrade_details)|[heat_pump_clothes_dryer_upgrade_details](heat_pump_clothes_dryer_upgrade_details.md)|:white_check_mark:||Heat Pump Clothes Dryer Upgrade Details|
 
 ## heat_pump_clothes_dryer_upgrade_details
   

@@ -6,11 +6,11 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[percent_floor_receiving_additional_insulation](#percent_floor_receiving_additional_insulation)|`enum`|:white_check_mark:|False|||
-|[r_value_added](#r_value_added)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[percent_floor_receiving_additional_insulation](#percent_floor_receiving_additional_insulation)|`enum`|:white_check_mark:|||
+|[r_value_added](#r_value_added)|`enum`|:white_check_mark:|||
+|[upgrade_subtype](#upgrade_subtype)|`FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION`|:white_check_mark:|||
 
 ## percent_floor_receiving_additional_insulation
   

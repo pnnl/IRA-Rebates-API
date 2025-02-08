@@ -6,10 +6,10 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[primary_duct_location](#primary_duct_location)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`DUCT_INSULATION`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[primary_duct_location](#primary_duct_location)|`enum`|:white_check_mark:|||
+|[upgrade_subtype](#upgrade_subtype)|`DUCT_INSULATION`|:white_check_mark:|||
 
 ## primary_duct_location
   

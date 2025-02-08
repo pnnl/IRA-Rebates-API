@@ -6,9 +6,9 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[electrical_panel_upgrade_details](#electrical_panel_upgrade_details)|[electrical_panel_upgrade_details](electrical_panel_upgrade_details.md)|:white_check_mark:|False||Electrical Panel Upgrade Details|
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[electrical_panel_upgrade_details](#electrical_panel_upgrade_details)|[electrical_panel_upgrade_details](electrical_panel_upgrade_details.md)|:white_check_mark:||Electrical Panel Upgrade Details|
 
 ## electrical_panel_upgrade_details
   

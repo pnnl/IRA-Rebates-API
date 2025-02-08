@@ -6,9 +6,9 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[energy_guide_estimated_energy_use_kwh](#energy_guide_estimated_energy_use_kwh)|`integer`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[energy_guide_estimated_energy_use_kwh](#energy_guide_estimated_energy_use_kwh)|`integer`|:white_check_mark:|||
 
 ## energy_guide_estimated_energy_use_kwh
   

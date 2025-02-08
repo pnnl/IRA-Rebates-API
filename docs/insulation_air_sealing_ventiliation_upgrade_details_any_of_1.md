@@ -6,13 +6,13 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[cfm50](#cfm50)|`integer`||False|||
-|[is_homeowner_aware_combustion_safety_tests_are_highly_recommended](#is_homeowner_aware_combustion_safety_tests_are_highly_recommended)|`boolean`|:white_check_mark:|False|||
-|[is_leakage_rate_known](#is_leakage_rate_known)|`boolean`|:white_check_mark:|False|||
-|[locations](#locations)|[locations](locations.md)|:white_check_mark:|False||Locations|
-|[upgrade_subtype](#upgrade_subtype)|`AIR_SEALING`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[cfm50](#cfm50)|`integer`||||
+|[is_homeowner_aware_combustion_safety_tests_are_highly_recommended](#is_homeowner_aware_combustion_safety_tests_are_highly_recommended)|`boolean`|:white_check_mark:|||
+|[is_leakage_rate_known](#is_leakage_rate_known)|`boolean`|:white_check_mark:|||
+|[locations](#locations)|[locations](locations.md)|:white_check_mark:||Locations|
+|[upgrade_subtype](#upgrade_subtype)|`AIR_SEALING`|:white_check_mark:|||
   
 
 ## allOf Requirement

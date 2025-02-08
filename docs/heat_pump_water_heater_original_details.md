@@ -6,10 +6,10 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[storage_capacity](#storage_capacity)|`enum`|:white_check_mark:|False|||
-|[water_heater_fuel_and_system_type](#water_heater_fuel_and_system_type)|`enum`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[storage_capacity](#storage_capacity)|`enum`|:white_check_mark:|||
+|[water_heater_fuel_and_system_type](#water_heater_fuel_and_system_type)|`enum`|:white_check_mark:|||
 
 ## storage_capacity
   

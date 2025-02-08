@@ -6,9 +6,9 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[cooking_appliance_type](#cooking_appliance_type)|`enum`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[cooking_appliance_type](#cooking_appliance_type)|`enum`|:white_check_mark:|||
 
 ## cooking_appliance_type
   

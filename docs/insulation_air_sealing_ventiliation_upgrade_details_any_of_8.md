@@ -6,11 +6,11 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[percent_foundation_perimeter_receiving_additional_insulation](#percent_foundation_perimeter_receiving_additional_insulation)|`enum`|:white_check_mark:|False|||
-|[r_value_added](#r_value_added)|`enum`|:white_check_mark:|False|||
-|[upgrade_subtype](#upgrade_subtype)|`FOUNDATION_INSULATION`|:white_check_mark:|False|||
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[percent_foundation_perimeter_receiving_additional_insulation](#percent_foundation_perimeter_receiving_additional_insulation)|`enum`|:white_check_mark:|||
+|[r_value_added](#r_value_added)|`enum`|:white_check_mark:|||
+|[upgrade_subtype](#upgrade_subtype)|`FOUNDATION_INSULATION`|:white_check_mark:|||
 
 ## percent_foundation_perimeter_receiving_additional_insulation
   

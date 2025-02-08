@@ -52,7 +52,7 @@ def get_inline_link(ppty: str, md_file: MdUtils):
     return md_file.new_inline_link(link=f"#{ppty}", text=ppty)
 
 def add_table_of_properties(contents: dict, md_file: MdUtils):
-    list_of_strings = ['Property', 'Type', "Required", "Nullable", "Format", "Title"]
+    list_of_strings = ['Property', 'Type', "Required", "Format", "Title"]
     md_file.new_line()
     for ppty, ppty_dict in contents['properties'].items():
         format = ppty_dict.get('format', '')
@@ -61,14 +61,13 @@ def add_table_of_properties(contents: dict, md_file: MdUtils):
                 get_inline_link(ppty, md_file), 
                 get_ppty_type(ppty_dict, md_file),
                 ':white_check_mark:' if ppty in contents.get('required', []) else '',
-                True if 'null' in ppty_dict.get('type', '') or ppty_dict.get('nullable') else False, 
                 f"`{format}`" if format else '',
                 ppty_dict.get('title') or '',
             ]
         )
     md_file.new_line()
     md_file.new_table(
-        columns=6, 
+        columns=5, 
         rows=len(contents['properties'])+1, 
         text=list_of_strings, 
         text_align='center'

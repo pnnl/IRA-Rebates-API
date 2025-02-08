@@ -6,13 +6,13 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[ahri_reference_number](#ahri_reference_number)|`string`||False||AHRI reference number|
-|[count](#count)|`integer`||False||Count|
-|[model_number](#model_number)|`string`||False||Model number|
-|[product_description](#product_description)|`string`||False||Product description|
-|[upc](#upc)|`string`||False||UPC|
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[ahri_reference_number](#ahri_reference_number)|`string`|||AHRI reference number|
+|[count](#count)|`integer`|||Count|
+|[model_number](#model_number)|`string`|||Model number|
+|[product_description](#product_description)|`string`|||Product description|
+|[upc](#upc)|`string`|||UPC|
 
 ## ahri_reference_number
   

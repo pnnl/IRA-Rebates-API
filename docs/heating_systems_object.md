@@ -6,14 +6,14 @@ Type: `object`
 Additional Properties Allowed: `False`  
   
 
-|Property|Type|Required|Nullable|Format|Title|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|[efficiency_afue](#efficiency_afue)|`number`||False||Efficiency AFUE|
-|[efficiency_hspf](#efficiency_hspf)|`number`||False||Efficiency HSPF|
-|[fuel_and_system_type](#fuel_and_system_type)|`enum`|:white_check_mark:|False||Fuel and system type|
-|[is_efficiency_known](#is_efficiency_known)|`boolean`|:white_check_mark:|False||Is efficiency known|
-|[is_percent_conditioned_floor_area_served_known](#is_percent_conditioned_floor_area_served_known)|`boolean`|:white_check_mark:|False||Is percent conditioned floor area served known|
-|[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)|`integer`||False||Percent conditioned floor area served|
+|Property|Type|Required|Format|Title|
+| :---: | :---: | :---: | :---: | :---: |
+|[efficiency_afue](#efficiency_afue)|`number`|||Efficiency AFUE|
+|[efficiency_hspf](#efficiency_hspf)|`number`|||Efficiency HSPF|
+|[fuel_and_system_type](#fuel_and_system_type)|`enum`|:white_check_mark:||Fuel and system type|
+|[is_efficiency_known](#is_efficiency_known)|`boolean`|:white_check_mark:||Is efficiency known|
+|[is_percent_conditioned_floor_area_served_known](#is_percent_conditioned_floor_area_served_known)|`boolean`|:white_check_mark:||Is percent conditioned floor area served known|
+|[percent_conditioned_floor_area_served](#percent_conditioned_floor_area_served)|`integer`|||Percent conditioned floor area served|
   
 
 ## allOf Requirement
