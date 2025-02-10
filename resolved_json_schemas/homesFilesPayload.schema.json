@@ -9,6 +9,10 @@
       "description": "The API user must convert the binary file content to base64 encoding.",
       "title": "Binary file content Base64"
     },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
     "file_name": {
       "type": "string",
       "pattern": "^[0-9a-zA-Z\\-.\\(\\)_ ]+$",
@@ -26,7 +30,10 @@
         "HPXML_MODELED_REQUIRED",
         "JPEG",
         "PDF",
-        "PNG"
+        "PNG",
+        "BUILDINGSYNC",
+        "JSON",
+        "EXCEL"
       ],
       "title": "File type"
     },
@@ -35,7 +42,8 @@
         "POST_RETROFIT_MODEL",
         "PRE_AND_POST_RETROFIT_MODELS",
         "PRE_RETROFIT_MODEL",
-        "QUALITY_ASSURANCE"
+        "QUALITY_ASSURANCE",
+        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE"
       ],
       "title": "File purpose"
     }
