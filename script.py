@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import copy
 
 from mdutils import MdUtils
 
@@ -15,7 +16,7 @@ def replace_and_lowercase(text: str, replace: str = ' ', repalce_with='_') -> st
 def get_md_file_from_title(title: str, export_folder: Path) -> MdUtils:
     file_name = f"{replace_and_lowercase(title)}.md"
     file_path = export_folder / file_name
-    return MdUtils(file_name=str(file_path), title=title)
+    return MdUtils(file_name=str(file_path))
 
 def add_link_to_json_schema(md_file: MdUtils, link: str):
     name = link.split('/')[-1] + '.schema.json'
@@ -148,36 +149,27 @@ def generate_mutually_exlcusive_requirement_table(oneofs: list[dict], md_file:  
     md_file.new_table(columns=2, rows=len(one_ofs_with_exclusive_required)+1, text=list_of_strings, text_align='left')
 
 
-
-def handle_anyof(anyofs: list[dict], md_file: MdUtils, export_folder: Path):
-    md_file.new_header(level=2, title="Any Of", add_table_of_contents='n')
-    md_file.new_line()
-    for anyof in anyofs:
-        if "properties" in anyof:
-            md_file.new_line(get_hyperlinked_object_text(anyof.get('title'), md_file))
-            generate_markdown_for_object(anyof, export_folder)
-
-def handle_oneofs(oneofs: list[dict], md_file: MdUtils, export_folder: Path):
+def handle_oneofs(oneofs: list[dict], md_file: MdUtils, export_folder: Path, breadcrums: list[str]):
     md_file.new_header(level=2, title="One Of", add_table_of_contents='n')
     md_file.new_line()
     for one_of_item in oneofs:
         if "properties" in one_of_item:
             md_file.new_line(get_hyperlinked_object_text(one_of_item.get('title'), md_file))
-            generate_markdown_for_object(one_of_item, export_folder)
+            generate_markdown_for_object(one_of_item, export_folder, copy.deepcopy(breadcrums))
         if one_of_item.get('type') == "array":
-            generate_markdown_for_object(one_of_item)
+            generate_markdown_for_object(one_of_item, export_folder, copy.deepcopy(breadcrums))
     generate_mutually_exlcusive_requirement_table(oneofs, md_file)
 
-def handle_anyofs(anyofs: list[dict], md_file: MdUtils, export_folder: Path):
+def handle_anyofs(anyofs: list[dict], md_file: MdUtils, export_folder: Path, breadcrums: list[str]):
     md_file.new_header(level=2, title="Any Of", add_table_of_contents='n')
     md_file.new_line()
     for any_of_item in anyofs:
         if "properties" in any_of_item:
             md_file.new_line(get_hyperlinked_object_text(any_of_item.get('title'), md_file))
-            generate_markdown_for_object(any_of_item, export_folder)
-        if any_of_item.get('type') == "array":
-            generate_markdown_for_object(any_of_item)
-        if "required" in any_of_item:
+            generate_markdown_for_object(any_of_item, export_folder, copy.deepcopy(breadcrums))
+        elif any_of_item.get('type') == "array":
+            generate_markdown_for_object(any_of_item, export_folder, copy.deepcopy(breadcrums))
+        elif "required" in any_of_item:
             for req_item in any_of_item['required']:
                 md_file.new_line(get_inline_link(req_item, md_file))
 
@@ -244,37 +236,42 @@ def get_conditional_table_record(conditional_content: dict, md_file: MdUtils, ex
     if prev_if_text:
         if_text = f'{prev_if_text} AND {if_text}'
     if "then" in conditional_content and 'if' in conditional_content['then']:
-        return get_conditional_table_record(
+        conditional_records.extend(get_conditional_table_record(
             conditional_content['then'], md_file, export_folder, prev_if_text=if_text
-        )
+        ))
     then_not_text = get_then_not_text(conditional_content["then"]["not"], md_file) if "not" in conditional_content['then'] else ""
-    conditional_records.append(
-        [
-            if_text,
-            '<br>'.join([f"{get_inline_link(el, md_file)}" for el in conditional_content['then'].get('required', [])]),
-            then_not_text,
-            conditional_content.get('$comment') or ''
-        ]
-    )
+    then_text = '<br>'.join([f"{get_inline_link(el, md_file)}" for el in conditional_content['then'].get('required', [])])
+
+    if then_not_text or then_text:
+        conditional_records.append(
+            [
+                if_text,
+                then_text,
+                then_not_text,
+                conditional_content.get('$comment') or ''
+            ]
+        )
     if "else" in conditional_content:
         elseif_text = get_if_condition_text(conditional_content['if'], md_file, export_folder, not_=True)
         if prev_if_text:
             elseif_text = f'{prev_if_text} AND {elseif_text}'
         if "if" in conditional_content["else"]:
-            return get_conditional_table_record(
+            conditional_records.extend(get_conditional_table_record(
                 conditional_content['else'], md_file, export_folder, prev_if_text=elseif_text
-            )
+            ))
         should_not_text = ""
         if "not" in conditional_content['else']:
             should_not_text = get_then_not_text(conditional_content["else"]["not"], md_file) if "not" in conditional_content['else'] else ""
-        conditional_records.append(
-            [
-                elseif_text,
-                '<br>'.join([f"{get_inline_link(el, md_file)}" for el in conditional_content.get('else', {}).get('required', [])]),
-                should_not_text,
-                conditional_content.get('$comment') or ''
-            ]
-        )
+        should_text = '<br>'.join([f"{get_inline_link(el, md_file)}" for el in conditional_content.get('else', {}).get('required', [])])
+        if should_not_text or should_text:
+            conditional_records.append(
+                [
+                    elseif_text,
+                    should_text,
+                    should_not_text,
+                    conditional_content.get('$comment') or ''
+                ]
+            )
     return conditional_records
 
 
@@ -301,13 +298,18 @@ def handle_allofs(allofs: list[dict], md_file: MdUtils, export_folder: Path):
         handle_conditional_allofs(conditional_allofs, md_file, export_folder)
 
 
-def generate_markdown_for_object(contents: dict, export_folder: Path):
+def generate_markdown_for_object(contents: dict, export_folder: Path, breadcrums: list = []):
     """Function to generate markdown file for object recursively."""
 
     if "properties" in contents and "type" not in contents:
         contents["type"] = "object"
 
     md_file = get_md_file_from_title(contents.get('title'), export_folder)
+    if breadcrums:
+        md_file.new_line(' / '.join(breadcrums))
+    
+    breadcrums.append(get_hyperlinked_object_text(contents.get('title'), md_file))
+    md_file.new_header(level=1, title=contents.get('title'))
     if '$id' in contents:
         add_link_to_json_schema(md_file, contents.get('$id'))
     
@@ -316,13 +318,13 @@ def generate_markdown_for_object(contents: dict, export_folder: Path):
         type_text = get_hyperlinked_object_text(items.get('title'), md_file) if 'enum' not in items else 'string'
         md_file.new_line(f"Type: array[{type_text}]")
         if items.get('type') == "object":
-            generate_markdown_for_object(items, export_folder)
+            generate_markdown_for_object(items, export_folder, copy.deepcopy(breadcrums))
 
         if "enum" in items:
             handle_enums(items['enum'], md_file)
         
         if 'anyOf' in items:
-            handle_anyof(items['anyOf'], md_file, export_folder)
+            handle_anyofs(items['anyOf'], md_file, export_folder, copy.deepcopy(breadcrums))
         
         md_file.create_md_file()
 
@@ -334,10 +336,10 @@ def generate_markdown_for_object(contents: dict, export_folder: Path):
             add_table_of_properties(contents, md_file)
             for _, ppty_dict in contents['properties'].items():
                 if ppty_dict.get('type') in ['object', 'array']:
-                    generate_markdown_for_object(ppty_dict, export_folder)
+                    generate_markdown_for_object(ppty_dict, export_folder, copy.deepcopy(breadcrums))
 
         if "oneOf" in contents:
-            handle_oneofs(contents.get('oneOf'), md_file, export_folder)
+            handle_oneofs(contents.get('oneOf'), md_file, export_folder, copy.deepcopy(breadcrums))
 
         if "allOf" in contents:
             handle_allofs(contents.get('allOf'), md_file, export_folder)
@@ -346,7 +348,7 @@ def generate_markdown_for_object(contents: dict, export_folder: Path):
             handle_allofs([contents], md_file, export_folder)
 
         if 'anyOf' in contents:
-            handle_anyofs(contents.get('anyOf'), md_file, export_folder)
+            handle_anyofs(contents.get('anyOf'), md_file, export_folder, copy.deepcopy(breadcrums))
 
         if "properties" in contents:
             add_ppty_details(contents, md_file)
@@ -367,10 +369,5 @@ if __name__ == "__main__":
     json_schema_file = Path(r'../../../IRA-Rebates-API/resolved_json_schemas/electricBulkReportingPayload.schema.json')
     generate_markdown_files(
         json_schema_file,
-        Path("docs")
+        Path("docs/electric_bulk_reporting")
     )
-    # json_schema_file = Path(r'../../../../Grid Atlas/schemas/dehydration-metadata-schema/dehydration-metadata.v1.schema.json')
-    # generate_markdown_files(
-    #     json_schema_file,
-    #     Path("../../../../Grid Atlas/schemas/dehydration-metadata-schema/docs/v1")
-    # )

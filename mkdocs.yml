@@ -48,4 +48,5 @@ markdown_extensions:
         kwds:
           case: lower
 
-
+nav:
+  - Electric Bulk Reporting: electric_bulk_reporting/electrification_bulk_reporting.md
