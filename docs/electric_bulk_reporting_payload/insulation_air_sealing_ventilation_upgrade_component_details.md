@@ -1,0 +1,20 @@
+
+
+
+  
+[electric_bulk_reporting_payload](electric_bulk_reporting_payload.md) / [electric_bulk_reporting_payload_item](electric_bulk_reporting_payload_item.md) / [upgrade_component_details](upgrade_component_details.md) / [original_component_details_one_of_1](original_component_details_one_of_1.md)
+# Insulation Air Sealing Ventilation Upgrade Component Details
+  
+Type: array[[insulation_air_sealing_ventilation_upgrade_component_details_item](insulation_air_sealing_ventilation_upgrade_component_details_item.md)]
+## Any Of
+  
+  
+[air_sealing_upgrade_component_details](air_sealing_upgrade_component_details.md)  
+[ceiling_insulation_upgrade_component_details](ceiling_insulation_upgrade_component_details.md)  
+[wall_insulation_upgrade_component_details](wall_insulation_upgrade_component_details.md)  
+[duct_sealing_upgrade_component_details](duct_sealing_upgrade_component_details.md)  
+[duct_insulation_upgrade_component_details](duct_insulation_upgrade_component_details.md)  
+[foor_conditioned_space_upgrade_component_details](foor_conditioned_space_upgrade_component_details.md)  
+[floor_unconditioned_space_upgrade_component_details](floor_unconditioned_space_upgrade_component_details.md)  
+[foundation_insulation_upgrade_component_details](foundation_insulation_upgrade_component_details.md)  
+[ventilation_upgrade_component_details](ventilation_upgrade_component_details.md)

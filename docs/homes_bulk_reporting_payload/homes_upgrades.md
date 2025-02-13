@@ -1,0 +1,31 @@
+
+
+
+  
+[homes_bulk_reporting_payload](homes_bulk_reporting_payload.md) / [homes_bulk_reporting_payload_item](homes_bulk_reporting_payload_item.md)
+# Homes upgrades
+  
+Type: array[string]  
+
+|Value|
+| :--- |
+|`AIR_SEALING`|
+|`APPLIANCE`|
+|`CEILING_INSULATION`|
+|`COOLING_EQUIPMENT`|
+|`DUCT_INSULATION`|
+|`DUCT_SEALING`|
+|`FLOOR_INSULATION`|
+|`FOUNDATION_INSULATION`|
+|`HEATING_EQUIPMENT`|
+|`LIGHTING`|
+|`MOTORS`|
+|`PUMPS`|
+|`ROOF_INSULATION`|
+|`THERMOSTATS`|
+|`VARIABLE_FREQUENCY_DRIVES`|
+|`VENTILATION`|
+|`WALL_INSULATION`|
+|`WATER_HEATER`|
+|`WINDOW_ATTACHMENT`|
+|`WINDOW_REPLACEMENT`|
