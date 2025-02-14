@@ -948,6 +948,15 @@
           }
         ]
       },
+      "post_retrofit_inspection_passed": {
+        "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+        "title": "Post retrofit inspection passed",
+        "enum": [
+          "NA",
+          "NO",
+          "YES"
+        ]
+      },
       "product_info": {
         "type": "array",
         "minItems": 1,
