@@ -2,8 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationBulkReporting",
   "type": "array",
+  "title": "Electric Bulk Reporting Payload",
   "items": {
     "type": "object",
+    "title": "Electric Bulk reporting Payload Item",
     "properties": {
       "address_id": {
         "type": "string",
@@ -137,6 +139,7 @@
       "limited_assessment": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
+        "title": "Electric Limited Assessments Payload",
         "properties": {
           "assessment_date": {
             "type": "string",
@@ -191,6 +194,7 @@
             "type": "array",
             "items": {
               "type": "object",
+              "title": "Cooling Systems Item",
               "properties": {
                 "efficiency_seer": {
                   "type": "number",
@@ -311,6 +315,7 @@
             "type": "array",
             "items": {
               "type": "object",
+              "title": "Heating Systems Item",
               "properties": {
                 "efficiency_afue": {
                   "type": "number",
@@ -587,15 +592,20 @@
       "original_component_details": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
+        "title": "Original Component Details",
         "oneOf": [
           {
+            "title": "Original Component Details One Of 1",
             "properties": {
               "insulation_air_sealing_ventilation_original_details": {
                 "type": "array",
+                "title": "Insulation Air Sealing Ventilation Original Component Details",
                 "description": "The preexisting conditions associated with this improvement",
                 "items": {
+                  "title": "Insulation Air Sealing Ventilation Original Component Details Item",
                   "anyOf": [
                     {
+                      "title": "Air Sealing Original Component Details",
                       "type": "object",
                       "description": "The preexisting conditions associated with this improvement",
                       "properties": {
@@ -637,6 +647,7 @@
                     },
                     {
                       "type": "object",
+                      "title": "Celing Insulation Original Component Details",
                       "description": "The preexisting conditions associated with this improvement",
                       "properties": {
                         "insulation_type": {
@@ -662,6 +673,7 @@
                     },
                     {
                       "type": "object",
+                      "title": "Wall Insulation Original Component Details",
                       "description": "The preexisting conditions associated with this improvement",
                       "properties": {
                         "insulation": {
@@ -684,6 +696,7 @@
                       "additionalProperties": false
                     },
                     {
+                      "title": "Duct Sealing Original Component Details",
                       "description": "The preexisting conditions associated with this improvement",
                       "type": "object",
                       "properties": {
@@ -726,6 +739,7 @@
                     },
                     {
                       "type": "object",
+                      "title": "Duct Insulation Original Component Details",
                       "description": "The preexisting conditions associated with this improvement",
                       "properties": {
                         "primary_duct_location": {
@@ -748,6 +762,7 @@
                     },
                     {
                       "type": "object",
+                      "title": "Foundation Insulation Original Component Details",
                       "description": "The preexisting conditions associated with this improvement",
                       "properties": {
                         "foundation_type": {
@@ -771,6 +786,7 @@
                       "additionalProperties": false
                     },
                     {
+                      "title": "Ventilation Original Component Details",
                       "type": "object",
                       "description": "The preexisting conditions associated with this improvement",
                       "properties": {
@@ -798,8 +814,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 2",
             "properties": {
               "electrical_panel_original_details": {
+                "title": "Electrical Panel Original Component Details",
                 "description": "The preexisting conditions associated with this improvement",
                 "type": "object",
                 "properties": {
@@ -825,8 +843,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 3",
             "properties": {
               "electric_cooking_appliance_original_details": {
+                "title": "Electric Cooking Appliance Original Component Details",
                 "type": "object",
                 "description": "The preexisting conditions associated with this improvement",
                 "properties": {
@@ -849,8 +869,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 4",
             "properties": {
               "heat_pump_clothes_dryer_original_details": {
+                "title": "Heat Pump Clothes Dryer Original Component Details",
                 "type": "object",
                 "description": "The preexisting conditions associated with this improvement",
                 "properties": {
@@ -874,8 +896,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 5",
             "properties": {
               "heat_pump_for_space_heating_or_cooling_original_details": {
+                "title": "Heat Pump For Space Heating or Cooling Original Component Details",
                 "type": "object",
                 "description": "The preexisting conditions associated with this improvement",
                 "properties": {
@@ -905,8 +929,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 6",
             "properties": {
               "heat_pump_water_heater_original_details": {
+                "title": "Heat Pump Water Heater Original Component Details",
                 "type": "object",
                 "description": "The preexisting conditions associated with this improvement",
                 "properties": {
@@ -948,12 +974,23 @@
           }
         ]
       },
+      "post_retrofit_inspection_passed": {
+        "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+        "title": "Post retrofit inspection passed",
+        "enum": [
+          "NA",
+          "NO",
+          "YES"
+        ]
+      },
       "product_info": {
         "type": "array",
         "minItems": 1,
+        "title": "Product Info",
         "description": "Provide identifying information for the qualifying product or products that are covered by this rebate.",
         "items": {
           "type": "object",
+          "title": "Product Info Item",
           "properties": {
             "ahri_reference_number": {
               "type": "string",
@@ -1042,6 +1079,7 @@
         "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
       },
       "safety_checks": {
+        "title": "Safety Checks",
         "type": "object",
         "properties": {
           "ambient_co_test_result": {
@@ -1186,15 +1224,20 @@
       "upgrade_component_details": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
+        "title": "Upgrade Component Details",
         "oneOf": [
           {
+            "title": "Original Component Details One Of 1",
             "properties": {
               "insulation_air_sealing_ventilation_upgrade_details": {
                 "type": "array",
+                "title": "Insulation Air Sealing Ventilation Upgrade Component Details",
                 "description": "Details that describe this improvement",
                 "items": {
+                  "title": "Insulation Air Sealing Ventilation Upgrade Component Details Item",
                   "anyOf": [
                     {
+                      "title": "Air Sealing Upgrade Component Details",
                       "type": "object",
                       "description": "Details that describe this improvement",
                       "properties": {
@@ -1211,6 +1254,7 @@
                         },
                         "locations": {
                           "type": "array",
+                          "title": "Location Item",
                           "items": {
                             "enum": [
                               "ATTIC",
@@ -1253,6 +1297,7 @@
                       }
                     },
                     {
+                      "title": "Ceiling Insulation Upgrade Component Details",
                       "type": "object",
                       "description": "Details that describe this improvement",
                       "properties": {
@@ -1289,6 +1334,7 @@
                     },
                     {
                       "type": "object",
+                      "title": "Wall Insulation Upgrade Component Details",
                       "description": "Details that describe this improvement",
                       "properties": {
                         "cavity_insulation_added": {
@@ -1338,6 +1384,7 @@
                       "additionalProperties": false
                     },
                     {
+                      "title": "Duct Sealing Upgrade Component Details",
                       "description": "Details that describe this improvement",
                       "type": "object",
                       "properties": {
@@ -1379,6 +1426,7 @@
                       }
                     },
                     {
+                      "title": "Duct Insulation Upgrade Component Details",
                       "type": "object",
                       "description": "Details that describe this improvement",
                       "properties": {
@@ -1404,6 +1452,7 @@
                     },
                     {
                       "type": "object",
+                      "title": "Foor Conditioned Space Upgrade Component Details",
                       "description": "Details that describe this improvement",
                       "properties": {
                         "percent_floor_receiving_additional_insulation": {
@@ -1440,6 +1489,7 @@
                     },
                     {
                       "type": "object",
+                      "title": "Floor Unconditioned Space Upgrade Component Details",
                       "description": "The preexisting conditions associated with this improvement",
                       "properties": {
                         "percent_floor_receiving_additional_insulation": {
@@ -1475,6 +1525,7 @@
                       "additionalProperties": false
                     },
                     {
+                      "title": "Foundation Insulation Upgrade Component Details",
                       "type": "object",
                       "description": "Details that describe this improvement",
                       "properties": {
@@ -1511,6 +1562,7 @@
                       "additionalProperties": false
                     },
                     {
+                      "title": "Ventilation Upgrade Component Details",
                       "type": "object",
                       "description": "Details that describe this improvement",
                       "properties": {
@@ -1538,8 +1590,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 2",
             "properties": {
               "electrical_panel_upgrade_details": {
+                "title": "Electrical Panel Upgrade Component Details",
                 "description": "Details that describe this improvement",
                 "type": "object",
                 "properties": {
@@ -1565,8 +1619,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 3",
             "properties": {
               "electric_cooking_appliance_upgrade_details": {
+                "title": "Electric Cooking Appliance Upgrade Component Details",
                 "type": "object",
                 "description": "Details that describe this improvement",
                 "properties": {
@@ -1589,8 +1645,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 4",
             "properties": {
               "heat_pump_clothes_dryer_upgrade_details": {
+                "title": "Heat Pump Clothes Dryer Upgrade Component Details",
                 "type": "object",
                 "description": "Details that describe this improvement",
                 "properties": {
@@ -1611,8 +1669,10 @@
             "additionalProperties": false
           },
           {
+            "title": "Original Component Details One Of 5",
             "properties": {
               "heat_pump_water_heater_upgrade_details": {
+                "title": "Heat Pump Water Heater Upgrade Component Details",
                 "type": "object",
                 "description": "Details that describe this improvement",
                 "properties": {
@@ -2046,6 +2106,7 @@
                   "properties": {
                     "insulation_air_sealing_ventilation_upgrade_details": {
                       "contains": {
+                        "title": "Air Sealing Upgrade Component Details",
                         "type": "object",
                         "description": "Details that describe this improvement",
                         "properties": {
@@ -2062,6 +2123,7 @@
                           },
                           "locations": {
                             "type": "array",
+                            "title": "Location Item",
                             "items": {
                               "enum": [
                                 "ATTIC",

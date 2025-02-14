@@ -2,12 +2,17 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationFile",
   "type": "object",
+  "title": "Electric Files Payload",
   "properties": {
     "binary_file_content_base_64": {
       "type": "string",
       "contentEncoding": "base64",
       "description": "The API user must convert the binary file content to base64 encoding.",
       "title": "Binary file content Base64"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
     },
     "file_name": {
       "type": "string",
