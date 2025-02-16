@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationLimitedAssessment",
   "type": "object",
+  "title": "Electric Limited Assessments Payload",
   "properties": {
     "assessment_date": {
       "type": "string",
@@ -45,6 +46,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "title": "Cooling Systems Item",
         "properties": {
           "efficiency_seer": {
             "type": "number",
@@ -163,6 +165,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "title": "Heating Systems Item",
         "properties": {
           "efficiency_afue": {
             "type": "number",
