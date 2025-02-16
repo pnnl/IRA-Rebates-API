@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationProductRedemption",
   "type": "object",
+  "title": "Electric Product Redemptions Payload",
   "properties": {
     "equipment_and_material_cost": {
       "$ref": "/schemas/definitions#electric_equipment_and_material_cost",
