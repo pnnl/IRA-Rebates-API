@@ -2,10 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/ceilingInsulation",
   "type": "object",
+  "title": "Ceiling Insulation",
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "title": "Celing Insulation Original Component Details",
       "description": "The preexisting conditions associated with this improvement",
       "properties": {
         "insulation_type": {
@@ -31,6 +33,7 @@
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
+      "title": "Ceiling Insulation Upgrade Component Details",
       "type": "object",
       "description": "Details that describe this improvement",
       "properties": {

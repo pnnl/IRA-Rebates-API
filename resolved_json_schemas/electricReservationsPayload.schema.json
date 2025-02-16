@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationReservation",
   "type": "object",
+  "title": "Electric Reservations Payload",
   "properties": {
     "address_id": {
       "type": "string",
@@ -138,15 +139,20 @@
     "original_component_details": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "object",
+      "title": "Original Component Details",
       "oneOf": [
         {
+          "title": "Original Component Details One Of 1",
           "properties": {
             "insulation_air_sealing_ventilation_original_details": {
               "type": "array",
+              "title": "Insulation Air Sealing Ventilation Original Component Details",
               "description": "The preexisting conditions associated with this improvement",
               "items": {
+                "title": "Insulation Air Sealing Ventilation Original Component Details Item",
                 "anyOf": [
                   {
+                    "title": "Air Sealing Original Component Details",
                     "type": "object",
                     "description": "The preexisting conditions associated with this improvement",
                     "properties": {
@@ -188,6 +194,7 @@
                   },
                   {
                     "type": "object",
+                    "title": "Celing Insulation Original Component Details",
                     "description": "The preexisting conditions associated with this improvement",
                     "properties": {
                       "insulation_type": {
@@ -213,6 +220,7 @@
                   },
                   {
                     "type": "object",
+                    "title": "Wall Insulation Original Component Details",
                     "description": "The preexisting conditions associated with this improvement",
                     "properties": {
                       "insulation": {
@@ -235,6 +243,7 @@
                     "additionalProperties": false
                   },
                   {
+                    "title": "Duct Sealing Original Component Details",
                     "description": "The preexisting conditions associated with this improvement",
                     "type": "object",
                     "properties": {
@@ -277,6 +286,7 @@
                   },
                   {
                     "type": "object",
+                    "title": "Duct Insulation Original Component Details",
                     "description": "The preexisting conditions associated with this improvement",
                     "properties": {
                       "primary_duct_location": {
@@ -299,6 +309,7 @@
                   },
                   {
                     "type": "object",
+                    "title": "Foundation Insulation Original Component Details",
                     "description": "The preexisting conditions associated with this improvement",
                     "properties": {
                       "foundation_type": {
@@ -322,6 +333,7 @@
                     "additionalProperties": false
                   },
                   {
+                    "title": "Ventilation Original Component Details",
                     "type": "object",
                     "description": "The preexisting conditions associated with this improvement",
                     "properties": {
@@ -349,8 +361,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 2",
           "properties": {
             "electrical_panel_original_details": {
+              "title": "Electrical Panel Original Component Details",
               "description": "The preexisting conditions associated with this improvement",
               "type": "object",
               "properties": {
@@ -376,8 +390,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 3",
           "properties": {
             "electric_cooking_appliance_original_details": {
+              "title": "Electric Cooking Appliance Original Component Details",
               "type": "object",
               "description": "The preexisting conditions associated with this improvement",
               "properties": {
@@ -400,8 +416,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 4",
           "properties": {
             "heat_pump_clothes_dryer_original_details": {
+              "title": "Heat Pump Clothes Dryer Original Component Details",
               "type": "object",
               "description": "The preexisting conditions associated with this improvement",
               "properties": {
@@ -425,8 +443,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 5",
           "properties": {
             "heat_pump_for_space_heating_or_cooling_original_details": {
+              "title": "Heat Pump For Space Heating or Cooling Original Component Details",
               "type": "object",
               "description": "The preexisting conditions associated with this improvement",
               "properties": {
@@ -456,8 +476,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 6",
           "properties": {
             "heat_pump_water_heater_original_details": {
+              "title": "Heat Pump Water Heater Original Component Details",
               "type": "object",
               "description": "The preexisting conditions associated with this improvement",
               "properties": {
@@ -890,6 +912,7 @@
                 "properties": {
                   "insulation_air_sealing_ventilation_original_details": {
                     "contains": {
+                      "title": "Air Sealing Original Component Details",
                       "type": "object",
                       "description": "The preexisting conditions associated with this improvement",
                       "properties": {
