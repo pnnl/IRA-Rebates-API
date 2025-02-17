@@ -2,12 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/insulationAirSealingVentilation",
   "type": "object",
+  "title": "Insulation Air Sealing Ventilation",
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "array",
+      "title": "Insulation Air Sealing Ventilation Original Component Details",
       "description": "The preexisting conditions associated with this improvement",
       "items": {
+        "title": "Insulation Air Sealing Ventilation Original Component Details Item",
         "anyOf": [
           {
             "$ref": "/schemas/airSealing#original_component_details"
@@ -36,8 +39,10 @@
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "array",
+      "title": "Insulation Air Sealing Ventilation Upgrade Component Details",
       "description": "Details that describe this improvement",
       "items": {
+        "title": "Insulation Air Sealing Ventilation Upgrade Component Details Item",
         "anyOf": [
           {
             "$ref": "/schemas/airSealing#upgrade_component_details"

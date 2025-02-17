@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/homesFile",
   "type": "object",
+  "title": "Homes Files Payload",
   "properties": {
     "binary_file_content_base_64": {
       "$ref": "/schemas/definitions#binary_file_content_base_64"

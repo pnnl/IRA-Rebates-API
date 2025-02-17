@@ -2,8 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/homesBulkReporting",
   "type": "array",
+  "title": "Homes Bulk Reporting Payload",
   "items": {
     "type": "object",
+    "title": "Homes Bulk Reporting Payload Item",
     "properties": {
       "address_id": {
         "type": "string",
@@ -110,7 +112,9 @@
       },
       "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
         "type": "array",
+        "title": "Estimated Post Retrofit Item",
         "items": {
+          "title": "Site Energy Usage",
           "type": "object",
           "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
           "properties": {
@@ -190,7 +194,9 @@
       },
       "measured_post_retrofit_site_energy_usages_by_fuel_type": {
         "type": "array",
+        "title": "Measured Post Retrofit Site Energy Usage By Fuel Type",
         "items": {
+          "title": "Site Energy Usage",
           "type": "object",
           "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
           "properties": {
@@ -241,7 +247,9 @@
       },
       "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
         "type": "array",
+        "title": "Measured Pre Retrofit Site Energy Usages By Fuel Type",
         "items": {
+          "title": "Site Energy Usage",
           "type": "object",
           "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
           "properties": {
@@ -304,8 +312,10 @@
         "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
       },
       "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+        "title": "Modeled Post Retrofit Site Energy Usages By Fuel Type",
         "type": "array",
         "items": {
+          "title": "Site Energy Usage",
           "type": "object",
           "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
           "properties": {
@@ -356,7 +366,9 @@
       },
       "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
         "type": "array",
+        "title": "Modeled Pre Retrofit Site Energy Usages By Fuel Type",
         "items": {
+          "title": "Site Energy Usage",
           "type": "object",
           "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
           "properties": {
@@ -425,6 +437,15 @@
         "description": "Multiple reservations for MEASURED HOMES projects can be tied together into a portfolio by assigning the same portfolio_id value to each reservation in the portfolio.",
         "title": "Portfolio id"
       },
+      "post_retrofit_inspection_passed": {
+        "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+        "title": "Post retrofit inspection passed",
+        "enum": [
+          "NA",
+          "NO",
+          "YES"
+        ]
+      },
       "project_id": {
         "type": "string",
         "minLength": 6,
@@ -463,6 +484,7 @@
         "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate."
       },
       "safety_checks": {
+        "title": "Safety Checks",
         "type": "object",
         "properties": {
           "ambient_co_test_result": {
@@ -609,6 +631,12 @@
             "FLOOR_INSULATION",
             "FOUNDATION_INSULATION",
             "HEATING_EQUIPMENT",
+            "LIGHTING",
+            "MOTORS",
+            "PUMPS",
+            "ROOF_INSULATION",
+            "THERMOSTATS",
+            "VARIABLE_FREQUENCY_DRIVES",
             "VENTILATION",
             "WALL_INSULATION",
             "WATER_HEATER",

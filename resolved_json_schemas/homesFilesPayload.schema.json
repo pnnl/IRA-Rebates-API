@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/homesFile",
   "type": "object",
+  "title": "Homes Files Payload",
   "properties": {
     "binary_file_content_base_64": {
       "type": "string",
@@ -30,7 +31,10 @@
         "HPXML_MODELED_REQUIRED",
         "JPEG",
         "PDF",
-        "PNG"
+        "PNG",
+        "BUILDINGSYNC",
+        "JSON",
+        "EXCEL"
       ],
       "title": "File type"
     },
@@ -39,7 +43,8 @@
         "POST_RETROFIT_MODEL",
         "PRE_AND_POST_RETROFIT_MODELS",
         "PRE_RETROFIT_MODEL",
-        "QUALITY_ASSURANCE"
+        "QUALITY_ASSURANCE",
+        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE"
       ],
       "title": "File purpose"
     }

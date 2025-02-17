@@ -238,6 +238,7 @@
     "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "estimated_post_retrofit_site_energy_usages_by_fuel_type",
       "type": "array",
+      "title": "Estimated Post Retrofit Item",
       "items": {
         "$ref": "#site_energy_usage"
       },
@@ -307,7 +308,8 @@
         "POST_RETROFIT_MODEL",
         "PRE_AND_POST_RETROFIT_MODELS",
         "PRE_RETROFIT_MODEL",
-        "QUALITY_ASSURANCE"
+        "QUALITY_ASSURANCE",
+        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE"
       ],
       "title": "File purpose"
     },
@@ -321,7 +323,10 @@
         "HPXML_MODELED_REQUIRED",
         "JPEG",
         "PDF",
-        "PNG"
+        "PNG",
+        "BUILDINGSYNC",
+        "JSON",
+        "EXCEL"
       ],
       "title": "File type"
     },
@@ -358,6 +363,12 @@
           "FLOOR_INSULATION",
           "FOUNDATION_INSULATION",
           "HEATING_EQUIPMENT",
+          "LIGHTING",
+          "MOTORS",
+          "PUMPS",
+          "ROOF_INSULATION",
+          "THERMOSTATS",
+          "VARIABLE_FREQUENCY_DRIVES",
           "VENTILATION",
           "WALL_INSULATION",
           "WATER_HEATER",
@@ -419,6 +430,7 @@
     "measured_post_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "measured_post_retrofit_site_energy_usages_by_fuel_type",
       "type": "array",
+      "title": "Measured Post Retrofit Site Energy Usage By Fuel Type",
       "items": {
         "$ref": "#site_energy_usage"
       },
@@ -435,6 +447,7 @@
     "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "measured_pre_retrofit_site_energy_usages_by_fuel_type",
       "type": "array",
+      "title": "Measured Pre Retrofit Site Energy Usages By Fuel Type",
       "items": {
         "$ref": "#site_energy_usage"
       },
@@ -480,6 +493,7 @@
     },
     "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "modeled_post_retrofit_site_energy_usages_by_fuel_type",
+      "title": "Modeled Post Retrofit Site Energy Usages By Fuel Type",
       "type": "array",
       "items": {
         "$ref": "#site_energy_usage"
@@ -497,6 +511,7 @@
     "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "modeled_pre_retrofit_site_energy_usages_by_fuel_type",
       "type": "array",
+      "title": "Modeled Pre Retrofit Site Energy Usages By Fuel Type",
       "items": {
         "$ref": "#site_energy_usage"
       },
@@ -563,6 +578,12 @@
       "description": "Multiple reservations for MEASURED HOMES projects can be tied together into a portfolio by assigning the same portfolio_id value to each reservation in the portfolio.",
       "title": "Portfolio id"
     },
+    "post_retrofit_inspection_passed": {
+      "$anchor": "post_retrofit_inspection_passed",
+      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+      "title": "Post retrofit inspection passed",
+      "$ref": "#safety_checks_yes_no_na"
+    },
     "product_description": {
       "$anchor": "product_description",
       "type": "string",
@@ -575,9 +596,11 @@
       "$anchor": "product_info",
       "type": "array",
       "minItems": 1,
+      "title": "Product Info",
       "description": "Provide identifying information for the qualifying product or products that are covered by this rebate.",
       "items": {
         "type": "object",
+        "title": "Product Info Item",
         "properties": {
           "ahri_reference_number": {
             "$ref": "#ahri_reference_number"
@@ -685,6 +708,7 @@
     },
     "safety_checks": {
       "$anchor": "safety_checks",
+      "title": "Safety Checks",
       "type": "object",
       "properties": {
         "ambient_co_test_result": {
@@ -801,6 +825,7 @@
     },
     "site_energy_usage": {
       "$anchor": "site_energy_usage",
+      "title": "Site Energy Usage",
       "type": "object",
       "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
       "properties": {

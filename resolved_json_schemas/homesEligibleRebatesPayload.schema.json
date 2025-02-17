@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/homesEligibleRebate",
   "type": "object",
+  "title": "Homes Eligible Rebates Payload",
   "properties": {
     "address_id": {
       "type": "string",
@@ -61,7 +62,9 @@
     },
     "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
       "type": "array",
+      "title": "Estimated Post Retrofit Item",
       "items": {
+        "title": "Site Energy Usage",
         "type": "object",
         "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
         "properties": {
@@ -117,7 +120,9 @@
     },
     "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
       "type": "array",
+      "title": "Measured Pre Retrofit Site Energy Usages By Fuel Type",
       "items": {
+        "title": "Site Energy Usage",
         "type": "object",
         "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
         "properties": {
@@ -180,8 +185,10 @@
       "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
     },
     "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+      "title": "Modeled Post Retrofit Site Energy Usages By Fuel Type",
       "type": "array",
       "items": {
+        "title": "Site Energy Usage",
         "type": "object",
         "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
         "properties": {
@@ -232,7 +239,9 @@
     },
     "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
       "type": "array",
+      "title": "Modeled Pre Retrofit Site Energy Usages By Fuel Type",
       "items": {
+        "title": "Site Energy Usage",
         "type": "object",
         "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
         "properties": {
@@ -325,6 +334,12 @@
           "FLOOR_INSULATION",
           "FOUNDATION_INSULATION",
           "HEATING_EQUIPMENT",
+          "LIGHTING",
+          "MOTORS",
+          "PUMPS",
+          "ROOF_INSULATION",
+          "THERMOSTATS",
+          "VARIABLE_FREQUENCY_DRIVES",
           "VENTILATION",
           "WALL_INSULATION",
           "WATER_HEATER",

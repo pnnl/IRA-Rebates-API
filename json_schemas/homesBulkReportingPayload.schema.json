@@ -2,8 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/homesBulkReporting",
   "type": "array",
+  "title": "Homes Bulk Reporting Payload",
   "items": {
     "type": "object",
+    "title": "Homes Bulk Reporting Payload Item",
     "properties": {
       "address_id": {
         "$ref": "/schemas/definitions#address_id"
@@ -106,6 +108,9 @@
       },
       "portfolio_id": {
         "$ref": "/schemas/definitions#portfolio_id"
+      },
+      "post_retrofit_inspection_passed": {
+        "$ref": "/schemas/definitions#post_retrofit_inspection_passed"
       },
       "project_id": {
         "$ref": "/schemas/definitions#project_id"
