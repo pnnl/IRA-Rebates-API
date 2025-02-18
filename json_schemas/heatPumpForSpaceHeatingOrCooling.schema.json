@@ -2,9 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/heatPumpForSpaceHeatingOrCooling",
   "type": "object",
+  "title": "Heat Pump For Space Heating or Cooling",
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
+      "title": "Heat Pump For Space Heating or Cooling Original Component Details",
       "type": "object",
       "description": "The preexisting conditions associated with this improvement",
       "properties": {
