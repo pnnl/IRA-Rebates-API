@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/addressService",
   "type": "object",
+  "title": "Address Service Payload",
   "properties": {
     "city": {
       "type": "string",
