@@ -2,9 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/heatPumpClothesDryer",
   "type": "object",
+  "title": "Heat Pump Clothes Dryer",
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
+      "title": "Heat Pump Clothes Dryer Original Component Details",
       "type": "object",
       "description": "The preexisting conditions associated with this improvement",
       "properties": {
@@ -23,6 +25,7 @@
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
+      "title": "Heat Pump Clothes Dryer Upgrade Component Details",
       "type": "object",
       "description": "Details that describe this improvement",
       "properties": {
