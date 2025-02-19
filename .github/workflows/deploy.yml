@@ -7,6 +7,9 @@ on:
       - stage
       - sandbox
       - sandbox-test
+  pull_request:
+    branches:
+      - sandbox-test
 
 jobs:
   deploy:
@@ -24,6 +27,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
+          python script.py
 
       - name: Get Branch Name
         id: branch
