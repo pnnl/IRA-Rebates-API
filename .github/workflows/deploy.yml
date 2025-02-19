@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -27,7 +29,6 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          python script.py
 
       - name: Get Branch Name
         id: branch
@@ -46,10 +47,14 @@ jobs:
 
       - name: Delete Existing Version (If Exists)
         run: |
-          mike delete ${{ env.branch_name }} || echo "Version does not exist, continuing..."
+          git fetch origin gh-pages  # Fetch latest changes
+          git checkout gh-pages      # Switch to gh-pages branch
+          git pull origin gh-pages   # Ensure local copy is up-to-date
+          mike delete ${{ env.branch_name }} --push || echo "Version does not exist, continuing..."
 
       - name: Deploy Site with Mike
         run: |
+          python script.py
           mike deploy --push --update-aliases ${{ env.branch_name }} latest
 
       - name: Set Default Version (Optional)
