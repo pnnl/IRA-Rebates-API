@@ -47,14 +47,12 @@ jobs:
 
       - name: Delete Existing Version (If Exists)
         run: |
-          git fetch origin gh-pages  # Fetch latest changes
-          git checkout gh-pages      # Switch to gh-pages branch
-          git pull origin gh-pages   # Ensure local copy is up-to-date
+          git fetch origin gh-pages
+          python script.py
           mike delete ${{ env.branch_name }} --push || echo "Version does not exist, continuing..."
 
       - name: Deploy Site with Mike
         run: |
-          python script.py
           mike deploy --push --update-aliases ${{ env.branch_name }} latest
 
       - name: Set Default Version (Optional)
