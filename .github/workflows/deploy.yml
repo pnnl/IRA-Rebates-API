@@ -31,7 +31,13 @@ jobs:
 
       - name: Get Branch Name
         id: branch
-        run: echo "branch_name=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Forcing the version to be sandbox-test for PRs"
+            echo "branch_name=sandbox-test" >> $GITHUB_ENV
+          else
+            echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          fi
 
       - name: Configure Git
         run: |
