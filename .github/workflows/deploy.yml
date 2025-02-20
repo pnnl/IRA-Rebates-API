@@ -1,0 +1,60 @@
+name: Deploy MkDocs with Mike
+
+on:
+  push:
+    branches:
+      - prod
+      - stage
+      - sandbox
+      - sandbox-test
+  pull_request:
+    branches:
+      - sandbox-test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Get Branch Name
+        id: branch
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Forcing the version to be sandbox-test for PRs"
+            echo "branch_name=sandbox-test" >> $GITHUB_ENV
+          else
+            echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          fi
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Delete Existing Version (If Exists)
+        run: |
+          git fetch origin gh-pages
+          python script.py
+          mike delete ${{ env.branch_name }} --push || echo "Version does not exist, continuing..."
+
+      - name: Deploy Site with Mike
+        run: |
+          mike deploy --push --update-aliases ${{ env.branch_name }} latest
+
+      - name: Set Default Version (Optional)
+        run: |
+          mike set-default --push latest
