@@ -2,10 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/wallInsulation",
   "type": "object",
+  "title": "Wall Insulation",
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "title": "Wall Insulation Original Component Details",
       "description": "The preexisting conditions associated with this improvement",
       "properties": {
         "insulation": {
@@ -30,6 +32,7 @@
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "title": "Wall Insulation Upgrade Component Details",
       "description": "Details that describe this improvement",
       "properties": {
         "cavity_insulation_added": {

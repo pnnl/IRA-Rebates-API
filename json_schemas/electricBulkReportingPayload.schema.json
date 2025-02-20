@@ -2,8 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationBulkReporting",
   "type": "array",
+  "title": "Electric Bulk Reporting Payload",
   "items": {
     "type": "object",
+    "title": "Electric Bulk reporting Payload Item",
     "properties": {
       "address_id": {
         "$ref": "/schemas/definitions#address_id"
@@ -83,6 +85,9 @@
       },
       "original_component_details": {
         "$ref": "/schemas/originalComponentDetails"
+      },
+      "post_retrofit_inspection_passed": {
+        "$ref": "/schemas/definitions#post_retrofit_inspection_passed"
       },
       "product_info": {
         "$ref": "/schemas/definitions#product_info"
