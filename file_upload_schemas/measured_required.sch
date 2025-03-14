@@ -425,7 +425,6 @@
   <sch:pattern>
     <sch:title>[ClothesDryer]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:ClothesDryer">
-      <sch:assert role="ERROR" test="h:Type">Expected Type</sch:assert>
       <sch:assert role="ERROR" test="h:FuelType">Expected FuelType</sch:assert>
     </sch:rule>
   </sch:pattern>
