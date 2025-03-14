@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "lxml",
+# ]
+# ///
 import pathlib
 from copy import deepcopy
 

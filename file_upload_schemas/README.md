@@ -10,17 +10,11 @@ These files are generated with a script since they are very similar with a few a
 
 ## Generating the schematrons
 
-Create a python environment. Install the dependency.
+Recommend using the [uv package manager](https://docs.astral.sh/uv/getting-started/installation/) to run this script.
 
 ```bash
 cd source_schematrons
-pip install -r requirements.txt
-```
-
-Run the script to generate the schematrons.
-
-```bash
-python combine_schematrons.py
+uv run combine_schematrons.py
 ```
 
 ## How the schematron files are assembled
