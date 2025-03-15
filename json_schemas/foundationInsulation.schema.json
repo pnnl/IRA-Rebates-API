@@ -2,10 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/foundationInsulation",
   "type": "object",
+  "title": "Foundation Insulation",
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
       "type": "object",
+      "title": "Foundation Insulation Original Component Details",
       "description": "The preexisting conditions associated with this improvement",
       "properties": {
         "foundation_type": {
@@ -30,6 +32,7 @@
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
+      "title": "Foundation Insulation Upgrade Component Details",
       "type": "object",
       "description": "Details that describe this improvement",
       "properties": {
