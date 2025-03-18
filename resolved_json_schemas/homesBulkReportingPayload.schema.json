@@ -29,7 +29,7 @@
         ],
         "description": "This describes both the type of the building and, in the multifamily case, whether this reservation applies to the whole building or to a single unit. For the MULTIFAMILY_CENTRAL case, the income bucket for the building, mf_income_bucket, is used. Otherwise, the income bucket for the dwelling unit, dwelling_unit_income_bucket, is used."
       },
-      "claimant_payment": {
+      "total_rebate_payout": {
         "type": "number",
         "multipleOf": 0.01,
         "minimum": 0,
@@ -659,7 +659,6 @@
       "applicant_id",
       "building_project_type",
       "claimant_type",
-      "claimant_payment",
       "construction_type",
       "contractor_company_name",
       "contractor_name",
@@ -673,6 +672,7 @@
       "safety_checks",
       "state_attests_proof_of_identity_ownership_income",
       "state_attests_any_failed_inspection_remediated",
+      "total_rebate_payout",
       "upgrades",
       "vendor_id"
     ],

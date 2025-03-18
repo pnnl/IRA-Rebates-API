@@ -37,7 +37,8 @@
       "multipleOf": 0.01,
       "minimum": 0,
       "description": "This is the amount that the state paid to an aggregator, or other claimant, for a HOMES rebate.",
-      "title": "Claimant payment"
+      "title": "Claimant payment",
+      "deprecated": true
     },
     "construction_type": {
       "$anchor": "construction_type",
@@ -121,7 +122,8 @@
       "minLength": 2,
       "maxLength": 64,
       "$anchor": "doe_approved_bpi_2400_compliant_software_used",
-      "description": "This field is required when *rebate_type* is MODELED. Otherwise, this field should be omitted. A list of approved software will be publicly available along with the corresponding string that should be used here. We use a string rather than an enum because the approved list may change often."
+      "description": "This field is deprecated and will be removed in a future version. Please use modeling_software_used instead. Enter the name of the software used to model energy usage and savings. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. Until this field is removed, when rebate_type is MODELED you must either use this field OR modeling_software_used, but not both. This field is NOT allowed unless rebate_type is MODELED.",
+      "deprecated": true
     },
     "electric_building_project_type": {
       "$anchor": "electric_building_project_type",
@@ -517,6 +519,14 @@
       },
       "description": "An array of modeled pre-retrofit site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
     },
+    "modeling_software_used": {
+      "type": "string",
+      "title": "Modeling software used",
+      "minLength": 2,
+      "maxLength": 64,
+      "$anchor": "modeling_software_used",
+      "description": "This field should be used instead of doe_approved_bpi_2400_compliant_software_used, which is now deprecated. Enter the name of the software used to model energy usage and savings when rebate_type is MODELED. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. Until the doe_approved_bpi_2400_compliant_software_used field is removed, when rebate_type is MODELED you must either use this field OR doe_approved_bpi_2400_compliant_software_used, but not both. This field is NOT allowed unless rebate_type is MODELED."
+    },
     "new_expiration_date": {
       "type": "string",
       "format": "date",
@@ -889,6 +899,14 @@
       "$anchor": "text_file_content",
       "type": "string",
       "maxLength": 1000000
+    },
+    "total_rebate_payout": {
+      "$anchor": "total_rebate_payout",
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "The amount rebated to the claimant by the state. Do NOT include any contractor incentive amounts.",
+      "title": "Total rebate payout"
     },
     "unit_name_or_number": {
       "$anchor": "unit_name_or_number",

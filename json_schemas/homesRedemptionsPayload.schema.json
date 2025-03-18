@@ -38,6 +38,9 @@
     "safety_checks": {
       "$ref": "/schemas/definitions#safety_checks"
     },
+    "total_rebate_payout": {
+      "$ref": "/schemas/definitions#total_rebate_payout"
+    },
     "vendor_id": {
       "$ref": "/schemas/definitions#vendor_id"
     }
@@ -81,6 +84,9 @@
           "measured_percent_energy_savings"
         ]
       }
+    ],
+    "required": [
+      "total_rebate_payout"
     ]
   },
   "else": {
