@@ -31,6 +31,13 @@ This version of the json schema files correspond to Data and Tools Guide version
 
 All other json schema files are referenced from those listed in the table. 
 
+## API Environments and Branches
+This repository maintains different branches that correspond to different API environments:
+- `prod+sandbox` - Contains the latest production-ready API schemas and documentation
+- `sandbox-test` - Contains schemas and documentation for the sandbox-test environment. This environment allows users to test new features and functionalities before they are released in production.
+
+Each branch reflects the current state of its respective environment. When making API integrations, ensure you're using the branch that corresponds to your target environment.
+
 ## Useful Links
 - Home Energy Rebate Programs: https://www.energy.gov/scep/home-energy-rebates-programs
 - Home Energy Rebate Tools (the high-level web page for the IRA Rebate API and related tools): https://www.pnnl.gov/projects/rebate-tools
