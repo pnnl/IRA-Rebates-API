@@ -22,7 +22,7 @@ The `/resolved_json_schemas` folder includes JSON Schema payload files where all
 ### IRA Rebates API Schema Documentation
 More human-readable documentation of the JSON Schema files is available at https://pnnl.github.io/IRA-Rebates-API. Be sure to choose the appropriate branch (environment) at the top of the page.
 
-## API endpoint to JSON Schema table
+### API Endpoint to JSON Schema Table
 | API POST &amp; PUT endpoint | JSON schema filename |
 | ---- | ---- |
 | /applicants | applicantIdsPayload.schema.json |
