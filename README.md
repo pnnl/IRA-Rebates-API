@@ -2,6 +2,13 @@
 
 This repository contains materials useful to users of the IRA Rebates API. The IRA Rebates API supports 50121 and 50122 of the DOE rebate programs authorized by the Inflation Reduction Act (IRA) of 2022. See https://www.energy.gov/scep/home-energy-rebates-programs for program descriptions and updates.
 
+## API Environments and Branches
+This repository maintains different branches that correspond to different API environments:
+- `prod+sandbox` - Contains the latest production-ready API schemas and documentation
+- `sandbox-test` - Contains schemas and documentation for the sandbox-test environment. This environment allows users to test new features and functionalities before they are released in production.
+
+Each branch reflects the current state of its respective environment. When making API integrations, ensure you're using the branch that corresponds to your target environment.
+
 ## JSON Schema 
 The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST endpoint payloads. The schema files can also be used, together with a JSON Schema validator (see  https://json-schema.org/implementations), to validate the POST payloads before submitting to the API. This may be especially helpful during the development of client software.
 
@@ -30,13 +37,6 @@ This version of the json schema files correspond to Data and Tools Guide version
 | /homes/reservations/{reservation_id}/state-addenda | homesStateAddendaPayload.schema.json |
 
 All other json schema files are referenced from those listed in the table. 
-
-## API Environments and Branches
-This repository maintains different branches that correspond to different API environments:
-- `prod+sandbox` - Contains the latest production-ready API schemas and documentation
-- `sandbox-test` - Contains schemas and documentation for the sandbox-test environment. This environment allows users to test new features and functionalities before they are released in production.
-
-Each branch reflects the current state of its respective environment. When making API integrations, ensure you're using the branch that corresponds to your target environment.
 
 ## Useful Links
 - Home Energy Rebate Programs: https://www.energy.gov/scep/home-energy-rebates-programs
