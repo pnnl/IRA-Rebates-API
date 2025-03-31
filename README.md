@@ -19,8 +19,8 @@ The `/resolved_json_schemas` folder includes JSON Schema payload files where all
 
 This version of the json schema files correspond to Data and Tools Guide version 1.2. (See Useful Links below.)
 
-### API endpoint to JSON Schema table
-| API POST endpoint | JSON schema filename |
+## API endpoint to JSON Schema table
+| API POST &amp; PUT endpoint | JSON schema filename |
 | ---- | ---- |
 | /applicants | applicantIdsPayload.schema.json |
 | /address-service/addresses | addressServicePayload.schema.json |
@@ -28,8 +28,8 @@ This version of the json schema files correspond to Data and Tools Guide version
 | /electric/reservations | electricReservationsPayload.schema.json |
 | /electric/reservations/{reservation_id}/extend | electricReservationsExpirationDateUpdatesPayload.schema.json |
 | /electric/reservations/{reservation_id}/files | electricFilesPayload.schema.json |
-| /electric/reservations/{reservation_id}/limited-assessments | electricLimitedAssessmentsPayload.schema.json |
 | /electric/reservations/{reservation_id}/install-redemptions | electricInstallRedemptionsPayload.schema.json |
+| /electric/reservations/{reservation_id}/limited-assessments | electricLimitedAssessmentsPayload.schema.json |
 | /electric/reservations/{reservation_id}/product-redemptions | electricProductRedemptionsPayload.schema.json |
 | /electric/reservations/{reservation_id}/state-addenda | electricStateAddendaPayload.schema.json |
 | /electric/vendor-coupons/product-redemptions | electricVendorCouponRedemptionsPayload.schema.json |
