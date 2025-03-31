@@ -7,14 +7,14 @@ This repository maintains different branches that correspond to different API en
 - `prod+sandbox` - Contains the latest production-ready API schemas and documentation
 - `sandbox-test` - Contains schemas and documentation for the sandbox-test environment. This environment allows users to test new features and functionalities before they are released in production.
 
-Each branch reflects the current state of its respective environment. When making API integrations, ensure you're using the branch that corresponds to your target environment.
+Each branch reflects the current state of its respective environment. When making API integrations, ensure you're using the branch that corresponds to your target environment. 
+
+Both branches currently correspond to the Data and Tools Guide version 1.2. (See Useful Links below.)
 
 ## JSON Schema
 
 ### /json_schemas Folder 
 The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST and PUT endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST and PUT endpoint payloads. The schema files can also be used, together with a JSON Schema validator (see  https://json-schema.org/implementations), to validate the payloads before submitting to the API. This may be especially helpful during the development of client software.
-
-This version of the json schema files correspond to Data and Tools Guide version 1.2. (See Useful Links below.)
 
 ### /resolved_json_schemas Folder 
 The `/resolved_json_schemas` folder includes JSON Schema payload files where all referenced definitions are resolved. This provides a way to use an online JSON schema validator (such as https://www.liquid-technologies.com/online-json-schema-validator) to validate a POST payload.
