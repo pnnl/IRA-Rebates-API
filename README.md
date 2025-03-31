@@ -9,10 +9,13 @@ This repository maintains different branches that correspond to different API en
 
 Each branch reflects the current state of its respective environment. When making API integrations, ensure you're using the branch that corresponds to your target environment.
 
-## JSON Schema 
-The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST endpoint payloads. The schema files can also be used, together with a JSON Schema validator (see  https://json-schema.org/implementations), to validate the POST payloads before submitting to the API. This may be especially helpful during the development of client software.
+## JSON Schema
 
-Additionally, the `/resolved_json_schemas` folder includes JSON Schema payload files where all referenced definitions are resolved. This provides a way to use an online JSON schema validator (see https://www.liquid-technologies.com/online-json-schema-validator) to validate a POST payload.
+### /json_schemas Folder 
+The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST and PUT endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST and PUT endpoint payloads. The schema files can also be used, together with a JSON Schema validator (see  https://json-schema.org/implementations), to validate the payloads before submitting to the API. This may be especially helpful during the development of client software.
+
+### /resolved_json_schemas Folder 
+The `/resolved_json_schemas` folder includes JSON Schema payload files where all referenced definitions are resolved. This provides a way to use an online JSON schema validator (such as https://www.liquid-technologies.com/online-json-schema-validator) to validate a POST payload.
 
 This version of the json schema files correspond to Data and Tools Guide version 1.2. (See Useful Links below.)
 
