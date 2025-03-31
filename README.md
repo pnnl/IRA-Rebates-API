@@ -44,6 +44,18 @@ More human-readable documentation of the JSON Schema files is available at https
 
 All other json schema files are referenced from those listed in the table. 
 
+## /hpxml_schematrons Folder
+The API validates HPXML v4.x files into steps:
+1. Validate against the HPXML v4.x XML Schema file, which can be obtained from https://github.com/hpxmlwg/hpxml.
+2. Validate against the appropriate IRA 50121 Rebate HPXML Schematron file from the /hpxml_schematrons folder.
+
+### file_type to Schematron Table
+| file_type from payload | Schematron filename |
+| ---- | ---- |
+| HPXML_MEASURED | measured_required.sch |
+| HPXML_MODELED_RECOMMENDED | modeled_recommended.sch |
+| HPXML_MODELED_REQUIRED | modeled_required.sch |
+
 ## Useful Links
 - Home Energy Rebate Programs: https://www.energy.gov/scep/home-energy-rebates-programs
 - Home Energy Rebate Tools (the high-level web page for the IRA Rebate API and related tools): https://www.pnnl.gov/projects/rebate-tools
