@@ -2,15 +2,28 @@
 
 This repository contains materials useful to users of the IRA Rebates API. The IRA Rebates API supports 50121 and 50122 of the DOE rebate programs authorized by the Inflation Reduction Act (IRA) of 2022. See https://www.energy.gov/scep/home-energy-rebates-programs for program descriptions and updates.
 
-## JSON Schema 
-The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST endpoint payloads. The schema files can also be used, together with a JSON Schema validator (see  https://json-schema.org/implementations), to validate the POST payloads before submitting to the API. This may be especially helpful during the development of client software.
+## API Environments and Branches
+This repository maintains different branches that correspond to different API environments:
+- `prod+sandbox` - Contains the latest production-ready API schemas and documentation
+- `sandbox-test` - Contains schemas and documentation for the sandbox-test environment. This environment allows users to test new features and functionalities before they are released in production.
 
-Additionally, the `/resolved_json_schemas` folder includes JSON Schema payload files where all referenced definitions are resolved. This provides a way to use an online JSON schema validator (see https://www.liquid-technologies.com/online-json-schema-validator) to validate a POST payload.
+Each branch reflects the current state of its respective environment. When making API integrations, ensure you're using the branch that corresponds to your target environment. 
 
-This version of the json schema files correspond to Data and Tools Guide version 1.2. (See Useful Links below.)
+Both branches currently correspond to the Data and Tools Guide version 1.2. (See Useful Links below.)
 
-### API endpoint to JSON Schema table
-| API POST endpoint | JSON schema filename |
+## JSON Schema
+
+### /json_schemas Folder 
+The `/json_schemas` folder includes JSON Schema files that are used by the IRA Rebate API to validate the JSON payload for each POST and PUT endpoint. API users may find these files useful as the most precise documentation regarding the allowed structure of the POST and PUT endpoint payloads. The schema files can also be used, together with a JSON Schema validator (see  https://json-schema.org/implementations), to validate the payloads before submitting to the API. This may be especially helpful during the development of client software.
+
+### /resolved_json_schemas Folder 
+The `/resolved_json_schemas` folder includes JSON Schema payload files where all referenced definitions are resolved. This provides a way to use an online JSON schema validator (such as https://www.liquid-technologies.com/online-json-schema-validator) to validate a POST payload.
+
+### IRA Rebates API Schema Documentation
+More human-readable documentation of the JSON Schema files is available at https://pnnl.github.io/IRA-Rebates-API. Be sure to choose the appropriate branch (environment) at the top of the page.
+
+### API Endpoint to JSON Schema Table
+| API POST &amp; PUT endpoint | JSON schema filename |
 | ---- | ---- |
 | /applicants | applicantIdsPayload.schema.json |
 | /address-service/addresses | addressServicePayload.schema.json |
@@ -18,8 +31,8 @@ This version of the json schema files correspond to Data and Tools Guide version
 | /electric/reservations | electricReservationsPayload.schema.json |
 | /electric/reservations/{reservation_id}/extend | electricReservationsExpirationDateUpdatesPayload.schema.json |
 | /electric/reservations/{reservation_id}/files | electricFilesPayload.schema.json |
-| /electric/reservations/{reservation_id}/limited-assessments | electricLimitedAssessmentsPayload.schema.json |
 | /electric/reservations/{reservation_id}/install-redemptions | electricInstallRedemptionsPayload.schema.json |
+| /electric/reservations/{reservation_id}/limited-assessments | electricLimitedAssessmentsPayload.schema.json |
 | /electric/reservations/{reservation_id}/product-redemptions | electricProductRedemptionsPayload.schema.json |
 | /electric/reservations/{reservation_id}/state-addenda | electricStateAddendaPayload.schema.json |
 | /electric/vendor-coupons/product-redemptions | electricVendorCouponRedemptionsPayload.schema.json |
@@ -30,6 +43,18 @@ This version of the json schema files correspond to Data and Tools Guide version
 | /homes/reservations/{reservation_id}/state-addenda | homesStateAddendaPayload.schema.json |
 
 All other json schema files are referenced from those listed in the table. 
+
+## /hpxml_schematrons Folder
+The API validates HPXML v4.x files into steps:
+1. Validate against the HPXML v4.x XML Schema file, which can be obtained from https://github.com/hpxmlwg/hpxml.
+2. Validate against the appropriate IRA 50121 Rebate HPXML Schematron file from the /hpxml_schematrons folder.
+
+### file_type to Schematron Table
+| file_type from payload | Schematron filename |
+| ---- | ---- |
+| HPXML_MEASURED | measured_required.sch |
+| HPXML_MODELED_RECOMMENDED | modeled_recommended.sch |
+| HPXML_MODELED_REQUIRED | modeled_required.sch |
 
 ## Useful Links
 - Home Energy Rebate Programs: https://www.energy.gov/scep/home-energy-rebates-programs
