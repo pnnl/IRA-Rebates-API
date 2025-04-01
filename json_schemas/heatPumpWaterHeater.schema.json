@@ -2,9 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/heatPumpWaterHeater",
   "type": "object",
+  "title": "Heat Pump Water Heater",
   "properties": {
     "original_component_details": {
       "$anchor": "original_component_details",
+      "title": "Heat Pump Water Heater Original Component Details",
       "type": "object",
       "description": "The preexisting conditions associated with this improvement",
       "properties": {
@@ -40,6 +42,7 @@
     },
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
+      "title": "Heat Pump Water Heater Upgrade Component Details",
       "type": "object",
       "description": "Details that describe this improvement",
       "properties": {

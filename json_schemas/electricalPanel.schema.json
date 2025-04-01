@@ -2,13 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electricalPanel",
   "type": "object",
+  "title": "Electrical Panel",
   "properties": {
     "original_component_details": {
+      "title": "Electrical Panel Original Component Details",
       "$anchor": "original_component_details",
       "$ref": "#/$defs/component_details",
       "description": "The preexisting conditions associated with this improvement"
     },
     "upgrade_component_details": {
+      "title": "Electrical Panel Upgrade Component Details",
       "$anchor": "upgrade_component_details",
       "$ref": "#/$defs/component_details",
       "description": "Details that describe this improvement"
