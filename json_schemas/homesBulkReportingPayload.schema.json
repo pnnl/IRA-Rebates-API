@@ -2,8 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/homesBulkReporting",
   "type": "array",
+  "title": "Homes Bulk Reporting Payload",
   "items": {
     "type": "object",
+    "title": "Homes Bulk Reporting Payload Item",
     "properties": {
       "address_id": {
         "$ref": "/schemas/definitions#address_id"
@@ -41,8 +43,14 @@
       "equipment_and_material_cost": {
         "$ref": "/schemas/definitions#homes_equipment_and_material_cost"
       },
+      "estimated_percent_energy_savings": {
+        "$ref": "/schemas/definitions#estimated_percent_energy_savings"
+      },
       "estimated_post_retrofit_energy_usage_kwh_equivalent": {
         "$ref": "/schemas/definitions#estimated_post_retrofit_energy_usage_kwh_equivalent"
+      },
+      "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+        "$ref": "/schemas/definitions#estimated_post_retrofit_site_energy_usages_by_fuel_type"
       },
       "external_rebate_id": {
         "$ref": "/schemas/definitions#external_rebate_id"
@@ -56,20 +64,41 @@
       "is_disadvantaged_community": {
         "$ref": "/schemas/definitions#is_disadvantaged_community"
       },
+      "measured_percent_energy_savings": {
+        "$ref": "/schemas/definitions#measured_percent_energy_savings"
+      },
       "measured_post_retrofit_energy_usage_kwh_equivalent": {
         "$ref": "/schemas/definitions#measured_post_retrofit_energy_usage_kwh_equivalent"
+      },
+      "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+        "$ref": "/schemas/definitions#measured_post_retrofit_site_energy_usages_by_fuel_type"
       },
       "measured_pre_retrofit_energy_usage_kwh_equivalent": {
         "$ref": "/schemas/definitions#measured_pre_retrofit_energy_usage_kwh_equivalent"
       },
+      "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+        "$ref": "/schemas/definitions#measured_pre_retrofit_site_energy_usages_by_fuel_type"
+      },
       "mf_building_income_bucket": {
         "$ref": "/schemas/definitions#homes_mf_building_income_bucket"
+      },
+      "modeled_percent_energy_savings": {
+        "$ref": "/schemas/definitions#modeled_percent_energy_savings"
       },
       "modeled_post_retrofit_energy_usage_kwh_equivalent": {
         "$ref": "/schemas/definitions#modeled_post_retrofit_energy_usage_kwh_equivalent"
       },
+      "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+        "$ref": "/schemas/definitions#modeled_post_retrofit_site_energy_usages_by_fuel_type"
+      },
       "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
         "$ref": "/schemas/definitions#modeled_pre_retrofit_energy_usage_kwh_equivalent"
+      },
+      "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+        "$ref": "/schemas/definitions#modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+      },
+      "modeling_software_used": {
+        "$ref": "/schemas/definitions#modeling_software_used"
       },
       "num_occupied_units": {
         "$ref": "/schemas/definitions#num_occupied_units"
@@ -82,6 +111,9 @@
       },
       "portfolio_id": {
         "$ref": "/schemas/definitions#portfolio_id"
+      },
+      "post_retrofit_inspection_passed": {
+        "$ref": "/schemas/definitions#post_retrofit_inspection_passed"
       },
       "project_id": {
         "$ref": "/schemas/definitions#project_id"
@@ -110,6 +142,9 @@
       "state_attests_any_failed_inspection_remediated": {
         "$ref": "/schemas/definitions#state_attests_any_failed_inspection_remediated"
       },
+      "total_rebate_payout": {
+        "$ref": "/schemas/definitions#total_rebate_payout"
+      },
       "unit_name_or_number": {
         "$ref": "/schemas/definitions#unit_name_or_number"
       },
@@ -125,7 +160,6 @@
       "applicant_id",
       "building_project_type",
       "claimant_type",
-      "claimant_payment",
       "construction_type",
       "contractor_company_name",
       "contractor_name",
@@ -138,7 +172,6 @@
       "rebate_type",
       "safety_checks",
       "state_attests_proof_of_identity_ownership_income",
-      "state_attests_any_failed_inspection_remediated",
       "upgrades",
       "vendor_id"
     ],
@@ -176,16 +209,54 @@
           }
         },
         "then": {
-          "required": [
-            "doe_approved_bpi_2400_compliant_software_used",
-            "modeled_post_retrofit_energy_usage_kwh_equivalent",
-            "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+          "oneOf": [
+            {
+              "required": [
+                "doe_approved_bpi_2400_compliant_software_used",
+                "modeled_post_retrofit_energy_usage_kwh_equivalent",
+                "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+              ]
+            },
+            {
+              "required": [
+                "doe_approved_bpi_2400_compliant_software_used",
+                "modeled_percent_energy_savings"
+              ]
+            },
+            {
+              "required": [
+                "modeling_software_used",
+                "modeled_post_retrofit_energy_usage_kwh_equivalent",
+                "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+              ]
+            },
+            {
+              "required": [
+                "modeling_software_used",
+                "modeled_percent_energy_savings"
+              ]
+            }
           ],
           "not": {
             "anyOf": [
               {
                 "required": [
+                  "estimated_percent_energy_savings"
+                ]
+              },
+              {
+                "required": [
                   "estimated_post_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "estimated_post_retrofit_site_energy_usages_by_fuel_type"
+                ]
+              },
+              {
+                "required": [
+                  "measured_percent_energy_savings"
                 ]
               },
               {
@@ -195,7 +266,17 @@
               },
               {
                 "required": [
+                  "measured_post_retrofit_site_energy_usages_by_fuel_type"
+                ]
+              },
+              {
+                "required": [
                   "measured_pre_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "measured_pre_retrofit_site_energy_usages_by_fuel_type"
                 ]
               },
               {
@@ -214,11 +295,40 @@
         "else": {
           "$comment": "rebate_type is MEASURED",
           "required": [
-            "estimated_post_retrofit_energy_usage_kwh_equivalent",
-            "measured_post_retrofit_energy_usage_kwh_equivalent",
-            "measured_pre_retrofit_energy_usage_kwh_equivalent",
             "reservation_amount",
-            "software_used_to_estimate_post_retrofit_energy_usage"
+            "software_used_to_estimate_post_retrofit_energy_usage",
+            "total_rebate_payout"
+          ],
+          "allOf": [
+            {
+              "oneOf": [
+                {
+                  "required": [
+                    "estimated_post_retrofit_energy_usage_kwh_equivalent",
+                    "measured_pre_retrofit_energy_usage_kwh_equivalent"
+                  ]
+                },
+                {
+                  "required": [
+                    "estimated_percent_energy_savings"
+                  ]
+                }
+              ]
+            },
+            {
+              "oneOf": [
+                {
+                  "required": [
+                    "measured_post_retrofit_energy_usage_kwh_equivalent"
+                  ]
+                },
+                {
+                  "required": [
+                    "measured_percent_energy_savings"
+                  ]
+                }
+              ]
+            }
           ],
           "not": {
             "anyOf": [
@@ -229,12 +339,32 @@
               },
               {
                 "required": [
+                  "modeling_software_used"
+                ]
+              },
+              {
+                "required": [
+                  "modeled_percent_energy_savings"
+                ]
+              },
+              {
+                "required": [
                   "modeled_post_retrofit_energy_usage_kwh_equivalent"
                 ]
               },
               {
                 "required": [
+                  "modeled_post_retrofit_site_energy_usages_by_fuel_type"
+                ]
+              },
+              {
+                "required": [
                   "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                ]
+              },
+              {
+                "required": [
+                  "modeled_pre_retrofit_site_energy_usages_by_fuel_type"
                 ]
               }
             ]

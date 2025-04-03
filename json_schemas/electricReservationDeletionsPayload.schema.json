@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationReservationDeletion",
-  "$ref": "/schemas/deletion"
+  "$ref": "/schemas/deletion",
+  "title": "Electric Reservation Deletions Payload"
 }

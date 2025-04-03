@@ -2,10 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/floorAboveConditionedSpaceInsulation",
   "type": "object",
+  "title": "Floor Above Conditioned Space Insulation",
   "properties": {
     "upgrade_component_details": {
       "$anchor": "upgrade_component_details",
       "type": "object",
+      "title": "Foor Conditioned Space Upgrade Component Details",
       "description": "Details that describe this improvement",
       "properties": {
         "percent_floor_receiving_additional_insulation": {
