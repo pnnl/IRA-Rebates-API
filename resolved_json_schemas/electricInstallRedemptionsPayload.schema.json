@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/electrificationInstallRedemption",
   "type": "object",
+  "title": "Electric Install Redemptions Payload",
   "properties": {
     "contractor_company_name": {
       "title": "Contractor company name",
@@ -42,6 +43,15 @@
       "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
       "title": "Is final project redemption"
     },
+    "post_retrofit_inspection_passed": {
+      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+      "title": "Post retrofit inspection passed",
+      "enum": [
+        "NA",
+        "NO",
+        "YES"
+      ]
+    },
     "project_completion_date": {
       "type": "string",
       "minLength": 10,
@@ -65,6 +75,7 @@
       "description": "Use this field when the contractor submitted a product redemption for this reservation and received a rebate on behalf of the applicant. Otherwise set this to 0. This amount must be passed on to the applicant and shown on the invoice. Do not include this in the amount for `equipment_and_material_cost`."
     },
     "safety_checks": {
+      "title": "Safety Checks",
       "type": "object",
       "properties": {
         "ambient_co_test_result": {
@@ -176,15 +187,20 @@
     "upgrade_component_details": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "object",
+      "title": "Upgrade Component Details",
       "oneOf": [
         {
+          "title": "Original Component Details One Of 1",
           "properties": {
             "insulation_air_sealing_ventilation_upgrade_details": {
               "type": "array",
+              "title": "Insulation Air Sealing Ventilation Upgrade Component Details",
               "description": "Details that describe this improvement",
               "items": {
+                "title": "Insulation Air Sealing Ventilation Upgrade Component Details Item",
                 "anyOf": [
                   {
+                    "title": "Air Sealing Upgrade Component Details",
                     "type": "object",
                     "description": "Details that describe this improvement",
                     "properties": {
@@ -201,6 +217,7 @@
                       },
                       "locations": {
                         "type": "array",
+                        "title": "Location Item",
                         "items": {
                           "enum": [
                             "ATTIC",
@@ -243,6 +260,7 @@
                     }
                   },
                   {
+                    "title": "Ceiling Insulation Upgrade Component Details",
                     "type": "object",
                     "description": "Details that describe this improvement",
                     "properties": {
@@ -279,6 +297,7 @@
                   },
                   {
                     "type": "object",
+                    "title": "Wall Insulation Upgrade Component Details",
                     "description": "Details that describe this improvement",
                     "properties": {
                       "cavity_insulation_added": {
@@ -328,6 +347,7 @@
                     "additionalProperties": false
                   },
                   {
+                    "title": "Duct Sealing Upgrade Component Details",
                     "description": "Details that describe this improvement",
                     "type": "object",
                     "properties": {
@@ -369,6 +389,7 @@
                     }
                   },
                   {
+                    "title": "Duct Insulation Upgrade Component Details",
                     "type": "object",
                     "description": "Details that describe this improvement",
                     "properties": {
@@ -394,6 +415,7 @@
                   },
                   {
                     "type": "object",
+                    "title": "Foor Conditioned Space Upgrade Component Details",
                     "description": "Details that describe this improvement",
                     "properties": {
                       "percent_floor_receiving_additional_insulation": {
@@ -430,6 +452,7 @@
                   },
                   {
                     "type": "object",
+                    "title": "Floor Unconditioned Space Upgrade Component Details",
                     "description": "The preexisting conditions associated with this improvement",
                     "properties": {
                       "percent_floor_receiving_additional_insulation": {
@@ -465,6 +488,7 @@
                     "additionalProperties": false
                   },
                   {
+                    "title": "Foundation Insulation Upgrade Component Details",
                     "type": "object",
                     "description": "Details that describe this improvement",
                     "properties": {
@@ -501,6 +525,7 @@
                     "additionalProperties": false
                   },
                   {
+                    "title": "Ventilation Upgrade Component Details",
                     "type": "object",
                     "description": "Details that describe this improvement",
                     "properties": {
@@ -528,8 +553,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 2",
           "properties": {
             "electrical_panel_upgrade_details": {
+              "title": "Electrical Panel Upgrade Component Details",
               "description": "Details that describe this improvement",
               "type": "object",
               "properties": {
@@ -555,8 +582,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 3",
           "properties": {
             "electric_cooking_appliance_upgrade_details": {
+              "title": "Electric Cooking Appliance Upgrade Component Details",
               "type": "object",
               "description": "Details that describe this improvement",
               "properties": {
@@ -579,8 +608,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 4",
           "properties": {
             "heat_pump_clothes_dryer_upgrade_details": {
+              "title": "Heat Pump Clothes Dryer Upgrade Component Details",
               "type": "object",
               "description": "Details that describe this improvement",
               "properties": {
@@ -601,8 +632,10 @@
           "additionalProperties": false
         },
         {
+          "title": "Original Component Details One Of 5",
           "properties": {
             "heat_pump_water_heater_upgrade_details": {
+              "title": "Heat Pump Water Heater Upgrade Component Details",
               "type": "object",
               "description": "Details that describe this improvement",
               "properties": {
