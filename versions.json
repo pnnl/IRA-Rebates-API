@@ -5,10 +5,15 @@
     "aliases": []
   },
   {
-    "version": "prod-sanbox",
-    "title": "prod-sanbox",
+    "version": "prod-sandbox",
+    "title": "prod-sandbox",
     "aliases": [
       "latest"
     ]
+  },
+  {
+    "version": "prod-sanbox",
+    "title": "prod-sanbox",
+    "aliases": []
   }
 ]
