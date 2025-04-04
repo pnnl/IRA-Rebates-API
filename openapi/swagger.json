@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "DOE IRA Rebate API",
-    "description": "API for processing rebates under the Inflation Reduction Act (IRA). Client software can connect to the API at https://sandbox-test.ira-rebates.labworks.org/.\n\n### Swagger JSON\nThe original swagger json is at https://sandbox-test.ira-rebates.labworks.org/api-doc/swagger\n\n### About the beta v4 releases\nThe IRA Rebate API dev team is completing the work of updating the system to match the Data and Tools Guide v1.2 and finalizing all endpoints for the real-time processing of rebates (reservations and redemptions). As significant portions of the update are completed, they will be made available to API users for testing here.\n\n### Release 2025-01-08\n- **Fixed contractor_dac_incentive field validation**: An issue where users were unable to create a DIY reservation in a DAC due to contractor_dac_incentive validation issues. A contractor_dac_incentive is NOT required when a reservation is DIY in a DAC.\n- **User specifiable reservation_amount**: Users can now also specify a reservation amount. The user-specified amount will be applied to the reservation if it is lower than the API calculated reservation amount. This is to allow fine management of reservation for upgrade_types that allow multiple reservations.\n- **Support for multiple reservations for specific 50122 upgrade_types**: Multiple concurrent reservations can now be created for the following upgrade types: ELECTRICAL_PANEL, ELECTRIC_WIRING, and INSULATION_AIR_SEALING_VENTILATION. The maximum rebate amounts still apply for these upgrades. \n- **ahri_reference_number update**: JSON Schema has been updated to accept AHRI numbers that are 9 digits.\n\n### Release 2024-12-13\n- **Added num_occupied_units field**: A new field named `num_occupied_units` has been added for reservations where `building_project_type` is `MULTIFAMILY_CENTRAL` or `MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT`. This field is currently optional, but will be made required at a later date.\n\n### Release 2024-12-06\n- **Bug Fix for project_id field**: A string type project_id field was being incorrectly rejected, saying it needed to be a UUID. That is no longer the case.\n- **Formatted Swagger JSON for Download**: The Swagger JSON file available on the documentation page has been updated to a \"pretty format\" for improved readability and usability when downloaded.\n- **Required `dwelling_unit_income_bucket` for MULTIFAMILY_IN_UNIT**: A bug has been fixed where now the `dwelling_unit_income_bucket` field is required in rebate API for the `MULTIFAMILY_IN_UNIT` building project type.\n- **Bug Fix for rounding energy savings when applying rules**. A hotfix has been implemented correctly round the internally calculated energy savings used when determining reservation amount.\n\n\n### Release 2024-12-02\n- **DAC Incentive Requirement for Homes and Electrification Reservations**: The `contractor_dac_incentive` field is now required for reservations in disadvantaged communities (DAC) across real-time and reporting APIs. DAC determination prioritizes user-provided status over address-service responses.\n- **RFC3339 Validation for `purchase_date_time`**: Both the bulk reporting and real-time redemption endpoints now validate `purchase_date_time` fields to ensure compliance with the RFC3339 date-time standard. Empty strings are no longer allowed.\n- **New `purchase_date` Field**: A `purchase_date` field has been introduced alongside `purchase_date_time` for creating product redemptions. Validation ensures mutual exclusivity between these fields for backward compatibility. The `purchase_date_time` field is deprecated and will be removed in a future release. Users are encouraged to adopt `purchase_date` as soon as possible.\n- **Corrected Validation for `multipleOf` Fields**: Fixed an issue where fields with a `multipleOf` constraint in the JSON schema could fail validation even when valid decimal values were provided.\n- **Extend Reservation Endpoint**: Added new endpoints to extend reservation expiration dates:\n  - `PUT /electric/{reservation_id}/extend`\n  - `PUT /homes/{reservation_id}/extend`\n  Reservations with redemptions or those that have expired cannot be extended.\n\n### Release 2024-11-01\n- **Enhanced JSON Schema Error Reporting for Reporting API**: The reporting API now validates all elements of the reporting array for JSON schema errors, providing grouped error reporting for each array element instead of just the first identified error.\n- **Contractor DAC Incentive Field for Homes Reservations**: The `contractor_dac_incentive` field is now available in both real-time and reporting APIs for creating homes reservations.\n- **UI Updates - Rebate Details**: Users can now view rebate details directly from within the dashboard.\n- **Breaking Change - Safety Check Fields Update**: Updated JSON schema for safety_check fields, which now require values of `YES`, `NO`, or `NA` instead of booleans. Note: This change is not backward-compatible.\n- **Modeled Savings Calculation Adjustment**: For Homes reservations, the energy savings calculation have been revised to round 19.5% to 20%.\n\n### Release 2024-10-11\n- **Bulk Rebate Reporting**: New endpoints have been added for bulk rebate reporting in the Electrification and HOMES programs.\n- **Electrical Panel Upgrade**: The component details for Electrification upgrades involving an electrical panel now support a minimum value of 30 amps.\n- **Reservation Deletion**: A new `delete_redemptions` option (default: `false`) has been added to the reservation deletion endpoints. When set to `true`, this option allows associated redemptions to be deleted along with the reservation. If set to `false`, reservations with associated redemptions cannot be deleted.\n- **Maximum Rebate for Specific Upgrades**: Electrification reservations for HEAT_PUMP_CLOTHES_DRYER and ELECTRIC_COOKING_APPLIANCE upgrades now each qualify for a maximum rebate of $840. These amounts are no longer combined for these two upgrade types.\n- **HOMES Redemptions**: Redemptions for HOMES now allow a value of $0 for the `equipment_and_material_cost` field.\n- **Limited Assessment**: A limited assessment can now be provided for any Electrification upgrade. It is required for HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING and optional for all other Electrification upgrades.\n\n\n### Release beta v4.2 (8/7/2024)\nThis release includes\n- A new endpoint POST /electric/reservations/{reservation_id}/limited-assessments\n- A new endpoint POST /electric/reservations/{reservation_id}/state-addenda\n- A new endpoint POST /homes/reservations/{reservation_id}/state-addenda\n- Added contractor_dac_incentive and contractor_incentive fields in the payload for /electric/reservations\n- An added safety_checks field (itself an object) in the payloads for POST /electric/reservations/{reservation_id}/install-redemptions and POST /homes/reservations/{reservation_id}/redemptions\n- Including state, county, city, and zip_code in any response that includes the address_id\n- Email addresses must conform to the https://datatracker.ietf.org/doc/html/rfc5322 spec\n- The HPXML file_type used in POST /homes/reservations/{reservation_id}/files has been split into HPXML_MODELED_RECOMMENDED, HPXML_MODELED_REQUIRED, and HPXML_MEASURED to match the options in the Data and Tools Guide v1.2 Table 9\n- Relaxed the requirements on the street_number field used in the POST /address-service/addresses endpoint\n- The installation_cost field is now a number (instead of an integer) with up to two places after the decimal allowed\n- An added reservation_amount field is now required in the payload for POST /homes/reservations/{reservation_id}/redemptions in the MEASURED savings case\n- A warning message is included in the response under the following circumstances:\n  - When making a MEASURED 50121 reservation if there is a completed 50122 reservation in the sytem for the same household or building\n  - When making a MODELED 50121 reservation if there is a 50122 reservation in the system (open or completed) for the same household or building\n  - When making a MODELED 50121 redemption if the reported rebate_deducted does not match the expected rebate amount\n  - When making a 50122 reservation if there is an open MODELED 50121 reeration for the same household or building\n  - When making a 50122 product or install redemption if the reported rebate_deducted does not match the expected rebate amount\n- You may notice small changes to the rules applied to reservations and redemptions, however, a complete set of rules will be applied in a subsequent release, so we do not suggest focusing on the rules too seriously until that release.\n- Updated JSON Schema files for all POST and DELETE endpoint payloads will be posted at https://github.com/pnnl/IRA-Rebates-API in the https://github.com/pnnl/IRA-Rebates-API/tree/beta_v4_schema branch\n\n### Feedback needed\nFor this release, please focus on the new endpoints and the changes to the JSON Schema. Please test all endpoints to verify that they perform as indicated by the documentation. Please try out sequences of reservations and redemptions at the same address.\n\n\n### Release beta v4.1 (7/17/2024)\nThis release includes\n- Endpoints to support redemption creation, retrieval, and deletion for Homes (50121) and Electrification (50122) rebates\n- A new `POST /applicants` endpoint for generating a unique applicant identifier from an applicant's last name, email address, and phone number\n- New `POST /electric/reservations/{reservation_id}/files` and `POST /homes/reservations/{reservation_id}/files` endpoints for associating files with a reservation\n\n\n### Release beta v4.0 (6/25/2024)\nThis release includes\n- JSON Schema files are available at https://github.com/pnnl/IRA-Rebates-API/tree/beta_v4_schema which are used by this API to validate the POST and DELETE endpoint payloads. These files provide precise descriptions of required data fields and can be an aid to users developing their client code. As a further aid to users, the folder https://github.com/pnnl/IRA-Rebates-API/tree/beta_v4_schema/resolved_json_schemas now contains json schema files with all internal references resolved. A user can use these resolved json schema files together with an online json schema validator to troubleshoot validation errors during development.\n- Users have access to a dashboard that provides  real-time metrics for the rebate data the user is authorized to see.\n- The `POST /address-service/addresses` endpoint converts a building address into a unique address ID.\n- Endpoints to support reservation creation, retrieval, and deletion for Homes (50121) and Electrification (50122) rebates.\n- An authentication system is being used. (See the \"Authentication\" section below.)\n- Rules have been implemented that will reject reservation requests based on existing or previous reservations at the same address. (See the \"Rebate Rules\" section below.)\n\n### Authentication\n- The authentication protocol for this API is based on OAuth 2.0.\n- You must log in to the system using your username and password. The first time you do this, you will be prompted to set up two-factor authentication.\n- Once you are logged in, you can obtain an authentication token by navigating to the Settings page.\n- To use the \"Try it out\" button for any endpoint in this Swagger document, you must first use the \"Authorize\" button (with the lock icon) and enter your authentication token prepended with the word Bearer.\n- To connect to the API from your client software, you will need to use a JWT Bearer token provided by the front-end GUI (obtainable at `/dashboard/settings`).\n- Currently, the authentication token will expire after 24 hours.\n\n### Rebate Rules\nThe complete set of rebate rules will be included in a subsequent release.\n\n### Reservation amount for measured HOMES\nThe states that implement the measured option of the HOMES rebate program will specify how the reservation amount should be calculated. In lieu of that information, beta v4.0 of the API sets the reservation amount to $6000 per dwelling unit for <80%AMI and $3000 per dwelling unit for 80%AMI and higher.\n\n### Typical API workflow for Electrification (50122)\n- Obtain `address_id` from `POST /address-service/addresses`\n- Obtain `applicant_id` from `POST /applicants`\n- Create a reservation using `POST /electric/reservations`\n\t- Obtain `reservation_id` from the response\n- Submit a product redemption using `POST  /electric/reservations/{reservation_id}/product-redemptions`\n- Submit a limited assessment as needed using `POST /electric/reservations/{reservation_id}/limited-assessments`\n- Submit Quality Installation documentation as needed using `POST  /electric/reservations/{reservation_id}/files`\n- Submit an install redemption using `POST  /electric/reservations/{reservation_id}/install-redemptions`\n\n### Typical API workflow for HOMES (50121)\n- Obtain `address_id` from `POST /address-service/addresses`\n- Obtain `applicant_id` from `POST /applicants`\n- Create a reservation using `POST /homes/reservations`\n\t- Obtain `reservation_id` from the response\n- Submit modeling data files (HPXML, ...) as needed using `POST  /homes/reservations/{reservation_id}/files`\n- Submit a state attestation that any failed inspection items have been remediated using `POST /electric/reservations/{reservation_id}/state-addenda`\n- Submit quality installation documentation as needed using `POST  /homes/reservations/{reservation_id}/files`\n- Submit a redemption using `POST  /homes/reservations/{reservation_id}/redemptions`\n- Submit the amount the state paid to the rebate claimant using `POST /electric/reservations/{reservation_id}/state-addenda`\n\n### Example Payloads\n#### Electrification Reservation: Single-family building\n```json\n{\n  \"address_id\": \"bcede3eb-39a1-459a-97ce-c6088bfcdd62\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"SINGLE_FAMILY_DETACHED\",\n  \"claimant_type\": \"HOMEOWNER\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_dac_incentive\": 200.00,\n  \"contractor_incentive\": 100.00,\n  \"dwelling_unit_income_bucket\": \"LESS_THAN_80%_AMI\",\n  \"energy_data_evaluation_permission\": true,\n  \"external_rebate_id\": \"my_state_specific_rebate_id\",\n  \"installation_type\": \"CONTRACTOR_INSTALLED\",\n  \"original_component_details\": {\n    \"heat_pump_for_space_heating_or_cooling_original_details\": {\n      \"primary_heating_fuel_and_system_type\": \"GAS_PROPANE_FURNACE\"\n    }\n  },\n  \"sf_conditioned_floor_area\": \"1500SF_2500SF\",\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"upgrade_type\": \"HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING\"\n}\n```\n#### Electrification Limited Assessment for the above reservation\n```\n{\n  \"assessment_date\": \"2024-08-06\",\n  \"ceiling_insulation_r_value\": 40,\n  \"ceiling_insulation_type\": \"BLOWN_IN\",\n  \"conditioned_floor_area_sq_ft\": \"1500SF_2500SF\",\n  \"cooling_systems\": [{\n    \"efficiency_seer\": 12,\n    \"is_efficiency_known\": true,\n    \"is_percent_conditioned_floor_area_served_known\": true,\n    \"percent_conditioned_floor_area_served\": 100,\n    \"system_type\": \"CENTRAL\"\n  }],\n  \"ducts_are_insulated\": \"YES\",\n  \"ducts_are_sealed\": \"DO_NOT_KNOW\",\n  \"electrical_panel_max_amps\": 200,\n  \"envelope_professionally_air_sealed\": \"NO\",\n  \"heating_systems\": [{\n    \"fuel_and_system_type\": \"OIL_FURNACE\",\n    \"is_efficiency_known\": false,\n    \"is_percent_conditioned_floor_area_served_known\": true,\n    \"percent_conditioned_floor_area_served\": 100\n  }],\n  \"is_ceiling_insulation_r_value_known\": true,\n  \"is_whole_home_ventilation_system_rated_flow_cfm_known\": false,\n  \"whole_home_ventilation_system_type\": \"EXHAUST\",\n  \"year_built\": \"1964\"\n}\n```\n#### Electrification State attestation\n```json\n{\n  \"state_attests_any_failed_inspection_remediated\": true\n}\n```\n#### Electrification Product Redemption for the above reservation\n```json\n{\n  \"equipment_and_material_cost\": 4000,\n  \"installation_cost\": 0,\n  \"product_info\": [{\n    \"ahri_reference_number\": \"1234567\",\n    \"model_number\": \"0ABCDEFG\"\n  }],\n  \"purchase_date_time\": \"2024-07-17T18:00-08:00\",\n  \"rebate_deducted\": 4000,\n  \"upgrade_type\": \"HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING\",\n  \"vendor_id\": \"the_retailer_id\"\n}\n```\n#### Electrification Install Redemption for the above reservation\n```json\n{\n  \"contractor_company_name\": \"my install co\",\n  \"contractor_name\": \"me\",\n  \"equipment_and_material_cost\": 0,\n  \"installation_cost\": 2500.00,\n  \"is_contractor_eligible\": true,\n  \"is_final_project_redemption\": true,\n  \"project_completion_date\": \"2024-07-17\",\n  \"rebate_deducted\": 2500.00,\n  \"rebate_passed_through_to_applicant\": 0,\n  \"safety_checks\": {\n    \"ambient_co_test_result\": \"PASSED\",\n    \"ashrae_62_2_ventilation_calculated\": \"YES\",\n    \"confirm_all_safety_check_results_disclosed_to_homeowner\": true,\n    \"drainage_system_condition\": \"POTENTIAL_ISSUES\",\n    \"gas_leak_detection_test_result\": \"PASSED\",\n    \"roof_condition\": \"GOOD\",\n    \"signs_of_mold_or_moisture\": false,\n    \"spillage_test_result\": \"PASSED\",\n    \"venting_test_result\": \"PASSED\"\n  },\n  \"upgrade_type\": \"HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING\",\n  \"vendor_id\": \"the_installers_id\"\n}\n```\n#### Electrification Reservation: Multifamily building, single dwelling unit project\n```json\n{\n  \"address_id\": \"bcede3eb-39a1-459a-97ce-c6088bfcdd62\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"MULTIFAMILY_IN_UNIT\",\n  \"claimant_type\": \"TENANT\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_dac_incentive\": 200.00,\n  \"contractor_incentive\": 0,\n  \"dwelling_unit_income_bucket\": \"LESS_THAN_80%_AMI\",\n  \"energy_data_evaluation_permission\": true,\n  \"installation_type\": \"DO_IT_YOURSELF\",\n  \"num_units\": 5,\n  \"original_component_details\": {\n    \"electric_cooking_appliance_original_details\": { \"fuel_type\": \"GAS\" }\n  },\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"unit_name_or_number\": \"A\",\n  \"upgrade_type\": \"ELECTRIC_COOKING_APPLIANCE\"\n}\n```\n#### Electrification Reservation: Multifamily building, whole-building project, single dwelling unit upgrade\n```json\n{\n  \"address_id\": \"bcede3eb-39a1-459a-97ce-c6088bfcdd62\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT\",\n  \"claimant_type\": \"MULTIFAMILY_BUILDING_OWNER\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_dac_incentive\": 200.00,\n  \"contractor_incentive\": 0,\n  \"energy_data_evaluation_permission\": true,\n  \"installation_type\": \"CONTRACTOR_INSTALLED\",\n  \"mf_building_income_bucket\": \"LESS_THAN_80%_AMI\",\n  \"num_units\": 4,\n  \"num_units_meeting_income_bucket\": 2,\n  \"unit_name_or_number\": \"A\",\n  \"original_component_details\": {\n    \"heat_pump_clothes_dryer_original_details\": { \"fuel_type\": \"GAS\" }\n  },\n  \"project_id\": \"state_specific_project_id_uuid_suggested\",\n  \"sf_num_bedrooms\": 2,\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"unit_name_or_number\": \"A\",\n  \"upgrade_type\": \"HEAT_PUMP_CLOTHES_DRYER\"\n}\n```\n#### Electrification Reservation: Multifamily building, whole-building project, whole-building upgrade\n```json\n{\n  \"address_id\": \"bcede3eb-39a1-459a-97ce-c6088bfcdd62\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"MULTIFAMILY_CENTRAL\",\n  \"claimant_type\": \"MULTIFAMILY_BUILDING_OWNER\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_dac_incentive\": 200.00,\n  \"contractor_incentive\": 0,\n  \"energy_data_evaluation_permission\": true,\n  \"installation_type\": \"CONTRACTOR_INSTALLED\",\n  \"mf_building_income_bucket\": \"LESS_THAN_80%_AMI\",\n  \"mf_num_bedrooms\": 5,\n  \"num_units\": 2,\n  \"num_units_meeting_income_bucket\": 1,\n  \"original_component_details\": {\n    \"heat_pump_water_heater_original_details\": {\n      \"storage_capacity\": \"50_GALLON\"\n      \"water_heater_fuel_and_system_type\": \"GAS_STORAGE\",\n    }\n  },\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"upgrade_type\": \"HEAT_PUMP_WATER_HEATER\"\n}\n```\n#### Homes Reservation: single-family manufactured home, modeled\n```json\n{\n  \"address_id\": \"efab4e6b-243e-4fa0-bbf1-ebf724bff4b2\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"MANUFACTURED\",\n  \"claimant_type\": \"HOMEOWNER\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_company_name\": \"Joe's\",\n  \"contractor_name\": \"Joe\",\n  \"doe_approved_bpi_2400_compliant_software_used\": \"TBD\",\n  \"dwelling_unit_income_bucket\": \"80%_AMI_AND_GREATER\",\n  \"is_contractor_eligible\": true,\n  \"modeled_post_retrofit_energy_usage_kwh_equivalent\": 10000,\n  \"modeled_pre_retrofit_energy_usage_kwh_equivalent\": 15000,\n  \"rebate_type\": \"MODELED\",\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"upgrades\": [\"AIR_SEALING\", \"DUCT_SEALING\", \"CEILING_INSULATION\", \"HEATING_EQUIPMENT\"]\n}\n```\n#### Homes Redemption: for the above reservation\n```json\n{\n  \"equipment_and_material_cost\": 6000,\n  \"installation_cost\": 4000,\n  \"project_completion_date\": \"2024-07-17\",\n  \"rebate_deducted\": 2000,\n  \"rebate_type\": \"MODELED\",\n  \"safety_checks\": {\n    \"ambient_co_test_result\": \"PASSED\",\n    \"ashrae_62_2_ventilation_calculated\": \"YES\",\n    \"confirm_all_safety_check_results_disclosed_to_homeowner\": true,\n    \"drainage_system_condition\": \"POTENTIAL_ISSUES\",\n    \"gas_leak_detection_test_result\": \"PASSED\",\n    \"roof_condition\": \"GOOD\",\n    \"signs_of_mold_or_moisture\": false,\n    \"spillage_test_result\": \"PASSED\",\n    \"venting_test_result\": \"PASSED\"\n  },\n  \"vendor_id\": \"contractor_id\"\n}\n```\n",
+    "description": "API for processing rebates under the Inflation Reduction Act (IRA). Client software can connect to the API at https://sandbox-test.ira-rebates.labworks.org/.\n\n### Swagger JSON\nThe original swagger json is at https://sandbox-test.ira-rebates.labworks.org/api-doc/swagger\n\n### About the beta v4 releases\nThe IRA Rebate API dev team is completing the work of updating the system to match the Data and Tools Guide v1.2 and finalizing all endpoints for the real-time processing of rebates (reservations and redemptions). As significant portions of the update are completed, they will be made available to API users for testing here.\n\n### Release 2025-03-04\n- **`total_rebate_payout` Field added**: Required for \"Measured\" 50121 redemptions. Replaces the now depreciated `claimant_payment` field.\n- **`modeling_software_used` Field added**: To be used with \"Modeled\" 50121 reservations. Replaces the now depreciated `doe_approved_bpi_2400_compliant_software_used` field.\n\n### Release 2025-02-16\n- **`post_retrofit_inspection_passed` Field Added (Optional)**: Now available in the 50121 Redemption and 50122 Installation Redemption endpoints, with `yes/no/na` options.\n- **Bulk Reporting Update**: The `post_retrofit_inspection_passed` field has been added to bulk reporting endpoints with `yes/no/na` options.\n- **Dashboard Enhancements**: The updated dashboard now displays program summary metrics.\n- **JSON Schema Improvements**: Object titles have been added to the JSON schema to support static site documentation.\n- **Dashboard Allocation Chart Update**: State tranche amounts are now displayed in the web application\u2019s allocations chart.\n- **File Upload Enhancements**: New file purpose and file type enums have been added to the file upload form in the web application.\n- **Expanded Upgrade Type Support**: Additional upgrade type enums are now supported in 50121 reservations.\n- **HPXML File Upload Enhancements**: The system now validates and processes HPXML files for 50121 reservations.\n- **File Management for Uploaded Spreadsheets**: Users can now view an audit trail of all uploaded spreadsheets used for reservation creation. Additionally, they can delete an uploaded file along with all associated reservation records, improving file tracking and management.\n- **Repeatable upgrade types** - Fixed bug that prevented multiple reservations for \"repeatable upgrade types\" (INSULATION_AIR_SEALING_VENTILATION, ELECTRICAL_PANEL, ELECTRICAL_WIRING).\n\n### Release 2025-01-16\n- **HER reservations now support pre and post-retrofit energy usage by fuel type**: The new fields end with `_site_energy_usages_by_fuel_type` and take in an array of type `site_energy_usage`. See JSON schema for details. When using these new fields, the API no longer calculates a percent energy savings so it must be passed in the payload as `<modeled/estimated>_percent_energy_savings`. The `_energy_usage_kwh_equivalent` fields are still supported but will be depreceated.\n- **File upload for model files and QA documents**: Users can now upload and download model files and QA documents in the reservation detail view for both programs.\n- **Bug fixes and improvements**: Improvements in routing and security, and various small bug fixes.\n\n### Release 2025-01-08\n- **Fixed contractor_dac_incentive field validation**: An issue where users were unable to create a DIY reservation in a DAC due to contractor_dac_incentive validation issues. A contractor_dac_incentive is NOT required when a reservation is DIY in a DAC.\n- **User specifiable reservation_amount**: Users can now also specify a reservation amount. The user-specified amount will be applied to the reservation if it is lower than the API calculated reservation amount. This is to allow fine management of reservation for upgrade_types that allow multiple reservations.\n- **Support for multiple reservations for specific 50122 upgrade_types**: Multiple concurrent reservations can now be created for the following upgrade types: ELECTRICAL_PANEL, ELECTRIC_WIRING, and INSULATION_AIR_SEALING_VENTILATION. The maximum rebate amounts still apply for these upgrades.\n- **ahri_reference_number update**: JSON Schema has been updated to accept AHRI numbers that are 9 digits.\n\n### Release 2024-12-13\n- **Added num_occupied_units field**: A new field named `num_occupied_units` has been added for reservations where `building_project_type` is `MULTIFAMILY_CENTRAL` or `MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT`. This field is currently optional, but will be made required at a later date.\n\n### Release 2024-12-06\n- **Bug Fix for project_id field**: A string type project_id field was being incorrectly rejected, saying it needed to be a UUID. That is no longer the case.\n- **Formatted Swagger JSON for Download**: The Swagger JSON file available on the documentation page has been updated to a \"pretty format\" for improved readability and usability when downloaded.\n- **Required `dwelling_unit_income_bucket` for MULTIFAMILY_IN_UNIT**: A bug has been fixed where now the `dwelling_unit_income_bucket` field is required in rebate API for the `MULTIFAMILY_IN_UNIT` building project type.\n- **Bug Fix for rounding energy savings when applying rules**. A hotfix has been implemented correctly round the internally calculated energy savings used when determining reservation amount.\n\n\n### Release 2024-12-02\n- **DAC Incentive Requirement for 50121 and 50122 Reservations**: The `contractor_dac_incentive` field is now required for reservations in disadvantaged communities (DAC) across real-time and reporting APIs. DAC determination prioritizes user-provided status over address-service responses.\n- **RFC3339 Validation for `purchase_date_time`**: Both the bulk reporting and real-time redemption endpoints now validate `purchase_date_time` fields to ensure compliance with the RFC3339 date-time standard. Empty strings are no longer allowed.\n- **New `purchase_date` Field**: A `purchase_date` field has been introduced alongside `purchase_date_time` for creating product redemptions. Validation ensures mutual exclusivity between these fields for backward compatibility. The `purchase_date_time` field is deprecated and will be removed in a future release. Users are encouraged to adopt `purchase_date` as soon as possible.\n- **Corrected Validation for `multipleOf` Fields**: Fixed an issue where fields with a `multipleOf` constraint in the JSON schema could fail validation even when valid decimal values were provided.\n- **Extend Reservation Endpoint**: Added new endpoints to extend reservation expiration dates:\n  - `PUT /electric/{reservation_id}/extend`\n  - `PUT /homes/{reservation_id}/extend`\n  Reservations with redemptions or those that have expired cannot be extended.\n\n### Release 2024-11-01\n- **Enhanced JSON Schema Error Reporting for Reporting API**: The reporting API now validates all elements of the reporting array for JSON schema errors, providing grouped error reporting for each array element instead of just the first identified error.\n- **Contractor DAC Incentive Field for 50121 Reservations**: The `contractor_dac_incentive` field is now available in both real-time and reporting APIs for creating 50121 reservations.\n- **UI Updates - Rebate Details**: Users can now view rebate details directly from within the dashboard.\n- **Breaking Change - Safety Check Fields Update**: Updated JSON schema for safety_check fields, which now require values of `YES`, `NO`, or `NA` instead of booleans. Note: This change is not backward-compatible.\n- **Modeled Savings Calculation Adjustment**: For 50121 reservations, the energy savings calculation have been revised to round 19.5% to 20%.\n\n### Release 2024-10-11\n- **Bulk Rebate Reporting**: New endpoints have been added for bulk rebate reporting in the 50122 and 50121 programs.\n- **Electrical Panel Upgrade**: The component details for 50122 upgrades involving an electrical panel now support a minimum value of 30 amps.\n- **Reservation Deletion**: A new `delete_redemptions` option (default: `false`) has been added to the reservation deletion endpoints. When set to `true`, this option allows associated redemptions to be deleted along with the reservation. If set to `false`, reservations with associated redemptions cannot be deleted.\n- **Maximum Rebate for Specific Upgrades**: 50122 reservations for HEAT_PUMP_CLOTHES_DRYER and ELECTRIC_COOKING_APPLIANCE upgrades now each qualify for a maximum rebate of $840. These amounts are no longer combined for these two upgrade types.\n- **50121 Redemptions**: Redemptions for 50121 now allow a value of $0 for the `equipment_and_material_cost` field.\n- **Limited Assessment**: A limited assessment can now be provided for any 50122 upgrade. It is required for HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING and optional for all other 50122 upgrades.\n\n\n### Release beta v4.2 (8/7/2024)\nThis release includes\n- A new endpoint POST /electric/reservations/{reservation_id}/limited-assessments\n- A new endpoint POST /electric/reservations/{reservation_id}/state-addenda\n- A new endpoint POST /homes/reservations/{reservation_id}/state-addenda\n- Added contractor_dac_incentive and contractor_incentive fields in the payload for /electric/reservations\n- An added safety_checks field (itself an object) in the payloads for POST /electric/reservations/{reservation_id}/install-redemptions and POST /homes/reservations/{reservation_id}/redemptions\n- Including state, county, city, and zip_code in any response that includes the address_id\n- Email addresses must conform to the https://datatracker.ietf.org/doc/html/rfc5322 spec\n- The HPXML file_type used in POST /homes/reservations/{reservation_id}/files has been split into HPXML_MODELED_RECOMMENDED, HPXML_MODELED_REQUIRED, and HPXML_MEASURED to match the options in the Data and Tools Guide v1.2 Table 9\n- Relaxed the requirements on the street_number field used in the POST /address-service/addresses endpoint\n- The installation_cost field is now a number (instead of an integer) with up to two places after the decimal allowed\n- An added reservation_amount field is now required in the payload for POST /homes/reservations/{reservation_id}/redemptions in the MEASURED savings case\n- A warning message is included in the response under the following circumstances:\n  - When making a MEASURED 50121 reservation if there is a completed 50122 reservation in the sytem for the same household or building\n  - When making a MODELED 50121 reservation if there is a 50122 reservation in the system (open or completed) for the same household or building\n  - When making a MODELED 50121 redemption if the reported rebate_deducted does not match the expected rebate amount\n  - When making a 50122 reservation if there is an open MODELED 50121 reeration for the same household or building\n  - When making a 50122 product or install redemption if the reported rebate_deducted does not match the expected rebate amount\n- You may notice small changes to the rules applied to reservations and redemptions, however, a complete set of rules will be applied in a subsequent release, so we do not suggest focusing on the rules too seriously until that release.\n- Updated JSON Schema files for all POST and DELETE endpoint payloads will be posted at https://github.com/pnnl/IRA-Rebates-API in the https://github.com/pnnl/IRA-Rebates-API/tree/beta_v4_schema branch\n\n### Feedback needed\nFor this release, please focus on the new endpoints and the changes to the JSON Schema. Please test all endpoints to verify that they perform as indicated by the documentation. Please try out sequences of reservations and redemptions at the same address.\n\n\n### Release beta v4.1 (7/17/2024)\nThis release includes\n- Endpoints to support redemption creation, retrieval, and deletion for 50121 and 50122 rebates\n- A new `POST /applicants` endpoint for generating a unique applicant identifier from an applicant's last name, email address, and phone number\n- New `POST /electric/reservations/{reservation_id}/files` and `POST /homes/reservations/{reservation_id}/files` endpoints for associating files with a reservation\n\n\n### Release beta v4.0 (6/25/2024)\nThis release includes\n- JSON Schema files are available at https://github.com/pnnl/IRA-Rebates-API/tree/beta_v4_schema which are used by this API to validate the POST and DELETE endpoint payloads. These files provide precise descriptions of required data fields and can be an aid to users developing their client code. As a further aid to users, the folder https://github.com/pnnl/IRA-Rebates-API/tree/beta_v4_schema/resolved_json_schemas now contains json schema files with all internal references resolved. A user can use these resolved json schema files together with an online json schema validator to troubleshoot validation errors during development.\n- Users have access to a dashboard that provides  real-time metrics for the rebate data the user is authorized to see.\n- The `POST /address-service/addresses` endpoint converts a building address into a unique address ID.\n- Endpoints to support reservation creation, retrieval, and deletion for 50121 and 50122 rebates.\n- An authentication system is being used. (See the \"Authentication\" section below.)\n- Rules have been implemented that will reject reservation requests based on existing or previous reservations at the same address. (See the \"Rebate Rules\" section below.)\n\n### Authentication\n- The authentication protocol for this API is based on OAuth 2.0.\n- You must log in to the system using your username and password. The first time you do this, you will be prompted to set up two-factor authentication.\n- Once you are logged in, you can obtain an authentication token by navigating to the Settings page.\n- To use the \"Try it out\" button for any endpoint in this Swagger document, you must first use the \"Authorize\" button (with the lock icon) and enter your authentication token prepended with the word Bearer.\n- To connect to the API from your client software, you will need to use a JWT Bearer token provided by the front-end GUI (obtainable at `/dashboard/settings`).\n- The JWT token will expire after 24 hours.\n- The refresh token is a long-lived token that can be used to obtain new JWT tokens at any time, not just after expiration. It is provided alongside your initial JWT token in the Settings page.\n- To obtain a new JWT token, make a POST request to the `/auth/refresh` endpoint with your refresh token in the request body. The response will contain a new JWT token. You can use this endpoint proactively before the current JWT token expires.\n- For security reasons, refresh tokens should be stored securely and never exposed in client-side code or URLs.\n\n### Rebate Rules\nThe complete set of rebate rules will be included in a subsequent release.\n\n### Reservation amount for measured 50121\nThe states that implement the measured option of the 50121 rebate program will specify how the reservation amount should be calculated. In lieu of that information, beta v4.0 of the API sets the reservation amount to $6000 per dwelling unit for <80%AMI and $3000 per dwelling unit for 80%AMI and higher.\n\n### Typical API workflow for 50122 rebates\n- Obtain `address_id` from `POST /address-service/addresses`\n- Obtain `applicant_id` from `POST /applicants`\n- Create a reservation using `POST /electric/reservations`\n\t- Obtain `reservation_id` from the response\n- Submit a product redemption using `POST  /electric/reservations/{reservation_id}/product-redemptions`\n- Submit a limited assessment as needed using `POST /electric/reservations/{reservation_id}/limited-assessments`\n- Submit Quality Installation documentation as needed using `POST  /electric/reservations/{reservation_id}/files`\n- Submit an install redemption using `POST  /electric/reservations/{reservation_id}/install-redemptions`\n\n### Typical API workflow for 50121\n- Obtain `address_id` from `POST /address-service/addresses`\n- Obtain `applicant_id` from `POST /applicants`\n- Create a reservation using `POST /homes/reservations`\n\t- Obtain `reservation_id` from the response\n- Submit modeling data files (HPXML, ...) as needed using `POST  /homes/reservations/{reservation_id}/files`\n- Submit a state attestation that any failed inspection items have been remediated using `POST /electric/reservations/{reservation_id}/state-addenda`\n- Submit quality installation documentation as needed using `POST  /homes/reservations/{reservation_id}/files`\n- Submit a redemption using `POST  /homes/reservations/{reservation_id}/redemptions`\n- Submit the amount the state paid to the rebate claimant using `POST /electric/reservations/{reservation_id}/state-addenda`\n\n### Example Payloads\n#### 50122 Reservation: Single-family building\n```json\n{\n  \"address_id\": \"bcede3eb-39a1-459a-97ce-c6088bfcdd62\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"SINGLE_FAMILY_DETACHED\",\n  \"claimant_type\": \"HOMEOWNER\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_dac_incentive\": 200.00,\n  \"contractor_incentive\": 100.00,\n  \"dwelling_unit_income_bucket\": \"LESS_THAN_80%_AMI\",\n  \"energy_data_evaluation_permission\": true,\n  \"external_rebate_id\": \"my_state_specific_rebate_id\",\n  \"installation_type\": \"CONTRACTOR_INSTALLED\",\n  \"original_component_details\": {\n    \"heat_pump_for_space_heating_or_cooling_original_details\": {\n      \"primary_heating_fuel_and_system_type\": \"GAS_PROPANE_FURNACE\"\n    }\n  },\n  \"sf_conditioned_floor_area\": \"1500SF_2500SF\",\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"upgrade_type\": \"HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING\"\n}\n```\n#### 50122 Limited Assessment for the above reservation\n```\n{\n  \"assessment_date\": \"2024-08-06\",\n  \"ceiling_insulation_r_value\": 40,\n  \"ceiling_insulation_type\": \"BLOWN_IN\",\n  \"conditioned_floor_area_sq_ft\": \"1500SF_2500SF\",\n  \"cooling_systems\": [{\n    \"efficiency_seer\": 12,\n    \"is_efficiency_known\": true,\n    \"is_percent_conditioned_floor_area_served_known\": true,\n    \"percent_conditioned_floor_area_served\": 100,\n    \"system_type\": \"CENTRAL\"\n  }],\n  \"ducts_are_insulated\": \"YES\",\n  \"ducts_are_sealed\": \"DO_NOT_KNOW\",\n  \"electrical_panel_max_amps\": 200,\n  \"envelope_professionally_air_sealed\": \"NO\",\n  \"heating_systems\": [{\n    \"fuel_and_system_type\": \"OIL_FURNACE\",\n    \"is_efficiency_known\": false,\n    \"is_percent_conditioned_floor_area_served_known\": true,\n    \"percent_conditioned_floor_area_served\": 100\n  }],\n  \"is_ceiling_insulation_r_value_known\": true,\n  \"is_whole_home_ventilation_system_rated_flow_cfm_known\": false,\n  \"whole_home_ventilation_system_type\": \"EXHAUST\",\n  \"year_built\": \"1964\"\n}\n```\n#### 50122 State attestation\n```json\n{\n  \"state_attests_any_failed_inspection_remediated\": true\n}\n```\n#### 50122 Product Redemption for the above reservation\n```json\n{\n  \"equipment_and_material_cost\": 4000,\n  \"installation_cost\": 0,\n  \"product_info\": [{\n    \"ahri_reference_number\": \"1234567\",\n    \"model_number\": \"0ABCDEFG\"\n  }],\n  \"purchase_date_time\": \"2024-07-17T18:00-08:00\",\n  \"rebate_deducted\": 4000,\n  \"upgrade_type\": \"HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING\",\n  \"vendor_id\": \"the_retailer_id\"\n}\n```\n#### 50122 Install Redemption for the above reservation\n```json\n{\n  \"contractor_company_name\": \"my install co\",\n  \"contractor_name\": \"me\",\n  \"equipment_and_material_cost\": 0,\n  \"installation_cost\": 2500.00,\n  \"is_contractor_eligible\": true,\n  \"is_final_project_redemption\": true,\n  \"project_completion_date\": \"2024-07-17\",\n  \"rebate_deducted\": 2500.00,\n  \"rebate_passed_through_to_applicant\": 0,\n  \"safety_checks\": {\n    \"ambient_co_test_result\": \"PASSED\",\n    \"ashrae_62_2_ventilation_calculated\": \"YES\",\n    \"confirm_all_safety_check_results_disclosed_to_homeowner\": true,\n    \"drainage_system_condition\": \"POTENTIAL_ISSUES\",\n    \"gas_leak_detection_test_result\": \"PASSED\",\n    \"roof_condition\": \"GOOD\",\n    \"signs_of_mold_or_moisture\": false,\n    \"spillage_test_result\": \"PASSED\",\n    \"venting_test_result\": \"PASSED\"\n  },\n  \"upgrade_type\": \"HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING\",\n  \"vendor_id\": \"the_installers_id\"\n}\n```\n#### 50122 Reservation: Multifamily building, single dwelling unit project\n```json\n{\n  \"address_id\": \"bcede3eb-39a1-459a-97ce-c6088bfcdd62\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"MULTIFAMILY_IN_UNIT\",\n  \"claimant_type\": \"TENANT\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_dac_incentive\": 200.00,\n  \"contractor_incentive\": 0,\n  \"dwelling_unit_income_bucket\": \"LESS_THAN_80%_AMI\",\n  \"energy_data_evaluation_permission\": true,\n  \"installation_type\": \"DO_IT_YOURSELF\",\n  \"num_units\": 5,\n  \"original_component_details\": {\n    \"electric_cooking_appliance_original_details\": { \"fuel_type\": \"GAS\" }\n  },\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"unit_name_or_number\": \"A\",\n  \"upgrade_type\": \"ELECTRIC_COOKING_APPLIANCE\"\n}\n```\n#### 50122 Reservation: Multifamily building, whole-building project, single dwelling unit upgrade\n```json\n{\n  \"address_id\": \"bcede3eb-39a1-459a-97ce-c6088bfcdd62\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT\",\n  \"claimant_type\": \"MULTIFAMILY_BUILDING_OWNER\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_dac_incentive\": 200.00,\n  \"contractor_incentive\": 0,\n  \"energy_data_evaluation_permission\": true,\n  \"installation_type\": \"CONTRACTOR_INSTALLED\",\n  \"mf_building_income_bucket\": \"LESS_THAN_80%_AMI\",\n  \"num_units\": 4,\n  \"num_units_meeting_income_bucket\": 2,\n  \"unit_name_or_number\": \"A\",\n  \"original_component_details\": {\n    \"heat_pump_clothes_dryer_original_details\": { \"fuel_type\": \"GAS\" }\n  },\n  \"project_id\": \"state_specific_project_id_uuid_suggested\",\n  \"sf_num_bedrooms\": 2,\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"unit_name_or_number\": \"A\",\n  \"upgrade_type\": \"HEAT_PUMP_CLOTHES_DRYER\"\n}\n```\n#### 50122 Reservation: Multifamily building, whole-building project, whole-building upgrade\n```json\n{\n  \"address_id\": \"bcede3eb-39a1-459a-97ce-c6088bfcdd62\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"MULTIFAMILY_CENTRAL\",\n  \"claimant_type\": \"MULTIFAMILY_BUILDING_OWNER\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_dac_incentive\": 200.00,\n  \"contractor_incentive\": 0,\n  \"energy_data_evaluation_permission\": true,\n  \"installation_type\": \"CONTRACTOR_INSTALLED\",\n  \"mf_building_income_bucket\": \"LESS_THAN_80%_AMI\",\n  \"mf_num_bedrooms\": 5,\n  \"num_units\": 2,\n  \"num_units_meeting_income_bucket\": 1,\n  \"original_component_details\": {\n    \"heat_pump_water_heater_original_details\": {\n      \"storage_capacity\": \"50_GALLON\"\n      \"water_heater_fuel_and_system_type\": \"GAS_STORAGE\",\n    }\n  },\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"upgrade_type\": \"HEAT_PUMP_WATER_HEATER\"\n}\n```\n#### 50121 Reservation: single-family manufactured home, modeled\n```json\n{\n  \"address_id\": \"efab4e6b-243e-4fa0-bbf1-ebf724bff4b2\",\n  \"applicant_id\": \"bdede3eb-39a1-459a-97ce-c6088bfcdd76\",\n  \"building_project_type\": \"MANUFACTURED\",\n  \"claimant_type\": \"HOMEOWNER\",\n  \"construction_type\": \"EXISTING\",\n  \"contractor_company_name\": \"Joe's\",\n  \"contractor_name\": \"Joe\",\n  \"modeling_software_used\": \"TBD\",\n  \"dwelling_unit_income_bucket\": \"80%_AMI_AND_GREATER\",\n  \"is_contractor_eligible\": true,\n  \"modeled_post_retrofit_energy_usage_kwh_equivalent\": 10000,\n  \"modeled_pre_retrofit_energy_usage_kwh_equivalent\": 15000,\n  \"rebate_type\": \"MODELED\",\n  \"state_attests_proof_of_identity_ownership_income\": true,\n  \"upgrades\": [\"AIR_SEALING\", \"DUCT_SEALING\", \"CEILING_INSULATION\", \"HEATING_EQUIPMENT\"]\n}\n```\n#### 50121 Redemption: for the above reservation\n```json\n{\n  \"equipment_and_material_cost\": 6000,\n  \"installation_cost\": 4000,\n  \"project_completion_date\": \"2024-07-17\",\n  \"rebate_deducted\": 2000,\n  \"rebate_type\": \"MODELED\",\n  \"safety_checks\": {\n    \"ambient_co_test_result\": \"PASSED\",\n    \"ashrae_62_2_ventilation_calculated\": \"YES\",\n    \"confirm_all_safety_check_results_disclosed_to_homeowner\": \"YES\",\n    \"drainage_system_condition\": \"POTENTIAL_ISSUES\",\n    \"gas_leak_detection_test_result\": \"PASSED\",\n    \"roof_condition\": \"GOOD\",\n    \"signs_of_mold_or_moisture\": \"NO\",\n    \"spillage_test_result\": \"PASSED\",\n    \"venting_test_result\": \"PASSED\"\n  },\n  \"vendor_id\": \"contractor_id\"\n}\n```\n",
     "version": "v3"
   },
   "basePath": "/",
@@ -37,6 +37,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Address Service Payload",
               "properties": {
                 "city": {
                   "$ref": "#/definitions/city"
@@ -159,6 +160,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Applicant IDs Payload",
               "properties": {
                 "email": {
                   "$ref": "#/definitions/email"
@@ -288,8 +290,10 @@
             "required": true,
             "schema": {
               "type": "array",
+              "title": "Electric Bulk Reporting Payload",
               "items": {
                 "type": "object",
+                "title": "Electric Bulk reporting Payload Item",
                 "properties": {
                   "address_id": {
                     "$ref": "#/definitions/address_id"
@@ -370,6 +374,9 @@
                   "original_component_details": {
                     "$ref": "#/definitions/original_component_details"
                   },
+                  "post_retrofit_inspection_passed": {
+                    "$ref": "#/definitions/post_retrofit_inspection_passed"
+                  },
                   "product_info": {
                     "$ref": "#/definitions/product_info"
                   },
@@ -432,7 +439,6 @@
                   "project_completion_date",
                   "rebate_deducted",
                   "state_attests_proof_of_identity_ownership_income",
-                  "state_attests_any_failed_inspection_remediated",
                   "upgrade_type"
                 ],
                 "additionalProperties": false
@@ -786,6 +792,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Electric Reservations Payload",
               "properties": {
                 "address_id": {
                   "$ref": "#/definitions/address_id"
@@ -1270,8 +1277,8 @@
     "/electric/reservations/{reservation_id}/extend": {
       "put": {
         "operationId": "electric_reservations_extend_update",
-        "summary": "Extend the expiration date for a homes rebate.",
-        "description": "Use this endpoint to extend the expiration date for a homes rebate. New date must be in a format of YYYY-MM-DD.",
+        "summary": "Extend the expiration date for an electrification rebate.",
+        "description": "Use this endpoint to extend the expiration date for an electrification rebate. New date must be in a format of YYYY-MM-DD.",
         "parameters": [
           {
             "name": "data",
@@ -1279,6 +1286,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Electric Reservations Expiration Date Updates Payload",
               "properties": {
                 "new_expiration_date": {
                   "$ref": "#/definitions/new_expiration_date"
@@ -1328,9 +1336,13 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Electric Files Payload",
               "properties": {
                 "binary_file_content_base_64": {
                   "$ref": "#/definitions/binary_file_content_base_64"
+                },
+                "description": {
+                  "$ref": "#/definitions/description"
                 },
                 "file_name": {
                   "$ref": "#/definitions/file_name"
@@ -1356,16 +1368,8 @@
           "201": {
             "description": "",
             "schema": {
-              "required": [
-                "file_name",
-                "file_type",
-                "file_purpose"
-              ],
               "type": "object",
               "properties": {
-                "file_url": {
-                  "$ref": "#/definitions/file_url"
-                },
                 "file_name": {
                   "$ref": "#/definitions/file_name"
                 },
@@ -1374,6 +1378,12 @@
                 },
                 "file_purpose": {
                   "$ref": "#/definitions/electric_file_purpose"
+                },
+                "file_url": {
+                  "$ref": "#/definitions/file_url"
+                },
+                "description": {
+                  "$ref": "#/definitions/description"
                 }
               }
             }
@@ -1413,6 +1423,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Electric Install Redemptions Payload",
               "properties": {
                 "contractor_company_name": {
                   "$ref": "#/definitions/contractor_company_name"
@@ -1432,6 +1443,9 @@
                 },
                 "is_final_project_redemption": {
                   "$ref": "#/definitions/is_final_project_redemption"
+                },
+                "post_retrofit_inspection_passed": {
+                  "$ref": "#/definitions/post_retrofit_inspection_passed"
                 },
                 "project_completion_date": {
                   "$ref": "#/definitions/project_completion_date"
@@ -1507,6 +1521,9 @@
                 },
                 "install_vendor_id": {
                   "$ref": "#/definitions/install_vendor_id"
+                },
+                "post_retrofit_inspection_passed": {
+                  "$ref": "#/definitions/post_retrofit_inspection_passed"
                 },
                 "product_vendor_id": {
                   "$ref": "#/definitions/product_vendor_id"
@@ -1614,6 +1631,9 @@
                 },
                 "install_vendor_id": {
                   "$ref": "#/definitions/install_vendor_id"
+                },
+                "post_retrofit_inspection_passed": {
+                  "$ref": "#/definitions/post_retrofit_inspection_passed"
                 },
                 "product_vendor_id": {
                   "$ref": "#/definitions/product_vendor_id"
@@ -1738,6 +1758,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Electric Limited Assessments Payload",
               "properties": {
                 "assessment_date": {
                   "$ref": "#/definitions/assessment_date"
@@ -1845,6 +1866,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Electric Product Redemptions Payload",
               "properties": {
                 "equipment_and_material_cost": {
                   "$ref": "#/definitions/electric_equipment_and_material_cost",
@@ -1908,6 +1930,9 @@
                 },
                 "install_vendor_id": {
                   "$ref": "#/definitions/install_vendor_id"
+                },
+                "post_retrofit_inspection_passed": {
+                  "$ref": "#/definitions/post_retrofit_inspection_passed"
                 },
                 "product_vendor_id": {
                   "$ref": "#/definitions/product_vendor_id"
@@ -2000,6 +2025,9 @@
                 },
                 "install_vendor_id": {
                   "$ref": "#/definitions/install_vendor_id"
+                },
+                "post_retrofit_inspection_passed": {
+                  "$ref": "#/definitions/post_retrofit_inspection_passed"
                 },
                 "product_vendor_id": {
                   "$ref": "#/definitions/product_vendor_id"
@@ -2121,6 +2149,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Electric State Addenda Payload",
               "properties": {
                 "state_attests_any_failed_inspection_remediated": {
                   "$ref": "#/definitions/state_attests_any_failed_inspection_remediated"
@@ -2391,6 +2420,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Vendor Coupon",
               "properties": {
                 "id": {
                   "type": "integer",
@@ -2588,8 +2618,10 @@
             "required": true,
             "schema": {
               "type": "array",
+              "title": "Homes Bulk Reporting Payload",
               "items": {
                 "type": "object",
+                "title": "Homes Bulk Reporting Payload Item",
                 "properties": {
                   "address_id": {
                     "$ref": "#/definitions/address_id"
@@ -2627,8 +2659,14 @@
                   "equipment_and_material_cost": {
                     "$ref": "#/definitions/homes_equipment_and_material_cost"
                   },
+                  "estimated_percent_energy_savings": {
+                    "$ref": "#/definitions/estimated_percent_energy_savings"
+                  },
                   "estimated_post_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/estimated_post_retrofit_energy_usage_kwh_equivalent"
+                  },
+                  "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/estimated_post_retrofit_site_energy_usages_by_fuel_type"
                   },
                   "external_rebate_id": {
                     "$ref": "#/definitions/external_rebate_id"
@@ -2642,20 +2680,41 @@
                   "is_disadvantaged_community": {
                     "$ref": "#/definitions/is_disadvantaged_community"
                   },
+                  "measured_percent_energy_savings": {
+                    "$ref": "#/definitions/measured_percent_energy_savings"
+                  },
                   "measured_post_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/measured_post_retrofit_energy_usage_kwh_equivalent"
+                  },
+                  "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/measured_post_retrofit_site_energy_usages_by_fuel_type"
                   },
                   "measured_pre_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/measured_pre_retrofit_energy_usage_kwh_equivalent"
                   },
+                  "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/measured_pre_retrofit_site_energy_usages_by_fuel_type"
+                  },
                   "mf_building_income_bucket": {
                     "$ref": "#/definitions/homes_mf_building_income_bucket"
+                  },
+                  "modeled_percent_energy_savings": {
+                    "$ref": "#/definitions/modeled_percent_energy_savings"
                   },
                   "modeled_post_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/modeled_post_retrofit_energy_usage_kwh_equivalent"
                   },
+                  "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/modeled_post_retrofit_site_energy_usages_by_fuel_type"
+                  },
                   "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                  },
+                  "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+                  },
+                  "modeling_software_used": {
+                    "$ref": "#/definitions/modeling_software_used"
                   },
                   "num_occupied_units": {
                     "$ref": "#/definitions/num_occupied_units"
@@ -2668,6 +2727,9 @@
                   },
                   "portfolio_id": {
                     "$ref": "#/definitions/portfolio_id"
+                  },
+                  "post_retrofit_inspection_passed": {
+                    "$ref": "#/definitions/post_retrofit_inspection_passed"
                   },
                   "project_id": {
                     "$ref": "#/definitions/project_id"
@@ -2696,6 +2758,9 @@
                   "state_attests_any_failed_inspection_remediated": {
                     "$ref": "#/definitions/state_attests_any_failed_inspection_remediated"
                   },
+                  "total_rebate_payout": {
+                    "$ref": "#/definitions/total_rebate_payout"
+                  },
                   "unit_name_or_number": {
                     "$ref": "#/definitions/unit_name_or_number"
                   },
@@ -2711,7 +2776,6 @@
                   "applicant_id",
                   "building_project_type",
                   "claimant_type",
-                  "claimant_payment",
                   "construction_type",
                   "contractor_company_name",
                   "contractor_name",
@@ -2724,7 +2788,6 @@
                   "rebate_type",
                   "safety_checks",
                   "state_attests_proof_of_identity_ownership_income",
-                  "state_attests_any_failed_inspection_remediated",
                   "upgrades",
                   "vendor_id"
                 ],
@@ -2894,14 +2957,14 @@
                   "building_project_type": {
                     "$ref": "#/definitions/homes_building_project_type"
                   },
+                  "city": {
+                    "$ref": "#/definitions/city"
+                  },
                   "claimant_type": {
                     "$ref": "#/definitions/homes_claimant_type"
                   },
                   "construction_type": {
                     "$ref": "#/definitions/construction_type"
-                  },
-                  "contractor_name": {
-                    "$ref": "#/definitions/contractor_name"
                   },
                   "contractor_company_name": {
                     "$ref": "#/definitions/contractor_company_name"
@@ -2909,17 +2972,44 @@
                   "contractor_dac_incentive": {
                     "$ref": "#/definitions/contractor_dac_incentive"
                   },
+                  "contractor_name": {
+                    "$ref": "#/definitions/contractor_name"
+                  },
+                  "county": {
+                    "$ref": "#/definitions/county"
+                  },
+                  "created_at": {
+                    "$ref": "#/definitions/created_at"
+                  },
+                  "created_by_name": {
+                    "$ref": "#/definitions/created_by_name"
+                  },
+                  "deletion_reason": {
+                    "$ref": "#/definitions/deletion_reason"
+                  },
                   "doe_approved_bpi_2400_compliant_software_used": {
                     "$ref": "#/definitions/doe_approved_bpi_2400_compliant_software_used"
                   },
                   "dwelling_unit_income_bucket": {
                     "$ref": "#/definitions/homes_dwelling_unit_income_bucket"
                   },
+                  "estimated_percent_energy_savings": {
+                    "$ref": "#/definitions/estimated_percent_energy_savings"
+                  },
                   "estimated_post_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/estimated_post_retrofit_energy_usage_kwh_equivalent"
                   },
+                  "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/estimated_post_retrofit_site_energy_usages_by_fuel_type"
+                  },
                   "external_rebate_id": {
                     "$ref": "#/definitions/external_rebate_id"
+                  },
+                  "files": {
+                    "$ref": "#/definitions/files"
+                  },
+                  "id": {
+                    "$ref": "#/definitions/id"
                   },
                   "is_contractor_eligible": {
                     "$ref": "#/definitions/is_contractor_eligible"
@@ -2930,14 +3020,29 @@
                   "measured_pre_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/measured_pre_retrofit_energy_usage_kwh_equivalent"
                   },
+                  "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/measured_pre_retrofit_site_energy_usages_by_fuel_type"
+                  },
                   "mf_building_income_bucket": {
                     "$ref": "#/definitions/homes_mf_building_income_bucket"
+                  },
+                  "modeled_percent_energy_savings": {
+                    "$ref": "#/definitions/modeled_percent_energy_savings"
                   },
                   "modeled_post_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/modeled_post_retrofit_energy_usage_kwh_equivalent"
                   },
+                  "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/modeled_post_retrofit_site_energy_usages_by_fuel_type"
+                  },
                   "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
                     "$ref": "#/definitions/modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                  },
+                  "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+                    "$ref": "#/definitions/modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+                  },
+                  "modeling_software_used": {
+                    "$ref": "#/definitions/modeling_software_used"
                   },
                   "num_occupied_units": {
                     "$ref": "#/definitions/num_occupied_units"
@@ -2948,6 +3053,9 @@
                   "num_units_meeting_income_bucket": {
                     "$ref": "#/definitions/num_units_meeting_income_bucket"
                   },
+                  "percent_cost_limit": {
+                    "$ref": "#/definitions/percent_cost_limit"
+                  },
                   "portfolio_id": {
                     "$ref": "#/definitions/portfolio_id"
                   },
@@ -2957,8 +3065,26 @@
                   "rebate_type": {
                     "$ref": "#/definitions/rebate_type"
                   },
+                  "redemptions": {
+                    "$ref": "#/definitions/redemptions"
+                  },
+                  "reservation_amount": {
+                    "$ref": "#/definitions/homes_reservation_amount"
+                  },
+                  "reservation_amount_note": {
+                    "$ref": "#/definitions/reservation_amount_note"
+                  },
+                  "reservation_expiration_date_time": {
+                    "$ref": "#/definitions/reservation_expiration_date_time"
+                  },
                   "software_used_to_estimate_post_retrofit_energy_usage": {
                     "$ref": "#/definitions/software_used_to_estimate_post_retrofit_energy_usage"
+                  },
+                  "state": {
+                    "$ref": "#/definitions/state"
+                  },
+                  "state_addenda": {
+                    "$ref": "#/definitions/HomesReservationStateAddenda"
                   },
                   "state_attests_proof_of_identity_ownership_income": {
                     "$ref": "#/definitions/state_attests_proof_of_identity_ownership_income"
@@ -2969,53 +3095,11 @@
                   "upgrades": {
                     "$ref": "#/definitions/homes_upgrades"
                   },
-                  "reservation_amount": {
-                    "$ref": "#/definitions/homes_reservation_amount"
-                  },
-                  "deletion_reason": {
-                    "$ref": "#/definitions/deletion_reason"
-                  },
-                  "id": {
-                    "$ref": "#/definitions/id"
-                  },
-                  "created_at": {
-                    "$ref": "#/definitions/created_at"
-                  },
-                  "created_by_name": {
-                    "$ref": "#/definitions/created_by_name"
-                  },
-                  "percent_cost_limit": {
-                    "$ref": "#/definitions/percent_cost_limit"
+                  "warnings": {
+                    "$ref": "#/definitions/warnings"
                   },
                   "zip_code": {
                     "$ref": "#/definitions/zip_code"
-                  },
-                  "city": {
-                    "$ref": "#/definitions/city"
-                  },
-                  "county": {
-                    "$ref": "#/definitions/county"
-                  },
-                  "state": {
-                    "$ref": "#/definitions/state"
-                  },
-                  "reservation_expiration_date_time": {
-                    "$ref": "#/definitions/reservation_expiration_date_time"
-                  },
-                  "reservation_amount_note": {
-                    "$ref": "#/definitions/reservation_amount_note"
-                  },
-                  "redemptions": {
-                    "$ref": "#/definitions/redemptions"
-                  },
-                  "files": {
-                    "$ref": "#/definitions/files"
-                  },
-                  "state_addenda": {
-                    "$ref": "#/definitions/HomesReservationStateAddenda"
-                  },
-                  "warnings": {
-                    "$ref": "#/definitions/warnings"
                   }
                 }
               }
@@ -3043,6 +3127,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Homes Reservations Payload",
               "properties": {
                 "address_id": {
                   "$ref": "#/definitions/address_id"
@@ -3074,8 +3159,14 @@
                 "dwelling_unit_income_bucket": {
                   "$ref": "#/definitions/homes_dwelling_unit_income_bucket"
                 },
+                "estimated_percent_energy_savings": {
+                  "$ref": "#/definitions/estimated_percent_energy_savings"
+                },
                 "estimated_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/estimated_post_retrofit_energy_usage_kwh_equivalent"
+                },
+                "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/estimated_post_retrofit_site_energy_usages_by_fuel_type"
                 },
                 "external_rebate_id": {
                   "$ref": "#/definitions/external_rebate_id"
@@ -3089,17 +3180,32 @@
                 "measured_pre_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/measured_pre_retrofit_energy_usage_kwh_equivalent"
                 },
+                "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/measured_pre_retrofit_site_energy_usages_by_fuel_type"
+                },
                 "mf_building_income_bucket": {
                   "$ref": "#/definitions/homes_mf_building_income_bucket"
                 },
+                "modeled_percent_energy_savings": {
+                  "$ref": "#/definitions/modeled_percent_energy_savings"
+                },
                 "modeled_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/modeled_post_retrofit_energy_usage_kwh_equivalent"
+                },
+                "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/modeled_post_retrofit_site_energy_usages_by_fuel_type"
                 },
                 "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/modeled_pre_retrofit_energy_usage_kwh_equivalent"
                 },
                 "num_occupied_units": {
                   "$ref": "#/definitions/num_occupied_units"
+                },
+                "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+                },
+                "modeling_software_used": {
+                  "$ref": "#/definitions/modeling_software_used"
                 },
                 "num_units": {
                   "$ref": "#/definitions/num_units"
@@ -3165,14 +3271,14 @@
                 "building_project_type": {
                   "$ref": "#/definitions/homes_building_project_type"
                 },
+                "city": {
+                  "$ref": "#/definitions/city"
+                },
                 "claimant_type": {
                   "$ref": "#/definitions/homes_claimant_type"
                 },
                 "construction_type": {
                   "$ref": "#/definitions/construction_type"
-                },
-                "contractor_name": {
-                  "$ref": "#/definitions/contractor_name"
                 },
                 "contractor_company_name": {
                   "$ref": "#/definitions/contractor_company_name"
@@ -3180,17 +3286,44 @@
                 "contractor_dac_incentive": {
                   "$ref": "#/definitions/contractor_dac_incentive"
                 },
+                "contractor_name": {
+                  "$ref": "#/definitions/contractor_name"
+                },
+                "county": {
+                  "$ref": "#/definitions/county"
+                },
+                "created_at": {
+                  "$ref": "#/definitions/created_at"
+                },
+                "created_by_name": {
+                  "$ref": "#/definitions/created_by_name"
+                },
+                "deletion_reason": {
+                  "$ref": "#/definitions/deletion_reason"
+                },
                 "doe_approved_bpi_2400_compliant_software_used": {
                   "$ref": "#/definitions/doe_approved_bpi_2400_compliant_software_used"
                 },
                 "dwelling_unit_income_bucket": {
                   "$ref": "#/definitions/homes_dwelling_unit_income_bucket"
                 },
+                "estimated_percent_energy_savings": {
+                  "$ref": "#/definitions/estimated_percent_energy_savings"
+                },
                 "estimated_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/estimated_post_retrofit_energy_usage_kwh_equivalent"
                 },
+                "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/estimated_post_retrofit_site_energy_usages_by_fuel_type"
+                },
                 "external_rebate_id": {
                   "$ref": "#/definitions/external_rebate_id"
+                },
+                "files": {
+                  "$ref": "#/definitions/files"
+                },
+                "id": {
+                  "$ref": "#/definitions/id"
                 },
                 "is_contractor_eligible": {
                   "$ref": "#/definitions/is_contractor_eligible"
@@ -3201,14 +3334,29 @@
                 "measured_pre_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/measured_pre_retrofit_energy_usage_kwh_equivalent"
                 },
+                "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/measured_pre_retrofit_site_energy_usages_by_fuel_type"
+                },
                 "mf_building_income_bucket": {
                   "$ref": "#/definitions/homes_mf_building_income_bucket"
+                },
+                "modeled_percent_energy_savings": {
+                  "$ref": "#/definitions/modeled_percent_energy_savings"
                 },
                 "modeled_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/modeled_post_retrofit_energy_usage_kwh_equivalent"
                 },
+                "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/modeled_post_retrofit_site_energy_usages_by_fuel_type"
+                },
                 "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                },
+                "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+                },
+                "modeling_software_used": {
+                  "$ref": "#/definitions/modeling_software_used"
                 },
                 "num_occupied_units": {
                   "$ref": "#/definitions/num_occupied_units"
@@ -3219,6 +3367,9 @@
                 "num_units_meeting_income_bucket": {
                   "$ref": "#/definitions/num_units_meeting_income_bucket"
                 },
+                "percent_cost_limit": {
+                  "$ref": "#/definitions/percent_cost_limit"
+                },
                 "portfolio_id": {
                   "$ref": "#/definitions/portfolio_id"
                 },
@@ -3228,8 +3379,26 @@
                 "rebate_type": {
                   "$ref": "#/definitions/rebate_type"
                 },
+                "redemptions": {
+                  "$ref": "#/definitions/redemptions"
+                },
+                "reservation_amount": {
+                  "$ref": "#/definitions/homes_reservation_amount"
+                },
+                "reservation_amount_note": {
+                  "$ref": "#/definitions/reservation_amount_note"
+                },
+                "reservation_expiration_date_time": {
+                  "$ref": "#/definitions/reservation_expiration_date_time"
+                },
                 "software_used_to_estimate_post_retrofit_energy_usage": {
                   "$ref": "#/definitions/software_used_to_estimate_post_retrofit_energy_usage"
+                },
+                "state": {
+                  "$ref": "#/definitions/state"
+                },
+                "state_addenda": {
+                  "$ref": "#/definitions/HomesReservationStateAddenda"
                 },
                 "state_attests_proof_of_identity_ownership_income": {
                   "$ref": "#/definitions/state_attests_proof_of_identity_ownership_income"
@@ -3240,53 +3409,11 @@
                 "upgrades": {
                   "$ref": "#/definitions/homes_upgrades"
                 },
-                "reservation_amount": {
-                  "$ref": "#/definitions/homes_reservation_amount"
-                },
-                "deletion_reason": {
-                  "$ref": "#/definitions/deletion_reason"
-                },
-                "id": {
-                  "$ref": "#/definitions/id"
-                },
-                "created_at": {
-                  "$ref": "#/definitions/created_at"
-                },
-                "created_by_name": {
-                  "$ref": "#/definitions/created_by_name"
-                },
-                "percent_cost_limit": {
-                  "$ref": "#/definitions/percent_cost_limit"
+                "warnings": {
+                  "$ref": "#/definitions/warnings"
                 },
                 "zip_code": {
                   "$ref": "#/definitions/zip_code"
-                },
-                "city": {
-                  "$ref": "#/definitions/city"
-                },
-                "county": {
-                  "$ref": "#/definitions/county"
-                },
-                "state": {
-                  "$ref": "#/definitions/state"
-                },
-                "reservation_expiration_date_time": {
-                  "$ref": "#/definitions/reservation_expiration_date_time"
-                },
-                "reservation_amount_note": {
-                  "$ref": "#/definitions/reservation_amount_note"
-                },
-                "redemptions": {
-                  "$ref": "#/definitions/redemptions"
-                },
-                "files": {
-                  "$ref": "#/definitions/files"
-                },
-                "state_addenda": {
-                  "$ref": "#/definitions/HomesReservationStateAddenda"
-                },
-                "warnings": {
-                  "$ref": "#/definitions/warnings"
                 }
               }
             }
@@ -3329,14 +3456,14 @@
                 "building_project_type": {
                   "$ref": "#/definitions/homes_building_project_type"
                 },
+                "city": {
+                  "$ref": "#/definitions/city"
+                },
                 "claimant_type": {
                   "$ref": "#/definitions/homes_claimant_type"
                 },
                 "construction_type": {
                   "$ref": "#/definitions/construction_type"
-                },
-                "contractor_name": {
-                  "$ref": "#/definitions/contractor_name"
                 },
                 "contractor_company_name": {
                   "$ref": "#/definitions/contractor_company_name"
@@ -3344,17 +3471,44 @@
                 "contractor_dac_incentive": {
                   "$ref": "#/definitions/contractor_dac_incentive"
                 },
+                "contractor_name": {
+                  "$ref": "#/definitions/contractor_name"
+                },
+                "county": {
+                  "$ref": "#/definitions/county"
+                },
+                "created_at": {
+                  "$ref": "#/definitions/created_at"
+                },
+                "created_by_name": {
+                  "$ref": "#/definitions/created_by_name"
+                },
+                "deletion_reason": {
+                  "$ref": "#/definitions/deletion_reason"
+                },
                 "doe_approved_bpi_2400_compliant_software_used": {
                   "$ref": "#/definitions/doe_approved_bpi_2400_compliant_software_used"
                 },
                 "dwelling_unit_income_bucket": {
                   "$ref": "#/definitions/homes_dwelling_unit_income_bucket"
                 },
+                "estimated_percent_energy_savings": {
+                  "$ref": "#/definitions/estimated_percent_energy_savings"
+                },
                 "estimated_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/estimated_post_retrofit_energy_usage_kwh_equivalent"
                 },
+                "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/estimated_post_retrofit_site_energy_usages_by_fuel_type"
+                },
                 "external_rebate_id": {
                   "$ref": "#/definitions/external_rebate_id"
+                },
+                "files": {
+                  "$ref": "#/definitions/files"
+                },
+                "id": {
+                  "$ref": "#/definitions/id"
                 },
                 "is_contractor_eligible": {
                   "$ref": "#/definitions/is_contractor_eligible"
@@ -3365,14 +3519,29 @@
                 "measured_pre_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/measured_pre_retrofit_energy_usage_kwh_equivalent"
                 },
+                "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/measured_pre_retrofit_site_energy_usages_by_fuel_type"
+                },
                 "mf_building_income_bucket": {
                   "$ref": "#/definitions/homes_mf_building_income_bucket"
+                },
+                "modeled_percent_energy_savings": {
+                  "$ref": "#/definitions/modeled_percent_energy_savings"
                 },
                 "modeled_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/modeled_post_retrofit_energy_usage_kwh_equivalent"
                 },
+                "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/modeled_post_retrofit_site_energy_usages_by_fuel_type"
+                },
                 "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                },
+                "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+                },
+                "modeling_software_used": {
+                  "$ref": "#/definitions/modeling_software_used"
                 },
                 "num_occupied_units": {
                   "$ref": "#/definitions/num_occupied_units"
@@ -3383,6 +3552,9 @@
                 "num_units_meeting_income_bucket": {
                   "$ref": "#/definitions/num_units_meeting_income_bucket"
                 },
+                "percent_cost_limit": {
+                  "$ref": "#/definitions/percent_cost_limit"
+                },
                 "portfolio_id": {
                   "$ref": "#/definitions/portfolio_id"
                 },
@@ -3392,8 +3564,26 @@
                 "rebate_type": {
                   "$ref": "#/definitions/rebate_type"
                 },
+                "redemptions": {
+                  "$ref": "#/definitions/redemptions"
+                },
+                "reservation_amount": {
+                  "$ref": "#/definitions/homes_reservation_amount"
+                },
+                "reservation_amount_note": {
+                  "$ref": "#/definitions/reservation_amount_note"
+                },
+                "reservation_expiration_date_time": {
+                  "$ref": "#/definitions/reservation_expiration_date_time"
+                },
                 "software_used_to_estimate_post_retrofit_energy_usage": {
                   "$ref": "#/definitions/software_used_to_estimate_post_retrofit_energy_usage"
+                },
+                "state": {
+                  "$ref": "#/definitions/state"
+                },
+                "state_addenda": {
+                  "$ref": "#/definitions/HomesReservationStateAddenda"
                 },
                 "state_attests_proof_of_identity_ownership_income": {
                   "$ref": "#/definitions/state_attests_proof_of_identity_ownership_income"
@@ -3404,53 +3594,11 @@
                 "upgrades": {
                   "$ref": "#/definitions/homes_upgrades"
                 },
-                "reservation_amount": {
-                  "$ref": "#/definitions/homes_reservation_amount"
-                },
-                "deletion_reason": {
-                  "$ref": "#/definitions/deletion_reason"
-                },
-                "id": {
-                  "$ref": "#/definitions/id"
-                },
-                "created_at": {
-                  "$ref": "#/definitions/created_at"
-                },
-                "created_by_name": {
-                  "$ref": "#/definitions/created_by_name"
-                },
-                "percent_cost_limit": {
-                  "$ref": "#/definitions/percent_cost_limit"
+                "warnings": {
+                  "$ref": "#/definitions/warnings"
                 },
                 "zip_code": {
                   "$ref": "#/definitions/zip_code"
-                },
-                "city": {
-                  "$ref": "#/definitions/city"
-                },
-                "county": {
-                  "$ref": "#/definitions/county"
-                },
-                "state": {
-                  "$ref": "#/definitions/state"
-                },
-                "reservation_expiration_date_time": {
-                  "$ref": "#/definitions/reservation_expiration_date_time"
-                },
-                "reservation_amount_note": {
-                  "$ref": "#/definitions/reservation_amount_note"
-                },
-                "redemptions": {
-                  "$ref": "#/definitions/redemptions"
-                },
-                "files": {
-                  "$ref": "#/definitions/files"
-                },
-                "state_addenda": {
-                  "$ref": "#/definitions/HomesReservationStateAddenda"
-                },
-                "warnings": {
-                  "$ref": "#/definitions/warnings"
                 }
               }
             }
@@ -3525,6 +3673,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Homes Reservations Expiration Date Updates Payload",
               "properties": {
                 "new_expiration_date": {
                   "$ref": "#/definitions/new_expiration_date"
@@ -3574,9 +3723,13 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Homes Files Payload",
               "properties": {
                 "binary_file_content_base_64": {
                   "$ref": "#/definitions/binary_file_content_base_64"
+                },
+                "description": {
+                  "$ref": "#/definitions/description"
                 },
                 "file_name": {
                   "$ref": "#/definitions/file_name"
@@ -3602,16 +3755,8 @@
           "201": {
             "description": "",
             "schema": {
-              "required": [
-                "file_name",
-                "file_type",
-                "file_purpose"
-              ],
               "type": "object",
               "properties": {
-                "file_url": {
-                  "$ref": "#/definitions/file_url"
-                },
                 "file_name": {
                   "$ref": "#/definitions/file_name"
                 },
@@ -3620,6 +3765,12 @@
                 },
                 "file_purpose": {
                   "$ref": "#/definitions/homes_file_purpose"
+                },
+                "file_url": {
+                  "$ref": "#/definitions/file_url"
+                },
+                "description": {
+                  "$ref": "#/definitions/description"
                 }
               }
             }
@@ -3659,6 +3810,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Homes Redemptions Payload",
               "properties": {
                 "equipment_and_material_cost": {
                   "$ref": "#/definitions/homes_equipment_and_material_cost"
@@ -3669,8 +3821,17 @@
                 "is_contractor_eligible": {
                   "$ref": "#/definitions/is_contractor_eligible"
                 },
+                "measured_percent_energy_savings": {
+                  "$ref": "#/definitions/measured_percent_energy_savings"
+                },
                 "measured_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/measured_post_retrofit_energy_usage_kwh_equivalent"
+                },
+                "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/measured_post_retrofit_site_energy_usages_by_fuel_type"
+                },
+                "post_retrofit_inspection_passed": {
+                  "$ref": "#/definitions/post_retrofit_inspection_passed"
                 },
                 "project_completion_date": {
                   "$ref": "#/definitions/project_completion_date"
@@ -3683,6 +3844,9 @@
                 },
                 "safety_checks": {
                   "$ref": "#/definitions/safety_checks"
+                },
+                "total_rebate_payout": {
+                  "$ref": "#/definitions/total_rebate_payout"
                 },
                 "vendor_id": {
                   "$ref": "#/definitions/vendor_id"
@@ -3730,6 +3894,9 @@
                 "installation_cost": {
                   "$ref": "#/definitions/installation_cost"
                 },
+                "post_retrofit_inspection_passed": {
+                  "$ref": "#/definitions/post_retrofit_inspection_passed"
+                },
                 "project_completion_date": {
                   "$ref": "#/definitions/project_completion_date"
                 },
@@ -3739,8 +3906,14 @@
                 "redemption_notes": {
                   "$ref": "#/definitions/redemption_notes"
                 },
+                "measured_percent_energy_savings": {
+                  "$ref": "#/definitions/measured_percent_energy_savings"
+                },
                 "measured_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/measured_post_retrofit_energy_usage_kwh_equivalent"
+                },
+                "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/measured_post_retrofit_site_energy_usages_by_fuel_type"
                 },
                 "vendor_id": {
                   "$ref": "#/definitions/vendor_id"
@@ -3750,6 +3923,9 @@
                 },
                 "is_contractor_eligible": {
                   "$ref": "#/definitions/is_contractor_eligible"
+                },
+                "total_rebate_payout": {
+                  "$ref": "#/definitions/total_rebate_payout"
                 }
               }
             }
@@ -3816,6 +3992,9 @@
                 "installation_cost": {
                   "$ref": "#/definitions/installation_cost"
                 },
+                "post_retrofit_inspection_passed": {
+                  "$ref": "#/definitions/post_retrofit_inspection_passed"
+                },
                 "project_completion_date": {
                   "$ref": "#/definitions/project_completion_date"
                 },
@@ -3825,8 +4004,14 @@
                 "redemption_notes": {
                   "$ref": "#/definitions/redemption_notes"
                 },
+                "measured_percent_energy_savings": {
+                  "$ref": "#/definitions/measured_percent_energy_savings"
+                },
                 "measured_post_retrofit_energy_usage_kwh_equivalent": {
                   "$ref": "#/definitions/measured_post_retrofit_energy_usage_kwh_equivalent"
+                },
+                "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+                  "$ref": "#/definitions/measured_post_retrofit_site_energy_usages_by_fuel_type"
                 },
                 "vendor_id": {
                   "$ref": "#/definitions/vendor_id"
@@ -3836,6 +4021,9 @@
                 },
                 "is_contractor_eligible": {
                   "$ref": "#/definitions/is_contractor_eligible"
+                },
+                "total_rebate_payout": {
+                  "$ref": "#/definitions/total_rebate_payout"
                 }
               }
             }
@@ -3921,6 +4109,7 @@
             "required": true,
             "schema": {
               "type": "object",
+              "title": "Homes State Addenda Payload",
               "properties": {
                 "claimant_payment": {
                   "$ref": "#/definitions/claimant_payment"
@@ -4002,6 +4191,9 @@
         "install_vendor_id": {
           "$ref": "#/definitions/install_vendor_id"
         },
+        "post_retrofit_inspection_passed": {
+          "$ref": "#/definitions/post_retrofit_inspection_passed"
+        },
         "product_vendor_id": {
           "$ref": "#/definitions/product_vendor_id"
         },
@@ -4054,14 +4246,22 @@
     },
     "ElectrificationReservationFile": {
       "required": [
-        "reservation",
-        "binary_file_content_base_64",
-        "file_name",
         "file_type",
-        "file_purpose"
+        "file_purpose",
+        "reservation",
+        "file_content"
       ],
       "type": "object",
       "properties": {
+        "file_name": {
+          "$ref": "#/definitions/file_name"
+        },
+        "file_type": {
+          "$ref": "#/definitions/electric_file_type"
+        },
+        "file_purpose": {
+          "$ref": "#/definitions/electric_file_purpose"
+        },
         "reservation": {
           "$ref": "#/definitions/reservation"
         },
@@ -4071,17 +4271,11 @@
         "file_url": {
           "$ref": "#/definitions/file_url"
         },
-        "binary_file_content_base_64": {
-          "$ref": "#/definitions/binary_file_content_base_64"
+        "description": {
+          "$ref": "#/definitions/description"
         },
-        "file_name": {
-          "$ref": "#/definitions/file_name"
-        },
-        "file_type": {
-          "$ref": "#/definitions/electric_file_type"
-        },
-        "file_purpose": {
-          "$ref": "#/definitions/electric_file_purpose"
+        "file_content": {
+          "$ref": "#/definitions/file_content"
         }
       }
     },
@@ -4286,6 +4480,41 @@
         }
       }
     },
+    "HomesReservationFile": {
+      "required": [
+        "file_type",
+        "file_purpose",
+        "reservation",
+        "file_content"
+      ],
+      "type": "object",
+      "properties": {
+        "file_name": {
+          "$ref": "#/definitions/file_name"
+        },
+        "file_type": {
+          "$ref": "#/definitions/homes_file_type"
+        },
+        "file_purpose": {
+          "$ref": "#/definitions/homes_file_purpose"
+        },
+        "reservation": {
+          "$ref": "#/definitions/reservation"
+        },
+        "program": {
+          "$ref": "#/definitions/program"
+        },
+        "file_url": {
+          "$ref": "#/definitions/file_url"
+        },
+        "description": {
+          "$ref": "#/definitions/description"
+        },
+        "file_content": {
+          "$ref": "#/definitions/file_content"
+        }
+      }
+    },
     "HomesRedemption": {
       "description": "Redemptions redeemed for this reservation",
       "required": [
@@ -4317,6 +4546,9 @@
         "installation_cost": {
           "$ref": "#/definitions/installation_cost"
         },
+        "post_retrofit_inspection_passed": {
+          "$ref": "#/definitions/post_retrofit_inspection_passed"
+        },
         "project_completion_date": {
           "$ref": "#/definitions/project_completion_date"
         },
@@ -4329,8 +4561,14 @@
         "redemption_notes": {
           "$ref": "#/definitions/redemption_notes"
         },
+        "measured_percent_energy_savings": {
+          "$ref": "#/definitions/measured_percent_energy_savings"
+        },
         "measured_post_retrofit_energy_usage_kwh_equivalent": {
           "$ref": "#/definitions/measured_post_retrofit_energy_usage_kwh_equivalent"
+        },
+        "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+          "$ref": "#/definitions/measured_post_retrofit_site_energy_usages_by_fuel_type"
         },
         "vendor_id": {
           "$ref": "#/definitions/vendor_id"
@@ -4340,39 +4578,9 @@
         },
         "is_contractor_eligible": {
           "$ref": "#/definitions/is_contractor_eligible"
-        }
-      }
-    },
-    "HomesReservationFile": {
-      "required": [
-        "reservation",
-        "binary_file_content_base_64",
-        "file_name",
-        "file_type",
-        "file_purpose"
-      ],
-      "type": "object",
-      "properties": {
-        "reservation": {
-          "$ref": "#/definitions/reservation"
         },
-        "program": {
-          "$ref": "#/definitions/program"
-        },
-        "file_url": {
-          "$ref": "#/definitions/file_url"
-        },
-        "binary_file_content_base_64": {
-          "$ref": "#/definitions/binary_file_content_base_64"
-        },
-        "file_name": {
-          "$ref": "#/definitions/file_name"
-        },
-        "file_type": {
-          "$ref": "#/definitions/homes_file_type"
-        },
-        "file_purpose": {
-          "$ref": "#/definitions/homes_file_purpose"
+        "total_rebate_payout": {
+          "$ref": "#/definitions/total_rebate_payout"
         }
       }
     },
@@ -4436,7 +4644,8 @@
       "multipleOf": 0.01,
       "minimum": 0,
       "description": "This is the amount that the state paid to an aggregator, or other claimant, for a HOMES rebate.",
-      "title": "Claimant payment"
+      "title": "Claimant payment",
+      "deprecated": true
     },
     "construction_type": {
       "title": "Construction type",
@@ -4491,12 +4700,17 @@
       "type": "boolean",
       "description": "A boolean flag to determine if the redemption(s) for this reservation will be deleted. When this flag is set to true, any associated redemption for the reservation will also be deleted."
     },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
     "doe_approved_bpi_2400_compliant_software_used": {
       "type": "string",
       "title": "DOE approved bpi 2400 compliant software used",
       "minLength": 2,
       "maxLength": 64,
-      "description": "This field is required when *rebate_type* is MODELED. Otherwise, this field should be omitted. A list of approved software will be publicly available along with the corresponding string that should be used here. We use a string rather than an enum because the approved list may change often."
+      "description": "This field is deprecated and will be removed in a future version. Please use modeling_software_used instead. Enter the name of the software used to model energy usage and savings. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. Until this field is removed, when rebate_type is MODELED you must either use this field OR modeling_software_used, but not both. This field is NOT allowed unless rebate_type is MODELED.",
+      "deprecated": true
     },
     "electric_building_project_type": {
       "title": "Building project type",
@@ -4589,64 +4803,49 @@
       "minimum": 0,
       "exclusiveMinimum": true
     },
-    "safety_checks": {
-      "type": "object",
-      "properties": {
-        "ambient_co_test_result": {
-          "$ref": "#/definitions/ambient_co_test_result"
-        },
-        "ashrae_62_2_ventilation_calculated": {
-          "$ref": "#/definitions/ashrae_62_2_ventilation_calculated"
-        },
-        "confirm_all_safety_check_results_disclosed_to_homeowner": {
-          "$ref": "#/definitions/confirm_all_safety_check_results_disclosed_to_homeowner"
-        },
-        "drainage_system_condition": {
-          "$ref": "#/definitions/drainage_system_condition"
-        },
-        "gas_leak_detection_test_result": {
-          "$ref": "#/definitions/gas_leak_detection_test_result"
-        },
-        "roof_condition": {
-          "$ref": "#/definitions/roof_condition"
-        },
-        "signs_of_mold_or_moisture": {
-          "$ref": "#/definitions/signs_of_mold_or_moisture"
-        },
-        "spillage_test_result": {
-          "$ref": "#/definitions/spillage_test_result"
-        },
-        "undiluted_co_test_result": {
-          "$ref": "#/definitions/undiluted_co_test_result"
-        },
-        "venting_test_result": {
-          "$ref": "#/definitions/venting_test_result"
-        }
-      },
-      "required": [
-        "ambient_co_test_result",
-        "ashrae_62_2_ventilation_calculated",
-        "confirm_all_safety_check_results_disclosed_to_homeowner",
-        "drainage_system_condition",
-        "gas_leak_detection_test_result",
-        "roof_condition",
-        "signs_of_mold_or_moisture",
-        "spillage_test_result",
-        "undiluted_co_test_result",
-        "venting_test_result"
-      ],
-      "additionalProperties": false
-    },
     "energy_data_evaluation_permission": {
       "type": "boolean",
       "description": "Set to true if the home/building owner has given their permission to share energy data with the State and the DOE for evaluation purposes.",
       "title": "Energy data evaluation permission"
     },
+    "estimated_percent_energy_savings": {
+      "type": "number",
+      "maximum": 100,
+      "description": "An estimate for the percent measured energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed \u2013 either this field or the two fields measured_pre_retrofit_energy_usage_kwh_equivalent and  estimated_post_retrofit_energy_usage_kwh_equivalent must be specified when rebate_type is MEASURED. The behavior starting mid to late January 2025 will be: this field is required for rebate_type MEASURED and otherwise not allowed."
+    },
     "estimated_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Estimated post retrofit energy usage kwh equivalent",
       "minimum": 0,
+      "deprecated": true,
       "description": "The total estimated (expected) annual  energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
+    },
+    "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
+      "type": "array",
+      "title": "Estimated Post Retrofit Item",
+      "items": {
+        "title": "Site Energy Usage",
+        "type": "object",
+        "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+        "properties": {
+          "annual_consumption": {
+            "$ref": "#/definitions/annual_consumption"
+          },
+          "energy_type": {
+            "$ref": "#/definitions/energy_type"
+          },
+          "unit_of_measure": {
+            "$ref": "#/definitions/unit_of_measure"
+          }
+        },
+        "required": [
+          "annual_consumption",
+          "energy_type",
+          "unit_of_measure"
+        ],
+        "additionalProperties": false
+      },
+      "description": "An array of estimated post-retrofit site energy usage objects. Each entry represents a different fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed. Please begin using this field asap."
     },
     "external_rebate_id": {
       "type": "string",
@@ -4708,7 +4907,8 @@
         "POST_RETROFIT_MODEL",
         "PRE_AND_POST_RETROFIT_MODELS",
         "PRE_RETROFIT_MODEL",
-        "QUALITY_ASSURANCE"
+        "QUALITY_ASSURANCE",
+        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE"
       ],
       "title": "File purpose",
       "type": "string"
@@ -4722,7 +4922,10 @@
         "HPXML_MODELED_REQUIRED",
         "JPEG",
         "PDF",
-        "PNG"
+        "PNG",
+        "BUILDINGSYNC",
+        "JSON",
+        "EXCEL"
       ],
       "title": "File type",
       "type": "string"
@@ -4759,6 +4962,12 @@
           "FLOOR_INSULATION",
           "FOUNDATION_INSULATION",
           "HEATING_EQUIPMENT",
+          "LIGHTING",
+          "MOTORS",
+          "PUMPS",
+          "ROOF_INSULATION",
+          "THERMOSTATS",
+          "VARIABLE_FREQUENCY_DRIVES",
           "VENTILATION",
           "WALL_INSULATION",
           "WATER_HEATER",
@@ -4800,17 +5009,78 @@
       "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
       "title": "Is final project redemption"
     },
+    "measured_percent_energy_savings": {
+      "type": "number",
+      "maximum": 100,
+      "description": "The calculated percent measured energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed \u2013 either this field or measured_post_retrofit_energy_usage_kwh_equivalent must be specified when rebate_type is MEASURED. The behavior starting mid to late January 2025 will be: this field is required for rebate_type MEASURED and otherwise not allowed."
+    },
     "measured_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Measured post retrofit energy usage kwh equivalent",
       "minimum": 0,
+      "deprecated": true,
       "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
+    },
+    "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+      "type": "array",
+      "title": "Measured Post Retrofit Site Energy Usage By Fuel Type",
+      "items": {
+        "title": "Site Energy Usage",
+        "type": "object",
+        "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+        "properties": {
+          "annual_consumption": {
+            "$ref": "#/definitions/annual_consumption"
+          },
+          "energy_type": {
+            "$ref": "#/definitions/energy_type"
+          },
+          "unit_of_measure": {
+            "$ref": "#/definitions/unit_of_measure"
+          }
+        },
+        "required": [
+          "annual_consumption",
+          "energy_type",
+          "unit_of_measure"
+        ],
+        "additionalProperties": false
+      },
+      "description": "An array of measured site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed."
     },
     "measured_pre_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Measured pre-retrofit energy usage kwh equivalent",
       "minimum": 0,
+      "deprecated": true,
       "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
+    },
+    "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
+      "type": "array",
+      "title": "Measured Pre Retrofit Site Energy Usages By Fuel Type",
+      "items": {
+        "title": "Site Energy Usage",
+        "type": "object",
+        "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+        "properties": {
+          "annual_consumption": {
+            "$ref": "#/definitions/annual_consumption"
+          },
+          "energy_type": {
+            "$ref": "#/definitions/energy_type"
+          },
+          "unit_of_measure": {
+            "$ref": "#/definitions/unit_of_measure"
+          }
+        },
+        "required": [
+          "annual_consumption",
+          "energy_type",
+          "unit_of_measure"
+        ],
+        "additionalProperties": false
+      },
+      "description": "An array of measured pre-retrofit site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed. Please begin using this field asap."
     },
     "mf_conditioned_floor_area": {
       "type": "integer",
@@ -4833,17 +5103,85 @@
       "maxLength": 64,
       "description": "The model number for the product being purchased."
     },
+    "modeled_percent_energy_savings": {
+      "type": "number",
+      "maximum": 100,
+      "description": "The calculated percent modeled energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed \u2013 either this field or the two modeled_...kwh_equalent fields must be specified when _rebate_type is MODELED. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
+    },
     "modeled_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
       "title": "Modeled post retrofit energy usage kwh equivalent",
       "minimum": 0,
+      "deprecated": true,
       "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
+    },
+    "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
+      "title": "Modeled Post Retrofit Site Energy Usages By Fuel Type",
+      "type": "array",
+      "items": {
+        "title": "Site Energy Usage",
+        "type": "object",
+        "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+        "properties": {
+          "annual_consumption": {
+            "$ref": "#/definitions/annual_consumption"
+          },
+          "energy_type": {
+            "$ref": "#/definitions/energy_type"
+          },
+          "unit_of_measure": {
+            "$ref": "#/definitions/unit_of_measure"
+          }
+        },
+        "required": [
+          "annual_consumption",
+          "energy_type",
+          "unit_of_measure"
+        ],
+        "additionalProperties": false
+      },
+      "description": "An array of modeled post-retrofit site energy usage objects. Each entry represents a different fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
     },
     "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Modeled pre energy usage kwh equivalent",
+      "title": "Modeled pre-retrofit energy usage kwh equivalent",
       "minimum": 0,
+      "deprecated": true,
       "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
+    },
+    "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
+      "type": "array",
+      "title": "Modeled Pre Retrofit Site Energy Usages By Fuel Type",
+      "items": {
+        "title": "Site Energy Usage",
+        "type": "object",
+        "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+        "properties": {
+          "annual_consumption": {
+            "$ref": "#/definitions/annual_consumption"
+          },
+          "energy_type": {
+            "$ref": "#/definitions/energy_type"
+          },
+          "unit_of_measure": {
+            "$ref": "#/definitions/unit_of_measure"
+          }
+        },
+        "required": [
+          "annual_consumption",
+          "energy_type",
+          "unit_of_measure"
+        ],
+        "additionalProperties": false
+      },
+      "description": "An array of modeled pre-retrofit site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MODELED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MODELED and otherwise not allowed. Please begin using this field asap."
+    },
+    "modeling_software_used": {
+      "type": "string",
+      "title": "Modeling software used",
+      "minLength": 2,
+      "maxLength": 64,
+      "description": "This field should be used instead of doe_approved_bpi_2400_compliant_software_used, which is now deprecated. Enter the name of the software used to model energy usage and savings when rebate_type is MODELED. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. Until the doe_approved_bpi_2400_compliant_software_used field is removed, when rebate_type is MODELED you must either use this field OR doe_approved_bpi_2400_compliant_software_used, but not both. This field is NOT allowed unless rebate_type is MODELED."
     },
     "new_expiration_date": {
       "type": "string",
@@ -4895,6 +5233,16 @@
       "description": "Multiple reservations for MEASURED HOMES projects can be tied together into a portfolio by assigning the same portfolio_id value to each reservation in the portfolio.",
       "title": "Portfolio id"
     },
+    "post_retrofit_inspection_passed": {
+      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+      "title": "Post retrofit inspection passed",
+      "enum": [
+        "NA",
+        "NO",
+        "YES"
+      ],
+      "type": "string"
+    },
     "product_description": {
       "type": "string",
       "minLength": 1,
@@ -4905,9 +5253,11 @@
     "product_info": {
       "type": "array",
       "minItems": 1,
+      "title": "Product Info",
       "description": "Provide identifying information for the qualifying product or products that are covered by this rebate.",
       "items": {
         "type": "object",
+        "title": "Product Info Item",
         "properties": {
           "ahri_reference_number": {
             "$ref": "#/definitions/ahri_reference_number"
@@ -5002,6 +5352,55 @@
       "type": "date-time",
       "description": "If the reservation is not redeemed by this date, the reservation will be automatically canceled."
     },
+    "safety_checks": {
+      "title": "Safety Checks",
+      "type": "object",
+      "properties": {
+        "ambient_co_test_result": {
+          "$ref": "#/definitions/ambient_co_test_result"
+        },
+        "ashrae_62_2_ventilation_calculated": {
+          "$ref": "#/definitions/ashrae_62_2_ventilation_calculated"
+        },
+        "confirm_all_safety_check_results_disclosed_to_homeowner": {
+          "$ref": "#/definitions/confirm_all_safety_check_results_disclosed_to_homeowner"
+        },
+        "drainage_system_condition": {
+          "$ref": "#/definitions/drainage_system_condition"
+        },
+        "gas_leak_detection_test_result": {
+          "$ref": "#/definitions/gas_leak_detection_test_result"
+        },
+        "roof_condition": {
+          "$ref": "#/definitions/roof_condition"
+        },
+        "signs_of_mold_or_moisture": {
+          "$ref": "#/definitions/signs_of_mold_or_moisture"
+        },
+        "spillage_test_result": {
+          "$ref": "#/definitions/spillage_test_result"
+        },
+        "undiluted_co_test_result": {
+          "$ref": "#/definitions/undiluted_co_test_result"
+        },
+        "venting_test_result": {
+          "$ref": "#/definitions/venting_test_result"
+        }
+      },
+      "required": [
+        "ambient_co_test_result",
+        "ashrae_62_2_ventilation_calculated",
+        "confirm_all_safety_check_results_disclosed_to_homeowner",
+        "drainage_system_condition",
+        "gas_leak_detection_test_result",
+        "roof_condition",
+        "signs_of_mold_or_moisture",
+        "spillage_test_result",
+        "undiluted_co_test_result",
+        "venting_test_result"
+      ],
+      "additionalProperties": false
+    },
     "safety_checks_good_potential_issues_na": {
       "enum": [
         "GOOD",
@@ -5052,6 +5451,28 @@
       "maximum": 20,
       "description": "The number of bedrooms in the dwelling unit."
     },
+    "site_energy_usage": {
+      "title": "Site Energy Usage",
+      "type": "object",
+      "description": "This represents an annual site energy consumption for a particular fuel with specified energy units. The structure of this object is inspired by  https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage . Represent district-type energy uses by giving the equivalent energy in the source fuel(s).",
+      "properties": {
+        "annual_consumption": {
+          "$ref": "#/definitions/annual_consumption"
+        },
+        "energy_type": {
+          "$ref": "#/definitions/energy_type"
+        },
+        "unit_of_measure": {
+          "$ref": "#/definitions/unit_of_measure"
+        }
+      },
+      "required": [
+        "annual_consumption",
+        "energy_type",
+        "unit_of_measure"
+      ],
+      "additionalProperties": false
+    },
     "software_used_to_estimate_post_retrofit_energy_usage": {
       "type": "string",
       "title": "Software used to estimate measured savings",
@@ -5071,6 +5492,13 @@
     "text_file_content": {
       "type": "string",
       "maxLength": 1000000
+    },
+    "total_rebate_payout": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "The amount rebated to the claimant by the state. Do NOT include any contractor incentive amounts.",
+      "title": "Total rebate payout"
     },
     "unit_name_or_number": {
       "type": "string",
@@ -5471,6 +5899,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "title": "Cooling Systems Item",
         "properties": {
           "efficiency_seer": {
             "type": "number",
@@ -5551,6 +5980,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "title": "Heating Systems Item",
         "properties": {
           "efficiency_afue": {
             "type": "number",
@@ -5662,6 +6092,11 @@
       ],
       "x-nullable": true
     },
+    "file_content": {
+      "title": "File content",
+      "type": "string",
+      "minLength": 1
+    },
     "coupon_expiration_date_time": {
       "title": "Coupon expiration date time",
       "type": "string",
@@ -5712,6 +6147,37 @@
       "title": "Vendor coupon provider",
       "type": "string",
       "readOnly": true
+    },
+    "annual_consumption": {
+      "type": "number",
+      "description": "The annual site usage for the specified fuel type.",
+      "minimum": 0,
+      "exclusiveMinimum": true
+    },
+    "energy_type": {
+      "enum": [
+        "COAL",
+        "ELECTRICITY",
+        "FUEL_OIL",
+        "KEROSENE",
+        "NATURAL_GAS",
+        "PROPANE",
+        "SOLAR_HOT_WATER",
+        "WOOD"
+      ],
+      "description": "A site fuel type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/EnergyType . In the case of a district-type fuel, the source fuel must be used.",
+      "type": "string"
+    },
+    "unit_of_measure": {
+      "enum": [
+        "BTU",
+        "KBTU",
+        "KWH",
+        "MWH",
+        "THERMS"
+      ],
+      "description": "The energy unit for the energy_type. This enumeration is a subset of https://hpxml.nrel.gov/datadictionary/4.0.0/Building/ModeledUsages/ModeledUsage/UnitofMeasure.",
+      "type": "string"
     },
     "ambient_co_test_result": {
       "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
