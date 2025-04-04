@@ -10,10 +10,5 @@
     "aliases": [
       "latest"
     ]
-  },
-  {
-    "version": "prod-sanbox",
-    "title": "prod-sanbox",
-    "aliases": []
   }
 ]
