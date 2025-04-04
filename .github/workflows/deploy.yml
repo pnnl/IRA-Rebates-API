@@ -50,6 +50,8 @@ jobs:
         run: |
           git fetch origin gh-pages
           python script.py
+          cat mkdocs.yml
+          tree docs
           mike delete ${{ env.branch_name }} --push || echo "Version does not exist, continuing..."
 
       - name: Deploy Site with Mike
