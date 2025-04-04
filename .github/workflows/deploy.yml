@@ -8,6 +8,7 @@ on:
       - stage
       - sandbox
       - sandbox-test
+      - prod-sanbox
   pull_request:
     branches:
       - sandbox-test
