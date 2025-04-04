@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - prod
+      - prod+sandbox
       - stage
       - sandbox
       - sandbox-test
