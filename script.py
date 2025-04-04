@@ -531,6 +531,8 @@ def get_navs_as_dict(schema_folder: Path) -> list[dict[str, str]]:
         title = get_title_from_file_path(file)
         folder_name = get_folder_name_from_file_path(file)
         nav_items.append({title: f"{folder_name}/{folder_name}.md"})
+
+    nav_items.sort(key=lambda item: next(iter(item)))
     return nav_items
 
 def generate_markdown_files_from_folder(schema_folder: Path, export_path: Path, preamble: Path = None, title: str = None ):
