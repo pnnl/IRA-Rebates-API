@@ -4,11 +4,10 @@ on:
   push:
     branches:
       - prod
-      - "prod+sandbox"
       - stage
       - sandbox
       - sandbox-test
-      - prod-sanbox
+      - prod-sandbox
   pull_request:
     branches:
       - sandbox-test
