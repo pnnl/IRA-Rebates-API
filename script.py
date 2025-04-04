@@ -465,8 +465,9 @@ def generate_markdown_for_object(
             handle_enums(items["enum"], md_file)
 
         if "anyOf" in items:
-            handle_anyofs(
-                items["anyOf"], md_file, export_folder, copy.deepcopy(breadcrums)
+            items['type'] = 'object'
+            generate_markdown_for_object(
+                items, export_folder, copy.deepcopy(breadcrums)
             )
 
         md_file.create_md_file()
@@ -512,7 +513,7 @@ def generate_markdown_files(json_schema_file: Path, export_folder: Path):
     """Function for generating markdown files associated with json schema file."""
 
     contents = read_json_file(json_schema_file)
-    generate_markdown_for_object(contents, export_folder, copy.deepcopy([]))
+    generate_markdown_for_object(contents, export_folder, copy.deepcopy(['[home](../index.md)']))
 
 def get_folder_name_from_file_path(file_path: Path) -> str:
     return re.sub(r"(?<!^)(?=[A-Z])", "_", get_file_name_from_file_path(file_path)).lower()
