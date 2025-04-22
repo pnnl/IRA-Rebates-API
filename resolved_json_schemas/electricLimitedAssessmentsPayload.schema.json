@@ -315,6 +315,7 @@
       "enum": [
         "BALANCED",
         "CFIS",
+        "DO_NOT_KNOW",
         "ERV",
         "EXHAUST",
         "HRV",
