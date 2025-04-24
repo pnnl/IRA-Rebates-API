@@ -452,6 +452,7 @@
             "enum": [
               "BALANCED",
               "CFIS",
+              "DO_NOT_KNOW",
               "ERV",
               "EXHAUST",
               "HRV",
@@ -1729,7 +1730,6 @@
       "project_completion_date",
       "rebate_deducted",
       "state_attests_proof_of_identity_ownership_income",
-      "state_attests_any_failed_inspection_remediated",
       "upgrade_type"
     ],
     "oneOf": [

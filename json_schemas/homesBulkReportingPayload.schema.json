@@ -209,108 +209,17 @@
           }
         },
         "then": {
-          "oneOf": [
-            {
-              "required": [
-                "doe_approved_bpi_2400_compliant_software_used",
-                "modeled_post_retrofit_energy_usage_kwh_equivalent",
-                "modeled_pre_retrofit_energy_usage_kwh_equivalent"
-              ]
-            },
-            {
-              "required": [
-                "doe_approved_bpi_2400_compliant_software_used",
-                "modeled_percent_energy_savings"
-              ]
-            },
-            {
-              "required": [
-                "modeling_software_used",
-                "modeled_post_retrofit_energy_usage_kwh_equivalent",
-                "modeled_pre_retrofit_energy_usage_kwh_equivalent"
-              ]
-            },
-            {
-              "required": [
-                "modeling_software_used",
-                "modeled_percent_energy_savings"
-              ]
-            }
-          ],
-          "not": {
-            "anyOf": [
-              {
-                "required": [
-                  "estimated_percent_energy_savings"
-                ]
-              },
-              {
-                "required": [
-                  "estimated_post_retrofit_energy_usage_kwh_equivalent"
-                ]
-              },
-              {
-                "required": [
-                  "estimated_post_retrofit_site_energy_usages_by_fuel_type"
-                ]
-              },
-              {
-                "required": [
-                  "measured_percent_energy_savings"
-                ]
-              },
-              {
-                "required": [
-                  "measured_post_retrofit_energy_usage_kwh_equivalent"
-                ]
-              },
-              {
-                "required": [
-                  "measured_post_retrofit_site_energy_usages_by_fuel_type"
-                ]
-              },
-              {
-                "required": [
-                  "measured_pre_retrofit_energy_usage_kwh_equivalent"
-                ]
-              },
-              {
-                "required": [
-                  "measured_pre_retrofit_site_energy_usages_by_fuel_type"
-                ]
-              },
-              {
-                "required": [
-                  "reservation_amount"
-                ]
-              },
-              {
-                "required": [
-                  "software_used_to_estimate_post_retrofit_energy_usage"
-                ]
-              }
-            ]
-          }
-        },
-        "else": {
-          "$comment": "rebate_type is MEASURED",
-          "required": [
-            "reservation_amount",
-            "software_used_to_estimate_post_retrofit_energy_usage",
-            "total_rebate_payout"
-          ],
           "allOf": [
             {
               "oneOf": [
                 {
                   "required": [
-                    "estimated_post_retrofit_energy_usage_kwh_equivalent",
-                    "measured_pre_retrofit_energy_usage_kwh_equivalent"
+                    "doe_approved_bpi_2400_compliant_software_used"
                   ]
                 },
                 {
                   "required": [
-                    "estimated_percent_energy_savings"
+                    "modeling_software_used"
                   ]
                 }
               ]
@@ -319,15 +228,175 @@
               "oneOf": [
                 {
                   "required": [
-                    "measured_post_retrofit_energy_usage_kwh_equivalent"
-                  ]
+                    "modeled_post_retrofit_energy_usage_kwh_equivalent",
+                    "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                  ],
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "modeled_percent_energy_savings"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "modeled_post_retrofit_site_energy_usages_by_fuel_type"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+                        ]
+                      }
+                    ]
+                  }
                 },
                 {
                   "required": [
-                    "measured_percent_energy_savings"
-                  ]
+                    "modeled_percent_energy_savings",
+                    "modeled_post_retrofit_site_energy_usages_by_fuel_type",
+                    "modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+                  ],
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "modeled_post_retrofit_energy_usage_kwh_equivalent"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+                        ]
+                      }
+                    ]
+                  }
                 }
               ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "estimated_percent_energy_savings"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "estimated_post_retrofit_energy_usage_kwh_equivalent"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "estimated_post_retrofit_site_energy_usages_by_fuel_type"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_post_retrofit_energy_usage_kwh_equivalent"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_post_retrofit_site_energy_usages_by_fuel_type"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_pre_retrofit_energy_usage_kwh_equivalent"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_pre_retrofit_site_energy_usages_by_fuel_type"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "reservation_amount"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "software_used_to_estimate_post_retrofit_energy_usage"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "else": {
+          "$comment": "rebate_type is MEASURED",
+          "required": [
+            "reservation_amount",
+            "software_used_to_estimate_post_retrofit_energy_usage"
+          ],
+          "oneOf": [
+            {
+              "required": [
+                "estimated_post_retrofit_energy_usage_kwh_equivalent",
+                "measured_pre_retrofit_energy_usage_kwh_equivalent",
+                "measured_post_retrofit_energy_usage_kwh_equivalent"
+              ],
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "estimated_percent_energy_savings"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "estimated_post_retrofit_site_energy_usages_by_fuel_type"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_percent_energy_savings"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_post_retrofit_site_energy_usages_by_fuel_type"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_pre_retrofit_site_energy_usages_by_fuel_type"
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "required": [
+                "estimated_percent_energy_savings",
+                "estimated_post_retrofit_site_energy_usages_by_fuel_type",
+                "measured_percent_energy_savings",
+                "measured_post_retrofit_site_energy_usages_by_fuel_type",
+                "measured_pre_retrofit_site_energy_usages_by_fuel_type"
+              ],
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "estimated_post_retrofit_energy_usage_kwh_equivalent"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_post_retrofit_energy_usage_kwh_equivalent"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "measured_pre_retrofit_energy_usage_kwh_equivalent"
+                    ]
+                  }
+                ]
+              }
             }
           ],
           "not": {
@@ -335,11 +404,6 @@
               {
                 "required": [
                   "doe_approved_bpi_2400_compliant_software_used"
-                ]
-              },
-              {
-                "required": [
-                  "modeling_software_used"
                 ]
               },
               {
@@ -365,6 +429,11 @@
               {
                 "required": [
                   "modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+                ]
+              },
+              {
+                "required": [
+                  "modeling_software_used"
                 ]
               }
             ]

@@ -224,6 +224,13 @@
       ],
       "additionalProperties": false
     },
+    "total_rebate_payout": {
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "The amount rebated to the claimant by the state. Do NOT include any contractor incentive amounts.",
+      "title": "Total rebate payout"
+    },
     "vendor_id": {
       "type": "string",
       "minLength": 6,
@@ -271,6 +278,9 @@
           "measured_percent_energy_savings"
         ]
       }
+    ],
+    "required": [
+      "total_rebate_payout"
     ]
   },
   "else": {

@@ -9,7 +9,8 @@
       "multipleOf": 0.01,
       "minimum": 0,
       "description": "This is the amount that the state paid to an aggregator, or other claimant, for a HOMES rebate.",
-      "title": "Claimant payment"
+      "title": "Claimant payment",
+      "deprecated": true
     },
     "state_attests_any_failed_inspection_remediated": {
       "type": "boolean",
