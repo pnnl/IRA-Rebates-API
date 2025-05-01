@@ -145,7 +145,6 @@
       "energy_data_evaluation_permission",
       "equipment_and_material_cost",
       "installation_type",
-      "is_disadvantaged_community",
       "product_info",
       "product_vendor_id",
       "project_completion_date",
@@ -539,7 +538,6 @@
         "then": {
           "required": [
             "contractor_company_name",
-            "contractor_dac_incentive",
             "contractor_incentive",
             "contractor_name",
             "is_contractor_eligible",
