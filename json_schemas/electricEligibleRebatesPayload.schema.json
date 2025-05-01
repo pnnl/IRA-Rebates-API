@@ -53,7 +53,6 @@
     "claimant_type",
     "construction_type",
     "installation_type",
-    "is_disadvantaged_community",
     "upgrade_type"
   ],
   "additionalProperties": true,
