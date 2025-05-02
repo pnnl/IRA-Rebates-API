@@ -305,6 +305,9 @@
           ]
         }
       }
+    ],
+    "required": [
+      "total_rebate_payout"
     ]
   },
   "else": {
