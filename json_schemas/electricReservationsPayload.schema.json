@@ -438,22 +438,7 @@
       "then": {
         "required": [
           "contractor_incentive"
-        ],
-        "if": {
-          "properties": {
-            "is_disadvantaged_community": {
-              "const": true
-            }
-          },
-          "required": [
-            "is_disadvantaged_community"
-          ]
-        },
-        "then": {
-          "required": [
-            "contractor_dac_incentive"
-          ]
-        }
+        ]
       },
       "else": {
         "not": {
