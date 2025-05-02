@@ -60,7 +60,7 @@
         "type": "number",
         "multipleOf": 0.01,
         "minimum": 0,
-        "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive. This field is required if the address of the building is within a DAC.",
+        "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive.",
         "title": "Contractor DAC incentive"
       },
       "contractor_incentive": {
@@ -1724,7 +1724,6 @@
       "energy_data_evaluation_permission",
       "equipment_and_material_cost",
       "installation_type",
-      "is_disadvantaged_community",
       "product_info",
       "product_vendor_id",
       "project_completion_date",
@@ -2175,7 +2174,6 @@
         "then": {
           "required": [
             "contractor_company_name",
-            "contractor_dac_incentive",
             "contractor_incentive",
             "contractor_name",
             "is_contractor_eligible",
