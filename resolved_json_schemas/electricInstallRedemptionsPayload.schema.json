@@ -19,7 +19,7 @@
       "description": "The name of the primary contractor for the project."
     },
     "equipment_and_material_cost": {
-      "description": "The total cost of the equipment and materials purchased as part of a redemption.",
+      "description": "This should not include the cost of the qualifying product(s) for this rebate. Those should be provided using the `/electric/reservations/{reservation_id}/product-redemptions` endpoint. Include incidental equipment and materials costs directly related to installation here.",
       "type": "number",
       "title": "Equipment and material cost",
       "minimum": 0,
@@ -61,7 +61,7 @@
       "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
     },
     "rebate_deducted": {
-      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation.",
+      "description": "This is the amount that was deducted from the applicant's (homeowner, building owner, renter) invoiced amount for the installation.",
       "type": "number",
       "minimum": 0,
       "multipleOf": 0.01,
@@ -79,7 +79,7 @@
       "type": "object",
       "properties": {
         "ambient_co_test_result": {
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
           "title": "Ambient CO test result",
           "enum": [
             "FAILED",
@@ -97,7 +97,7 @@
           ]
         },
         "confirm_all_safety_check_results_disclosed_to_homeowner": {
-          "title": "ASHRAE 62.2 ventilation calculated",
+          "title": "Confirm all safety check results disclosed to homeowner",
           "enum": [
             "NA",
             "NO",
@@ -113,8 +113,8 @@
           ]
         },
         "gas_leak_detection_test_result": {
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Ambient CO test result",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Gas leak detection test result",
           "enum": [
             "FAILED",
             "NA",
@@ -123,7 +123,7 @@
           ]
         },
         "roof_condition": {
-          "title": "Drainage system condition",
+          "title": "Roof condition",
           "enum": [
             "GOOD",
             "NA",
@@ -132,7 +132,7 @@
         },
         "signs_of_mold_or_moisture": {
           "description": "Contractor should not proceed with energy efficiency measures until mold and moisture issues are mitigated.",
-          "title": "ASHRAE 62.2 ventilation calculated",
+          "title": "Signs of mold or moisture",
           "enum": [
             "NA",
             "NO",
@@ -140,8 +140,8 @@
           ]
         },
         "spillage_test_result": {
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Ambient CO test result",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Spillage test result",
           "enum": [
             "FAILED",
             "NA",
@@ -150,8 +150,8 @@
           ]
         },
         "undiluted_co_test_result": {
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Ambient CO test result",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Undiluted CO test result",
           "enum": [
             "FAILED",
             "NA",
@@ -160,8 +160,8 @@
           ]
         },
         "venting_test_result": {
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-          "title": "Ambient CO test result",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
+          "title": "Venting test result",
           "enum": [
             "FAILED",
             "NA",
@@ -188,480 +188,463 @@
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "object",
       "title": "Upgrade Component Details",
-      "oneOf": [
-        {
-          "title": "Original Component Details One Of 1",
+      "properties": {
+        "electric_cooking_appliance_upgrade_details": {
+          "title": "Electric Cooking Appliance Upgrade Component Details",
+          "type": "object",
+          "description": "Details that describe this improvement",
           "properties": {
-            "insulation_air_sealing_ventilation_upgrade_details": {
-              "type": "array",
-              "title": "Insulation Air Sealing Ventilation Upgrade Component Details",
-              "description": "Details that describe this improvement",
-              "items": {
-                "title": "Insulation Air Sealing Ventilation Upgrade Component Details Item",
+            "cooking_appliance_type": {
+              "enum": [
+                "INDUCTION_COOKTOP",
+                "STANDARD_ELECTRIC"
+              ]
+            }
+          },
+          "required": [
+            "cooking_appliance_type"
+          ],
+          "additionalProperties": false
+        },
+        "electrical_panel_upgrade_details": {
+          "title": "Electrical Panel Upgrade Component Details",
+          "description": "Details that describe this improvement",
+          "type": "object",
+          "properties": {
+            "max_amps": {
+              "type": "integer",
+              "minimum": 30
+            },
+            "num_open_breaker_spots": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "max_amps",
+            "num_open_breaker_spots"
+          ],
+          "additionalProperties": false
+        },
+        "heat_pump_clothes_dryer_upgrade_details": {
+          "title": "Heat Pump Clothes Dryer Upgrade Component Details",
+          "type": "object",
+          "description": "Details that describe this improvement",
+          "properties": {
+            "energy_guide_estimated_energy_use_kwh": {
+              "type": "integer",
+              "exclsuiveMinimum": 0
+            }
+          },
+          "required": [
+            "energy_guide_estimated_energy_use_kwh"
+          ],
+          "additionalProperties": false
+        },
+        "heat_pump_water_heater_upgrade_details": {
+          "title": "Heat Pump Water Heater Upgrade Component Details",
+          "type": "object",
+          "description": "Details that describe this improvement",
+          "properties": {
+            "storage_capacity": {
+              "enum": [
+                "45_GALLON",
+                "50_GALLON",
+                "60_GALLON",
+                "80_GALLON",
+                "LESS_THAN_45_GALLON",
+                "MORE_THAN_80_GALLON"
+              ]
+            }
+          },
+          "required": [
+            "storage_capacity"
+          ],
+          "additionalProperties": false
+        },
+        "insulation_air_sealing_ventilation_upgrade_details": {
+          "type": "array",
+          "title": "Insulation Air Sealing Ventilation Upgrade Component Details",
+          "description": "Details that describe this improvement",
+          "items": {
+            "title": "Insulation Air Sealing Ventilation Upgrade Component Details Item",
+            "anyOf": [
+              {
+                "title": "Air Sealing Upgrade Component Details",
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "cfm50": {
+                    "type": "integer",
+                    "minimum": 100
+                  },
+                  "is_homeowner_aware_combustion_safety_tests_are_highly_recommended": {
+                    "type": "boolean",
+                    "description": "Is the homeowner aware that combustion safety tests are highly recommended for homes with any combustion appliances after air sealing projects are completed?"
+                  },
+                  "is_leakage_rate_known": {
+                    "type": "boolean"
+                  },
+                  "locations": {
+                    "type": "array",
+                    "title": "Location Item",
+                    "items": {
+                      "enum": [
+                        "ATTIC",
+                        "FLOOR_FOUNDATION",
+                        "WALLS_WINDOWS_DOORS"
+                      ]
+                    },
+                    "uniqueItems": true,
+                    "minItems": 1
+                  },
+                  "upgrade_subtype": {
+                    "const": "AIR_SEALING"
+                  }
+                },
+                "required": [
+                  "is_homeowner_aware_combustion_safety_tests_are_highly_recommended",
+                  "is_leakage_rate_known",
+                  "locations",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false,
+                "if": {
+                  "properties": {
+                    "is_leakage_rate_known": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "cfm50"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "required": [
+                      "cfm50"
+                    ]
+                  }
+                }
+              },
+              {
+                "title": "Ceiling Insulation Upgrade Component Details",
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "percent_ceiling_receiving_additional_insulation": {
+                    "description": "Choose the closest percent of total ceiling area that will receive (additional) insulation. The ceiling is the one that is associated with the appropriate conditioned_floor_area field.",
+                    "enum": [
+                      10,
+                      25,
+                      50,
+                      75,
+                      100
+                    ]
+                  },
+                  "r_value_added": {
+                    "description": "Choose the R-value that best describes the amount of insulation added.",
+                    "enum": [
+                      "LESS_THAN_R30",
+                      "MORE_THAN_R60",
+                      "R30",
+                      "R49",
+                      "R60"
+                    ]
+                  },
+                  "upgrade_subtype": {
+                    "const": "CEILING_INSULATION"
+                  }
+                },
+                "required": [
+                  "percent_ceiling_receiving_additional_insulation",
+                  "r_value_added",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "title": "Wall Insulation Upgrade Component Details",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "cavity_insulation_added": {
+                    "enum": [
+                      "MORE_THAN_R21",
+                      "R13",
+                      "R19",
+                      "R21"
+                    ]
+                  },
+                  "exterior_continuous_insulation_added": {
+                    "enum": [
+                      "1_INCH",
+                      "2_INCH",
+                      "MORE_THAN_2_INCH"
+                    ]
+                  },
+                  "percent_wall_area_treated": {
+                    "enum": [
+                      10,
+                      25,
+                      50,
+                      75,
+                      100
+                    ]
+                  },
+                  "upgrade_subtype": {
+                    "const": "WALL_INSULATION"
+                  }
+                },
                 "anyOf": [
                   {
-                    "title": "Air Sealing Upgrade Component Details",
-                    "type": "object",
-                    "description": "Details that describe this improvement",
-                    "properties": {
-                      "cfm50": {
-                        "type": "integer",
-                        "minimum": 100
-                      },
-                      "is_homeowner_aware_combustion_safety_tests_are_highly_recommended": {
-                        "type": "boolean",
-                        "description": "Is the homeowner aware that combustion safety tests are highly recommended for homes with any combustion appliances after air sealing projects are completed?"
-                      },
-                      "is_leakage_rate_known": {
-                        "type": "boolean"
-                      },
-                      "locations": {
-                        "type": "array",
-                        "title": "Location Item",
-                        "items": {
-                          "enum": [
-                            "ATTIC",
-                            "FLOOR_FOUNDATION",
-                            "WALLS_WINDOWS_DOORS"
-                          ]
-                        },
-                        "uniqueItems": true,
-                        "minItems": 1
-                      },
-                      "upgrade_subtype": {
-                        "const": "AIR_SEALING"
-                      }
-                    },
                     "required": [
-                      "is_homeowner_aware_combustion_safety_tests_are_highly_recommended",
-                      "is_leakage_rate_known",
-                      "locations",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false,
-                    "if": {
-                      "properties": {
-                        "is_leakage_rate_known": {
-                          "const": true
-                        }
-                      }
-                    },
-                    "then": {
-                      "required": [
-                        "cfm50"
-                      ]
-                    },
-                    "else": {
-                      "not": {
-                        "required": [
-                          "cfm50"
-                        ]
-                      }
-                    }
+                      "cavity_insulation_added"
+                    ]
                   },
                   {
-                    "title": "Ceiling Insulation Upgrade Component Details",
-                    "type": "object",
-                    "description": "Details that describe this improvement",
-                    "properties": {
-                      "percent_ceiling_receiving_additional_insulation": {
-                        "description": "Choose the closest percent of total ceiling area that will receive (additional) insulation. The ceiling is the one that is associated with the appropriate conditioned_floor_area field.",
-                        "enum": [
-                          10,
-                          25,
-                          50,
-                          75,
-                          100
-                        ]
-                      },
-                      "r_value_added": {
-                        "description": "Choose the R-value that best describes the amount of insulation added.",
-                        "enum": [
-                          "LESS_THAN_R30",
-                          "MORE_THAN_R60",
-                          "R30",
-                          "R49",
-                          "R60"
-                        ]
-                      },
-                      "upgrade_subtype": {
-                        "const": "CEILING_INSULATION"
-                      }
-                    },
                     "required": [
-                      "percent_ceiling_receiving_additional_insulation",
-                      "r_value_added",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "object",
-                    "title": "Wall Insulation Upgrade Component Details",
-                    "description": "Details that describe this improvement",
-                    "properties": {
-                      "cavity_insulation_added": {
-                        "enum": [
-                          "MORE_THAN_R21",
-                          "R13",
-                          "R19",
-                          "R21"
-                        ]
-                      },
-                      "exterior_continuous_insulation_added": {
-                        "enum": [
-                          "1_INCH",
-                          "2_INCH",
-                          "MORE_THAN_2_INCH"
-                        ]
-                      },
-                      "percent_wall_area_treated": {
-                        "enum": [
-                          10,
-                          25,
-                          50,
-                          75,
-                          100
-                        ]
-                      },
-                      "upgrade_subtype": {
-                        "const": "WALL_INSULATION"
-                      }
-                    },
-                    "anyOf": [
-                      {
-                        "required": [
-                          "cavity_insulation_added"
-                        ]
-                      },
-                      {
-                        "required": [
-                          "exterior_continuous_insulation_added"
-                        ]
-                      }
-                    ],
-                    "required": [
-                      "percent_wall_area_treated",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "title": "Duct Sealing Upgrade Component Details",
-                    "description": "Details that describe this improvement",
-                    "type": "object",
-                    "properties": {
-                      "cfm25": {
-                        "description": "Total duct leakage cfm at 25 Pa pressure difference",
-                        "type": "number",
-                        "exclusiveminimum": 0
-                      },
-                      "is_leakage_rate_known": {
-                        "type": "boolean"
-                      },
-                      "upgrade_subtype": {
-                        "const": "DUCT_SEALING"
-                      }
-                    },
-                    "required": [
-                      "is_leakage_rate_known",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false,
-                    "if": {
-                      "properties": {
-                        "is_leakage_rate_known": {
-                          "const": true
-                        }
-                      }
-                    },
-                    "then": {
-                      "required": [
-                        "cfm25"
-                      ]
-                    },
-                    "else": {
-                      "not": {
-                        "required": [
-                          "cfm25"
-                        ]
-                      }
-                    }
-                  },
-                  {
-                    "title": "Duct Insulation Upgrade Component Details",
-                    "type": "object",
-                    "description": "Details that describe this improvement",
-                    "properties": {
-                      "percent_ducts_receiving_additional_insulation": {
-                        "description": "The percentage of the ducts that received additional insulation in the upgrade. Choose the closest percentage.",
-                        "enum": [
-                          10,
-                          25,
-                          50,
-                          75,
-                          100
-                        ]
-                      },
-                      "upgrade_subtype": {
-                        "const": "DUCT_INSULATION"
-                      }
-                    },
-                    "required": [
-                      "percent_ducts_receiving_additional_insulation",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "object",
-                    "title": "Foor Conditioned Space Upgrade Component Details",
-                    "description": "Details that describe this improvement",
-                    "properties": {
-                      "percent_floor_receiving_additional_insulation": {
-                        "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
-                        "enum": [
-                          10,
-                          25,
-                          50,
-                          75,
-                          100
-                        ]
-                      },
-                      "r_value_added": {
-                        "description": "Choose the R-value that best describes the amount of insulation added.",
-                        "enum": [
-                          "LESS_THAN_R10",
-                          "MORE_THAN_R30",
-                          "R10",
-                          "R13",
-                          "R19",
-                          "R30"
-                        ]
-                      },
-                      "upgrade_subtype": {
-                        "const": "FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION"
-                      }
-                    },
-                    "required": [
-                      "percent_floor_receiving_additional_insulation",
-                      "r_value_added",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "object",
-                    "title": "Floor Unconditioned Space Upgrade Component Details",
-                    "description": "The preexisting conditions associated with this improvement",
-                    "properties": {
-                      "percent_floor_receiving_additional_insulation": {
-                        "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
-                        "enum": [
-                          10,
-                          25,
-                          50,
-                          75,
-                          100
-                        ]
-                      },
-                      "r_value_added": {
-                        "description": "Choose the R-value that best describes the amount of insulation added.",
-                        "enum": [
-                          "LESS_THAN_R10",
-                          "MORE_THAN_R30",
-                          "R10",
-                          "R13",
-                          "R19",
-                          "R30"
-                        ]
-                      },
-                      "upgrade_subtype": {
-                        "const": "FLOOR_ABOVE_UNCONDITIONED_SPACE_INSULATION"
-                      }
-                    },
-                    "required": [
-                      "percent_floor_receiving_additional_insulation",
-                      "r_value_added",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "title": "Foundation Insulation Upgrade Component Details",
-                    "type": "object",
-                    "description": "Details that describe this improvement",
-                    "properties": {
-                      "percent_foundation_perimeter_receiving_additional_insulation": {
-                        "description": "For estimating this percentage, use the distance around the footprint that is determined by either `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
-                        "enum": [
-                          10,
-                          25,
-                          50,
-                          75,
-                          100
-                        ]
-                      },
-                      "r_value_added": {
-                        "description": "Choose the R-value that best describes the amount of insulation added.",
-                        "enum": [
-                          "LESS_THAN_R5",
-                          "R10",
-                          "R13",
-                          "R19",
-                          "R30",
-                          "R5"
-                        ]
-                      },
-                      "upgrade_subtype": {
-                        "const": "FOUNDATION_INSULATION"
-                      }
-                    },
-                    "required": [
-                      "percent_foundation_perimeter_receiving_additional_insulation",
-                      "r_value_added",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "title": "Ventilation Upgrade Component Details",
-                    "type": "object",
-                    "description": "Details that describe this improvement",
-                    "properties": {
-                      "cfm_flow_rate": {
-                        "type": "number",
-                        "exclusiveMinimum": 0
-                      },
-                      "upgrade_subtype": {
-                        "const": "VENTILATION"
-                      }
-                    },
-                    "required": [
-                      "cfm_flow_rate",
-                      "upgrade_subtype"
-                    ],
-                    "additionalProperties": false
+                      "exterior_continuous_insulation_added"
+                    ]
                   }
-                ]
-              }
-            }
-          },
-          "required": [
-            "insulation_air_sealing_ventilation_upgrade_details"
-          ],
-          "additionalProperties": false
-        },
-        {
-          "title": "Original Component Details One Of 2",
-          "properties": {
-            "electrical_panel_upgrade_details": {
-              "title": "Electrical Panel Upgrade Component Details",
-              "description": "Details that describe this improvement",
-              "type": "object",
-              "properties": {
-                "max_amps": {
-                  "type": "integer",
-                  "minimum": 30
+                ],
+                "required": [
+                  "percent_wall_area_treated",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "title": "Duct Sealing Upgrade Component Details",
+                "description": "Details that describe this improvement",
+                "type": "object",
+                "properties": {
+                  "cfm25": {
+                    "description": "Total duct leakage cfm at 25 Pa pressure difference",
+                    "type": "number",
+                    "exclusiveminimum": 0
+                  },
+                  "is_leakage_rate_known": {
+                    "type": "boolean"
+                  },
+                  "upgrade_subtype": {
+                    "const": "DUCT_SEALING"
+                  }
                 },
-                "num_open_breaker_spots": {
-                  "type": "integer",
-                  "minimum": 0
+                "required": [
+                  "is_leakage_rate_known",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false,
+                "if": {
+                  "properties": {
+                    "is_leakage_rate_known": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "cfm25"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "required": [
+                      "cfm25"
+                    ]
+                  }
                 }
               },
-              "required": [
-                "max_amps",
-                "num_open_breaker_spots"
-              ],
-              "additionalProperties": false
-            }
-          },
+              {
+                "title": "Duct Insulation Upgrade Component Details",
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "percent_ducts_receiving_additional_insulation": {
+                    "description": "The percentage of the ducts that received additional insulation in the upgrade. Choose the closest percentage.",
+                    "enum": [
+                      10,
+                      25,
+                      50,
+                      75,
+                      100
+                    ]
+                  },
+                  "upgrade_subtype": {
+                    "const": "DUCT_INSULATION"
+                  }
+                },
+                "required": [
+                  "percent_ducts_receiving_additional_insulation",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "title": "Foor Conditioned Space Upgrade Component Details",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "percent_floor_receiving_additional_insulation": {
+                    "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                    "enum": [
+                      10,
+                      25,
+                      50,
+                      75,
+                      100
+                    ]
+                  },
+                  "r_value_added": {
+                    "description": "Choose the R-value that best describes the amount of insulation added.",
+                    "enum": [
+                      "LESS_THAN_R10",
+                      "MORE_THAN_R30",
+                      "R10",
+                      "R13",
+                      "R19",
+                      "R30"
+                    ]
+                  },
+                  "upgrade_subtype": {
+                    "const": "FLOOR_ABOVE_CONDITIONED_SPACE_INSULATION"
+                  }
+                },
+                "required": [
+                  "percent_floor_receiving_additional_insulation",
+                  "r_value_added",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "title": "Floor Unconditioned Space Upgrade Component Details",
+                "description": "The preexisting conditions associated with this improvement",
+                "properties": {
+                  "percent_floor_receiving_additional_insulation": {
+                    "description": "For estimating this percentage, use the total conditioned floor area `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                    "enum": [
+                      10,
+                      25,
+                      50,
+                      75,
+                      100
+                    ]
+                  },
+                  "r_value_added": {
+                    "description": "Choose the R-value that best describes the amount of insulation added.",
+                    "enum": [
+                      "LESS_THAN_R10",
+                      "MORE_THAN_R30",
+                      "R10",
+                      "R13",
+                      "R19",
+                      "R30"
+                    ]
+                  },
+                  "upgrade_subtype": {
+                    "const": "FLOOR_ABOVE_UNCONDITIONED_SPACE_INSULATION"
+                  }
+                },
+                "required": [
+                  "percent_floor_receiving_additional_insulation",
+                  "r_value_added",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "title": "Foundation Insulation Upgrade Component Details",
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "percent_foundation_perimeter_receiving_additional_insulation": {
+                    "description": "For estimating this percentage, use the distance around the footprint that is determined by either `mf_conditioned_floor_area` or `sf_conditioned_floor_area`, whichever is required for this reservation.",
+                    "enum": [
+                      10,
+                      25,
+                      50,
+                      75,
+                      100
+                    ]
+                  },
+                  "r_value_added": {
+                    "description": "Choose the R-value that best describes the amount of insulation added.",
+                    "enum": [
+                      "LESS_THAN_R5",
+                      "R10",
+                      "R13",
+                      "R19",
+                      "R30",
+                      "R5"
+                    ]
+                  },
+                  "upgrade_subtype": {
+                    "const": "FOUNDATION_INSULATION"
+                  }
+                },
+                "required": [
+                  "percent_foundation_perimeter_receiving_additional_insulation",
+                  "r_value_added",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "title": "Ventilation Upgrade Component Details",
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "cfm_flow_rate": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "upgrade_subtype": {
+                    "const": "VENTILATION"
+                  }
+                },
+                "required": [
+                  "cfm_flow_rate",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "oneOf": [
+        {
           "required": [
             "electrical_panel_upgrade_details"
-          ],
-          "additionalProperties": false
+          ]
         },
         {
-          "title": "Original Component Details One Of 3",
-          "properties": {
-            "electric_cooking_appliance_upgrade_details": {
-              "title": "Electric Cooking Appliance Upgrade Component Details",
-              "type": "object",
-              "description": "Details that describe this improvement",
-              "properties": {
-                "cooking_appliance_type": {
-                  "enum": [
-                    "INDUCTION_COOKTOP",
-                    "STANDARD_ELECTRIC"
-                  ]
-                }
-              },
-              "required": [
-                "cooking_appliance_type"
-              ],
-              "additionalProperties": false
-            }
-          },
           "required": [
             "electric_cooking_appliance_upgrade_details"
-          ],
-          "additionalProperties": false
+          ]
         },
         {
-          "title": "Original Component Details One Of 4",
-          "properties": {
-            "heat_pump_clothes_dryer_upgrade_details": {
-              "title": "Heat Pump Clothes Dryer Upgrade Component Details",
-              "type": "object",
-              "description": "Details that describe this improvement",
-              "properties": {
-                "energy_guide_estimated_energy_use_kwh": {
-                  "type": "integer",
-                  "exclsuiveMinimum": 0
-                }
-              },
-              "required": [
-                "energy_guide_estimated_energy_use_kwh"
-              ],
-              "additionalProperties": false
-            }
-          },
           "required": [
             "heat_pump_clothes_dryer_upgrade_details"
-          ],
-          "additionalProperties": false
+          ]
         },
         {
-          "title": "Original Component Details One Of 5",
-          "properties": {
-            "heat_pump_water_heater_upgrade_details": {
-              "title": "Heat Pump Water Heater Upgrade Component Details",
-              "type": "object",
-              "description": "Details that describe this improvement",
-              "properties": {
-                "storage_capacity": {
-                  "enum": [
-                    "45_GALLON",
-                    "50_GALLON",
-                    "60_GALLON",
-                    "80_GALLON",
-                    "LESS_THAN_45_GALLON",
-                    "MORE_THAN_80_GALLON"
-                  ]
-                }
-              },
-              "required": [
-                "storage_capacity"
-              ],
-              "additionalProperties": false
-            }
-          },
           "required": [
             "heat_pump_water_heater_upgrade_details"
-          ],
-          "additionalProperties": false
+          ]
+        },
+        {
+          "required": [
+            "insulation_air_sealing_ventilation_upgrade_details"
+          ]
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "upgrade_type": {
       "title": "Upgrade type",

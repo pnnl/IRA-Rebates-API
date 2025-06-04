@@ -3,66 +3,49 @@
   "$id": "https://ira-rebates.labworks.org/schemas/upgradeComponentDetails",
   "type": "object",
   "title": "Upgrade Component Details",
+  "properties": {
+    "electric_cooking_appliance_upgrade_details": {
+      "$ref": "/schemas/electricCookingAppliance#upgrade_component_details"
+    },
+    "electrical_panel_upgrade_details": {
+      "$ref": "/schemas/electricalPanel#upgrade_component_details"
+    },
+    "heat_pump_clothes_dryer_upgrade_details": {
+      "$ref": "/schemas/heatPumpClothesDryer#upgrade_component_details"
+    },
+    "heat_pump_water_heater_upgrade_details": {
+      "$ref": "/schemas/heatPumpWaterHeater#upgrade_component_details"
+    },
+    "insulation_air_sealing_ventilation_upgrade_details": {
+      "$ref": "/schemas/insulationAirSealingVentilation#upgrade_component_details"
+    }
+  },
   "oneOf": [
     {
-      "title": "Original Component Details One Of 1",
-      "properties": {
-        "insulation_air_sealing_ventilation_upgrade_details": {
-          "$ref": "/schemas/insulationAirSealingVentilation#upgrade_component_details"
-        }
-      },
-      "required": [
-        "insulation_air_sealing_ventilation_upgrade_details"
-      ],
-      "additionalProperties": false
-    },
-    {
-      "title": "Original Component Details One Of 2",
-      "properties": {
-        "electrical_panel_upgrade_details": {
-          "$ref": "/schemas/electricalPanel#upgrade_component_details"
-        }
-      },
       "required": [
         "electrical_panel_upgrade_details"
-      ],
-      "additionalProperties": false
+      ]
     },
     {
-      "title": "Original Component Details One Of 3",
-      "properties": {
-        "electric_cooking_appliance_upgrade_details": {
-          "$ref": "/schemas/electricCookingAppliance#upgrade_component_details"
-        }
-      },
       "required": [
         "electric_cooking_appliance_upgrade_details"
-      ],
-      "additionalProperties": false
+      ]
     },
     {
-      "title": "Original Component Details One Of 4",
-      "properties": {
-        "heat_pump_clothes_dryer_upgrade_details": {
-          "$ref": "/schemas/heatPumpClothesDryer#upgrade_component_details"
-        }
-      },
       "required": [
         "heat_pump_clothes_dryer_upgrade_details"
-      ],
-      "additionalProperties": false
+      ]
     },
     {
-      "title": "Original Component Details One Of 5",
-      "properties": {
-        "heat_pump_water_heater_upgrade_details": {
-          "$ref": "/schemas/heatPumpWaterHeater#upgrade_component_details"
-        }
-      },
       "required": [
         "heat_pump_water_heater_upgrade_details"
-      ],
-      "additionalProperties": false
+      ]
+    },
+    {
+      "required": [
+        "insulation_air_sealing_ventilation_upgrade_details"
+      ]
     }
-  ]
+  ],
+  "additionalProperties": false
 }
