@@ -317,7 +317,7 @@
       "title": "Unit name or number",
       "minLength": 1,
       "maxLength": 32,
-      "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
+      "description": "This is the unit designator for a unit in a multifamily building. It should also be used in situations where multiple homes share a street address and are distinguished only by a Lot# or other special designation. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
     },
     "upgrades": {
       "type": "array",
@@ -494,11 +494,6 @@
             {
               "required": [
                 "num_units_meeting_income_bucket"
-              ]
-            },
-            {
-              "required": [
-                "unit_name_or_number"
               ]
             }
           ]

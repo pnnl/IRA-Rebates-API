@@ -232,11 +232,6 @@
               "required": [
                 "num_units_meeting_income_bucket"
               ]
-            },
-            {
-              "required": [
-                "unit_name_or_number"
-              ]
             }
           ]
         }
@@ -409,7 +404,12 @@
                 "properties": {
                   "insulation_air_sealing_ventilation_original_details": {
                     "contains": {
-                      "$ref": "/schemas/airSealing#original_component_details"
+                      "title": "Air Sealing Original Component Details Object",
+                      "properties": {
+                        "upgrade_subtype": {
+                          "const": "AIR_SEALING"
+                        }
+                      }
                     }
                   }
                 }
