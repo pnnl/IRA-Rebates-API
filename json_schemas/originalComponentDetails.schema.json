@@ -3,78 +3,57 @@
   "$id": "https://ira-rebates.labworks.org/schemas/originalComponentDetails",
   "type": "object",
   "title": "Original Component Details",
+  "properties": {
+    "electric_cooking_appliance_original_details": {
+      "$ref": "/schemas/electricCookingAppliance#original_component_details"
+    },
+    "electrical_panel_original_details": {
+      "$ref": "/schemas/electricalPanel#original_component_details"
+    },
+    "heat_pump_clothes_dryer_original_details": {
+      "$ref": "/schemas/heatPumpClothesDryer#original_component_details"
+    },
+    "heat_pump_for_space_heating_or_cooling_original_details": {
+      "$ref": "/schemas/heatPumpForSpaceHeatingOrCooling#original_component_details"
+    },
+    "heat_pump_water_heater_original_details": {
+      "$ref": "/schemas/heatPumpWaterHeater#original_component_details"
+    },
+    "insulation_air_sealing_ventilation_original_details": {
+      "$ref": "/schemas/insulationAirSealingVentilation#original_component_details"
+    }
+  },
   "oneOf": [
     {
-      "title": "Original Component Details One Of 1",
-      "properties": {
-        "insulation_air_sealing_ventilation_original_details": {
-          "$ref": "/schemas/insulationAirSealingVentilation#original_component_details"
-        }
-      },
-      "required": [
-        "insulation_air_sealing_ventilation_original_details"
-      ],
-      "additionalProperties": false
-    },
-    {
-      "title": "Original Component Details One Of 2",
-      "properties": {
-        "electrical_panel_original_details": {
-          "$ref": "/schemas/electricalPanel#original_component_details"
-        }
-      },
       "required": [
         "electrical_panel_original_details"
-      ],
-      "additionalProperties": false
+      ]
     },
     {
-      "title": "Original Component Details One Of 3",
-      "properties": {
-        "electric_cooking_appliance_original_details": {
-          "$ref": "/schemas/electricCookingAppliance#original_component_details"
-        }
-      },
       "required": [
         "electric_cooking_appliance_original_details"
-      ],
-      "additionalProperties": false
+      ]
     },
     {
-      "title": "Original Component Details One Of 4",
-      "properties": {
-        "heat_pump_clothes_dryer_original_details": {
-          "$ref": "/schemas/heatPumpClothesDryer#original_component_details"
-        }
-      },
       "required": [
         "heat_pump_clothes_dryer_original_details"
-      ],
-      "additionalProperties": false
+      ]
     },
     {
-      "title": "Original Component Details One Of 5",
-      "properties": {
-        "heat_pump_for_space_heating_or_cooling_original_details": {
-          "$ref": "/schemas/heatPumpForSpaceHeatingOrCooling#original_component_details"
-        }
-      },
       "required": [
         "heat_pump_for_space_heating_or_cooling_original_details"
-      ],
-      "additionalProperties": false
+      ]
     },
     {
-      "title": "Original Component Details One Of 6",
-      "properties": {
-        "heat_pump_water_heater_original_details": {
-          "$ref": "/schemas/heatPumpWaterHeater#original_component_details"
-        }
-      },
       "required": [
         "heat_pump_water_heater_original_details"
-      ],
-      "additionalProperties": false
+      ]
+    },
+    {
+      "required": [
+        "insulation_air_sealing_ventilation_original_details"
+      ]
     }
-  ]
+  ],
+  "additionalProperties": false
 }

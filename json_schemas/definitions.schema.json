@@ -73,6 +73,14 @@
       "description": "This is the amount the state will pay to a contractor as an incentive. This is separate from any contractor DAC incentive.",
       "title": "Contractor incentive"
     },
+    "tribes_contractor_incentive": {
+      "$anchor": "tribes_contractor_incentive",
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "This is the amount the jurisidction will pay to a contractor as an incentive. This is separate from any contractor DAC incentive.",
+      "title": "Contractor incentive"
+    },
     "contractor_name": {
       "$anchor": "contractor_name",
       "title": "Contractor name",
@@ -162,7 +170,7 @@
     "electric_equipment_and_material_cost": {
       "type": "number",
       "title": "Equipment and material cost",
-      "exclusiveMinimum": 0,
+      "minimum": 0,
       "multipleOf": 0.01,
       "$anchor": "electric_equipment_and_material_cost",
       "description": "The total cost of the equipment and materials purchased as part of a redemption."
@@ -207,7 +215,7 @@
         "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI",
         "LESS_THAN_80%_AMI"
       ],
-      "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one units falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
+      "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one unit falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
     },
     "electric_reservation_amount": {
       "$anchor": "electric_reservation_amount",
@@ -414,6 +422,12 @@
       "type": "boolean",
       "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
       "title": "Is final project redemption"
+    },
+    "jurisdiction_attests_proof_of_identity_ownership_income": {
+      "$anchor": "jurisdiction_attests_proof_of_identity_ownership_income",
+      "type": "boolean",
+      "title": "Jurisdiction attests proof of identity ownership income",
+      "description": "The jurisdiction attests that they have obtained the required proof of identify, proof of ownership, and proof of income for this rebate."
     },
     "measured_percent_energy_savings": {
       "$anchor": "measured_percent_energy_savings",
@@ -723,7 +737,7 @@
       "properties": {
         "ambient_co_test_result": {
           "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
           "title": "Ambient CO test result"
         },
         "ashrae_62_2_ventilation_calculated": {
@@ -740,7 +754,7 @@
         },
         "gas_leak_detection_test_result": {
           "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
           "title": "Gas leak detection test result"
         },
         "roof_condition": {
@@ -754,17 +768,17 @@
         },
         "spillage_test_result": {
           "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
           "title": "Spillage test result"
         },
         "undiluted_co_test_result": {
           "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
           "title": "Undiluted CO test result"
         },
         "venting_test_result": {
           "$ref": "#safety_checks_passed_failed_warning_na",
-          "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+          "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
           "title": "Venting test result"
         }
       },
@@ -914,7 +928,7 @@
       "title": "Unit name or number",
       "minLength": 1,
       "maxLength": 32,
-      "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
+      "description": "This is the unit designator for a unit in a multifamily building. It should also be used in situations where multiple homes share a street address and are distinguished only by a Lot# or other special designation. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
     },
     "upc": {
       "$anchor": "upc",

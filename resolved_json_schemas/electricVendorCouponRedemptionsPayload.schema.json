@@ -5,14 +5,14 @@
   "title": "Electric Vendor Coupon Redemptions Payload",
   "properties": {
     "equipment_and_material_cost": {
-      "description": "The total cost of the equipment and materials purchased as part of a redemption.",
+      "description": "The total cost of the qualifying products purchased.",
       "type": "number",
       "title": "Equipment and material cost",
-      "exclusiveMinimum": 0,
+      "minimum": 0,
       "multipleOf": 0.01
     },
     "installation_cost": {
-      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "description": "Use this if installation cost is included at the point of purchase of the qualifying product(s), otherwise set this to 0.",
       "type": "number",
       "multipleOf": 0.01,
       "minimum": 0,

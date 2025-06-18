@@ -68,7 +68,7 @@
         "80%_AND_GREATER_BUT_LESS_THAN_150%_AMI",
         "LESS_THAN_80%_AMI"
       ],
-      "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one units falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
+      "description": "Choose the lowest area median income (AMI) range for which at least 50% of the household units fall into the range or lower. For example, consider a five-unit apartment building for which one unit falls in the `LESS_THAN_80%_AMI` range, two fall in the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI`, and the other two have household incomes above these ranges. Then the `80%_AND_GREATER_BUT_LESS_THAN_150%_AMI` range should be chosen because more than half of the units fall into this range or lower."
     },
     "num_occupied_units": {
       "type": "integer",
@@ -103,7 +103,7 @@
       "title": "Unit name or number",
       "minLength": 1,
       "maxLength": 32,
-      "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
+      "description": "This is the unit designator for a unit in a multifamily building. It should also be used in situations where multiple homes share a street address and are distinguished only by a Lot# or other special designation. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
     },
     "upgrade_type": {
       "title": "Upgrade type",
@@ -238,11 +238,6 @@
             {
               "required": [
                 "num_units_meeting_income_bucket"
-              ]
-            },
-            {
-              "required": [
-                "unit_name_or_number"
               ]
             }
           ]
