@@ -1,11 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ira-rebates.labworks.org/schemas/electrificationBulkReporting",
+  "$id": "https://ira-rebates.labworks.org/schemas/tribesElectrificationBulkReporting",
   "type": "array",
-  "title": "Electric Bulk Reporting Payload",
   "items": {
     "type": "object",
-    "title": "Electric Bulk reporting Payload Item",
     "properties": {
       "address_id": {
         "$ref": "/schemas/definitions#address_id"
@@ -25,54 +23,59 @@
       "contractor_company_name": {
         "$ref": "/schemas/definitions#contractor_company_name"
       },
-      "contractor_dac_incentive": {
-        "$ref": "/schemas/definitions#contractor_dac_incentive"
-      },
       "contractor_incentive": {
-        "$ref": "/schemas/definitions#contractor_incentive"
-      },
-      "contractor_name": {
-        "$ref": "/schemas/definitions#contractor_name"
+        "$ref": "/schemas/definitions#contractor_incentive",
+        "description": "This is the amount the jurisdiction will pay to a contractor as an incentive. This is separate from any contractor DAC incentive."
       },
       "dwelling_unit_income_bucket": {
         "$ref": "/schemas/definitions#electric_dwelling_unit_income_bucket"
       },
-      "energy_data_evaluation_permission": {
-        "$ref": "/schemas/definitions#energy_data_evaluation_permission"
-      },
       "equipment_and_material_cost": {
-        "$ref": "/schemas/definitions#electric_equipment_and_material_cost"
-      },
-      "external_rebate_id": {
-        "$ref": "/schemas/definitions#external_rebate_id"
-      },
-      "install_vendor_id": {
-        "$ref": "/schemas/definitions#vendor_id",
-        "title": "Install vendor id"
+        "$ref": "/schemas/definitions#electric_equipment_and_material_cost",
+        "description": "The total cost of qualifying equipment and materials associated with this rebate."
       },
       "installation_cost": {
-        "$ref": "/schemas/definitions#installation_cost"
+        "$ref": "/schemas/definitions#installation_cost",
+        "description": "The installation costs associated with this rebate. To qualify, the installation must be performed by an approved contractor. Also see is_contractor_eligible."
       },
       "installation_type": {
         "$ref": "/schemas/definitions#installation_type"
       },
       "is_contractor_eligible": {
-        "$ref": "/schemas/definitions#is_contractor_eligible"
+        "$ref": "/schemas/definitions#is_contractor_eligible",
+        "description": "The contractor is eligible if they are on the jurisdiction's approved list."
       },
-      "is_disadvantaged_community": {
-        "$ref": "/schemas/definitions#is_disadvantaged_community"
+      "jurisdiction_attests_proof_of_identity_ownership_income": {
+        "$ref": "/schemas/definitions#jurisdiction_attests_proof_of_identity_ownership_income"
+      },
+      "post_retrofit_inspection_passed": {
+        "$ref": "/schemas/definitions#post_retrofit_inspection_passed"
       },
       "limited_assessment": {
-        "$ref": "/schemas/electrificationLimitedAssessment"
+        "$ref": "/schemas/electrificationLimitedAssessment",
+        "properties": {
+          "cooling_systems": {
+            "items": {
+              "properties": {
+                "percent_conditioned_floor_area_served": {
+                  "description": "For estimating this percentage, use the total conditioned floor area"
+                }
+              }
+            }
+          },
+          "heating_systems": {
+            "items": {
+              "properties": {
+                "percent_conditioned_floor_area_served": {
+                  "description": "For estimating this percentage, use the total conditioned floor area"
+                }
+              }
+            }
+          }
+        }
       },
       "mf_building_income_bucket": {
         "$ref": "/schemas/definitions#electric_mf_building_income_bucket"
-      },
-      "mf_conditioned_floor_area": {
-        "$ref": "/schemas/definitions#mf_conditioned_floor_area"
-      },
-      "mf_num_bedrooms": {
-        "$ref": "/schemas/definitions#mf_num_bedrooms"
       },
       "num_occupied_units": {
         "$ref": "/schemas/definitions#num_occupied_units"
@@ -86,27 +89,18 @@
       "original_component_details": {
         "$ref": "/schemas/originalComponentDetails"
       },
-      "post_retrofit_inspection_passed": {
-        "$ref": "/schemas/definitions#post_retrofit_inspection_passed"
-      },
       "product_info": {
         "$ref": "/schemas/definitions#product_info"
-      },
-      "product_vendor_id": {
-        "$ref": "/schemas/definitions#vendor_id",
-        "title": "Product vendor id"
       },
       "project_completion_date": {
         "$ref": "/schemas/definitions#project_completion_date"
       },
       "project_id": {
-        "$ref": "/schemas/definitions#project_id"
+        "$ref": "/schemas/definitions#project_id",
+        "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the jurisdiction."
       },
       "purchase_date": {
         "$ref": "/schemas/definitions#purchase_date"
-      },
-      "purchase_date_time": {
-        "$ref": "/schemas/definitions#purchase_date_time"
       },
       "rebate_deducted": {
         "$ref": "/schemas/definitions#rebate_deducted"
@@ -114,23 +108,61 @@
       "safety_checks": {
         "$ref": "/schemas/definitions#safety_checks"
       },
-      "sf_conditioned_floor_area": {
-        "$ref": "/schemas/definitions#sf_conditioned_floor_area"
-      },
-      "sf_num_bedrooms": {
-        "$ref": "/schemas/definitions#sf_num_bedrooms"
-      },
-      "state_attests_proof_of_identity_ownership_income": {
-        "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income"
-      },
-      "state_attests_any_failed_inspection_remediated": {
-        "$ref": "/schemas/definitions#state_attests_any_failed_inspection_remediated"
-      },
       "unit_name_or_number": {
         "$ref": "/schemas/definitions#unit_name_or_number"
       },
       "upgrade_component_details": {
-        "$ref": "/schemas/upgradeComponentDetails"
+        "$ref": "/schemas/upgradeComponentDetails",
+        "properties": {
+          "insulation_air_sealing_ventilation_upgrade_details": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "/schemas/airSealing#upgrade_component_details"
+                },
+                {
+                  "$ref": "/schemas/ceilingInsulation#upgrade_component_details"
+                },
+                {
+                  "$ref": "/schemas/wallInsulation#upgrade_component_details"
+                },
+                {
+                  "$ref": "/schemas/ductSealing#upgrade_component_details"
+                },
+                {
+                  "$ref": "/schemas/ductInsulation#upgrade_component_details"
+                },
+                {
+                  "$ref": "/schemas/floorAboveConditionedSpaceInsulation#upgrade_component_details",
+                  "properties": {
+                    "percent_floor_receiving_additional_insulation": {
+                      "description": "For estimating this percentage, use the total conditioned floor area"
+                    }
+                  }
+                },
+                {
+                  "$ref": "/schemas/floorAboveUnconditionedSpaceInsulation#upgrade_component_details",
+                  "properties": {
+                    "percent_floor_receiving_additional_insulation": {
+                      "description": "For estimating this percentage, use the total conditioned floor area"
+                    }
+                  }
+                },
+                {
+                  "$ref": "/schemas/foundationInsulation#upgrade_component_details",
+                  "properties": {
+                    "percent_foundation_perimeter_receiving_additional_insulation": {
+                      "description": "For estimating this percentage, use the distance around the footprint"
+                    }
+                  }
+                },
+                {
+                  "$ref": "/schemas/ventilation#upgrade_component_details"
+                }
+              ]
+            }
+          }
+        }
       },
       "upgrade_type": {
         "$ref": "/schemas/definitions#upgrade_type"
@@ -142,37 +174,14 @@
       "building_project_type",
       "claimant_type",
       "construction_type",
-      "energy_data_evaluation_permission",
       "equipment_and_material_cost",
       "installation_type",
       "product_info",
-      "product_vendor_id",
+      "jurisdiction_attests_proof_of_identity_ownership_income",
       "project_completion_date",
+      "purchase_date",
       "rebate_deducted",
-      "state_attests_proof_of_identity_ownership_income",
       "upgrade_type"
-    ],
-    "oneOf": [
-      {
-        "required": [
-          "purchase_date_time"
-        ],
-        "not": {
-          "required": [
-            "purchase_date"
-          ]
-        }
-      },
-      {
-        "required": [
-          "purchase_date"
-        ],
-        "not": {
-          "required": [
-            "purchase_date_time"
-          ]
-        }
-      }
     ],
     "additionalProperties": false,
     "allOf": [
@@ -188,6 +197,7 @@
         "then": {
           "required": [
             "mf_building_income_bucket",
+            "num_occupied_units",
             "num_units",
             "num_units_meeting_income_bucket"
           ],
@@ -293,12 +303,12 @@
               },
               {
                 "required": [
-                  "num_units"
+                  "num_occupied_units"
                 ]
               },
               {
                 "required": [
-                  "num_occupied_units"
+                  "num_units"
                 ]
               },
               {
@@ -320,10 +330,6 @@
           }
         },
         "then": {
-          "required": [
-            "original_component_details",
-            "upgrade_component_details"
-          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -347,10 +353,6 @@
           }
         },
         "then": {
-          "required": [
-            "original_component_details",
-            "upgrade_component_details"
-          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -374,10 +376,6 @@
           }
         },
         "then": {
-          "required": [
-            "original_component_details",
-            "upgrade_component_details"
-          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -401,10 +399,6 @@
           }
         },
         "then": {
-          "required": [
-            "original_component_details",
-            "upgrade_component_details"
-          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -428,10 +422,6 @@
           }
         },
         "then": {
-          "required": [
-            "original_component_details",
-            "upgrade_component_details"
-          ],
           "properties": {
             "original_component_details": {
               "required": [
@@ -448,6 +438,9 @@
       },
       {
         "if": {
+          "required": [
+            "original_component_details"
+          ],
           "properties": {
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
@@ -455,9 +448,6 @@
           }
         },
         "then": {
-          "required": [
-            "original_component_details"
-          ],
           "not": {
             "required": [
               "upgrade_component_details"
@@ -498,7 +488,7 @@
         }
       },
       {
-        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, contractor_dac_incentive, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed",
+        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed",
         "if": {
           "oneOf": [
             {
@@ -513,6 +503,9 @@
               }
             },
             {
+              "required": [
+                "upgrade_component_details"
+              ],
               "properties": {
                 "upgrade_type": {
                   "const": "INSULATION_AIR_SEALING_VENTILATION"
@@ -539,7 +532,6 @@
           "required": [
             "contractor_company_name",
             "contractor_incentive",
-            "contractor_name",
             "is_contractor_eligible",
             "safety_checks"
           ],
@@ -567,17 +559,7 @@
                 },
                 {
                   "required": [
-                    "contractor_dac_incentive"
-                  ]
-                },
-                {
-                  "required": [
                     "contractor_incentive"
-                  ]
-                },
-                {
-                  "required": [
-                    "contractor_name"
                   ]
                 },
                 {
@@ -588,85 +570,6 @@
               ]
             }
           }
-        }
-      },
-      {
-        "$comment": "Determine when mf_conditioned_floor_area and sf_conditioned_floor_area are required",
-        "if": {
-          "properties": {
-            "upgrade_type": {
-              "enum": [
-                "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
-                "INSULATION_AIR_SEALING_VENTILATION"
-              ]
-            }
-          }
-        },
-        "then": {
-          "if": {
-            "properties": {
-              "building_project_type": {
-                "const": "MULTIFAMILY_CENTRAL"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "mf_conditioned_floor_area"
-            ]
-          },
-          "else": {
-            "required": [
-              "sf_conditioned_floor_area"
-            ]
-          }
-        }
-      },
-      {
-        "$comment": "Determine when mf_num_bedrooms and sf_num_bedrooms are required",
-        "if": {
-          "properties": {
-            "upgrade_type": {
-              "enum": [
-                "HEAT_PUMP_CLOTHES_DRYER",
-                "HEAT_PUMP_WATER_HEATER"
-              ]
-            }
-          }
-        },
-        "then": {
-          "if": {
-            "properties": {
-              "building_project_type": {
-                "const": "MULTIFAMILY_CENTRAL"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "mf_num_bedrooms"
-            ]
-          },
-          "else": {
-            "required": [
-              "sf_num_bedrooms"
-            ]
-          }
-        }
-      },
-      {
-        "$comment": "Determine when limited_assessment is required or not allowed",
-        "if": {
-          "properties": {
-            "upgrade_type": {
-              "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
-            }
-          }
-        },
-        "then": {
-          "required": [
-            "limited_assessment"
-          ]
         }
       },
       {

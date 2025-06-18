@@ -15,11 +15,11 @@
     "ceiling_insulation_r_value": {
       "type": "integer",
       "minimum": 0,
-      "description": "Estimate of the R-value of the as-found ceiling insulation.",
+      "description": "Estimated R-value of the predominant, as-found ceiling (attic or roof) insulation.",
       "title": "Ceiling insulation r-value"
     },
     "ceiling_insulation_type": {
-      "description": "The preexisting insulation type for the area to receive (additional) insulation. See https://www.energy.gov/energysaver/types-insulation for information about insulation types.",
+      "description": "The predominant as-found insulation type for the ceiling (attic or roof) area. See https://www.energy.gov/energysaver/types-insulation for information about insulation types.",
       "enum": [
         "BATT",
         "BLOWN_IN",
@@ -320,7 +320,8 @@
         "EXHAUST",
         "HRV",
         "NONE",
-        "SUPPLY"
+        "SUPPLY",
+        "DO_NOT_KNOW"
       ],
       "title": "Whole home ventilation system type"
     },
@@ -373,6 +374,28 @@
           "required": [
             "ceiling_insulation_r_value"
           ]
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "ceiling_insulation_type"
+        ],
+        "properties": {
+          "ceiling_insulation_type": {
+            "const": "NONE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "is_ceiling_insulation_r_value_known": {
+            "const": true
+          },
+          "ceiling_insulation_r_value": {
+            "const": 0
+          }
         }
       }
     },

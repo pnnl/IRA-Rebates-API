@@ -497,7 +497,7 @@
         "type": "object",
         "properties": {
           "ambient_co_test_result": {
-            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
+            "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
             "title": "Ambient CO test result",
             "enum": [
               "FAILED",
@@ -515,7 +515,7 @@
             ]
           },
           "confirm_all_safety_check_results_disclosed_to_homeowner": {
-            "title": "ASHRAE 62.2 ventilation calculated",
+            "title": "Confirm all safety check results disclosed to homeowner",
             "enum": [
               "NA",
               "NO",
@@ -531,8 +531,8 @@
             ]
           },
           "gas_leak_detection_test_result": {
-            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Ambient CO test result",
+            "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Gas leak detection test result",
             "enum": [
               "FAILED",
               "NA",
@@ -541,7 +541,7 @@
             ]
           },
           "roof_condition": {
-            "title": "Drainage system condition",
+            "title": "Roof condition",
             "enum": [
               "GOOD",
               "NA",
@@ -550,7 +550,7 @@
           },
           "signs_of_mold_or_moisture": {
             "description": "Contractor should not proceed with energy efficiency measures until mold and moisture issues are mitigated.",
-            "title": "ASHRAE 62.2 ventilation calculated",
+            "title": "Signs of mold or moisture",
             "enum": [
               "NA",
               "NO",
@@ -558,8 +558,8 @@
             ]
           },
           "spillage_test_result": {
-            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Ambient CO test result",
+            "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Spillage test result",
             "enum": [
               "FAILED",
               "NA",
@@ -568,8 +568,8 @@
             ]
           },
           "undiluted_co_test_result": {
-            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Ambient CO test result",
+            "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Undiluted CO test result",
             "enum": [
               "FAILED",
               "NA",
@@ -578,8 +578,8 @@
             ]
           },
           "venting_test_result": {
-            "description": "Testing is only required if the home has one or more combustion appliances post-retrofit.",
-            "title": "Ambient CO test result",
+            "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
+            "title": "Venting test result",
             "enum": [
               "FAILED",
               "NA",
@@ -630,7 +630,7 @@
         "title": "Unit name or number",
         "minLength": 1,
         "maxLength": 32,
-        "description": "This is the unit designator for a unit in a multifamily building. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
+        "description": "This is the unit designator for a unit in a multifamily building. It should also be used in situations where multiple homes share a street address and are distinguished only by a Lot# or other special designation. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
       },
       "upgrades": {
         "type": "array",
@@ -1058,11 +1058,6 @@
               {
                 "required": [
                   "num_units_meeting_income_bucket"
-                ]
-              },
-              {
-                "required": [
-                  "unit_name_or_number"
                 ]
               }
             ]
