@@ -66,14 +66,6 @@
       "maxLength": 64,
       "description": "The name of the primary contractor for the project."
     },
-    "doe_approved_bpi_2400_compliant_software_used": {
-      "type": "string",
-      "title": "DOE approved bpi 2400 compliant software used",
-      "minLength": 2,
-      "maxLength": 64,
-      "description": "This field is deprecated and will be removed in a future version. Please use modeling_software_used instead. Enter the name of the software used to model energy usage and savings. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. Until this field is removed, when rebate_type is MODELED you must either use this field OR modeling_software_used, but not both. This field is NOT allowed unless rebate_type is MODELED.",
-      "deprecated": true
-    },
     "dwelling_unit_income_bucket": {
       "title": "Dwelling unit income bucket",
       "enum": [
@@ -334,7 +326,7 @@
       "title": "Modeling software used",
       "minLength": 2,
       "maxLength": 64,
-      "description": "This field should be used instead of doe_approved_bpi_2400_compliant_software_used, which is now deprecated. Enter the name of the software used to model energy usage and savings when rebate_type is MODELED. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. Until the doe_approved_bpi_2400_compliant_software_used field is removed, when rebate_type is MODELED you must either use this field OR doe_approved_bpi_2400_compliant_software_used, but not both. This field is NOT allowed unless rebate_type is MODELED."
+      "description": "Enter the name of the software used to model energy usage and savings when rebate_type is MODELED. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. This field is NOT allowed unless rebate_type is MODELED."
     },
     "num_occupied_units": {
       "type": "integer",
@@ -458,7 +450,10 @@
           "claimant_type": {
             "const": "AGGREGATOR"
           }
-        }
+        },
+        "required": [
+          "claimant_type"
+        ]
       },
       "then": {
         "required": [
@@ -480,24 +475,16 @@
           "rebate_type": {
             "const": "MODELED"
           }
-        }
+        },
+        "required": [
+          "rebate_type"
+        ]
       },
       "then": {
+        "required": [
+          "modeling_software_used"
+        ],
         "allOf": [
-          {
-            "oneOf": [
-              {
-                "required": [
-                  "doe_approved_bpi_2400_compliant_software_used"
-                ]
-              },
-              {
-                "required": [
-                  "modeling_software_used"
-                ]
-              }
-            ]
-          },
           {
             "oneOf": [
               {
@@ -649,11 +636,6 @@
           "anyOf": [
             {
               "required": [
-                "doe_approved_bpi_2400_compliant_software_used"
-              ]
-            },
-            {
-              "required": [
                 "modeled_percent_energy_savings"
               ]
             },
@@ -693,7 +675,10 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT"
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -728,7 +713,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_CENTRAL"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -763,7 +752,10 @@
               "SINGLE_FAMILY_DETACHED"
             ]
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [

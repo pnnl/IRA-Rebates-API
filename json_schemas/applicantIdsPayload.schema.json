@@ -9,10 +9,12 @@
       "anyOf": [
         {
           "format": "email",
-          "pattern": "(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+          "pattern": "(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
+          "error_msg": "'email' must be a valid RFC 5322-compliant email address"
         },
         {
-          "const": "NOT AVAILABLE"
+          "const": "NOT AVAILABLE",
+          "error_msg": "'email' must be exactly 'NOT AVAILABLE'."
         }
       ],
       "$comment": "https://datatracker.ietf.org/doc/html/rfc5322",
@@ -31,10 +33,12 @@
         {
           "pattern": "^\\d+$",
           "minLength": 10,
-          "maxLength": 10
+          "maxLength": 10,
+          "error_msg": "The 'phone' number must be a ten-digit phone number (e.g, 1234567890)."
         },
         {
-          "const": "NOT AVAILABLE"
+          "const": "NOT AVAILABLE",
+          "error_msg": "'phone' must be exactly 'NOT AVAILABLE'."
         }
       ],
       "description": "The ten-digit phone number of the home owner, building owner, or renter that will ultimately be receiving the benefit of the rebate."
@@ -55,8 +59,13 @@
           "phone": {
             "const": "NOT AVAILABLE"
           }
-        }
-      }
+        },
+        "required": [
+          "email",
+          "phone"
+        ]
+      },
+      "error_msg": "At least one of the 'email' or 'phone' must be provided, but not both as 'NOT AVAILABLE'."
     }
   ],
   "additionalProperties": false

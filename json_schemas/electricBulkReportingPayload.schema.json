@@ -123,9 +123,6 @@
       "state_attests_proof_of_identity_ownership_income": {
         "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income"
       },
-      "state_attests_any_failed_inspection_remediated": {
-        "$ref": "/schemas/definitions#state_attests_any_failed_inspection_remediated"
-      },
       "unit_name_or_number": {
         "$ref": "/schemas/definitions#unit_name_or_number"
       },
@@ -161,7 +158,8 @@
           "required": [
             "purchase_date"
           ]
-        }
+        },
+        "error_msg": "If 'purchase_date_time' is provided, then 'purchase_date' must not be provided."
       },
       {
         "required": [
@@ -171,7 +169,8 @@
           "required": [
             "purchase_date_time"
           ]
-        }
+        },
+        "error_msg": "If 'purchase_date' is provided, then 'purchase_date_time' must not be provided."
       }
     ],
     "additionalProperties": false,
@@ -183,11 +182,15 @@
             "building_project_type": {
               "const": "MULTIFAMILY_CENTRAL"
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
             "mf_building_income_bucket",
+            "num_occupied_units",
             "num_units",
             "num_units_meeting_income_bucket"
           ],
@@ -203,7 +206,8 @@
                   "unit_name_or_number"
                 ]
               }
-            ]
+            ],
+            "error_msg": "If 'building_project_type' is 'MULTIFAMILY_CENTRAL', then 'dwelling_unit_income_bucket' and 'unit_name_or_number' must not be provided."
           }
         }
       },
@@ -214,7 +218,11 @@
             "building_project_type": {
               "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
             }
-          }
+          },
+          "required": [
+            "num_occupied_units",
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -227,7 +235,8 @@
           "not": {
             "required": [
               "dwelling_unit_income_bucket"
-            ]
+            ],
+            "error_msg": "If 'building_project_type' is 'MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT', then 'dwelling_unit_income_bucket' must not be provided."
           }
         }
       },
@@ -238,7 +247,10 @@
             "building_project_type": {
               "const": "MULTIFAMILY_IN_UNIT"
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -263,7 +275,8 @@
                   "num_units_meeting_income_bucket"
                 ]
               }
-            ]
+            ],
+            "error_msg": "If 'building_project_type' is 'MULTIFAMILY_IN_UNIT', then 'mf_building_income_bucket', 'num_occupied_units', and 'num_units_meeting_income_bucket' must not be provided."
           }
         }
       },
@@ -278,7 +291,10 @@
                 "SINGLE_FAMILY_DETACHED"
               ]
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -306,7 +322,8 @@
                   "num_units_meeting_income_bucket"
                 ]
               }
-            ]
+            ],
+            "error_msg": "If 'building_project_type' is either 'SINGLE_FAMILY_ATTACHED', 'SINGLE_FAMILY_DETACHED', or 'MANUFACTURED', then 'mf_building_income_bucket', 'num_units', 'num_occupied_units', and 'num_units_meeting_income_bucket' must not be provided."
           }
         }
       },
@@ -317,7 +334,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_CLOTHES_DRYER"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "required": [
@@ -344,7 +364,10 @@
             "upgrade_type": {
               "const": "ELECTRIC_COOKING_APPLIANCE"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "required": [
@@ -371,7 +394,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_WATER_HEATER"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "required": [
@@ -398,7 +424,10 @@
             "upgrade_type": {
               "const": "ELECTRICAL_PANEL"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "required": [
@@ -425,7 +454,10 @@
             "upgrade_type": {
               "const": "INSULATION_AIR_SEALING_VENTILATION"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "required": [
@@ -452,7 +484,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "required": [
@@ -461,7 +496,8 @@
           "not": {
             "required": [
               "upgrade_component_details"
-            ]
+            ],
+            "error_msg": "If 'upgrade_type' is 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING', then 'upgrade_component_details' must not be provided."
           },
           "properties": {
             "original_component_details": {
@@ -478,7 +514,10 @@
             "upgrade_type": {
               "const": "ELECTRIC_WIRING"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "not": {
@@ -494,7 +533,8 @@
                 ]
               }
             ]
-          }
+          },
+          "error_msg": "If 'upgrade_type' is 'ELECTRIC_WIRING', then 'original_component_details' and 'upgrade_component_details' must not be provided."
         }
       },
       {
@@ -555,7 +595,10 @@
               "installation_type": {
                 "const": "DO_IT_YOURSELF"
               }
-            }
+            },
+            "required": [
+              "installation_type"
+            ]
           },
           "then": {
             "not": {
@@ -586,7 +629,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "error_msg": "If 'installation_type' is 'DO_IT_YOURSELF', then 'contractor_company_name', 'contractor_dac_incentive', 'contractor_incentive', 'contractor_name', and 'is_contractor_eligible' must not be provided."
           }
         }
       },
@@ -600,7 +644,10 @@
                 "INSULATION_AIR_SEALING_VENTILATION"
               ]
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "if": {
@@ -608,7 +655,10 @@
               "building_project_type": {
                 "const": "MULTIFAMILY_CENTRAL"
               }
-            }
+            },
+            "required": [
+              "building_project_type"
+            ]
           },
           "then": {
             "required": [
@@ -632,7 +682,10 @@
                 "HEAT_PUMP_WATER_HEATER"
               ]
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "if": {
@@ -640,7 +693,10 @@
               "building_project_type": {
                 "const": "MULTIFAMILY_CENTRAL"
               }
-            }
+            },
+            "required": [
+              "building_project_type"
+            ]
           },
           "then": {
             "required": [
@@ -661,7 +717,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "required": [
@@ -678,17 +737,20 @@
                 {
                   "required": [
                     "ahri_reference_number"
-                  ]
+                  ],
+                  "error_msg": "'ahri_reference_number' is required in 'product_info' item."
                 },
                 {
                   "required": [
                     "model_number"
-                  ]
+                  ],
+                  "error_msg": "'model_number' is required in 'product_info' item."
                 },
                 {
                   "required": [
                     "upc"
-                  ]
+                  ],
+                  "error_msg": "'upc' is required in 'product_info' item."
                 }
               ]
             }
@@ -701,7 +763,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -711,12 +776,14 @@
                   {
                     "required": [
                       "ahri_reference_number"
-                    ]
+                    ],
+                    "error_msg": "'ahri_reference_number' is required in 'product_info' item."
                   },
                   {
                     "required": [
                       "model_number"
-                    ]
+                    ],
+                    "error_msg": "'model_number' is required in 'product_info' item."
                   }
                 ]
               }
@@ -744,7 +811,8 @@
                 "not": {
                   "required": [
                     "ahri_reference_number"
-                  ]
+                  ],
+                  "error_msg": "'ahri_reference_number' must not be provided in 'product_info' item if 'upgrade_type' is not 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING' or 'HEAT_PUMP_WATER_HEATER'."
                 }
               }
             }

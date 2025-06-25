@@ -85,7 +85,10 @@
                 "is_efficiency_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_efficiency_known"
+              ]
             },
             "then": {
               "required": [
@@ -97,7 +100,8 @@
                 "required": [
                   "efficiency_seer"
                 ]
-              }
+              },
+              "error_msg": "If 'is_efficiency_known' is 'false', then 'efficiency_seer' must not be provided."
             }
           },
           {
@@ -106,7 +110,10 @@
                 "is_percent_conditioned_floor_area_served_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_percent_conditioned_floor_area_served_known"
+              ]
             },
             "then": {
               "required": [
@@ -118,7 +125,8 @@
                 "required": [
                   "percent_conditioned_floor_area_served"
                 ]
-              }
+              },
+              "error_msg": "If 'is_percent_conditioned_floor_area_served_known' is 'false', then 'percent_conditioned_floor_area_served' must not be provided."
             }
           }
         ]
@@ -219,7 +227,10 @@
                 "is_efficiency_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_efficiency_known"
+              ]
             },
             "then": {
               "if": {
@@ -227,7 +238,10 @@
                   "fuel_and_system_type": {
                     "const": "ELECTRIC_HEAT_PUMP"
                   }
-                }
+                },
+                "required": [
+                  "fuel_and_system_type"
+                ]
               },
               "then": {
                 "required": [
@@ -254,7 +268,8 @@
                     ]
                   }
                 ]
-              }
+              },
+              "error_msg": "If 'is_efficiency_known' is false, then 'efficiency_hspf' and 'efficiency_afue' must not be provided."
             }
           },
           {
@@ -263,7 +278,10 @@
                 "is_percent_conditioned_floor_area_served_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_percent_conditioned_floor_area_served_known"
+              ]
             },
             "then": {
               "required": [
@@ -275,7 +293,8 @@
                 "required": [
                   "percent_conditioned_floor_area_served"
                 ]
-              }
+              },
+              "error_msg": "If 'is_percent_conditioned_floor_area_served_known' is 'false', then 'percent_conditioned_floor_area_served' must not be provided."
             }
           }
         ]
@@ -316,10 +335,12 @@
           "type": "string",
           "minLength": 4,
           "maxLength": 4,
-          "pattern": "^\\d+$"
+          "pattern": "^\\d+$",
+          "error_msg": "'year_built' must be a 4-digit number."
         },
         {
-          "const": "DO_NOT_KNOW"
+          "const": "DO_NOT_KNOW",
+          "error_msg": "'year_built' can be 'DO_NOT_KNOW'."
         }
       ],
       "description": "The year the building was built.",
@@ -347,7 +368,10 @@
           "is_ceiling_insulation_r_value_known": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_ceiling_insulation_r_value_known"
+        ]
       },
       "then": {
         "required": [
@@ -359,7 +383,8 @@
           "required": [
             "ceiling_insulation_r_value"
           ]
-        }
+        },
+        "error_msg": "If 'is_ceiling_insulation_r_value_known' is 'false', then 'ceiling_insulation_r_value' must not be provided."
       }
     },
     {
@@ -376,10 +401,12 @@
       "then": {
         "properties": {
           "is_ceiling_insulation_r_value_known": {
-            "const": true
+            "const": true,
+            "error_msg": "If 'ceiling_insulation_type' is 'NONE', then 'is_ceiling_insulation_r_value_known' must be 'true'."
           },
           "ceiling_insulation_r_value": {
-            "const": 0
+            "const": 0,
+            "error_msg": "If 'ceiling_insulation_type' is 'NONE', then 'ceiling_insulation_r_value' must be 0."
           }
         }
       }
@@ -390,7 +417,10 @@
           "is_whole_home_ventilation_system_rated_flow_cfm_known": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_whole_home_ventilation_system_rated_flow_cfm_known"
+        ]
       },
       "then": {
         "required": [
@@ -402,7 +432,8 @@
           "required": [
             "whole_home_ventilation_system_rated_flow_cfm"
           ]
-        }
+        },
+        "error_msg": "If 'is_whole_home_ventilation_system_rated_flow_cfm_known' is 'false', then 'whole_home_ventilation_system_rated_flow_cfm' must not be provided."
       }
     }
   ],

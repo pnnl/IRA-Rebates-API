@@ -314,7 +314,10 @@
                     "is_leakage_rate_known": {
                       "const": true
                     }
-                  }
+                  },
+                  "required": [
+                    "is_leakage_rate_known"
+                  ]
                 },
                 "then": {
                   "required": [
@@ -443,7 +446,10 @@
                     "is_leakage_rate_known": {
                       "const": true
                     }
-                  }
+                  },
+                  "required": [
+                    "is_leakage_rate_known"
+                  ]
                 },
                 "then": {
                   "required": [
@@ -688,7 +694,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_CLOTHES_DRYER"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -709,7 +718,10 @@
           "upgrade_type": {
             "const": "ELECTRIC_COOKING_APPLIANCE"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -730,7 +742,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_WATER_HEATER"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -751,7 +766,10 @@
           "upgrade_type": {
             "const": "ELECTRICAL_PANEL"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -772,7 +790,10 @@
           "upgrade_type": {
             "const": "INSULATION_AIR_SEALING_VENTILATION"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -796,7 +817,10 @@
               "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             ]
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "not": {
@@ -812,7 +836,10 @@
           "is_final_project_redemption": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_final_project_redemption"
+        ]
       },
       "then": {
         "required": [

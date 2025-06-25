@@ -192,7 +192,11 @@
             "building_project_type": {
               "const": "MULTIFAMILY_CENTRAL"
             }
-          }
+          },
+          "required": [
+            "num_occupied_units",
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -224,7 +228,11 @@
             "building_project_type": {
               "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
             }
-          }
+          },
+          "required": [
+            "num_occupied_units",
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -248,7 +256,10 @@
             "building_project_type": {
               "const": "MULTIFAMILY_IN_UNIT"
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -288,7 +299,10 @@
                 "SINGLE_FAMILY_DETACHED"
               ]
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -327,7 +341,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_CLOTHES_DRYER"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -350,7 +367,10 @@
             "upgrade_type": {
               "const": "ELECTRIC_COOKING_APPLIANCE"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -373,7 +393,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_WATER_HEATER"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -396,7 +419,10 @@
             "upgrade_type": {
               "const": "ELECTRICAL_PANEL"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -419,7 +445,10 @@
             "upgrade_type": {
               "const": "INSULATION_AIR_SEALING_VENTILATION"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -438,14 +467,15 @@
       },
       {
         "if": {
-          "required": [
-            "original_component_details"
-          ],
           "properties": {
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             }
-          }
+          },
+          "required": [
+            "original_component_details",
+            "upgrade_type"
+          ]
         },
         "then": {
           "not": {
@@ -468,7 +498,10 @@
             "upgrade_type": {
               "const": "ELECTRIC_WIRING"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "not": {
@@ -484,7 +517,8 @@
                 ]
               }
             ]
-          }
+          },
+          "error_msg": "'original_component_details' and 'upgrade_component_details' are not allowed for 'ELECTRIC_WIRING' upgrade_type."
         }
       },
       {
@@ -547,7 +581,10 @@
               "installation_type": {
                 "const": "DO_IT_YOURSELF"
               }
-            }
+            },
+            "required": [
+              "installation_type"
+            ]
           },
           "then": {
             "not": {
@@ -593,7 +630,8 @@
                     "upc"
                   ]
                 }
-              ]
+              ],
+              "error_msg": "Each item in 'product_info' must have at least one of 'ahri_reference_number', 'model_number', or 'upc'."
             }
           }
         }
@@ -604,7 +642,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -621,7 +662,8 @@
                       "model_number"
                     ]
                   }
-                ]
+                ],
+                "error_msg": "If 'upgrade_type' is 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING', each item in 'product_info' must have at least one of 'ahri_reference_number' or 'model_number'."
               }
             }
           }
@@ -648,7 +690,8 @@
                   "required": [
                     "ahri_reference_number"
                   ]
-                }
+                },
+                "error_msg": "If 'upgrade_type' is not 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING' or 'HEAT_PUMP_WATER_HEATER', 'product_info' must not have 'ahri_reference_number'."
               }
             }
           }

@@ -57,12 +57,14 @@
     {
       "required": [
         "equipment_and_material_cost"
-      ]
+      ],
+      "error_msg": "'equipment_and_material_cost' is required."
     },
     {
       "required": [
         "installation_cost"
-      ]
+      ],
+      "error_msg": "'installation_cost' is required."
     }
   ],
   "if": {
@@ -70,7 +72,10 @@
       "rebate_type": {
         "const": "MEASURED"
       }
-    }
+    },
+    "required": [
+      "rebate_type"
+    ]
   },
   "then": {
     "required": [
@@ -94,7 +99,8 @@
               ]
             }
           ]
-        }
+        },
+        "error_msg": "If 'rebate_type' is 'MEASURED', and 'measured_post_retrofit_energy_usage_kwh_equivalent' is  provided then 'measured_percent_energy_savings' and 'measured_post_retrofit_site_energy_usages_by_fuel_type' must not be provided."
       },
       {
         "required": [
@@ -109,7 +115,8 @@
               ]
             }
           ]
-        }
+        },
+        "error_msg": "If 'rebate_type' is 'MEASURED', and 'measured_percent_energy_savings' and 'measured_post_retrofit_site_energy_usages_by_fuel_type' are provided then 'measured_post_retrofit_energy_usage_kwh_equivalent' must not be provided."
       }
     ]
   },
@@ -132,7 +139,8 @@
           ]
         }
       ]
-    }
+    },
+    "error_msg": "If 'rebate_type' is not 'MEASURED', then 'measured_post_retrofit_energy_usage_kwh_equivalent', 'measured_post_retrofit_site_energy_usages_by_fuel_type', and 'measured_percent_energy_savings' must not be provided."
   },
   "additionalProperties": false
 }
