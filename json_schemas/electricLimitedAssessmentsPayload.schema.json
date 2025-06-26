@@ -413,6 +413,28 @@
     },
     {
       "if": {
+        "required": [
+          "ceiling_insulation_type"
+        ],
+        "properties": {
+          "ceiling_insulation_type": {
+            "const": "NONE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "is_ceiling_insulation_r_value_known": {
+            "const": true
+          },
+          "ceiling_insulation_r_value": {
+            "const": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
         "properties": {
           "is_whole_home_ventilation_system_rated_flow_cfm_known": {
             "const": true

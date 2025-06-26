@@ -314,10 +314,14 @@
                     "is_leakage_rate_known": {
                       "const": true
                     }
+<<<<<<< HEAD
                   },
                   "required": [
                     "is_leakage_rate_known"
                   ]
+=======
+                  }
+>>>>>>> sandbox-test
                 },
                 "then": {
                   "required": [
@@ -446,10 +450,14 @@
                     "is_leakage_rate_known": {
                       "const": true
                     }
+<<<<<<< HEAD
                   },
                   "required": [
                     "is_leakage_rate_known"
                   ]
+=======
+                  }
+>>>>>>> sandbox-test
                 },
                 "then": {
                   "required": [
