@@ -153,16 +153,16 @@
   <sch:pattern>
     <sch:title>[Walls]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Enclosure/h:Walls">
-      <sch:assert role='ERROR' test='(count(h:Wall) = count(h:Wall/h:Azimuth)) or (count(h:Wall) = count(h:Wall/h:Orientation)) or (count(h:Wall/h:Azimuth) = 0 and count(h:Wall/h:Orientation) = 0)'>Every Wall needs an Orientation or Azimuth, or every wall needs to not have those elements.</sch:assert>
-      <sch:assert role='ERROR' test='(count(h:Wall/h:Area) = count(h:Wall)) or (count(h:Wall/h:Area) = 0)'>Every Wall should have an Area, or no Walls should have an Area</sch:assert>
-      <sch:assert role='ERROR' test='count(h:Wall[h:ExteriorAdjacentTo[text()="outside" or text()="unconditioned space" or text()="other housing unit" or text()="other heated space" or text()="other multifamily buffer space" or text()="other non-freezing space"] and h:InteriorAdjacentTo[text()="living space" or text()="conditioned space"]]) &gt; 0'>At least one exterior wall needs to be present</sch:assert>
-      <sch:assert role='ERROR' test='not(count(h:Wall) &gt; 1 and count(h:Wall[not(h:Azimuth) and not(h:Orientation)]) = count(h:Wall) and count(h:Wall[not(h:Azimuth) and not(h:Orientation) and not(h:Area)]) &gt; 0)'>If all Walls are missing both Azimuth and Orientation, and there's more than one Wall, each Wall must have an Area subelement.</sch:assert>
+      <sch:assert role='ERROR' test='(count(h:Wall[not(h:AtticWallType[text()="knee wall"])]) = count(h:Wall[not(h:AtticWallType[text()="knee wall"])]/h:Azimuth)) or (count(h:Wall[not(h:AtticWallType[text()="knee wall"])]) = count(h:Wall[not(h:AtticWallType[text()="knee wall"])]/h:Orientation)) or (count(h:Wall[not(h:AtticWallType[text()="knee wall"])]/h:Azimuth) = 0 and count(h:Wall[not(h:AtticWallType[text()="knee wall"])]/h:Orientation) = 0)'>Every Wall needs an Orientation or Azimuth, or every wall needs to not have those elements.</sch:assert>
+      <sch:assert role='ERROR' test='(count(h:Wall[not(h:AtticWallType[text()="knee wall"])]/h:Area) = count(h:Wall[not(h:AtticWallType[text()="knee wall"])])) or (count(h:Wall[not(h:AtticWallType[text()="knee wall"])]/h:Area) = 0)'>Every Wall should have an Area, or no Walls should have an Area</sch:assert>
+      <sch:assert role='ERROR' test='count(h:Wall[not(h:AtticWallType[text()="knee wall"]) and (h:ExteriorAdjacentTo[text()="outside" or text()="unconditioned space" or text()="other housing unit" or text()="other heated space" or text()="other multifamily buffer space" or text()="other non-freezing space"] and h:InteriorAdjacentTo[text()="living space" or text()="conditioned space"])]) &gt; 0'>At least one exterior wall needs to be present</sch:assert>
+      <sch:assert role='ERROR' test='not(count(h:Wall[not(h:AtticWallType[text()="knee wall"])]) &gt; 1 and count(h:Wall[not(h:Azimuth) and not(h:Orientation) and not(h:AtticWallType[text()="knee wall"])]) = count(h:Wall[not(h:AtticWallType[text()="knee wall"])]) and count(h:Wall[not(h:Azimuth) and not(h:Orientation) and not(h:Area) and not(h:AtticWallType[text()="knee wall"])]) &gt; 0)'>If all Walls are missing both Azimuth and Orientation, and there's more than one Wall, each Wall must have an Area subelement.</sch:assert>
     </sch:rule>
   </sch:pattern>
 
   <sch:pattern>
     <sch:title>[Wall]</sch:title>
-    <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Enclosure/h:Walls/h:Wall'>
+    <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Enclosure/h:Walls/h:Wall[not(h:AtticWallType[text()="knee wall"])]'>
       <sch:assert role='ERROR' test='h:SystemIdentifier/@id'>Expected Wall/SystemIdentifier/@id</sch:assert>
       <sch:assert role='ERROR' test='h:ExteriorAdjacentTo'>Expected Wall/ExteriorAdjacentTo</sch:assert>
       <sch:assert role='ERROR' test='h:InteriorAdjacentTo'>Expected Wall/InteriorAdjacentTo</sch:assert>
@@ -189,10 +189,11 @@
     </sch:rule>
   </sch:pattern>
 
-  <sch:pattern ira:remove-req-modeled="true" ira:remove-measured="true">
+  <sch:pattern >
     <sch:title>[AtticWallType[text()="knee wall"]]</sch:title>
     <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Enclosure/h:Walls/h:Wall[h:AtticWallType[text()="knee wall"]]'>
-      <sch:assert role='ERROR' test='h:Area = 1'>Knee walls should have an area</sch:assert>
+      <sch:assert role='ERROR' test='h:Area = 1' ira:remove-req-modeled="true" ira:remove-measured="true">Knee walls should have an area</sch:assert>
+      <sch:assert role='ERROR' test='not(h:Orientation)'>Knee walls should not have an orientation</sch:assert>
     </sch:rule>
   </sch:pattern>
 
