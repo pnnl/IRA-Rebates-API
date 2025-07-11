@@ -136,7 +136,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_CENTRAL"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -153,7 +157,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -172,7 +180,10 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT"
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -212,7 +223,10 @@
               "SINGLE_FAMILY_DETACHED"
             ]
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [

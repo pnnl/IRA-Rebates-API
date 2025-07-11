@@ -30,19 +30,24 @@
           "is_leakage_rate_known": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_leakage_rate_known"
+        ]
       },
       "then": {
         "required": [
           "cfm50"
-        ]
+        ],
+        "error_msg": "If 'is_leakage_rate_known' is 'true', then 'cfm50' must be provided."
       },
       "else": {
         "not": {
           "required": [
             "cfm50"
           ]
-        }
+        },
+        "error_msg": "If 'is_leakage_rate_known' is 'false', then 'cfm50' must not be provided."
       }
     },
     "upgrade_component_details": {
@@ -90,19 +95,24 @@
           "is_leakage_rate_known": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_leakage_rate_known"
+        ]
       },
       "then": {
         "required": [
           "cfm50"
-        ]
+        ],
+        "error_msg": "If 'is_leakage_rate_known' is 'true', then 'cfm50' must be provided."
       },
       "else": {
         "not": {
           "required": [
             "cfm50"
           ]
-        }
+        },
+        "error_msg": "If 'is_leakage_rate_known' is 'false', then 'cfm50' must not be provided."
       }
     }
   },

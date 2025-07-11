@@ -43,19 +43,24 @@
           "is_leakage_rate_known": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_leakage_rate_known"
+        ]
       },
       "then": {
         "required": [
           "cfm25"
-        ]
+        ],
+        "error_msg": "If 'is_leakage_rate_known' is 'true', 'cfm25' must be present."
       },
       "else": {
         "not": {
           "required": [
             "cfm25"
           ]
-        }
+        },
+        "error_msg": "If 'is_leakage_rate_known' is 'false', 'cfm25' must not be present."
       }
     }
   }

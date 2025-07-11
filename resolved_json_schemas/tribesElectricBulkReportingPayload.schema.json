@@ -2,8 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ira-rebates.labworks.org/schemas/tribesElectrificationBulkReporting",
   "type": "array",
+  "title": "Tribes Electrification Bulk Reporting Payload",
   "items": {
     "type": "object",
+    "title": "Tribes Electrification Bulk Reporting Payload Item",
     "properties": {
       "address_id": {
         "type": "string",
@@ -205,7 +207,10 @@
                       "is_efficiency_known": {
                         "const": true
                       }
-                    }
+                    },
+                    "required": [
+                      "is_efficiency_known"
+                    ]
                   },
                   "then": {
                     "required": [
@@ -226,7 +231,10 @@
                       "is_percent_conditioned_floor_area_served_known": {
                         "const": true
                       }
-                    }
+                    },
+                    "required": [
+                      "is_percent_conditioned_floor_area_served_known"
+                    ]
                   },
                   "then": {
                     "required": [
@@ -341,7 +349,10 @@
                       "is_efficiency_known": {
                         "const": true
                       }
-                    }
+                    },
+                    "required": [
+                      "is_efficiency_known"
+                    ]
                   },
                   "then": {
                     "if": {
@@ -349,7 +360,10 @@
                         "fuel_and_system_type": {
                           "const": "ELECTRIC_HEAT_PUMP"
                         }
-                      }
+                      },
+                      "required": [
+                        "fuel_and_system_type"
+                      ]
                     },
                     "then": {
                       "required": [
@@ -385,7 +399,10 @@
                       "is_percent_conditioned_floor_area_served_known": {
                         "const": true
                       }
-                    }
+                    },
+                    "required": [
+                      "is_percent_conditioned_floor_area_served_known"
+                    ]
                   },
                   "then": {
                     "required": [
@@ -473,7 +490,10 @@
                 "is_ceiling_insulation_r_value_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_ceiling_insulation_r_value_known"
+              ]
             },
             "then": {
               "required": [
@@ -516,7 +536,10 @@
                 "is_whole_home_ventilation_system_rated_flow_cfm_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_whole_home_ventilation_system_rated_flow_cfm_known"
+              ]
             },
             "then": {
               "required": [
@@ -725,7 +748,10 @@
                       "is_leakage_rate_known": {
                         "const": true
                       }
-                    }
+                    },
+                    "required": [
+                      "is_leakage_rate_known"
+                    ]
                   },
                   "then": {
                     "required": [
@@ -817,7 +843,10 @@
                       "is_leakage_rate_known": {
                         "const": true
                       }
-                    }
+                    },
+                    "required": [
+                      "is_leakage_rate_known"
+                    ]
                   },
                   "then": {
                     "required": [
@@ -1256,7 +1285,10 @@
                       "is_leakage_rate_known": {
                         "const": true
                       }
-                    }
+                    },
+                    "required": [
+                      "is_leakage_rate_known"
+                    ]
                   },
                   "then": {
                     "required": [
@@ -1385,7 +1417,10 @@
                       "is_leakage_rate_known": {
                         "const": true
                       }
-                    }
+                    },
+                    "required": [
+                      "is_leakage_rate_known"
+                    ]
                   },
                   "then": {
                     "required": [
@@ -1617,6 +1652,7 @@
       "construction_type",
       "equipment_and_material_cost",
       "installation_type",
+      "post_retrofit_inspection_passed",
       "product_info",
       "jurisdiction_attests_proof_of_identity_ownership_income",
       "project_completion_date",
@@ -1633,7 +1669,11 @@
             "building_project_type": {
               "const": "MULTIFAMILY_CENTRAL"
             }
-          }
+          },
+          "required": [
+            "num_occupied_units",
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -1665,7 +1705,11 @@
             "building_project_type": {
               "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
             }
-          }
+          },
+          "required": [
+            "num_occupied_units",
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -1689,7 +1733,10 @@
             "building_project_type": {
               "const": "MULTIFAMILY_IN_UNIT"
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -1729,7 +1776,10 @@
                 "SINGLE_FAMILY_DETACHED"
               ]
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -1768,7 +1818,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_CLOTHES_DRYER"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -1791,7 +1844,10 @@
             "upgrade_type": {
               "const": "ELECTRIC_COOKING_APPLIANCE"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -1814,7 +1870,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_WATER_HEATER"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -1837,7 +1896,10 @@
             "upgrade_type": {
               "const": "ELECTRICAL_PANEL"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -1860,7 +1922,10 @@
             "upgrade_type": {
               "const": "INSULATION_AIR_SEALING_VENTILATION"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {
@@ -1879,14 +1944,15 @@
       },
       {
         "if": {
-          "required": [
-            "original_component_details"
-          ],
           "properties": {
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             }
-          }
+          },
+          "required": [
+            "original_component_details",
+            "upgrade_type"
+          ]
         },
         "then": {
           "not": {
@@ -1909,7 +1975,10 @@
             "upgrade_type": {
               "const": "ELECTRIC_WIRING"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "not": {
@@ -1988,7 +2057,10 @@
               "installation_type": {
                 "const": "DO_IT_YOURSELF"
               }
-            }
+            },
+            "required": [
+              "installation_type"
+            ]
           },
           "then": {
             "not": {
@@ -2045,7 +2117,10 @@
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             }
-          }
+          },
+          "required": [
+            "upgrade_type"
+          ]
         },
         "then": {
           "properties": {

@@ -98,7 +98,10 @@
                 "is_efficiency_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_efficiency_known"
+              ]
             },
             "then": {
               "required": [
@@ -119,7 +122,10 @@
                 "is_percent_conditioned_floor_area_served_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_percent_conditioned_floor_area_served_known"
+              ]
             },
             "then": {
               "required": [
@@ -234,7 +240,10 @@
                 "is_efficiency_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_efficiency_known"
+              ]
             },
             "then": {
               "if": {
@@ -242,7 +251,10 @@
                   "fuel_and_system_type": {
                     "const": "ELECTRIC_HEAT_PUMP"
                   }
-                }
+                },
+                "required": [
+                  "fuel_and_system_type"
+                ]
               },
               "then": {
                 "required": [
@@ -278,7 +290,10 @@
                 "is_percent_conditioned_floor_area_served_known": {
                   "const": true
                 }
-              }
+              },
+              "required": [
+                "is_percent_conditioned_floor_area_served_known"
+              ]
             },
             "then": {
               "required": [
@@ -362,7 +377,10 @@
           "is_ceiling_insulation_r_value_known": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_ceiling_insulation_r_value_known"
+        ]
       },
       "then": {
         "required": [
@@ -405,7 +423,10 @@
           "is_whole_home_ventilation_system_rated_flow_cfm_known": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_whole_home_ventilation_system_rated_flow_cfm_known"
+        ]
       },
       "then": {
         "required": [

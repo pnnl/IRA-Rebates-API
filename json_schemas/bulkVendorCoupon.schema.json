@@ -44,7 +44,8 @@
           "discount_value"
         ]
       },
-      "minItems": 1
+      "minItems": 1,
+      "error_msg": "At least one 'coupons' item must be provided."
     }
   },
   "required": [

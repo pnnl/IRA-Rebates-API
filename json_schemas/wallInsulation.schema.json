@@ -67,12 +67,14 @@
         {
           "required": [
             "cavity_insulation_added"
-          ]
+          ],
+          "error_msg": "'cavity_insulation_added' is required."
         },
         {
           "required": [
             "exterior_continuous_insulation_added"
-          ]
+          ],
+          "error_msg": "'exterior_continuous_insulation_added' is required."
         }
       ],
       "required": [

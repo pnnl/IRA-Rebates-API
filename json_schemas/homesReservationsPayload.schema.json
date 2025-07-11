@@ -28,9 +28,6 @@
     "contractor_name": {
       "$ref": "/schemas/definitions#contractor_name"
     },
-    "doe_approved_bpi_2400_compliant_software_used": {
-      "$ref": "/schemas/definitions#doe_approved_bpi_2400_compliant_software_used"
-    },
     "dwelling_unit_income_bucket": {
       "$ref": "/schemas/definitions#homes_dwelling_unit_income_bucket"
     },
@@ -136,7 +133,10 @@
           "claimant_type": {
             "const": "AGGREGATOR"
           }
-        }
+        },
+        "required": [
+          "claimant_type"
+        ]
       },
       "then": {
         "required": [
@@ -148,7 +148,8 @@
           "required": [
             "portfolio_id"
           ]
-        }
+        },
+        "error_msg": "'portfolio_id' is not allowed when 'claimant_type' is not 'AGGREGATOR'."
       }
     },
     {
@@ -158,24 +159,16 @@
           "rebate_type": {
             "const": "MODELED"
           }
-        }
+        },
+        "required": [
+          "rebate_type"
+        ]
       },
       "then": {
+        "required": [
+          "modeling_software_used"
+        ],
         "allOf": [
-          {
-            "oneOf": [
-              {
-                "required": [
-                  "doe_approved_bpi_2400_compliant_software_used"
-                ]
-              },
-              {
-                "required": [
-                  "modeling_software_used"
-                ]
-              }
-            ]
-          },
           {
             "oneOf": [
               {
@@ -201,7 +194,8 @@
                       ]
                     }
                   ]
-                }
+                },
+                "error_msg": "If 'rebate_type' is 'MODELED', and 'modeled_post_retrofit_energy_usage_kwh_equivalent' and 'modeled_pre_retrofit_energy_usage_kwh_equivalent' are provided then 'modeled_percent_energy_savings', 'modeled_post_retrofit_site_energy_usages_by_fuel_type', and 'modeled_pre_retrofit_site_energy_usages_by_fuel_type' must not be provided."
               },
               {
                 "required": [
@@ -222,7 +216,8 @@
                       ]
                     }
                   ]
-                }
+                },
+                "error_msg": "If 'rebate_type' is 'MODELED', and 'modeled_percent_energy_savings', 'modeled_post_retrofit_site_energy_usages_by_fuel_type', and 'modeled_pre_retrofit_site_energy_usages_by_fuel_type' are provided then 'modeled_post_retrofit_energy_usage_kwh_equivalent' and 'modeled_pre_retrofit_energy_usage_kwh_equivalent' must not be provided."
               }
             ]
           },
@@ -265,7 +260,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "error_msg": "If 'rebate_type' is 'MODELED', then 'estimated_percent_energy_savings', 'estimated_post_retrofit_energy_usage_kwh_equivalent', 'estimated_post_retrofit_site_energy_usages_by_fuel_type', 'measured_pre_retrofit_energy_usage_kwh_equivalent', 'measured_pre_retrofit_site_energy_usages_by_fuel_type', 'reservation_amount', and 'software_used_to_estimate_post_retrofit_energy_usage' must not be provided."
           }
         ]
       },
@@ -299,7 +295,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "error_msg": "If 'rebate_type' is not 'MODELED', and 'estimated_post_retrofit_energy_usage_kwh_equivalent' and 'measured_pre_retrofit_energy_usage_kwh_equivalent' are provided then 'estimated_percent_energy_savings', 'estimated_post_retrofit_site_energy_usages_by_fuel_type', and 'measured_pre_retrofit_site_energy_usages_by_fuel_type' must not be provided."
           },
           {
             "required": [
@@ -320,16 +317,12 @@
                   ]
                 }
               ]
-            }
+            },
+            "error_msg": "If 'rebate_type' is not 'MODELED', and 'estimated_percent_energy_savings', 'estimated_post_retrofit_site_energy_usages_by_fuel_type', and 'measured_pre_retrofit_site_energy_usages_by_fuel_type' are provided then 'estimated_post_retrofit_energy_usage_kwh_equivalent' and 'measured_pre_retrofit_energy_usage_kwh_equivalent' must not be provided."
           }
         ],
         "not": {
           "anyOf": [
-            {
-              "required": [
-                "doe_approved_bpi_2400_compliant_software_used"
-              ]
-            },
             {
               "required": [
                 "modeled_percent_energy_savings"
@@ -361,7 +354,8 @@
               ]
             }
           ]
-        }
+        },
+        "error_msg": "If 'rebate_type' is not 'MODELED', then 'doe_approved_bpi_2400_compliant_software_used', 'modeled_percent_energy_savings', 'modeled_post_retrofit_energy_usage_kwh_equivalent', 'modeled_post_retrofit_site_energy_usages_by_fuel_type', 'modeled_pre_retrofit_energy_usage_kwh_equivalent', 'modeled_pre_retrofit_site_energy_usages_by_fuel_type', and 'modeling_software_used' must not be provided."
       }
     },
     {
@@ -371,7 +365,10 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT"
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -406,7 +403,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_CENTRAL"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -441,7 +442,10 @@
               "SINGLE_FAMILY_DETACHED"
             ]
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
