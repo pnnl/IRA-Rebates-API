@@ -48,7 +48,8 @@
         "required": [
           "purchase_date"
         ]
-      }
+      },
+      "error_msg": "If 'purchase_date_time' is provided, 'purchase_date' must not be provided."
     },
     {
       "required": [
@@ -58,7 +59,8 @@
         "required": [
           "purchase_date_time"
         ]
-      }
+      },
+      "error_msg": "If 'purchase_date' is provided, 'purchase_date_time' must not be provided."
     }
   ],
   "additionalProperties": false,
@@ -83,7 +85,8 @@
                   "upc"
                 ]
               }
-            ]
+            ],
+            "error_msg": "Each 'product_info' must have at least one of 'ahri_reference_number', 'model_number', or 'upc'."
           }
         }
       }
@@ -94,7 +97,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "properties": {
@@ -111,7 +117,8 @@
                     "model_number"
                   ]
                 }
-              ]
+              ],
+              "error_msg": "If 'upgrade_type' is 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING', each 'product_info' item must have at least one of 'ahri_reference_number' or 'model_number'."
             }
           }
         }
@@ -138,7 +145,8 @@
                 "required": [
                   "ahri_reference_number"
                 ]
-              }
+              },
+              "error_msg": "If 'upgrade_type' is other than 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING' and 'HEAT_PUMP_WATER_HEATER', 'ahri_reference_number' must not be provided."
             }
           }
         }

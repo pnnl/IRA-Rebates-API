@@ -64,7 +64,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_CENTRAL"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -81,7 +85,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -100,7 +108,10 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT"
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -125,7 +136,8 @@
                 "num_units_meeting_income_bucket"
               ]
             }
-          ]
+          ],
+          "error_msg": "If 'building_project_type' is 'MULTIFAMILY_IN_UNIT', then 'mf_building_income_bucket', 'num_occupied_units', and 'num_units_meeting_income_bucket' must not be provided."
         }
       }
     },
@@ -140,7 +152,10 @@
               "SINGLE_FAMILY_DETACHED"
             ]
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -168,7 +183,8 @@
                 "num_units_meeting_income_bucket"
               ]
             }
-          ]
+          ],
+          "error_msg": "If 'building_project_type' is either 'MANUFACTURED', 'SINGLE_FAMILY_ATTACHED', or 'SINGLE_FAMILY_DETACHED', then 'mf_building_income_bucket', 'num_occupied_units', 'num_units', and 'num_units_meeting_income_bucket' must not be provided."
         }
       }
     }

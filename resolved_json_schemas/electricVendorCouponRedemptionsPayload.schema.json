@@ -154,7 +154,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "properties": {

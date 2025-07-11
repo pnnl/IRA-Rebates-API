@@ -57,6 +57,7 @@
     "installation_cost",
     "is_contractor_eligible",
     "is_final_project_redemption",
+    "post_retrofit_inspection_passed",
     "rebate_deducted",
     "rebate_passed_through_to_applicant",
     "upgrade_type",
@@ -71,7 +72,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_CLOTHES_DRYER"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -92,7 +96,10 @@
           "upgrade_type": {
             "const": "ELECTRIC_COOKING_APPLIANCE"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -113,7 +120,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_WATER_HEATER"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -134,7 +144,10 @@
           "upgrade_type": {
             "const": "ELECTRICAL_PANEL"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -155,7 +168,10 @@
           "upgrade_type": {
             "const": "INSULATION_AIR_SEALING_VENTILATION"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -179,13 +195,17 @@
               "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
             ]
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "not": {
           "required": [
             "upgrade_component_details"
-          ]
+          ],
+          "error_msg": "The 'upgrade_component_details' field should not be provided for 'ELECTRIC_WIRING' or 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING' upgrade types."
         }
       }
     },
@@ -195,7 +215,10 @@
           "is_final_project_redemption": {
             "const": true
           }
-        }
+        },
+        "required": [
+          "is_final_project_redemption"
+        ]
       },
       "then": {
         "required": [
@@ -206,7 +229,8 @@
         "not": {
           "required": [
             "project_completion_date"
-          ]
+          ],
+          "error_msg": "The 'project_completion_date' field should not be provided if 'is_final_project_redemption' is 'false'."
         }
       }
     }
