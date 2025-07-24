@@ -110,7 +110,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_CENTRAL"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -130,7 +134,8 @@
                 "unit_name_or_number"
               ]
             }
-          ]
+          ],
+          "error_msg": "When 'building_project_type' is 'MULTIFAMILY_CENTRAL', 'dwelling_unit_income_bucket' and 'unit_name_or_number' must not be provided."
         }
       }
     },
@@ -141,7 +146,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -165,7 +174,10 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT"
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -205,7 +217,10 @@
               "SINGLE_FAMILY_DETACHED"
             ]
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -244,7 +259,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_CLOTHES_DRYER"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -265,7 +283,10 @@
           "upgrade_type": {
             "const": "ELECTRIC_COOKING_APPLIANCE"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -286,7 +307,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -307,7 +331,10 @@
           "upgrade_type": {
             "const": "ELECTRICAL_PANEL"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -328,7 +355,10 @@
           "upgrade_type": {
             "const": "INSULATION_AIR_SEALING_VENTILATION"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -349,7 +379,10 @@
           "upgrade_type": {
             "const": "HEAT_PUMP_WATER_HEATER"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "required": [
@@ -370,14 +403,18 @@
           "upgrade_type": {
             "const": "ELECTRIC_WIRING"
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "not": {
           "required": [
             "original_component_details"
           ]
-        }
+        },
+        "error_msg": "If 'upgrade_type' is 'ELECTRIC_WIRING' then 'original_component_details' must not be provided."
       }
     },
     {
@@ -433,7 +470,10 @@
           "installation_type": {
             "const": "CONTRACTOR_INSTALLED"
           }
-        }
+        },
+        "required": [
+          "installation_type"
+        ]
       },
       "then": {
         "required": [
@@ -454,7 +494,8 @@
               ]
             }
           ]
-        }
+        },
+        "error_msg": "If 'installation_type' is not 'CONTRACTOR_INSTALLED' then 'contractor_dac_incentive' and 'contractor_incentive' must not be provided."
       }
     },
     {
@@ -467,7 +508,10 @@
               "INSULATION_AIR_SEALING_VENTILATION"
             ]
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "if": {
@@ -475,7 +519,10 @@
             "building_project_type": {
               "const": "MULTIFAMILY_CENTRAL"
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [
@@ -499,7 +546,10 @@
               "HEAT_PUMP_WATER_HEATER"
             ]
           }
-        }
+        },
+        "required": [
+          "upgrade_type"
+        ]
       },
       "then": {
         "if": {
@@ -507,7 +557,10 @@
             "building_project_type": {
               "const": "MULTIFAMILY_CENTRAL"
             }
-          }
+          },
+          "required": [
+            "building_project_type"
+          ]
         },
         "then": {
           "required": [

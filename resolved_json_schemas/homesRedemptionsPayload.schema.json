@@ -241,6 +241,7 @@
   },
   "required": [
     "is_contractor_eligible",
+    "post_retrofit_inspection_passed",
     "project_completion_date",
     "rebate_deducted",
     "rebate_type",
@@ -264,7 +265,10 @@
       "rebate_type": {
         "const": "MEASURED"
       }
-    }
+    },
+    "required": [
+      "rebate_type"
+    ]
   },
   "then": {
     "required": [

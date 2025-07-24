@@ -16,6 +16,7 @@
       "minLength": 6,
       "maxLength": 9,
       "pattern": "^\\d+$",
+      "error_msg": "The 'ahri_reference_number' must be a string of digits between 6 and 9 characters long.",
       "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
     },
     "applicant_id": {
@@ -30,15 +31,6 @@
       "contentEncoding": "base64",
       "description": "The API user must convert the binary file content to base64 encoding.",
       "title": "Binary file content Base64"
-    },
-    "claimant_payment": {
-      "$anchor": "claimant_payment",
-      "type": "number",
-      "multipleOf": 0.01,
-      "minimum": 0,
-      "description": "This is the amount that the state paid to an aggregator, or other claimant, for a HOMES rebate.",
-      "title": "Claimant payment",
-      "deprecated": true
     },
     "construction_type": {
       "$anchor": "construction_type",
@@ -102,13 +94,15 @@
       "type": "string",
       "anyOf": [
         {
-          "minLength": 4
+          "minLength": 4,
+          "error_msg": "The 'deletion_reason' must be at least 4 characters long."
         },
         {
           "enum": [
             "CANCEL_RESERVATION",
             "CORRECT_RESERVATION"
-          ]
+          ],
+          "error_msg": "The 'deletion_reason' must be one of the following: 'CANCEL_RESERVATION', 'CORRECT_RESERVATION'."
         }
       ],
       "description": "Provide a reason for deleting the reservation. CANCEL_RESERVATION indicates that the intention is to delete the reservation with no immediate intention of replacing it. CORRECT_RESERVATION indicates that the intention is to delete the reservation in order to replace it with another."
@@ -123,15 +117,6 @@
       "$anchor": "description",
       "title": "Description",
       "type": "string"
-    },
-    "doe_approved_bpi_2400_compliant_software_used": {
-      "type": "string",
-      "title": "DOE approved bpi 2400 compliant software used",
-      "minLength": 2,
-      "maxLength": 64,
-      "$anchor": "doe_approved_bpi_2400_compliant_software_used",
-      "description": "This field is deprecated and will be removed in a future version. Please use modeling_software_used instead. Enter the name of the software used to model energy usage and savings. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. Until this field is removed, when rebate_type is MODELED you must either use this field OR modeling_software_used, but not both. This field is NOT allowed unless rebate_type is MODELED.",
-      "deprecated": true
     },
     "electric_building_project_type": {
       "$anchor": "electric_building_project_type",
@@ -539,7 +524,7 @@
       "minLength": 2,
       "maxLength": 64,
       "$anchor": "modeling_software_used",
-      "description": "This field should be used instead of doe_approved_bpi_2400_compliant_software_used, which is now deprecated. Enter the name of the software used to model energy usage and savings when rebate_type is MODELED. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. Until the doe_approved_bpi_2400_compliant_software_used field is removed, when rebate_type is MODELED you must either use this field OR doe_approved_bpi_2400_compliant_software_used, but not both. This field is NOT allowed unless rebate_type is MODELED."
+      "description": "Enter the name of the software used to model energy usage and savings when rebate_type is MODELED. For single-family building types this must be DOE-approved BPI-compliant software. Refer to program guidance for other building types. This field is NOT allowed unless rebate_type is MODELED."
     },
     "new_expiration_date": {
       "type": "string",
@@ -904,11 +889,6 @@
       "title": "State attests proof of identity ownership income",
       "description": "The state attests that they have obtained the required proof of identify, proof of ownership, and proof of income for this rebate."
     },
-    "state_attests_any_failed_inspection_remediated": {
-      "$anchor": "state_attests_any_failed_inspection_remediated",
-      "type": "boolean",
-      "title": "State attests any failed inspection remediated"
-    },
     "text_file_content": {
       "$anchor": "text_file_content",
       "type": "string",
@@ -937,6 +917,7 @@
       "pattern": "^\\d+$",
       "minLength": 1,
       "maxLength": 14,
+      "error_msg": "'upc' must be a string of digits with a length between 1 and 14 characters.",
       "description": "The universal product code (UPC) for the product being purchased."
     },
     "upgrade_component_details": {

@@ -92,7 +92,10 @@
           "rebate_type": {
             "const": "MODELED"
           }
-        }
+        },
+        "required": [
+          "rebate_type"
+        ]
       },
       "then": {
         "oneOf": [
@@ -100,12 +103,14 @@
             "required": [
               "modeled_post_retrofit_energy_usage_kwh_equivalent",
               "modeled_pre_retrofit_energy_usage_kwh_equivalent"
-            ]
+            ],
+            "error_msg": "If 'rebate_type' is 'MODELED', then 'modeled_post_retrofit_energy_usage_kwh_equivalent' and 'modeled_pre_retrofit_energy_usage_kwh_equivalent' must be provided."
           },
           {
             "required": [
               "modeled_percent_energy_savings"
-            ]
+            ],
+            "error_msg": "If 'rebate_type' is 'MODELED', then 'modeled_percent_energy_savings' must be provided."
           }
         ]
       },
@@ -119,12 +124,14 @@
             "required": [
               "estimated_post_retrofit_energy_usage_kwh_equivalent",
               "measured_pre_retrofit_energy_usage_kwh_equivalent"
-            ]
+            ],
+            "error_msg": "If 'rebate_type' is 'MEASURED', then 'estimated_post_retrofit_energy_usage_kwh_equivalent' and 'measured_pre_retrofit_energy_usage_kwh_equivalent' must be provided."
           },
           {
             "required": [
               "estimated_percent_energy_savings"
-            ]
+            ],
+            "error_msg": "If 'rebate_type' is 'MEASURED', then 'estimated_percent_energy_savings' must be provided."
           }
         ]
       }
@@ -136,7 +143,10 @@
           "building_project_type": {
             "const": "MULTIFAMILY_IN_UNIT"
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -171,7 +181,11 @@
           "building_project_type": {
             "const": "MULTIFAMILY_CENTRAL"
           }
-        }
+        },
+        "required": [
+          "num_occupied_units",
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
@@ -192,7 +206,10 @@
               "SINGLE_FAMILY_DETACHED"
             ]
           }
-        }
+        },
+        "required": [
+          "building_project_type"
+        ]
       },
       "then": {
         "required": [
