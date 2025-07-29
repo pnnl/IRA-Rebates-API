@@ -1,0 +1,158 @@
+{
+  "type": "object",
+  "title": "Electric Product Redemptions Response Payload",
+  "properties": {
+    "created_at": {
+      "title": "Created at",
+      "description": "This is the date and time, in UTC, at which the redemption was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by_name": {
+      "title": "Created by name",
+      "type": "string"
+    },
+    "equipment_and_material_cost": {
+      "type": "number",
+      "title": "Equipment and material cost",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "$anchor": "electric_equipment_and_material_cost",
+      "description": "The total cost of the equipment and materials purchased as part of a redemption."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "format": "uuid"
+    },
+    "installation_cost": {
+      "$anchor": "installation_cost",
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "title": "Installation cost"
+    },
+    "install_vendor_id": {
+      "$anchor": "vendor_id",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 64,
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "post_retrofit_inspection_passed": {
+      "oneOf": [
+        {
+          "enum": [
+            "NA",
+            "NO",
+            "YES",
+            "None"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "product_vendor_id": {
+      "$anchor": "vendor_id",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 64,
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "product_info": {
+      "type": "array",
+      "properties": {
+        "type": "object"
+      }
+    },
+    "purchase_date_time": {
+      "$anchor": "purchase_date_time",
+      "type": "string",
+      "minLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(Z|([+-]\\d{2}:\\d{2})))?$|^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
+      "format": "date-time",
+      "title": "Purchase date-time",
+      "description": "This is the date and time a product was purchased. Either this field or the 'purchase_date' field is required for product redemption. Note that the 'purchase_date_time' field will be deprecated in the future.",
+      "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
+    },
+    "purchase_date": {
+      "$anchor": "purchase_date",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Purchase date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial. This represents the date the product was purchased. Either this field or 'purchase_date_time' is required for product redemption."
+    },
+    "rebate_amount": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rebate_deducted": {
+      "$anchor": "rebate_deducted",
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "title": "Rebate deducted",
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+    },
+    "redemption_notes": {
+      "oneOf": [
+        {
+          "type": "string",
+          "readOnly": true,
+          "description": "This will be an array of strings explaining how the rebate_amount was calculated.",
+          "$comment": "This is a read-only field, automatically populated by the API in the response."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "warnings": {
+      "title": "Warning",
+      "type": "array"
+    },
+    "upgrade_type": {
+      "$anchor": "upgrade_type",
+      "title": "Upgrade type",
+      "enum": [
+        "ELECTRICAL_PANEL",
+        "ELECTRIC_COOKING_APPLIANCE",
+        "ELECTRIC_WIRING",
+        "HEAT_PUMP_CLOTHES_DRYER",
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "HEAT_PUMP_WATER_HEATER",
+        "INSULATION_AIR_SEALING_VENTILATION"
+      ],
+      "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+    },
+    "vendor_id": {
+      "$anchor": "vendor_id",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 64,
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "safety_checks": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "equipment_and_material_cost",
+    "installation_cost",
+    "product_info",
+    "rebate_deducted",
+    "upgrade_type",
+    "vendor_id",
+    "id",
+    "created_at",
+    "created_by_name"
+  ]
+}
