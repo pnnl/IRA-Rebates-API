@@ -304,9 +304,11 @@
         "PRE_AND_POST_RETROFIT_MODELS",
         "PRE_RETROFIT_MODEL",
         "QUALITY_ASSURANCE",
-        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE"
+        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE",
+        "MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION"
       ],
-      "title": "File purpose"
+      "title": "File purpose",
+      "description": "When the MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION option is used, Schematron validation will not be applied. The MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION may only be used for files that have received DOE approval to do so on a case-by-case basis."
     },
     "homes_file_type": {
       "$anchor": "homes_file_type",

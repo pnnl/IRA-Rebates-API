@@ -1,0 +1,159 @@
+{
+  "type": "object",
+  "title": "Homes Redemptions Response Payload",
+  "properties": {
+    "created_at": {
+      "title": "Created at",
+      "description": "This is the date and time, in UTC, at which the redemption was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by_name": {
+      "title": "Created by name",
+      "type": "string"
+    },
+    "equipment_and_material_cost": {
+      "type": "number",
+      "title": "Equipment and material cost",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "$anchor": "homes_equipment_and_material_cost",
+      "description": "The total cost of the equipment and materials purchased as part of a redemption."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "format": "uuid"
+    },
+    "installation_cost": {
+      "$anchor": "installation_cost",
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "title": "Installation cost"
+    },
+    "post_retrofit_inspection_passed": {
+      "oneOf": [
+        {
+          "enum": [
+            "NA",
+            "NO",
+            "YES",
+            "None"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "project_completion_date": {
+      "$anchor": "project_completion_date",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Project completion date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+    },
+    "rebate_amount": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rebate_type": {
+      "title": "Rebate type",
+      "enum": [
+        "MEASURED",
+        "MODELED"
+      ],
+      "$anchor": "rebate_type",
+      "description": "The HOMES rebates have two distinct options for determining savings and rebate amounts, MODELED vs MEASURED."
+    },
+    "rebate_deducted": {
+      "$anchor": "rebate_deducted",
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "title": "Rebate deducted",
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+    },
+    "redemption_notes": {
+      "oneOf": [
+        {
+          "type": "string",
+          "readOnly": true,
+          "description": "This will be an array of strings explaining how the rebate_amount was calculated.",
+          "$comment": "This is a read-only field, automatically populated by the API in the response."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "warnings": {
+      "title": "Warning",
+      "type": "array"
+    },
+    "vendor_id": {
+      "$anchor": "vendor_id",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 64,
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "safety_checks": {
+      "type": "object"
+    },
+    "measured_percent_energy_savings": {
+      "$anchor": "measured_percent_energy_savings",
+      "type": "number",
+      "maximum": 100,
+      "description": "The calculated percent measured energy savings where total energy use is first converted to source energy in a manner determined by the state. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed \u2013 either this field or measured_post_retrofit_energy_usage_kwh_equivalent must be specified when rebate_type is MEASURED. The behavior starting mid to late January 2025 will be: this field is required for rebate_type MEASURED and otherwise not allowed."
+    },
+    "measured_post_retrofit_site_energy_usages_by_fuel_type": {
+      "oneOf": [
+        {
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "measured_post_retrofit_energy_usage_kwh_equivalent": {
+      "type": "integer",
+      "title": "Measured post retrofit energy usage kwh equivalent",
+      "minimum": 0,
+      "$anchor": "measured_post_retrofit_energy_usage_kwh_equivalent",
+      "deprecated": true,
+      "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
+    },
+    "is_contractor_eligible": {
+      "$anchor": "is_contractor_eligible",
+      "type": "boolean",
+      "description": "The contractor is eligible if they are on the state's approved list.",
+      "title": "Is contractor eligible"
+    },
+    "total_rebate_payout": {
+      "$anchor": "total_rebate_payout",
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0,
+      "description": "The amount rebated to the claimant by the state. Do NOT include any contractor incentive amounts.",
+      "title": "Total rebate payout"
+    }
+  },
+  "required": [
+    "is_contractor_eligible",
+    "project_completion_date",
+    "rebate_deducted",
+    "rebate_type",
+    "safety_checks",
+    "vendor_id",
+    "id",
+    "created_at",
+    "created_by_name"
+  ]
+}
