@@ -395,7 +395,6 @@
       <sch:assert role="ERROR" test="h:WeatherRegressionBeginDate">Expected WeatherRegressionBeginDate</sch:assert>
       <sch:assert role="ERROR" test="h:WeatherRegressionEndDate">Expected WeatherRegressionEndDate</sch:assert>
       <sch:assert role="ERROR" test="h:CalibrationQualification">Expected CalibrationQualification</sch:assert>
-      <sch:assert role="ERROR" test="h:CalibrationWeatherRegressionCVRMSE">Expected CalibrationWeatherRegressionCVRMSE</sch:assert>
       <sch:assert role="ERROR" test="h:WeatherNormalizedHeatingUsage">Expected WeatherNormalizedHeatingUsage</sch:assert>
       <sch:assert role="ERROR" test="h:WeatherNormalizedCoolingUsage">Expected WeatherNormalizedCoolingUsage</sch:assert>
       <sch:assert role="ERROR" test="h:WeatherNormalizedBaseloadUsage">Expected WeatherNormalizedBaseloadUsage</sch:assert>
@@ -404,6 +403,7 @@
   <sch:pattern ira:remove-measured="true">
     <sch:title>[BPI2400Inputs=Detailed]</sch:title>
     <sch:rule context="/h:HPXML/h:Consumption/h:ConsumptionDetails/h:ConsumptionInfo/h:BPI2400Inputs[h:CalibrationQualification=&quot;detailed&quot;]">
+      <sch:assert role="ERROR" test="h:CalibrationWeatherRegressionCVRMSE">Expected CalibrationWeatherRegressionCVRMSE</sch:assert>
       <sch:assert role="ERROR" test="h:DetailedModelCalibrationHeatingBiasError">Expected DetailedModelCalibrationHeatingBiasError</sch:assert>
       <sch:assert role="ERROR" test="h:DetailedModelCalibrationHeatingAbsoluteError">Expected DetailedModelCalibrationHeatingAbsoluteError</sch:assert>
       <sch:assert role="ERROR" test="h:DetailedModelCalibrationCoolingBiasError">Expected DetailedModelCalibrationCoolingBiasError</sch:assert>
