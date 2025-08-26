@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "file_name": {
+      "$anchor": "file_name",
+      "type": "string",
+      "pattern": "^[0-9a-zA-Z\\-.\\(\\)_ ]+$",
+      "minLength": 2,
+      "maxLength": 64,
+      "description": "This file name will be associated with the uploaded file and will be shown wherever a list of the uploaded files for a reservation is returned.",
+      "title": "File name"
+    },
+    "file_type": {
+      "$anchor": "electric_file_type",
+      "enum": [
+        "HEIC",
+        "JPEG",
+        "PDF",
+        "PNG"
+      ],
+      "title": "File type"
+    },
+    "file_purpose": {
+      "$anchor": "electric_file_purpose",
+      "enum": [
+        "QUALITY_ASSURANCE"
+      ],
+      "title": "File purpose"
+    },
+    "file_url": {
+      "type": "string",
+      "format": "url"
+    },
+    "description": {
+      "$anchor": "description",
+      "title": "Description",
+      "type": "string"
+    }
+  },
+  "required": [
+    "file_name",
+    "file_type",
+    "file_purpose",
+    "file_url"
+  ]
+}

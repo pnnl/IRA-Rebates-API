@@ -1,0 +1,194 @@
+{
+  "type": "object",
+  "title": "Electric Install Redemptions Response Payload",
+  "properties": {
+    "contractor_company_name": {
+      "$anchor": "contractor_company_name",
+      "title": "Contractor company name",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the primary contracting company for the project."
+    },
+    "contractor_name": {
+      "$anchor": "contractor_name",
+      "title": "Contractor name",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the primary contractor for the project."
+    },
+    "created_at": {
+      "title": "Created at",
+      "description": "This is the date and time, in UTC, at which the redemption was created.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by_name": {
+      "title": "Created by name",
+      "type": "string"
+    },
+    "equipment_and_material_cost": {
+      "type": "number",
+      "title": "Equipment and material cost",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "$anchor": "electric_install_redemptions_equipment_and_material_cost",
+      "description": "The total cost of the equipment and materials purchased as part of a redemption."
+    },
+    "is_contractor_eligible": {
+      "$anchor": "is_contractor_eligible",
+      "type": "boolean",
+      "description": "The contractor is eligible if they are on the state's approved list.",
+      "title": "Is contractor eligible"
+    },
+    "is_final_project_redemption": {
+      "$anchor": "is_final_project_redemption",
+      "type": "boolean",
+      "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
+      "title": "Is final project redemption"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "format": "uuid"
+    },
+    "installation_cost": {
+      "$anchor": "electric_install_redemptions_installation_cost",
+      "type": "number",
+      "multipleOf": 0.01,
+      "exclusiveMinimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "title": "Installation cost"
+    },
+    "install_vendor_id": {
+      "$anchor": "vendor_id",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 64,
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "post_retrofit_inspection_passed": {
+      "oneOf": [
+        {
+          "enum": [
+            "NA",
+            "NO",
+            "YES",
+            "None"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "product_vendor_id": {
+      "$anchor": "vendor_id",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 64,
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "project_completion_date": {
+      "$anchor": "project_completion_date",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Project completion date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+    },
+    "purchase_date": {
+      "$anchor": "purchase_date",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Purchase date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial. This represents the date the product was purchased. Either this field or 'purchase_date_time' is required for product redemption."
+    },
+    "rebate_amount": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rebate_deducted": {
+      "$anchor": "rebate_deducted",
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "title": "Rebate deducted",
+      "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
+    },
+    "rebate_passed_through_to_applicant": {
+      "$anchor": "rebate_passed_through_to_applicant",
+      "title": "Rebate passed through to applicant",
+      "type": "number",
+      "minimum": 0,
+      "multipleOf": 0.01,
+      "description": "Use this field when the contractor submitted a product redemption for this reservation and received a rebate on behalf of the applicant. Otherwise set this to 0. This amount must be passed on to the applicant and shown on the invoice. Do not include this in the amount for `equipment_and_material_cost`."
+    },
+    "redemption_notes": {
+      "oneOf": [
+        {
+          "type": "string",
+          "readOnly": true,
+          "description": "This will be an array of strings explaining how the rebate_amount was calculated.",
+          "$comment": "This is a read-only field, automatically populated by the API in the response."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "warnings": {
+      "title": "Warning",
+      "type": "array"
+    },
+    "upgrade_component_details": {
+      "type": "object"
+    },
+    "upgrade_type": {
+      "$anchor": "upgrade_type",
+      "title": "Upgrade type",
+      "enum": [
+        "ELECTRICAL_PANEL",
+        "ELECTRIC_COOKING_APPLIANCE",
+        "ELECTRIC_WIRING",
+        "HEAT_PUMP_CLOTHES_DRYER",
+        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
+        "HEAT_PUMP_WATER_HEATER",
+        "INSULATION_AIR_SEALING_VENTILATION"
+      ],
+      "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
+    },
+    "vendor_id": {
+      "$anchor": "vendor_id",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 64,
+      "title": "Vendor id",
+      "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "safety_checks": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "contractor_company_name",
+    "contractor_name",
+    "equipment_and_material_cost",
+    "installation_cost",
+    "is_contractor_eligible",
+    "is_final_project_redemption",
+    "rebate_deducted",
+    "rebate_passed_through_to_applicant",
+    "upgrade_type",
+    "vendor_id",
+    "id",
+    "created_at",
+    "created_by_name"
+  ]
+}
