@@ -1,9 +1,14 @@
 [
   {
-    "version": "prod-sandbox",
-    "title": "prod-sandbox",
+    "version": "sandbox-test",
+    "title": "sandbox-test",
     "aliases": [
       "latest"
     ]
+  },
+  {
+    "version": "prod-sandbox",
+    "title": "prod-sandbox",
+    "aliases": []
   }
 ]
