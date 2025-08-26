@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Electric Bulk Reporting Response",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "title": "Electric Bulk Reporting Response Item",
+    "properties": {
+      "external_rebate_id": {
+        "oneOf": [
+          {
+            "type": "string",
+            "title": "External rebate id",
+            "minLength": 1,
+            "maxLength": 64,
+            "$anchor": "external_rebate_id",
+            "description": "This is an optional field that a state can use for their own purposes to identify a rebate or rebate reservation."
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reservation_id": {
+        "title": "Id",
+        "type": "string",
+        "format": "uuid"
+      },
+      "message": {
+        "type": "string"
+      },
+      "warnings": {
+        "oneOf": [
+          {
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "reservation_id",
+      "message",
+      "warnings"
+    ]
+  }
+}
