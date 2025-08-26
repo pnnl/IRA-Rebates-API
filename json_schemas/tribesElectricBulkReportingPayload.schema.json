@@ -135,6 +135,9 @@
                   "$ref": "/schemas/ductInsulation#upgrade_component_details"
                 },
                 {
+                  "$ref": "/schemas/pipeInsulation#upgrade_component_details"
+                },
+                {
                   "$ref": "/schemas/floorAboveConditionedSpaceInsulation#upgrade_component_details",
                   "properties": {
                     "percent_floor_receiving_additional_insulation": {
