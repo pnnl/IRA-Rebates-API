@@ -362,6 +362,7 @@
           "HEATING_EQUIPMENT",
           "LIGHTING",
           "MOTORS",
+          "PIPE_INSULATION",
           "PUMPS",
           "ROOF_INSULATION",
           "THERMOSTATS",

@@ -28,6 +28,9 @@
             "$ref": "/schemas/ductInsulation#original_component_details"
           },
           {
+            "$ref": "/schemas/pipeInsulation#original_component_details"
+          },
+          {
             "$ref": "/schemas/foundationInsulation#original_component_details"
           },
           {
@@ -58,6 +61,9 @@
           },
           {
             "$ref": "/schemas/ductInsulation#upgrade_component_details"
+          },
+          {
+            "$ref": "/schemas/pipeInsulation#upgrade_component_details"
           },
           {
             "$ref": "/schemas/floorAboveConditionedSpaceInsulation#upgrade_component_details"
