@@ -426,6 +426,29 @@
               },
               {
                 "type": "object",
+                "title": "Pipe Insulation Original Component Details",
+                "description": "The preexisting conditions associated with this improvement",
+                "properties": {
+                  "primary_pipe_location": {
+                    "description": "The type of space in which the majority of the pipes being treated are located.",
+                    "enum": [
+                      "CONDITIONED_SPACE",
+                      "DO_NOT_KNOW",
+                      "UNCONDITIONED_SPACE"
+                    ]
+                  },
+                  "upgrade_subtype": {
+                    "const": "PIPE_INSULATION"
+                  }
+                },
+                "required": [
+                  "primary_pipe_location",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
                 "title": "Foundation Insulation Original Component Details",
                 "description": "The preexisting conditions associated with this improvement",
                 "properties": {

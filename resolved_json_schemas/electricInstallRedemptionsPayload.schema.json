@@ -490,6 +490,31 @@
                 "additionalProperties": false
               },
               {
+                "title": "Pipe Insulation Upgrade Component Details",
+                "type": "object",
+                "description": "Details that describe this improvement",
+                "properties": {
+                  "percent_pipes_receiving_additional_insulation": {
+                    "description": "The percentage of the pipes that received additional insulation in the upgrade. Choose the closest percentage.",
+                    "enum": [
+                      10,
+                      25,
+                      50,
+                      75,
+                      100
+                    ]
+                  },
+                  "upgrade_subtype": {
+                    "const": "PIPE_INSULATION"
+                  }
+                },
+                "required": [
+                  "percent_pipes_receiving_additional_insulation",
+                  "upgrade_subtype"
+                ],
+                "additionalProperties": false
+              },
+              {
                 "type": "object",
                 "title": "Foor Conditioned Space Upgrade Component Details",
                 "description": "Details that describe this improvement",

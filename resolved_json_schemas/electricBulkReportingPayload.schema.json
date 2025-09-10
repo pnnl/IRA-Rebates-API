@@ -924,6 +924,29 @@
                 },
                 {
                   "type": "object",
+                  "title": "Pipe Insulation Original Component Details",
+                  "description": "The preexisting conditions associated with this improvement",
+                  "properties": {
+                    "primary_pipe_location": {
+                      "description": "The type of space in which the majority of the pipes being treated are located.",
+                      "enum": [
+                        "CONDITIONED_SPACE",
+                        "DO_NOT_KNOW",
+                        "UNCONDITIONED_SPACE"
+                      ]
+                    },
+                    "upgrade_subtype": {
+                      "const": "PIPE_INSULATION"
+                    }
+                  },
+                  "required": [
+                    "primary_pipe_location",
+                    "upgrade_subtype"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
                   "title": "Foundation Insulation Original Component Details",
                   "description": "The preexisting conditions associated with this improvement",
                   "properties": {
@@ -1548,6 +1571,31 @@
                   },
                   "required": [
                     "percent_ducts_receiving_additional_insulation",
+                    "upgrade_subtype"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "title": "Pipe Insulation Upgrade Component Details",
+                  "type": "object",
+                  "description": "Details that describe this improvement",
+                  "properties": {
+                    "percent_pipes_receiving_additional_insulation": {
+                      "description": "The percentage of the pipes that received additional insulation in the upgrade. Choose the closest percentage.",
+                      "enum": [
+                        10,
+                        25,
+                        50,
+                        75,
+                        100
+                      ]
+                    },
+                    "upgrade_subtype": {
+                      "const": "PIPE_INSULATION"
+                    }
+                  },
+                  "required": [
+                    "percent_pipes_receiving_additional_insulation",
                     "upgrade_subtype"
                   ],
                   "additionalProperties": false
