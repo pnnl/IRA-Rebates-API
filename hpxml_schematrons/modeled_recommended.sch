@@ -180,7 +180,7 @@
   <sch:pattern>
     <sch:title>[AtticWallType[text()="knee wall"]]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Enclosure/h:Walls/h:Wall[h:AtticWallType[text()=&quot;knee wall&quot;]]">
-      <sch:assert role="ERROR" test="h:Area = 1" ira:remove-req-modeled="true" ira:remove-measured="true">Knee walls should have an area</sch:assert>
+      <sch:assert role="ERROR" test="h:Area" ira:remove-req-modeled="true" ira:remove-measured="true">Expected Area for knee walls</sch:assert>
       <sch:assert role="ERROR" test="not(h:Orientation)">Knee walls should not have an orientation</sch:assert>
     </sch:rule>
   </sch:pattern>
@@ -235,104 +235,119 @@
   <sch:pattern>
     <sch:title>[HeatingSystem]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem">
-      <sch:assert role="ERROR" test="h:HeatingSystemType[h:ElectricResistance | h:Furnace | h:WallFurnace | h:FloorFurnace | h:Boiler | h:Stove]">Expected HeatingSystemType to be ElectricResistance, Furnace, WallFurnace, FloorFurnace, Boiler, or Stove</sch:assert>
-      <!-- See [HeatingSystemType=Resistance] or [HeatingSystemType=Furnace] or [HeatingSystemType=WallFurnace] or [HeatingSystemType=FloorFurnace] or [HeatingSystemType=InUnitBoiler] or [HeatingSystemType=Stove] -->
       <sch:assert role="ERROR" test="h:FractionHeatLoadServed | h:FloorAreaServed">Expected FractionHeatLoadServed or FloorAreaServed</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
+    <sch:title>[HeatingSystem=Present]</sch:title>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[number(h:FractionHeatLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0]">
+      <sch:assert role="ERROR" test="h:HeatingSystemType[h:ElectricResistance | h:Furnace | h:WallFurnace | h:FloorFurnace | h:Boiler | h:Stove]">Expected HeatingSystemType to be ElectricResistance, Furnace, WallFurnace, FloorFurnace, Boiler, or Stove when FractionHeatLoadServed is not zero</sch:assert>
+      <!-- See [HeatingSystemType=Resistance] or [HeatingSystemType=Furnace] or [HeatingSystemType=WallFurnace] or [HeatingSystemType=FloorFurnace] or [HeatingSystemType=InUnitBoiler] or [HeatingSystemType=Stove] -->
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
     <sch:title>[HeatingSystemType=Resistance]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType/h:ElectricResistance]">
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType/h:ElectricResistance and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
       <sch:assert role="ERROR" test="not(h:DistributionSystem)">DistributionSystem not allowed for HeatingSystemType/Resistance, use Furnace or Boiler instead</sch:assert>
-      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;electricity&quot;]">Expected HeatingSystemFuel to be 'electricity'</sch:assert>
+      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;electricity&quot;]">Expected HeatingSystemFuel to be 'electricity' when FractionHeatLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[HeatingSystemType=Furnace|WallFurnace|FloorFurnace|InUnitBoiler]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType[h:Furnace|h:WallFurnace|h:FloorFurnace|h:Boiler]]">
-      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;electricity&quot; or text()=&quot;natural gas&quot; or text()=&quot;fuel oil&quot; or text()=&quot;fuel oil 1&quot; or text()=&quot;fuel oil 2&quot; or text()=&quot;fuel oil 4&quot; or text()=&quot;fuel oil 5/6&quot; or text()=&quot;propane&quot;]">Expected HeatingSystemFuel to be 'electricity', 'natural gas', 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', 'fuel oil 5/6', or 'propane'</sch:assert>
-      <sch:assert role="ERROR" test="h:AnnualHeatingEfficiency[h:Units=&quot;AFUE&quot;]/h:Value or h:YearInstalled or h:ModelYear">Expected AnnualHeatingEfficiency[Units="AFUE"]/Value, YearInstalled, or ModelYear</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType[h:Furnace|h:WallFurnace|h:FloorFurnace|h:Boiler] and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;electricity&quot; or text()=&quot;natural gas&quot; or text()=&quot;fuel oil&quot; or text()=&quot;fuel oil 1&quot; or text()=&quot;fuel oil 2&quot; or text()=&quot;fuel oil 4&quot; or text()=&quot;fuel oil 5/6&quot; or text()=&quot;propane&quot;]">Expected HeatingSystemFuel to be 'electricity', 'natural gas', 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', 'fuel oil 5/6', or 'propane' when FractionHeatLoadServed is not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:AnnualHeatingEfficiency[h:Units=&quot;AFUE&quot;]/h:Value or h:YearInstalled or h:ModelYear">Expected AnnualHeatingEfficiency[Units="AFUE"]/Value, YearInstalled, or ModelYear when FractionHeatLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[HeatingSystemType=Furnace]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType/h:Furnace]">
-      <sch:assert role="ERROR" test="h:DistributionSystem/@idref">Expected DistributionSystem/@idref</sch:assert>
-      <sch:assert role="ERROR" test="../../h:HVACDistribution/h:DistributionSystemType/h:AirDistribution">Expected HVACDistribution/DistributionSystemType/AirDistribution</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType/h:Furnace and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="h:DistributionSystem/@idref">Expected DistributionSystem/@idref when FractionHeatLoadServed is not zero</sch:assert>
+      <sch:assert role="ERROR" test="../../h:HVACDistribution/h:DistributionSystemType/h:AirDistribution">Expected HVACDistribution/DistributionSystemType/AirDistribution when FractionHeatLoadServed is not zero</sch:assert>
       <!-- See [HVACDistribution] -->
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[HeatingSystemType=WallFurnace|FloorFurnace]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType[h:WallFurnace|h:FloorFurnace]]">
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType[h:WallFurnace|h:FloorFurnace] and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
       <sch:assert role="ERROR" test="not(h:DistributionSystem)">DistributionSystem not allowed</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[HeatingSystemType=Stove]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType/h:Stove]">
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType/h:Stove and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
       <sch:assert role="ERROR" test="not(h:DistributionSystem)">DistributionSystem not allowed</sch:assert>
-      <sch:assert role="ERROR" test="h:HeatingSystemFuel">Expected HeatingSystemFuel</sch:assert>
-      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;wood&quot; or text()=&quot;wood pellets&quot;]">Expected HeatingSystemFuel to be 'wood' or 'wood pellets'</sch:assert>
+      <sch:assert role="ERROR" test="h:HeatingSystemFuel">Expected HeatingSystemFuel when FractionHeatLoadServed is not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;wood&quot; or text()=&quot;wood pellets&quot;]">Expected HeatingSystemFuel to be 'wood' or 'wood pellets' when FractionHeatLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[CoolingSystem]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:CoolingSystem">
-      <sch:assert role="ERROR" test="h:CoolingSystemType[text()=&quot;central air conditioner&quot; or text()=&quot;room air conditioner&quot; or text()=&quot;evaporative cooler&quot; or text()=&quot;mini-split&quot;]">Expected CoolingSystemType to be 'central air conditioner', 'room air conditioner', 'evaporative cooler', or 'mini-split'</sch:assert>
       <sch:assert role="ERROR" test="h:FractionCoolLoadServed | h:FloorAreaServed">Expected FractionCoolLoadServed or FloorAreaServed</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
+    <sch:title>[CoolingSystem=Present]</sch:title>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:CoolingSystem[number(h:FractionCoolLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0]">
+      <sch:assert role="ERROR" test="h:CoolingSystemType[text()=&quot;central air conditioner&quot; or text()=&quot;room air conditioner&quot; or text()=&quot;evaporative cooler&quot; or text()=&quot;mini-split&quot;]">Expected CoolingSystemType to be 'central air conditioner', 'room air conditioner', 'evaporative cooler', or 'mini-split' when FractionCoolLoadServed is not zero</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
     <sch:title>[CoolingSystemType=CentralAC]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:CoolingSystem[h:CoolingSystemType=&quot;central air conditioner&quot;]">
-      <sch:assert role="ERROR" test="../../h:HVACDistribution/h:DistributionSystemType/h:AirDistribution">Expected HVACDistribution/DistributionSystemType/AirDistribution</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:CoolingSystem[h:CoolingSystemType=&quot;central air conditioner&quot; and (number(h:FractionCoolLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="../../h:HVACDistribution/h:DistributionSystemType/h:AirDistribution">Expected HVACDistribution/DistributionSystemType/AirDistribution when FractionCoolLoadServed is not zero</sch:assert>
       <!-- See [HVACDistribution] -->
-      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;SEER&quot; or h:Units=&quot;SEER2&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value, YearInstalled, or ModelYear</sch:assert>
+      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;SEER&quot; or h:Units=&quot;SEER2&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value, YearInstalled, or ModelYear when FractionCoolLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[CoolingSystemType=PTACorRoomAC]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:CoolingSystem[h:CoolingSystemType=&quot;room air conditioner&quot; or h:CoolingSystemType=&quot;packaged terminal air conditioner&quot;]">
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:CoolingSystem[(h:CoolingSystemType=&quot;room air conditioner&quot; or h:CoolingSystemType=&quot;packaged terminal air conditioner&quot;) and (number(h:FractionCoolLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
       <sch:assert role="ERROR" test="not(h:DistributionSystem)">DistributionSystem not allowed</sch:assert>
-      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;EER&quot; or h:Units=&quot;CEER&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="EER" or Units="CEER"]/Value, YearInstalled, or ModelYear</sch:assert>
+      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;EER&quot; or h:Units=&quot;CEER&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="EER" or Units="CEER"]/Value, YearInstalled, or ModelYear when FractionCoolLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[CoolingSystemType=MiniSplitAC]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:CoolingSystem[h:CoolingSystemType=&quot;mini-split&quot;]">
-      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;SEER&quot; or h:Units=&quot;SEER2&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value, YearInstalled, or ModelYear</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:CoolingSystem[h:CoolingSystemType=&quot;mini-split&quot; and (number(h:FractionCoolLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;SEER&quot; or h:Units=&quot;SEER2&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value, YearInstalled, or ModelYear when FractionCoolLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[HeatPump]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatPump">
-      <sch:assert role="ERROR" test="h:HeatPumpType[text()=&quot;air-to-air&quot; or text()=&quot;mini-split&quot; or text()=&quot;ground-to-air&quot;]">Expected HeatPumpType to be 'air-to-air', 'mini-split', or 'ground-to-air'</sch:assert>
       <sch:assert role="ERROR" test="(h:FractionHeatLoadServed and h:FractionCoolLoadServed) or h:FloorAreaServed">Expected FractionHeatLoadServed and FractionCoolLoadServed or FloorAreaServed</sch:assert>
-      <sch:assert role="ERROR" test="h:HeatPumpFuel[text()=&quot;electricity&quot;]">Expected HeatPumpFuel to be 'electricity'</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>[HeatPump=Present]</sch:title>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatPump[number(h:FractionHeatLoadServed) &gt; 0 or number(h:FractionCoolLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0]">
+      <sch:assert role="ERROR" test="h:HeatPumpType[text()=&quot;air-to-air&quot; or text()=&quot;mini-split&quot; or text()=&quot;ground-to-air&quot;]">Expected HeatPumpType to be 'air-to-air', 'mini-split', or 'ground-to-air' when FractionHeatLoadServed and FractionCoolLoadServed are not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:HeatPumpFuel[text()=&quot;electricity&quot;]">Expected HeatPumpFuel to be 'electricity' when FractionHeatLoadServed and FractionCoolLoadServed are not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[HeatPumpType=AirSource]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatPump[h:HeatPumpType=&quot;air-to-air&quot;]">
-      <sch:assert role="ERROR" test="../../h:HVACDistribution/h:DistributionSystemType/h:AirDistribution">Expected HVACDistribution/DistributionSystemType/AirDistribution</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatPump[h:HeatPumpType=&quot;air-to-air&quot; and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FractionCoolLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="../../h:HVACDistribution/h:DistributionSystemType/h:AirDistribution">Expected HVACDistribution/DistributionSystemType/AirDistribution when FractionHeatLoadServed and FractionCoolLoadServed are not zero</sch:assert>
       <!-- See [HVACDistribution] -->
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[HeatPumpType=AirSource|MiniSplit]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatPump[h:HeatPumpType=&quot;mini-split&quot; or h:HeatPumpType=&quot;air-to-air&quot;]">
-      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;SEER&quot; or h:Units=&quot;SEER2&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value, YearInstalled, or ModelYear</sch:assert>
-      <sch:assert role="ERROR" test="h:AnnualHeatingEfficiency[h:Units=&quot;HSPF&quot; or h:Units=&quot;HSPF2&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualHeatingEfficiency[Units="HSPF" or Units="HSPF2"]/Value, YearInstalled, or ModelYear</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatPump[(h:HeatPumpType=&quot;mini-split&quot; or h:HeatPumpType=&quot;air-to-air&quot;) and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FractionCoolLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;SEER&quot; or h:Units=&quot;SEER2&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value, YearInstalled, or ModelYear when FractionHeatLoadServed and FractionCoolLoadServed are not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:AnnualHeatingEfficiency[h:Units=&quot;HSPF&quot; or h:Units=&quot;HSPF2&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualHeatingEfficiency[Units="HSPF" or Units="HSPF2"]/Value, YearInstalled, or ModelYear when FractionHeatLoadServed and FractionCoolLoadServed are not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[HeatPumpType=GroundSource]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatPump[h:HeatPumpType=&quot;ground-to-air&quot;]">
-      <sch:assert role="ERROR" test="../../h:HVACDistribution/h:DistributionSystemType/h:AirDistribution">Expected HVACDistribution/DistributionSystemType/AirDistribution</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatPump[h:HeatPumpType=&quot;ground-to-air&quot; and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FractionCoolLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="../../h:HVACDistribution/h:DistributionSystemType/h:AirDistribution">Expected HVACDistribution/DistributionSystemType/AirDistribution when FractionHeatLoadServed and FractionCoolLoadServed are not zero</sch:assert>
       <!-- See [HVACDistribution] -->
-      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;EER&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="EER"]/Value, YearInstalled, or ModelYear</sch:assert>
-      <sch:assert role="ERROR" test="h:AnnualHeatingEfficiency[h:Units=&quot;COP&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualHeatingEfficiency[Units="COP"]/Value, YearInstalled, or ModelYear</sch:assert>
+      <sch:assert role="ERROR" test="h:AnnualCoolingEfficiency[h:Units=&quot;EER&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualCoolingEfficiency[Units="EER"]/Value, YearInstalled, or ModelYear when FractionHeatLoadServed and FractionCoolLoadServed are not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:AnnualHeatingEfficiency[h:Units=&quot;COP&quot;]/h:Value | h:YearInstalled | h:ModelYear">Expected AnnualHeatingEfficiency[Units="COP"]/Value, YearInstalled, or ModelYear when FractionHeatLoadServed and FractionCoolLoadServed are not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -363,28 +378,28 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>[WaterHeatingSystem]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem">
-      <sch:assert role="ERROR" test="h:WaterHeaterType[text()=&quot;storage water heater&quot; or text()=&quot;dedicated boiler with storage tank&quot; or text()=&quot;instantaneous water heater&quot; or text()=&quot;heat pump water heater&quot; or text()=&quot;space-heating boiler with storage tank&quot; or text()=&quot;space-heating boiler with tankless coil&quot;]">Expected WaterHeaterType to be one of 'storage water heater', 'dedicated boiler with storage tank', 'instantaneous water heater', 'heat pump water heater', 'space-heating boiler with storage tank', or 'space-heating boiler with tankless coil'</sch:assert>
+    <sch:title>[WaterHeatingSystem=Present]</sch:title>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[not(h:FractionDHWLoadServed) or number(h:FractionDHWLoadServed) &gt; 0]">
+      <sch:assert role="ERROR" test="h:WaterHeaterType[text()=&quot;storage water heater&quot; or text()=&quot;dedicated boiler with storage tank&quot; or text()=&quot;instantaneous water heater&quot; or text()=&quot;heat pump water heater&quot; or text()=&quot;space-heating boiler with storage tank&quot; or text()=&quot;space-heating boiler with tankless coil&quot;]">Expected WaterHeaterType to be one of 'storage water heater', 'dedicated boiler with storage tank', 'instantaneous water heater', 'heat pump water heater', 'space-heating boiler with storage tank', or 'space-heating boiler with tankless coil' when FractionDHWLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[WaterHeatingSystemType=Tank|Tankless|HeatPump]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[h:WaterHeaterType=&quot;storage water heater&quot; or h:WaterHeaterType=&quot;dedicated boiler with storage tank&quot; or h:WaterHeaterType=&quot;instantaneous water heater&quot; or h:WaterHeaterType=&quot;heat pump water heater&quot;]">
-      <sch:assert role="ERROR" test="h:UniformEnergyFactor | h:EnergyFactor | h:YearInstalled | h:ModelYear">Expected UniformEnergyFactor, EnergyFactor, YearInstalled, or ModelYear</sch:assert>
-      <sch:assert role="ERROR" test="h:FuelType[text()=&quot;natural gas&quot; or text()=&quot;fuel oil&quot; or text()=&quot;fuel oil 1&quot; or text()=&quot;fuel oil 2&quot; or text()=&quot;fuel oil 4&quot; or text()=&quot;fuel oil 5/6&quot; or text()=&quot;propane&quot; or text()=&quot;electricity&quot;]">Expected FuelType to be one of 'natural gas', 'electricity', 'propane', 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', or 'fuel oil 5/6'</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[(h:WaterHeaterType=&quot;storage water heater&quot; or h:WaterHeaterType=&quot;dedicated boiler with storage tank&quot; or h:WaterHeaterType=&quot;instantaneous water heater&quot; or h:WaterHeaterType=&quot;heat pump water heater&quot;) and (not(h:FractionDHWLoadServed) or number(h:FractionDHWLoadServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="h:UniformEnergyFactor | h:EnergyFactor | h:YearInstalled | h:ModelYear">Expected UniformEnergyFactor, EnergyFactor, YearInstalled, or ModelYear when FractionDHWLoadServed is not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:FuelType[text()=&quot;natural gas&quot; or text()=&quot;fuel oil&quot; or text()=&quot;fuel oil 1&quot; or text()=&quot;fuel oil 2&quot; or text()=&quot;fuel oil 4&quot; or text()=&quot;fuel oil 5/6&quot; or text()=&quot;propane&quot; or text()=&quot;electricity&quot;]">Expected FuelType to be one of 'natural gas', 'electricity', 'propane', 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', or 'fuel oil 5/6' when FractionDHWLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[WaterHeatingSystemType=HeatPump]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[h:WaterHeaterType=&quot;heat pump water heater&quot;]">
-      <sch:assert role="ERROR" test="h:FuelType[text()=&quot;electricity&quot;]">Expected FuelType = "electricity"</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[(h:WaterHeaterType=&quot;heat pump water heater&quot;) and (not(h:FractionDHWLoadServed) or number(h:FractionDHWLoadServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="h:FuelType[text()=&quot;electricity&quot;]">Expected FuelType to be "electricity" when FractionDHWLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[WaterHeatingSystemType=CombiIndirect|CombiTanklessCoil]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[h:WaterHeaterType=&quot;space-heating boiler with storage tank&quot; or h:WaterHeaterType=&quot;space-heating boiler with tankless coil&quot;]">
-      <sch:assert role="ERROR" test="h:RelatedHVACSystem">Expected RelatedHVACSystem</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[(h:WaterHeaterType=&quot;space-heating boiler with storage tank&quot; or h:WaterHeaterType=&quot;space-heating boiler with tankless coil&quot;) and (not(h:FractionDHWLoadServed) or number(h:FractionDHWLoadServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="h:RelatedHVACSystem">Expected RelatedHVACSystem when FractionDHWLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -504,8 +519,8 @@
   </sch:pattern>
   <sch:pattern>
     <sch:title>[WaterHeatingSystem]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[not(h:WaterHeaterType=&quot;instantaneous water heater&quot; or h:WaterHeaterType=&quot;space-heating boiler with tankless coil&quot;)]">
-      <sch:assert role="ERROR" test="h:TankVolume">Expected TankVolume</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[not(h:WaterHeaterType=&quot;instantaneous water heater&quot; or h:WaterHeaterType=&quot;space-heating boiler with tankless coil&quot;) and (not(h:FractionDHWLoadServed) or number(h:FractionDHWLoadServed) &gt; 0)]">
+      <sch:assert role="ERROR" test="h:TankVolume">Expected TankVolume when FractionDHWLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -531,28 +546,28 @@
   </sch:pattern>
   <sch:pattern>
     <sch:title>[ClothesWasher]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:ClothesWasher">
-      <sch:assert role="ERROR" test="h:Type">Expected Type</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:ClothesWasher[not(h:Count) or number(h:Count) &gt; 0]">
+      <sch:assert role="ERROR" test="h:Type">Expected Type when Count is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[ClothesDryer]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:ClothesDryer">
-      <sch:assert role="ERROR" test="h:Type">Expected Type</sch:assert>
-      <sch:assert role="ERROR" test="h:FuelType">Expected FuelType</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:ClothesDryer[not(h:Count) or number(h:Count) &gt; 0]">
+      <sch:assert role="ERROR" test="h:Type">Expected Type when Count is not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:FuelType">Expected FuelType when Count is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[CookingRange]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:CookingRange">
-      <sch:assert role="ERROR" test="h:FuelType">Expected FuelType</sch:assert>
-      <sch:assert role="ERROR" test="h:IsInduction">Expected IsInduction</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:CookingRange[not(h:Count) or number(h:Count) &gt; 0]">
+      <sch:assert role="ERROR" test="h:FuelType">Expected FuelType when Count is not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:IsInduction">Expected IsInduction when Count is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
     <sch:title>[Oven]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:Oven">
-      <sch:assert role="ERROR" test="h:FuelType">Expected FuelType</sch:assert>
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Appliances/h:Oven[not(h:Count) or number(h:Count) &gt; 0]">
+      <sch:assert role="ERROR" test="h:FuelType">Expected FuelType when Count is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
 </sch:schema>
