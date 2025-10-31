@@ -138,7 +138,7 @@
       "title": "Num occupied units",
       "minimum": 0,
       "maximum": 1000,
-      "description": "This is the number of occupied units in a multifamily building. "
+      "description": "This is the number of occupied units in a multifamily building. Note: This field should be used for building_project_type MULTIFAMILY_CENTRAL or MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT. Although it is currently optional in these cases, it will be required in a future release."
     },
     "num_units": {
       "$anchor": "num_units",

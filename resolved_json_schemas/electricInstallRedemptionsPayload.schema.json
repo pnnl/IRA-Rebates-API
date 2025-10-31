@@ -44,7 +44,7 @@
       "title": "Is final project redemption"
     },
     "post_retrofit_inspection_passed": {
-      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant. Note: this field is currently optional but will be required in a future release.",
       "title": "Post retrofit inspection passed",
       "enum": [
         "NA",

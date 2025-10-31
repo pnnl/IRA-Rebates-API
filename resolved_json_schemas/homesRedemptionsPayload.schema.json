@@ -31,14 +31,14 @@
     },
     "measured_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Measured post retrofit energy usage kwh equivalent",
+      "title": "Measured post-retrofit energy usage kwh equivalent",
       "minimum": 0,
       "deprecated": true,
-      "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
+      "description": "This field is deprecated and will be removed in a future release. Use `measured_post_retrofit_site_energy_usages_by_fuel_type` instead. This is the total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
     },
     "measured_post_retrofit_site_energy_usages_by_fuel_type": {
       "type": "array",
-      "title": "Measured Post Retrofit Site Energy Usage By Fuel Type",
+      "title": "Measured post-retrofit site energy usage by fuel type",
       "items": {
         "title": "Site Energy Usage",
         "type": "object",
@@ -83,7 +83,7 @@
       "description": "An array of measured site energy usage objects. Each entry represents a different site fuel type. To avoid an immediate breaking change, this field is currently optional when rebate_type is MEASURED and otherwise not allowed. The behavior starting mid to late January 2025 will be: this field is required when rebate_type is MEASURED and otherwise not allowed."
     },
     "post_retrofit_inspection_passed": {
-      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant. Note: this field is currently optional but will be required in a future release.",
       "title": "Post retrofit inspection passed",
       "enum": [
         "NA",
