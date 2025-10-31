@@ -48,7 +48,7 @@
         "MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION"
       ],
       "title": "File purpose",
-      "description": "When the MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION option is used, Schematron validation will not be applied. The MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION may only be used for files that have received DOE approval to do so on a case-by-case basis."
+      "description": "PRE_RETROFIT_MODEL: File contains a single building model representing the base building before upgrades. POST_RETROFIT_MODEL: File contains a single building model representing the building with as-installed upgrades included. PRE_AND_POST_RETROFIT_MODELS: File contains building models for both the base building (before upgrades) and the building with as-installed upgrades included. QUALITY_ASSURANCE: File used to document the installation of one or more upgrade. MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE: File containing the results from weather-normalized measure savings calculations. MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION: This option turns off HPXML Schematron validation, is a temporary workaround for specific cases, and may only be used with DOE approval on a case-by-case basis."
     }
   },
   "required": [

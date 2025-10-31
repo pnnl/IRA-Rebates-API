@@ -7,6 +7,9 @@
     "address_id": {
       "$ref": "/schemas/definitions#address_id"
     },
+    "allow_requested_reservation_amount_reduction": {
+      "$ref": "/schemas/definitions#allow_requested_reservation_amount_reduction"
+    },
     "applicant_id": {
       "$ref": "/schemas/definitions#applicant_id"
     },

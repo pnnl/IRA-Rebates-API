@@ -122,11 +122,11 @@
     },
     "estimated_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Estimated post retrofit energy usage kwh equivalent",
+      "title": "Estimated post-retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "estimated_post_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total estimated (expected) annual  energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
+      "description": "This field is deprecated and will be removed in a future release. Use `estimated_post_retrofit_site_energy_usages_by_fuel_type` instead. This is the total estimated (expected) annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
     },
     "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
       "type": "array",
@@ -168,7 +168,7 @@
       "minimum": 0,
       "$anchor": "measured_pre_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
+      "description": "This field is deprecated and will be removed in a future release. Use `measured_pre_retrofit_site_energy_usages_by_fuel_type` instead. This is the total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
     },
     "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
       "type": "array",
@@ -192,11 +192,11 @@
     },
     "modeled_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Modeled post retrofit energy usage kwh equivalent",
+      "title": "Modeled post-retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "modeled_post_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
+      "description": "This field is deprecated and will be removed in a future release. Use `modeled_post_retrofit_site_energy_usages_by_fuel_type` instead. This is the total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
     },
     "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
       "title": "Modeled Post Retrofit Site Energy Usages By Fuel Type",
@@ -209,7 +209,7 @@
       "minimum": 0,
       "$anchor": "modeled_pre_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
+      "description": "This field is deprecated and will be removed in a future release. Use `modeled_pre_retrofit_site_energy_usages_by_fuel_type` instead. This is the total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
     },
     "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
       "type": "array",
@@ -230,7 +230,7 @@
       "title": "Num occupied units",
       "minimum": 0,
       "maximum": 1000,
-      "description": "This is the number of occupied units in a multifamily building. "
+      "description": "This is the number of occupied units in a multifamily building. Note: This field should be used for building_project_type MULTIFAMILY_CENTRAL or MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT. Although it is currently optional in these cases, it will be required in a future release."
     },
     "num_units": {
       "$anchor": "num_units",
