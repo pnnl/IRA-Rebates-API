@@ -104,7 +104,7 @@
         "description": "The jurisdiction attests that they have obtained the required proof of identify, proof of ownership, and proof of income for this rebate."
       },
       "post_retrofit_inspection_passed": {
-        "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+        "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant. Note: this field is currently optional but will be required in a future release.",
         "title": "Post retrofit inspection passed",
         "enum": [
           "NA",
@@ -580,7 +580,7 @@
         "title": "Num occupied units",
         "minimum": 0,
         "maximum": 1000,
-        "description": "This is the number of occupied units in a multifamily building. "
+        "description": "This is the number of occupied units in a multifamily building. Note: This field should be used for building_project_type MULTIFAMILY_CENTRAL or MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT. Although it is currently optional in these cases, it will be required in a future release."
       },
       "num_units": {
         "type": "integer",
