@@ -10,6 +10,12 @@
       "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
       "title": "Address id"
     },
+    "allow_requested_reservation_amount_reduction": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, allows the rules engine to reduce the requested reservation amount.",
+      "title": "Allow requested reservation amount reduction"
+    },
     "applicant_id": {
       "type": "string",
       "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.",
@@ -120,7 +126,7 @@
       "title": "Num occupied units",
       "minimum": 0,
       "maximum": 1000,
-      "description": "This is the number of occupied units in a multifamily building. "
+      "description": "This is the number of occupied units in a multifamily building. Note: This field should be used for building_project_type MULTIFAMILY_CENTRAL or MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT. Although it is currently optional in these cases, it will be required in a future release."
     },
     "num_units": {
       "type": "integer",

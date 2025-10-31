@@ -19,6 +19,13 @@
       "error_msg": "The 'ahri_reference_number' must be a string of digits between 6 and 9 characters long.",
       "description": "The AHRA Reference Number associated with a heat pump or heat pump water heater. See the AHRI Directory of Certified Product Performance at  https://www.ahridirectory.org/Search/SearchHome?ReturnUrl=%2f for more information regarding AHRI Reference Numbers."
     },
+    "allow_requested_reservation_amount_reduction": {
+      "$anchor": "allow_requested_reservation_amount_reduction",
+      "type": "boolean",
+      "default": false,
+      "description": "If true, allows the rules engine to reduce the requested reservation amount.",
+      "title": "Allow requested reservation amount reduction"
+    },
     "applicant_id": {
       "$anchor": "applicant_id",
       "type": "string",
@@ -224,11 +231,11 @@
     },
     "estimated_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Estimated post retrofit energy usage kwh equivalent",
+      "title": "Estimated post-retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "estimated_post_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total estimated (expected) annual  energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
+      "description": "This field is deprecated and will be removed in a future release. Use `estimated_post_retrofit_site_energy_usages_by_fuel_type` instead. This is the total estimated (expected) annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MEASURED reservations only."
     },
     "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "estimated_post_retrofit_site_energy_usages_by_fuel_type",
@@ -308,7 +315,7 @@
         "MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION"
       ],
       "title": "File purpose",
-      "description": "When the MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION option is used, Schematron validation will not be applied. The MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION may only be used for files that have received DOE approval to do so on a case-by-case basis."
+      "description": "PRE_RETROFIT_MODEL: File contains a single building model representing the base building before upgrades. POST_RETROFIT_MODEL: File contains a single building model representing the building with as-installed upgrades included. PRE_AND_POST_RETROFIT_MODELS: File contains building models for both the base building (before upgrades) and the building with as-installed upgrades included. QUALITY_ASSURANCE: File used to document the installation of one or more upgrade. MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE: File containing the results from weather-normalized measure savings calculations. MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION: This option turns off HPXML Schematron validation, is a temporary workaround for specific cases, and may only be used with DOE approval on a case-by-case basis."
     },
     "homes_file_type": {
       "$anchor": "homes_file_type",
@@ -425,16 +432,16 @@
     },
     "measured_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Measured post retrofit energy usage kwh equivalent",
+      "title": "Measured post-retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "measured_post_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
+      "description": "This field is deprecated and will be removed in a future release. Use `measured_post_retrofit_site_energy_usages_by_fuel_type` instead. This is the total actual annual energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit - based on normalized utility bill data. This field is used for MEASURED redemptions only."
     },
     "measured_post_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "measured_post_retrofit_site_energy_usages_by_fuel_type",
       "type": "array",
-      "title": "Measured Post Retrofit Site Energy Usage By Fuel Type",
+      "title": "Measured post-retrofit site energy usage by fuel type",
       "items": {
         "$ref": "#site_energy_usage"
       },
@@ -446,12 +453,12 @@
       "minimum": 0,
       "$anchor": "measured_pre_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
+      "description": "This field is deprecated and will be removed in a future release. Use `measured_pre_retrofit_site_energy_usages_by_fuel_type` instead. This is the total actual annual energy usage converted to kWh-equivalent for the home or multifamily building prior to the retrofit - based on normalized utility bill data. This field is used for MEASURED reservations only."
     },
     "measured_pre_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "measured_pre_retrofit_site_energy_usages_by_fuel_type",
       "type": "array",
-      "title": "Measured Pre Retrofit Site Energy Usages By Fuel Type",
+      "title": "Measured pre-retrofit site energy usages by fuel type",
       "items": {
         "$ref": "#site_energy_usage"
       },
@@ -489,15 +496,15 @@
     },
     "modeled_post_retrofit_energy_usage_kwh_equivalent": {
       "type": "integer",
-      "title": "Modeled post retrofit energy usage kwh equivalent",
+      "title": "Modeled post-retrofit energy usage kwh equivalent",
       "minimum": 0,
       "$anchor": "modeled_post_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
+      "description": "This field is deprecated and will be removed in a future release. Use `modeled_post_retrofit_site_energy_usages_by_fuel_type` instead. This is the total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building post-retrofit. This field is used for MODELED reservations only."
     },
     "modeled_post_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "modeled_post_retrofit_site_energy_usages_by_fuel_type",
-      "title": "Modeled Post Retrofit Site Energy Usages By Fuel Type",
+      "title": "Modeled post-retrofit site energy usages by fuel type",
       "type": "array",
       "items": {
         "$ref": "#site_energy_usage"
@@ -510,12 +517,12 @@
       "minimum": 0,
       "$anchor": "modeled_pre_retrofit_energy_usage_kwh_equivalent",
       "deprecated": true,
-      "description": "The total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
+      "description": "This field is deprecated and will be removed in a future release. Use `modeled_pre_retrofit_site_energy_usages_by_fuel_type` instead. This is the total annual modeled energy usage converted to kWh-equivalent for the home or multifamily building as-found (prior to the retrofit). This field is used for MODELED reservations only."
     },
     "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
       "$anchor": "modeled_pre_retrofit_site_energy_usages_by_fuel_type",
       "type": "array",
-      "title": "Modeled Pre Retrofit Site Energy Usages By Fuel Type",
+      "title": "Modeled pre-retrofit site energy usages by fuel type",
       "items": {
         "$ref": "#site_energy_usage"
       },
@@ -544,7 +551,7 @@
       "title": "Num occupied units",
       "minimum": 0,
       "maximum": 1000,
-      "description": "This is the number of occupied units in a multifamily building. "
+      "description": "This is the number of occupied units in a multifamily building. Note: This field should be used for building_project_type MULTIFAMILY_CENTRAL or MULTIFAMILY_IN_UNIT_PART_OF_BUILDING_PROJECT. Although it is currently optional in these cases, it will be required in a future release."
     },
     "num_units": {
       "$anchor": "num_units",
@@ -592,7 +599,7 @@
     },
     "post_retrofit_inspection_passed": {
       "$anchor": "post_retrofit_inspection_passed",
-      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant.",
+      "description": "State attests that if a post-retrofit inspection was conducted and failed that the issues were remedied before the rebate was provided to the claimant. Note: this field is currently optional but will be required in a future release.",
       "title": "Post retrofit inspection passed",
       "$ref": "#safety_checks_yes_no_na"
     },
@@ -666,7 +673,8 @@
       "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(Z|([+-]\\d{2}:\\d{2})))?$|^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
       "format": "date-time",
       "title": "Purchase date-time",
-      "description": "This is the date and time a product was purchased. Either this field or the 'purchase_date' field is required for product redemption. Note that the 'purchase_date_time' field will be deprecated in the future.",
+      "deprecated": true,
+      "description": "This field is deprecated and will be removed in a future release. Use `puchase_date` instead. This is the date and time a product was purchased. Either this field or the `purchase_date` field is required for a product redemption.",
       "$comment": "The date-time format follows RFC 3339, section 5.6:  https://datatracker.ietf.org/doc/html/rfc3339#section-5.6:~:text=Timestamps%20%20%20%20%20%20%20July%202002-,5.6,-.%20Internet%20Date/Time."
     },
     "rebate_deducted": {
