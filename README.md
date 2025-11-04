@@ -88,6 +88,9 @@ The API validates BuildingSync v2.6.0 files into steps:
 1. Validate against the BuildingSync v2.6.0 XML Schema file, which can be obtained from https://github.com/hpxmlwg/hpxml.
 2. Validate against the IRA BuildingSync Schematron file from the `/buildingsync_schematrons` folder.
 
+## /openapi Folder
+This folder contains the single file `swagger.json`, which is a copy of the API's Swagger documentation available at https://sandbox.ira-rebates.labworks.org/api-doc (requires login credentials). Using OpenAPI Tools (see https://openapi.tools/) together with the swagger.json file, one can auto generate client software or view the documentation in GUI form. Searching for "online swagger viewer" will provide links to online viewers that will allow you to upload the swagger.json file and see a GUI view of the documentation.
+
 ## Useful Links
 - Home Energy Rebate Programs: https://www.energy.gov/scep/home-energy-rebates-programs
 - Home Energy Rebate Tools (the high-level web page for the IRA Rebate API and related tools): https://www.pnnl.gov/projects/rebate-tools
@@ -95,6 +98,8 @@ The API validates BuildingSync v2.6.0 files into steps:
 - JSON Schema documentation: https://json-schema.org/
 - JSON Schema validators: https://json-schema.org/implementations
 - JSON Schema online validator: https://www.liquid-technologies.com/online-json-schema-validator
+- OpenAPI documentation: https://www.openapis.org/
+- OpenAPI tools: https://openapi.tools/
 
 ## Feedback and Support
 We appreciate feedback from API users. Please email feedback to rebatetools@pnnl.gov.
