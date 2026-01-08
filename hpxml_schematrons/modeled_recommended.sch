@@ -47,7 +47,7 @@
   </sch:pattern>
   <sch:pattern ira:remove-req-modeled="true" ira:remove-measured="true">
     <sch:title>[BuildingType=ManufacturedHome]</sch:title>
-    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:BuildingSummary/h:BuildingConstruction/h:ResidentialFacilityType[text()=&quot;manufactured home&quot;]">
+    <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:BuildingSummary/h:BuildingConstruction[h:ResidentialFacilityType=&quot;manufactured home&quot;]">
       <sch:assert role="ERROR" test="h:ManufacturedHomeSections">Expected ManufacturedHomeSections</sch:assert>
     </sch:rule>
   </sch:pattern>
