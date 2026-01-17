@@ -96,7 +96,7 @@
       "multipleOf": 0.01,
       "exclusiveMinimum": 0,
       "title": "Requested reservation amount",
-      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
+      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount for the rebate (do not include incentives) that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
     },
     "unit_name_or_number": {
       "type": "string",
@@ -138,13 +138,13 @@
           }
         },
         "required": [
-          "num_occupied_units",
           "building_project_type"
         ]
       },
       "then": {
         "required": [
           "mf_building_income_bucket",
+          "num_occupied_units",
           "num_units",
           "num_units_meeting_income_bucket"
         ]
@@ -159,16 +159,16 @@
           }
         },
         "required": [
-          "num_occupied_units",
           "building_project_type"
         ]
       },
       "then": {
         "required": [
           "mf_building_income_bucket",
-          "project_id",
+          "num_occupied_units",
           "num_units",
           "num_units_meeting_income_bucket",
+          "project_id",
           "unit_name_or_number"
         ]
       }

@@ -69,6 +69,7 @@
     },
     "rebate_passed_through_to_applicant": {
       "title": "Rebate passed through to applicant",
+      "deprecated": true,
       "type": "number",
       "minimum": 0,
       "multipleOf": 0.01,

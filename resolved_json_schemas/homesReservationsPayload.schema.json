@@ -10,6 +10,20 @@
       "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
       "title": "Address id"
     },
+    "aggregator_company_name": {
+      "type": "string",
+      "title": "Aggregator company name",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the company acting as an aggregator for this project."
+    },
+    "aggregator_id": {
+      "type": "string",
+      "title": "Aggregator id",
+      "minLength": 6,
+      "maxLength": 64,
+      "description": "This is a unique identifier created by the state for an aggregator that the state will reimburse in connection with this rebate."
+    },
     "applicant_id": {
       "type": "string",
       "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.",
@@ -375,7 +389,7 @@
       "multipleOf": 0.01,
       "exclusiveMinimum": 0,
       "title": "Measured reservation amount",
-      "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate."
+      "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate. Do NOT include any incentive amount."
     },
     "software_used_to_estimate_post_retrofit_energy_usage": {
       "type": "string",
@@ -407,16 +421,19 @@
           "APPLIANCE",
           "CEILING_INSULATION",
           "COOLING_EQUIPMENT",
+          "DOOR_REPLACEMENT",
           "DUCT_INSULATION",
           "DUCT_SEALING",
           "FLOOR_INSULATION",
           "FOUNDATION_INSULATION",
           "HEATING_EQUIPMENT",
           "LIGHTING",
+          "MISC_ELECTRICAL_LOADS",
           "MOTORS",
           "PIPE_INSULATION",
           "PUMPS",
           "ROOF_INSULATION",
+          "STORM_DOOR",
           "THERMOSTATS",
           "VARIABLE_FREQUENCY_DRIVES",
           "VENTILATION",
@@ -463,8 +480,22 @@
       },
       "else": {
         "not": {
-          "required": [
-            "portfolio_id"
+          "anyOf": [
+            {
+              "required": [
+                "portfolio_id"
+              ]
+            },
+            {
+              "required": [
+                "aggregator_id"
+              ]
+            },
+            {
+              "required": [
+                "aggregator_company_name"
+              ]
+            }
           ]
         }
       }
@@ -716,13 +747,13 @@
           }
         },
         "required": [
-          "num_occupied_units",
           "building_project_type"
         ]
       },
       "then": {
         "required": [
           "mf_building_income_bucket",
+          "num_occupied_units",
           "num_units",
           "num_units_meeting_income_bucket"
         ],

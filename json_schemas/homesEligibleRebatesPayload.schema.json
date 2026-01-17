@@ -7,6 +7,9 @@
     "address_id": {
       "$ref": "/schemas/definitions#address_id"
     },
+    "applicant_id": {
+      "$ref": "/schemas/definitions#applicant_id"
+    },
     "building_project_type": {
       "$ref": "/schemas/definitions#homes_building_project_type"
     },
@@ -15,6 +18,15 @@
     },
     "construction_type": {
       "$ref": "/schemas/definitions#construction_type"
+    },
+    "contractor_company_name": {
+      "$ref": "/schemas/definitions#contractor_company_name"
+    },
+    "contractor_dac_incentive": {
+      "$ref": "/schemas/definitions#contractor_dac_incentive"
+    },
+    "contractor_name": {
+      "$ref": "/schemas/definitions#contractor_name"
     },
     "dwelling_unit_income_bucket": {
       "$ref": "/schemas/definitions#homes_dwelling_unit_income_bucket"
@@ -27,6 +39,12 @@
     },
     "estimated_post_retrofit_site_energy_usages_by_fuel_type": {
       "$ref": "/schemas/definitions#estimated_post_retrofit_site_energy_usages_by_fuel_type"
+    },
+    "external_rebate_id": {
+      "$ref": "/schemas/definitions#external_rebate_id"
+    },
+    "is_contractor_eligible": {
+      "$ref": "/schemas/definitions#is_contractor_eligible"
     },
     "is_disadvantaged_community": {
       "$ref": "/schemas/definitions#is_disadvantaged_community"
@@ -52,11 +70,14 @@
     "modeled_pre_retrofit_energy_usage_kwh_equivalent": {
       "$ref": "/schemas/definitions#modeled_pre_retrofit_energy_usage_kwh_equivalent"
     },
+    "num_occupied_units": {
+      "$ref": "/schemas/definitions#num_occupied_units"
+    },
     "modeled_pre_retrofit_site_energy_usages_by_fuel_type": {
       "$ref": "/schemas/definitions#modeled_pre_retrofit_site_energy_usages_by_fuel_type"
     },
-    "num_occupied_units": {
-      "$ref": "/schemas/definitions#num_occupied_units"
+    "modeling_software_used": {
+      "$ref": "/schemas/definitions#modeling_software_used"
     },
     "num_units": {
       "$ref": "/schemas/definitions#num_units"
@@ -64,8 +85,24 @@
     "num_units_meeting_income_bucket": {
       "$ref": "/schemas/definitions#num_units_meeting_income_bucket"
     },
+    "portfolio_id": {
+      "$ref": "/schemas/definitions#portfolio_id"
+    },
+    "project_id": {
+      "$ref": "/schemas/definitions#project_id"
+    },
     "rebate_type": {
       "$ref": "/schemas/definitions#rebate_type"
+    },
+    "reservation_amount": {
+      "$ref": "/schemas/definitions#homes_reservation_amount"
+    },
+    "software_used_to_estimate_post_retrofit_energy_usage": {
+      "$ref": "/schemas/definitions#software_used_to_estimate_post_retrofit_energy_usage"
+    },
+    "state_attests_proof_of_identity_ownership_income": {
+      "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income",
+      "const": true
     },
     "unit_name_or_number": {
       "$ref": "/schemas/definitions#unit_name_or_number"
@@ -76,17 +113,43 @@
   },
   "required": [
     "address_id",
+    "applicant_id",
     "building_project_type",
     "claimant_type",
     "construction_type",
-    "is_disadvantaged_community",
+    "contractor_company_name",
+    "contractor_name",
+    "is_contractor_eligible",
     "rebate_type",
+    "state_attests_proof_of_identity_ownership_income",
     "upgrades"
   ],
-  "additionalProperties": true,
+  "additionalProperties": false,
   "allOf": [
     {
-      "$comment": "Determine which fields are required when rebate_type is MODELED or MEASURED",
+      "$comment": "Determine when portfolio_id is required or not allowed",
+      "if": {
+        "properties": {
+          "claimant_type": {
+            "const": "AGGREGATOR"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "portfolio_id"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "portfolio_id"
+          ]
+        }
+      }
+    },
+    {
+      "$comment": "Determine which fields are required or not allowed when rebate_type is MODELED or MEASURED",
       "if": {
         "properties": {
           "rebate_type": {
@@ -101,6 +164,7 @@
         "oneOf": [
           {
             "required": [
+              "modeling_software_used",
               "modeled_post_retrofit_energy_usage_kwh_equivalent",
               "modeled_pre_retrofit_energy_usage_kwh_equivalent"
             ],
@@ -108,15 +172,69 @@
           },
           {
             "required": [
+              "modeling_software_used",
+              "modeled_percent_energy_savings"
+            ]
+          },
+          {
+            "required": [
+              "modeling_software_used",
+              "modeled_post_retrofit_energy_usage_kwh_equivalent",
+              "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+            ]
+          },
+          {
+            "required": [
+              "modeling_software_used",
               "modeled_percent_energy_savings"
             ],
             "error_msg": "If 'rebate_type' is 'MODELED', then 'modeled_percent_energy_savings' must be provided."
           }
-        ]
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "estimated_percent_energy_savings"
+              ]
+            },
+            {
+              "required": [
+                "estimated_post_retrofit_energy_usage_kwh_equivalent"
+              ]
+            },
+            {
+              "required": [
+                "estimated_post_retrofit_site_energy_usages_by_fuel_type"
+              ]
+            },
+            {
+              "required": [
+                "measured_pre_retrofit_energy_usage_kwh_equivalent"
+              ]
+            },
+            {
+              "required": [
+                "measured_pre_retrofit_site_energy_usages_by_fuel_type"
+              ]
+            },
+            {
+              "required": [
+                "reservation_amount"
+              ]
+            },
+            {
+              "required": [
+                "software_used_to_estimate_post_retrofit_energy_usage"
+              ]
+            }
+          ]
+        }
       },
       "else": {
-        "$comment": "Rebate type is MEASURED",
+        "$comment": "rebate_type is MEASURED",
         "required": [
+          "reservation_amount",
           "software_used_to_estimate_post_retrofit_energy_usage"
         ],
         "oneOf": [
@@ -133,11 +251,45 @@
             ],
             "error_msg": "If 'rebate_type' is 'MEASURED', then 'estimated_percent_energy_savings' must be provided."
           }
-        ]
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "modeling_software_used"
+              ]
+            },
+            {
+              "required": [
+                "modeled_percent_energy_savings"
+              ]
+            },
+            {
+              "required": [
+                "modeled_post_retrofit_energy_usage_kwh_equivalent"
+              ]
+            },
+            {
+              "required": [
+                "modeled_post_retrofit_site_energy_usages_by_fuel_type"
+              ]
+            },
+            {
+              "required": [
+                "modeled_pre_retrofit_energy_usage_kwh_equivalent"
+              ]
+            },
+            {
+              "required": [
+                "modeled_pre_retrofit_site_energy_usages_by_fuel_type"
+              ]
+            }
+          ]
+        }
       }
     },
     {
-      "$comment": "Determine which fields are required when building_project_type is MULTIFAMILY_IN_UNIT",
+      "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_IN_UNIT",
       "if": {
         "properties": {
           "building_project_type": {
@@ -175,7 +327,7 @@
       }
     },
     {
-      "$comment": "Determine which fields are required when building_project_type is MULTIFAMILY_CENTRAL",
+      "$comment": "Determine which fields are required or not allowed when building_project_type is MULTIFAMILY_CENTRAL",
       "if": {
         "properties": {
           "building_project_type": {
@@ -183,20 +335,34 @@
           }
         },
         "required": [
-          "num_occupied_units",
           "building_project_type"
         ]
       },
       "then": {
         "required": [
           "mf_building_income_bucket",
+          "num_occupied_units",
           "num_units",
           "num_units_meeting_income_bucket"
-        ]
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dwelling_unit_income_bucket"
+              ]
+            },
+            {
+              "required": [
+                "unit_name_or_number"
+              ]
+            }
+          ]
+        }
       }
     },
     {
-      "$comment": "Determine which fields are required for single family building_project_type",
+      "$comment": "Determine which fields are required or not allowed for single family building_project_type",
       "if": {
         "properties": {
           "building_project_type": {

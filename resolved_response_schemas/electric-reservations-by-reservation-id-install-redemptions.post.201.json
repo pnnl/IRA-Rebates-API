@@ -62,10 +62,7 @@
       "title": "Installation cost"
     },
     "install_vendor_id": {
-      "$anchor": "vendor_id",
       "type": "string",
-      "minLength": 6,
-      "maxLength": 64,
       "title": "Vendor id",
       "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     },
@@ -85,10 +82,7 @@
       ]
     },
     "product_vendor_id": {
-      "$anchor": "vendor_id",
       "type": "string",
-      "minLength": 6,
-      "maxLength": 64,
       "title": "Vendor id",
       "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     },
@@ -125,6 +119,7 @@
     "rebate_passed_through_to_applicant": {
       "$anchor": "rebate_passed_through_to_applicant",
       "title": "Rebate passed through to applicant",
+      "deprecated": true,
       "type": "number",
       "minimum": 0,
       "multipleOf": 0.01,
@@ -151,24 +146,12 @@
       "type": "object"
     },
     "upgrade_type": {
-      "$anchor": "upgrade_type",
+      "type": "string",
       "title": "Upgrade type",
-      "enum": [
-        "ELECTRICAL_PANEL",
-        "ELECTRIC_COOKING_APPLIANCE",
-        "ELECTRIC_WIRING",
-        "HEAT_PUMP_CLOTHES_DRYER",
-        "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING",
-        "HEAT_PUMP_WATER_HEATER",
-        "INSULATION_AIR_SEALING_VENTILATION"
-      ],
       "description": "The upgrade covered by this reservation. These upgrade types are the ones specifically listed in the IRA legislation."
     },
     "vendor_id": {
-      "$anchor": "vendor_id",
       "type": "string",
-      "minLength": 6,
-      "maxLength": 64,
       "title": "Vendor id",
       "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     },

@@ -1719,7 +1719,6 @@
             }
           },
           "required": [
-            "num_occupied_units",
             "building_project_type"
           ]
         },
@@ -1755,13 +1754,13 @@
             }
           },
           "required": [
-            "num_occupied_units",
             "building_project_type"
           ]
         },
         "then": {
           "required": [
             "mf_building_income_bucket",
+            "num_occupied_units",
             "num_units",
             "num_units_meeting_income_bucket",
             "project_id",
