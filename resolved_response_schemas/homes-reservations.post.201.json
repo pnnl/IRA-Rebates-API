@@ -9,6 +9,22 @@
       "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
       "title": "Address id"
     },
+    "aggregator_company_name": {
+      "$anchor": "aggregator_company_name",
+      "type": "string",
+      "title": "Aggregator company name",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the company acting as an aggregator for this project."
+    },
+    "aggregator_id": {
+      "$anchor": "aggregator_id",
+      "type": "string",
+      "title": "Aggregator id",
+      "minLength": 6,
+      "maxLength": 64,
+      "description": "This is a unique identifier created by the state for an aggregator that the state will reimburse in connection with this rebate."
+    },
     "jurisdiction_id": {
       "title": "Jurisdiction ID",
       "type": "number"
@@ -241,11 +257,8 @@
       "description": "This is the total number of units in a multifamily building. This field is required when *building_project_type* is any of the enumerated values that has a \"MULTIFAMILY\" prefix. Otherwise, the field should be omitted."
     },
     "num_units_meeting_income_bucket": {
-      "$anchor": "num_units_meeting_income_bucket",
       "type": "integer",
       "title": "Num units meeting income bucket",
-      "minimum": 1,
-      "maximum": 1000,
       "description": "This is the number of occupied units in a multifamily building for which the household income falls within the income range represented by *mf_income_bucket* or is lower."
     },
     "percent_cost_limit": {
