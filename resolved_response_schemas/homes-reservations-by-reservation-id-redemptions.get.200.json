@@ -96,10 +96,7 @@
       "type": "array"
     },
     "vendor_id": {
-      "$anchor": "vendor_id",
       "type": "string",
-      "minLength": 6,
-      "maxLength": 64,
       "title": "Vendor id",
       "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     },
