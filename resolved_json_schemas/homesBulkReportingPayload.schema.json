@@ -616,6 +616,7 @@
         "type": "array",
         "title": "Homes upgrades",
         "uniqueItems": true,
+        "minItems": 1,
         "items": {
           "enum": [
             "AIR_SEALING",
