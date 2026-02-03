@@ -9,6 +9,22 @@
       "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
       "title": "Address id"
     },
+    "aggregator_id": {
+      "$anchor": "aggregator_id",
+      "type": "string",
+      "title": "Aggregator id",
+      "minLength": 6,
+      "maxLength": 64,
+      "description": "This is a unique identifier created by the state for an aggregator that the state will reimburse in connection with this rebate."
+    },
+    "aggregator_company_name": {
+      "$anchor": "aggregator_company_name",
+      "type": "string",
+      "title": "Aggregator company name",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "The name of the company acting as an aggregator for this project."
+    },
     "ahri_reference_number": {
       "$anchor": "ahri_reference_number",
       "type": "string",
@@ -215,7 +231,7 @@
       "multipleOf": 0.01,
       "exclusiveMinimum": 0,
       "title": "Requested reservation amount",
-      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
+      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount for the rebate (do not include incentives) that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
     },
     "energy_data_evaluation_permission": {
       "$anchor": "energy_data_evaluation_permission",
@@ -307,15 +323,16 @@
     "homes_file_purpose": {
       "$anchor": "homes_file_purpose",
       "enum": [
+        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE",
+        "MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION",
+        "MULTIFAMILY_AUDIT_REPORT",
         "POST_RETROFIT_MODEL",
         "PRE_AND_POST_RETROFIT_MODELS",
         "PRE_RETROFIT_MODEL",
-        "QUALITY_ASSURANCE",
-        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE",
-        "MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION"
+        "QUALITY_ASSURANCE"
       ],
       "title": "File purpose",
-      "description": "PRE_RETROFIT_MODEL: File contains a single building model representing the base building before upgrades. POST_RETROFIT_MODEL: File contains a single building model representing the building with as-installed upgrades included. PRE_AND_POST_RETROFIT_MODELS: File contains building models for both the base building (before upgrades) and the building with as-installed upgrades included. QUALITY_ASSURANCE: File used to document the installation of one or more upgrade. MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE: File containing the results from weather-normalized measure savings calculations. MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION: This option turns off HPXML Schematron validation, is a temporary workaround for specific cases, and may only be used with DOE approval on a case-by-case basis."
+      "description": "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE: File containing the results from weather-normalized measure savings calculations. MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION: This option turns off HPXML Schematron validation, is a temporary workaround for specific cases, and may only be used with DOE approval on a case-by-case basis. MULTIFAMILY_AUDIT_REPORT: File containing energy assessment data for a multifamily building. POST_RETROFIT_MODEL: File contains a single building model representing the building with as-installed upgrades included. PRE_AND_POST_RETROFIT_MODELS: File contains building models for both the base building (before upgrades) and the building with as-installed upgrades included. PRE_RETROFIT_MODEL: File contains a single building model representing the base building before upgrades. QUALITY_ASSURANCE: File used to document the installation of one or more upgrade."
     },
     "homes_file_type": {
       "$anchor": "homes_file_type",
@@ -349,29 +366,33 @@
       "multipleOf": 0.01,
       "exclusiveMinimum": 0,
       "title": "Measured reservation amount",
-      "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate."
+      "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate. Do NOT include any incentive amount."
     },
     "homes_upgrades": {
       "$anchor": "homes_upgrades",
       "type": "array",
       "title": "Homes upgrades",
       "uniqueItems": true,
+      "minItems": 1,
       "items": {
         "enum": [
           "AIR_SEALING",
           "APPLIANCE",
           "CEILING_INSULATION",
           "COOLING_EQUIPMENT",
+          "DOOR_REPLACEMENT",
           "DUCT_INSULATION",
           "DUCT_SEALING",
           "FLOOR_INSULATION",
           "FOUNDATION_INSULATION",
           "HEATING_EQUIPMENT",
           "LIGHTING",
+          "MISC_ELECTRICAL_LOADS",
           "MOTORS",
           "PIPE_INSULATION",
           "PUMPS",
           "ROOF_INSULATION",
+          "STORM_DOOR",
           "THERMOSTATS",
           "VARIABLE_FREQUENCY_DRIVES",
           "VENTILATION",
@@ -685,14 +706,6 @@
       "title": "Rebate deducted",
       "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
     },
-    "rebate_passed_through_to_applicant": {
-      "$anchor": "rebate_passed_through_to_applicant",
-      "title": "Rebate passed through to applicant",
-      "type": "number",
-      "minimum": 0,
-      "multipleOf": 0.01,
-      "description": "Use this field when the contractor submitted a product redemption for this reservation and received a rebate on behalf of the applicant. Otherwise set this to 0. This amount must be passed on to the applicant and shown on the invoice. Do not include this in the amount for `equipment_and_material_cost`."
-    },
     "rebate_type": {
       "title": "Rebate type",
       "enum": [
@@ -910,7 +923,7 @@
       "type": "number",
       "multipleOf": 0.01,
       "minimum": 0,
-      "description": "The amount rebated to the claimant by the state. Do NOT include any contractor incentive amounts.",
+      "description": "The amount rebated to the claimant by the state. Unless the claimant is an aggregator and the aggregator is retaining a portion of the rebate, this should be the same as rebate_deducted. Do NOT include any contractor incentive amounts.",
       "title": "Total rebate payout"
     },
     "unit_name_or_number": {

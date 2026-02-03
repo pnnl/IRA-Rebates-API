@@ -375,7 +375,7 @@
       "multipleOf": 0.01,
       "exclusiveMinimum": 0,
       "title": "Measured reservation amount",
-      "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate."
+      "description": "The API user-specified reservation amount for a MEASURED rebate. This field is required for rebate_type MEASURED and otherwise not allowed. The API does not calculate a reservation amount in the MEASURED case. The value provided here will be reserved in the system for the rebate. Do NOT include any incentive amount."
     },
     "software_used_to_estimate_post_retrofit_energy_usage": {
       "type": "string",
@@ -401,22 +401,26 @@
       "type": "array",
       "title": "Homes upgrades",
       "uniqueItems": true,
+      "minItems": 1,
       "items": {
         "enum": [
           "AIR_SEALING",
           "APPLIANCE",
           "CEILING_INSULATION",
           "COOLING_EQUIPMENT",
+          "DOOR_REPLACEMENT",
           "DUCT_INSULATION",
           "DUCT_SEALING",
           "FLOOR_INSULATION",
           "FOUNDATION_INSULATION",
           "HEATING_EQUIPMENT",
           "LIGHTING",
+          "MISC_ELECTRICAL_LOADS",
           "MOTORS",
           "PIPE_INSULATION",
           "PUMPS",
           "ROOF_INSULATION",
+          "STORM_DOOR",
           "THERMOSTATS",
           "VARIABLE_FREQUENCY_DRIVES",
           "VENTILATION",
