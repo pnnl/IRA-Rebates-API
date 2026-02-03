@@ -103,4 +103,3 @@ This folder contains the single file `swagger.json`, which is a copy of the API'
 
 ## Feedback and Support
 We appreciate feedback from API users. Please email feedback to rebatetools@pnnl.gov.
-
