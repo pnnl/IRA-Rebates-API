@@ -547,7 +547,7 @@
       "multipleOf": 0.01,
       "exclusiveMinimum": 0,
       "title": "Requested reservation amount",
-      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
+      "description": "Optional API user-specified reservation amount. Use this to request a reservation amount for the rebate (do not include incentives) that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
     },
     "sf_conditioned_floor_area": {
       "title": "Single-family conditioned floor area",
@@ -698,7 +698,6 @@
       "then": {
         "required": [
           "dwelling_unit_income_bucket",
-          "num_units",
           "unit_name_or_number"
         ],
         "not": {
