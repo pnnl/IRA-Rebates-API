@@ -138,7 +138,7 @@
       "type": "number",
       "multipleOf": 0.01,
       "minimum": 0,
-      "description": "The amount rebated to the claimant by the state. Do NOT include any contractor incentive amounts.",
+      "description": "The amount rebated to the claimant by the state. Unless the claimant is an aggregator and the aggregator is retaining a portion of the rebate, this should be the same as rebate_deducted. Do NOT include any contractor incentive amounts.",
       "title": "Total rebate payout"
     }
   },

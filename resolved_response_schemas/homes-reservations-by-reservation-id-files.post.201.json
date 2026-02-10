@@ -31,15 +31,16 @@
     "file_purpose": {
       "$anchor": "homes_file_purpose",
       "enum": [
+        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE",
+        "MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION",
+        "MULTIFAMILY_AUDIT_REPORT",
         "POST_RETROFIT_MODEL",
         "PRE_AND_POST_RETROFIT_MODELS",
         "PRE_RETROFIT_MODEL",
-        "QUALITY_ASSURANCE",
-        "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE",
-        "MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION"
+        "QUALITY_ASSURANCE"
       ],
       "title": "File purpose",
-      "description": "PRE_RETROFIT_MODEL: File contains a single building model representing the base building before upgrades. POST_RETROFIT_MODEL: File contains a single building model representing the building with as-installed upgrades included. PRE_AND_POST_RETROFIT_MODELS: File contains building models for both the base building (before upgrades) and the building with as-installed upgrades included. QUALITY_ASSURANCE: File used to document the installation of one or more upgrade. MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE: File containing the results from weather-normalized measure savings calculations. MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION: This option turns off HPXML Schematron validation, is a temporary workaround for specific cases, and may only be used with DOE approval on a case-by-case basis."
+      "description": "MEASURED_SAVINGS_CALCULATION_OUTPUT_FILE: File containing the results from weather-normalized measure savings calculations. MODEL_FILE_WITH_APPROVED_DOE_EXCEPTION: This option turns off HPXML Schematron validation, is a temporary workaround for specific cases, and may only be used with DOE approval on a case-by-case basis. MULTIFAMILY_AUDIT_REPORT: File containing energy assessment data for a multifamily building. POST_RETROFIT_MODEL: File contains a single building model representing the building with as-installed upgrades included. PRE_AND_POST_RETROFIT_MODELS: File contains building models for both the base building (before upgrades) and the building with as-installed upgrades included. PRE_RETROFIT_MODEL: File contains a single building model representing the base building before upgrades. QUALITY_ASSURANCE: File used to document the installation of one or more upgrade."
     },
     "file_url": {
       "type": "string",

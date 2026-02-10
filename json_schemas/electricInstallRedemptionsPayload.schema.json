@@ -59,7 +59,6 @@
     "is_final_project_redemption",
     "post_retrofit_inspection_passed",
     "rebate_deducted",
-    "rebate_passed_through_to_applicant",
     "upgrade_type",
     "vendor_id"
   ],

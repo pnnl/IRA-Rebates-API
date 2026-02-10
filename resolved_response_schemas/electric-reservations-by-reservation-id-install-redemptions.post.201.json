@@ -119,6 +119,7 @@
     "rebate_passed_through_to_applicant": {
       "$anchor": "rebate_passed_through_to_applicant",
       "title": "Rebate passed through to applicant",
+      "deprecated": true,
       "type": "number",
       "minimum": 0,
       "multipleOf": 0.01,
@@ -166,7 +167,6 @@
     "is_contractor_eligible",
     "is_final_project_redemption",
     "rebate_deducted",
-    "rebate_passed_through_to_applicant",
     "upgrade_type",
     "vendor_id",
     "id",
