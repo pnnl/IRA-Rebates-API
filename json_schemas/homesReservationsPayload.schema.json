@@ -7,6 +7,12 @@
     "address_id": {
       "$ref": "/schemas/definitions#address_id"
     },
+    "aggregator_company_name": {
+      "$ref": "/schemas/definitions#aggregator_company_name"
+    },
+    "aggregator_id": {
+      "$ref": "/schemas/definitions#aggregator_id"
+    },
     "applicant_id": {
       "$ref": "/schemas/definitions#applicant_id"
     },
@@ -145,11 +151,25 @@
       },
       "else": {
         "not": {
-          "required": [
-            "portfolio_id"
+          "anyOf": [
+            {
+              "required": [
+                "portfolio_id"
+              ]
+            },
+            {
+              "required": [
+                "aggregator_id"
+              ]
+            },
+            {
+              "required": [
+                "aggregator_company_name"
+              ]
+            }
           ]
         },
-        "error_msg": "'portfolio_id' is not allowed when 'claimant_type' is not 'AGGREGATOR'."
+        "error_msg": "None of 'portfolio_id', 'aggregator_id', and 'aggregator_company_name' are allowed when 'claimant_type' is not 'AGGREGATOR'."
       }
     },
     {

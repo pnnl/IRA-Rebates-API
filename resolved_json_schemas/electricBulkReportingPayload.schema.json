@@ -1897,7 +1897,6 @@
         "then": {
           "required": [
             "dwelling_unit_income_bucket",
-            "num_units",
             "unit_name_or_number"
           ],
           "not": {

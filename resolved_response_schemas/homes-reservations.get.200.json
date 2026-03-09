@@ -43,6 +43,22 @@
             "description": "A unique identifier associated with the address of the building at which the upgrade(s) will be installed. This id must be obtained using the address-service endpoint.",
             "title": "Address id"
           },
+          "aggregator_company_name": {
+            "$anchor": "aggregator_company_name",
+            "type": "string",
+            "title": "Aggregator company name",
+            "minLength": 1,
+            "maxLength": 64,
+            "description": "The name of the company acting as an aggregator for this project."
+          },
+          "aggregator_id": {
+            "$anchor": "aggregator_id",
+            "type": "string",
+            "title": "Aggregator id",
+            "minLength": 6,
+            "maxLength": 64,
+            "description": "This is a unique identifier created by the state for an aggregator that the state will reimburse in connection with this rebate."
+          },
           "jurisdiction_id": {
             "title": "Jurisdiction ID",
             "type": "number"
