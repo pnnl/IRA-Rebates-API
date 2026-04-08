@@ -34,9 +34,6 @@
       "$ref": "/schemas/definitions#rebate_deducted",
       "description": "This is the amount that was deducted from the applicant's (homeowner, building owner, renter) invoiced amount for the installation."
     },
-    "rebate_passed_through_to_applicant": {
-      "$ref": "/schemas/definitions#rebate_passed_through_to_applicant"
-    },
     "safety_checks": {
       "$ref": "/schemas/definitions#safety_checks"
     },

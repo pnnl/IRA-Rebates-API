@@ -373,6 +373,7 @@
       "type": "array",
       "title": "Homes upgrades",
       "uniqueItems": true,
+      "minItems": 1,
       "items": {
         "enum": [
           "AIR_SEALING",
@@ -603,13 +604,6 @@
       "title": "Percent cost limit",
       "$comment": "This is a read-only field, automatically populated by the API in the response."
     },
-    "vendor_percent_cost_limit": {
-      "type": "integer",
-      "$anchor": "percent_cost_limit",
-      "description": "This integer is either 50 or 100 (for electrification) or 50 or 80 (for homes), depending on the income_bucket. It is the percent of project cost that can be covered by the rebate. The actual rebate amount allowed is *min(reservation_amount, percent_cost_limit x project_cost / 100)*.",
-      "title": "Percent cost limit",
-      "$comment": "This is a read-only field, automatically populated by the API in the response."
-    },
     "portfolio_id": {
       "$anchor": "portfolio_id",
       "type": "string",
@@ -704,15 +698,6 @@
       "multipleOf": 0.01,
       "title": "Rebate deducted",
       "description": "This is the amount that was deducted from the customer's/homeowner's purchase price or invoiced amount for products and/or installation."
-    },
-    "rebate_passed_through_to_applicant": {
-      "$anchor": "rebate_passed_through_to_applicant",
-      "title": "Rebate passed through to applicant",
-      "deprecated": true,
-      "type": "number",
-      "minimum": 0,
-      "multipleOf": 0.01,
-      "description": "Use this field when the contractor submitted a product redemption for this reservation and received a rebate on behalf of the applicant. Otherwise set this to 0. This amount must be passed on to the applicant and shown on the invoice. Do not include this in the amount for `equipment_and_material_cost`."
     },
     "rebate_type": {
       "title": "Rebate type",
@@ -995,6 +980,23 @@
       "maxLength": 64,
       "title": "Vendor id",
       "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
+    },
+    "vendor_percent_cost_limit": {
+      "type": "integer",
+      "$anchor": "percent_cost_limit",
+      "description": "This integer is either 50 or 100 (for electrification) or 50 or 80 (for homes), depending on the income_bucket. It is the percent of project cost that can be covered by the rebate. The actual rebate amount allowed is *min(reservation_amount, percent_cost_limit x project_cost / 100)*.",
+      "title": "Percent cost limit",
+      "$comment": "This is a read-only field, automatically populated by the API in the response."
+    },
+    "was_partial_payment_made": {
+      "$anchor": "was_partial_payment_made",
+      "type": "string",
+      "enum": [
+        "YES",
+        "NO"
+      ],
+      "description": "Set this field to YES to report that the state paid out a partial rebate to the claimant before the project_completion_date.",
+      "title": "Was partial payment made"
     }
   }
 }
