@@ -144,6 +144,9 @@
       },
       "vendor_id": {
         "$ref": "/schemas/definitions#vendor_id"
+      },
+      "was_partial_payment_made": {
+        "$ref": "/schemas/definitions#was_partial_payment_made"
       }
     },
     "required": [
