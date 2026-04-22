@@ -251,6 +251,20 @@
       "title": "Requested reservation amount",
       "description": "Optional API user-specified reservation amount. Use this to request a reservation amount that is less than the otherwise allowed amount. For example, this can be helpful if you need several concurrent reservations to support different parts of a project and need to make sure the total of the reservations will not exceed the $14,000 household cap."
     },
+    "reservation_options": {
+      "type": "object",
+      "title": "Reservation Options",
+      "description": "A dictionary of internal reservation options.",
+      "properties": {
+        "allow_requested_reservation_amount_reduction": {
+          "$anchor": "allow_requested_reservation_amount_reduction",
+          "type": "boolean",
+          "default": false,
+          "description": "If true, allows the rules engine to reduce the requested reservation amount.",
+          "title": "Allow requested reservation amount reduction"
+        }
+      }
+    },
     "redemptions": {
       "description": "Redemptions redeemed for this reservation",
       "type": "array"
