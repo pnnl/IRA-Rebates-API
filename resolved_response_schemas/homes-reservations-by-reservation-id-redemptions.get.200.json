@@ -140,6 +140,16 @@
       "minimum": 0,
       "description": "The amount rebated to the claimant by the state. Unless the claimant is an aggregator and the aggregator is retaining a portion of the rebate, this should be the same as rebate_deducted. Do NOT include any contractor incentive amounts.",
       "title": "Total rebate payout"
+    },
+    "was_partial_payment_made": {
+      "$anchor": "was_partial_payment_made",
+      "type": "string",
+      "enum": [
+        "YES",
+        "NO"
+      ],
+      "description": "Set this field to YES to report that the state paid out a partial rebate to the claimant before the project_completion_date.",
+      "title": "Was partial payment made"
     }
   },
   "required": [
