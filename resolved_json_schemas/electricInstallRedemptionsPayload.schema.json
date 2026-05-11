@@ -67,14 +67,6 @@
       "multipleOf": 0.01,
       "title": "Rebate deducted"
     },
-    "rebate_passed_through_to_applicant": {
-      "title": "Rebate passed through to applicant",
-      "deprecated": true,
-      "type": "number",
-      "minimum": 0,
-      "multipleOf": 0.01,
-      "description": "Use this field when the contractor submitted a product redemption for this reservation and received a rebate on behalf of the applicant. Otherwise set this to 0. This amount must be passed on to the applicant and shown on the invoice. Do not include this in the amount for `equipment_and_material_cost`."
-    },
     "safety_checks": {
       "title": "Safety Checks",
       "type": "object",
