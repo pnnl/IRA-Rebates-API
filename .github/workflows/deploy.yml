@@ -11,7 +11,7 @@ on:
   pull_request:
     branches:
       - sandbox-test
-
+      - prod-sandbox
 jobs:
   deploy:
     runs-on: ubuntu-latest
