@@ -1,4 +1,4 @@
-<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:ira="https://hpxml.nrel.gov/ira">
+<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:ira="https://hpxml.nlr.gov/ira">
   <sch:title>IRA HOMES Rebates 50121 Recommended For Modeled</sch:title>
   <sch:ns uri="http://hpxmlonline.com/2023/09" prefix="h"/>
   <!-- Insert contents of hescore.sch here -->
@@ -206,7 +206,7 @@
   <sch:pattern>
     <sch:title>[HeatingSystemType=Furnace|WallFurnace|FloorFurnace|InUnitBoiler]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType[h:Furnace|h:WallFurnace|h:FloorFurnace|h:Boiler] and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
-      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;electricity&quot; or text()=&quot;natural gas&quot; or text()=&quot;fuel oil&quot; or text()=&quot;fuel oil 1&quot; or text()=&quot;fuel oil 2&quot; or text()=&quot;fuel oil 4&quot; or text()=&quot;fuel oil 5/6&quot; or text()=&quot;propane&quot; or text()=&quot;wood&quot; or text()=&quot;wood pellets&quot;]">Expected HeatingSystemFuel to be 'electricity', 'natural gas', 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', 'fuel oil 5/6', 'propane', 'wood', or 'wood pellets' when FractionHeatLoadServed is not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;electricity&quot; or text()=&quot;natural gas&quot; or text()=&quot;fuel oil&quot; or text()=&quot;fuel oil 1&quot; or text()=&quot;fuel oil 2&quot; or text()=&quot;fuel oil 4&quot; or text()=&quot;fuel oil 5/6&quot; or text()=&quot;propane&quot; or text()=&quot;kerosene&quot; or text()=&quot;wood&quot; or text()=&quot;wood pellets&quot; or text()=&quot;coal&quot; or text()=&quot;anthracite coal&quot; or text()=&quot;bituminous coal&quot; or text()=&quot;coke&quot;]">Expected HeatingSystemFuel to be 'electricity', 'natural gas', 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', 'fuel oil 5/6', 'propane', 'kerosene', 'wood', 'wood pellets', 'coal', 'anthracite coal', 'bituminous coal', or 'coke' when FractionHeatLoadServed is not zero</sch:assert>
       <sch:assert role="ERROR" test="h:AnnualHeatingEfficiency[h:Units=&quot;AFUE&quot;]/h:Value or h:YearInstalled or h:ModelYear">Expected AnnualHeatingEfficiency[Units="AFUE"]/Value, YearInstalled, or ModelYear when FractionHeatLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
@@ -229,7 +229,7 @@
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:HeatingSystemType/h:Stove and (number(h:FractionHeatLoadServed) &gt; 0 or number(h:FloorAreaServed) &gt; 0)]">
       <sch:assert role="ERROR" test="not(h:DistributionSystem)">DistributionSystem not allowed</sch:assert>
       <sch:assert role="ERROR" test="h:HeatingSystemFuel">Expected HeatingSystemFuel when FractionHeatLoadServed is not zero</sch:assert>
-      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;wood&quot; or text()=&quot;wood pellets&quot;]">Expected HeatingSystemFuel to be 'wood' or 'wood pellets' when FractionHeatLoadServed is not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:HeatingSystemFuel[text()=&quot;kerosene&quot; or text()=&quot;wood&quot; or text()=&quot;wood pellets&quot; or text()=&quot;coal&quot; or text()=&quot;anthracite coal&quot; or text()=&quot;bituminous coal&quot; or text()=&quot;coke&quot;]">Expected HeatingSystemFuel to be 'kerosene', 'wood', 'wood pellets', 'coal', 'anthracite coal', 'bituminous coal', or 'coke' when FractionHeatLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -336,7 +336,7 @@
     <sch:title>[WaterHeatingSystemType=Tank|Tankless|HeatPump]</sch:title>
     <sch:rule context="/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[(h:WaterHeaterType=&quot;storage water heater&quot; or h:WaterHeaterType=&quot;dedicated boiler with storage tank&quot; or h:WaterHeaterType=&quot;instantaneous water heater&quot; or h:WaterHeaterType=&quot;heat pump water heater&quot;) and (not(h:FractionDHWLoadServed) or number(h:FractionDHWLoadServed) &gt; 0)]">
       <sch:assert role="ERROR" test="h:UniformEnergyFactor | h:EnergyFactor | h:YearInstalled | h:ModelYear">Expected UniformEnergyFactor, EnergyFactor, YearInstalled, or ModelYear when FractionDHWLoadServed is not zero</sch:assert>
-      <sch:assert role="ERROR" test="h:FuelType[text()=&quot;natural gas&quot; or text()=&quot;fuel oil&quot; or text()=&quot;fuel oil 1&quot; or text()=&quot;fuel oil 2&quot; or text()=&quot;fuel oil 4&quot; or text()=&quot;fuel oil 5/6&quot; or text()=&quot;propane&quot; or text()=&quot;electricity&quot;]">Expected FuelType to be one of 'natural gas', 'electricity', 'propane', 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', or 'fuel oil 5/6' when FractionDHWLoadServed is not zero</sch:assert>
+      <sch:assert role="ERROR" test="h:FuelType[text()=&quot;natural gas&quot; or text()=&quot;fuel oil&quot; or text()=&quot;fuel oil 1&quot; or text()=&quot;fuel oil 2&quot; or text()=&quot;fuel oil 4&quot; or text()=&quot;fuel oil 5/6&quot; or text()=&quot;propane&quot; or text()=&quot;kerosene&quot; or text()=&quot;electricity&quot;]">Expected FuelType to be one of 'natural gas', 'electricity', 'propane', 'kerosene', 'fuel oil', 'fuel oil 1', 'fuel oil 2', 'fuel oil 4', or 'fuel oil 5/6' when FractionDHWLoadServed is not zero</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -401,7 +401,7 @@
   <sch:pattern>
     <sch:title>[ConsumptionInfo]</sch:title>
     <sch:rule context="/h:HPXML/h:Consumption/h:ConsumptionDetails/h:ConsumptionInfo">
-      <sch:assert role="ERROR" test="h:BPI2400Inputs"/>
+      <sch:assert role="ERROR" test="h:BPI2400Inputs">Expected BPI2400Inputs</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern ira:remove-measured="true">
