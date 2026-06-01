@@ -60,24 +60,93 @@ def get_ppty_type(ppty_dict: dict, md_file: MdUtils):
 def get_inline_link(ppty: str, md_file: MdUtils):
     return md_file.new_inline_link(link=f"#{ppty}", text=ppty)
 
+def collect_conditional_requirements(contents: dict) -> set[str]:
+    """Recursively collect all conditionally required properties from conditional schemas."""
+    conditional_requirements = set()
 
-def add_table_of_properties(contents: dict, md_file: MdUtils):
-    list_of_strings = ["Property", "Type", "Required", "Format", "Title"]
+    # Handle anyOf conditions
+    if "anyOf" in contents:
+        for item in contents["anyOf"]:
+            if "required" in item:
+                conditional_requirements.update(item["required"])
+            # Recursively check nested conditions
+            conditional_requirements.update(collect_conditional_requirements(item))
+    
+    # Handle oneOf conditions
+    if "oneOf" in contents:
+        for item in contents["oneOf"]:
+            if "required" in item:
+                conditional_requirements.update(item["required"])
+            # Recursively check nested conditions
+            conditional_requirements.update(collect_conditional_requirements(item))
+    
+    # Handle allOf conditions (includes if/then/else)
+    if "allOf" in contents:
+        for item in contents["allOf"]:
+            # Handle if/then/else patterns
+            if "if" in item and "then" in item:
+                if "required" in item["then"]:
+                    conditional_requirements.update(item["then"]["required"])
+                # Also check nested if conditions in then
+                if isinstance(item["then"], dict):
+                    conditional_requirements.update(collect_conditional_requirements(item["then"]))
+            
+            # Handle else clause
+            if "else" in item:
+                if "required" in item["else"]:
+                    conditional_requirements.update(item["else"]["required"])
+                # Also check nested if conditions in else
+                if isinstance(item["else"], dict):
+                    conditional_requirements.update(collect_conditional_requirements(item["else"]))
+            
+            # Recursively check the item itself
+            conditional_requirements.update(collect_conditional_requirements(item))
+    
+    # Handle direct if/then/else at root level
+    if "if" in contents and "then" in contents:
+        if "required" in contents["then"]:
+            conditional_requirements.update(contents["then"]["required"])
+        if isinstance(contents["then"], dict):
+            conditional_requirements.update(collect_conditional_requirements(contents["then"]))
+    
+    if "else" in contents:
+        if "required" in contents["else"]:
+            conditional_requirements.update(contents["else"]["required"])
+        if isinstance(contents["else"], dict):
+            conditional_requirements.update(collect_conditional_requirements(contents["else"]))
+
+    # Handle not conditions
+    if "not" in contents:
+        if "required" in contents["not"]:
+            conditional_requirements.update(contents["not"]["required"])
+        if isinstance(contents["not"], dict):
+            conditional_requirements.update(collect_conditional_requirements(contents["not"]))
+
+    return conditional_requirements
+
+
+def add_table_of_properties(contents: dict, md_file: MdUtils, conditional_requirements: set[str] = None):
+    if conditional_requirements is None:
+        conditional_requirements = set()
+    
+    list_of_strings = ["Property", "Type", "Required", "Conditional Required", "Format", "Title"]
     md_file.new_line()
     for ppty, ppty_dict in contents["properties"].items():
+        #print(f"Processing property: {ppty} with details: {ppty_dict}")
         format = ppty_dict.get("format", "")
         list_of_strings.extend(
             [
                 get_inline_link(ppty, md_file),
                 get_ppty_type(ppty_dict, md_file),
                 ":white_check_mark:" if ppty in contents.get("required", []) else "",
+                ":gear:" if ppty in conditional_requirements else "",
                 f"`{format}`" if format else "",
                 ppty_dict.get("title") or "",
             ]
         )
     md_file.new_line()
     md_file.new_table(
-        columns=5,
+        columns=6,
         rows=len(contents["properties"]) + 1,
         text=list_of_strings,
         text_align="center",
@@ -219,6 +288,7 @@ def handle_anyofs(
     md_file.new_line()
     for any_of_item in anyofs:
         if "properties" in any_of_item:
+            print(f"Processing anyOf item with title: {any_of_item.get('title')}")
             md_file.new_line(
                 get_hyperlinked_object_text(any_of_item.get("title"), md_file)
             )
@@ -477,8 +547,10 @@ def generate_markdown_for_object(
         md_file.new_line(
             f"Additional Properties Allowed: `{contents.get('additionalProperties', True)}`"
         )
-        if "properties" in contents:
-            add_table_of_properties(contents, md_file)
+        conditional_requirements = collect_conditional_requirements(contents)
+        if "properties" in contents:            
+
+            add_table_of_properties(contents, md_file, conditional_requirements)
             for _, ppty_dict in contents["properties"].items():
                 if ppty_dict.get("type") in ["object", "array"]:
                     generate_markdown_for_object(
@@ -550,13 +622,14 @@ def generate_markdown_files_from_folder(schema_folder: Path, export_path: Path, 
     for file in schema_folder.iterdir():
         folder_name = get_folder_name_from_file_path(file)
         title  = get_title_from_file_path(file)
+        print(f"Processing file: {file} with title: {title} and folder name: {folder_name}")
         out_folder = export_path / folder_name
         out_folder.mkdir(exist_ok=True)
         generate_markdown_files(file, out_folder)
         link_items.append(index_md.new_inline_link(link=f"{folder_name}/{folder_name}.md", text=title))
     link_items.sort()
     index_md.new_list(link_items)
-    index_md.create_md_file()
+    #index_md.create_md_file()
 
 def create_mkdocs_config_file(root_dir: Path, 
                               navs: list[dict[str, str]],
