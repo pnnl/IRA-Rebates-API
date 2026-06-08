@@ -2,7 +2,46 @@
 Script to generate MkDocs markdown documentation from JSON schema files.
 This script recursively processes JSON schema files and creates comprehensive
 markdown documentation with property tables, conditional validations, and enums.
+ 
+High-level overview:
+- Reads resolved JSON Schema files from `resolved_json_schemas/`.
+- Recursively renders object/array docs into `docs/` markdown pages.
+- Builds summary/index navigation and schema cross-links.
+- Creates tables for properties, enums, and conditional validation rules.
+- Converts conditional schema logic (`if/then/else`, `oneOf`, `anyOf`) into
+    human-readable tables in generated markdown.
+- Writes `mkdocs.yml` and copies logos, favicons, CSS stylesheets, and 
+HTML templates to the docs folder for the documentation site.
+ 
+Manual Testing
+---------------
+1) Run this script to generate markdown files in `docs/`.
+2) Run `mkdocs serve -a localhost:8080` at the root of the project to preview the generated 
+documentation locally.
+3) The generated html files will be available at http://localhost:8080/IRA-Rebates-API in the browser. 
+Verify that the markdown files are correctly generated with expected content and structure.
+
+GitHub Pages deployment
+-----------------------
+This script is executed by the GitHub Actions workflow at
+`.github/workflows/deploy.yml` before publishing docs.
+ 
+Deployment sequence in CI:
+1) Install project dependencies.
+2) Run this script to regenerate documentation artifacts (`docs/` and `mkdocs.yml`).
+3) Publish the generated site to GitHub Pages and update the default docs alias using `mike`.
+
+`mike` is a Python utility to easily deploy multiple versions of your MkDocs-powered docs to a 
+Git branch, suitable for deploying to Github via gh-pages. Reference: https://pypi.org/project/mike/0.3.2/
+
+Schema-to-Table rendering details:
+- `add_table_of_properties`
+- `handle_enums`
+- `generate_mutually_exclusive_requirement_table`
+- `handle_conditional_allofs`
+- `create_mkdocs_config_file`
 """
+
 from pathlib import Path
 import json
 import copy
@@ -74,64 +113,147 @@ def get_inline_link(ppty: str, md_file: MdUtils):
     return md_file.new_inline_link(link=f"#{ppty}", text=ppty)
 
 def collect_conditional_requirements(contents: dict) -> set[str]:
-    """Recursively collect all conditionally required properties from conditional schemas."""
+    """
+    Recursively collect all conditionally required properties from conditional schemas.
+    
+    WORKFLOW SUMMARY:
+    =================
+    This function identifies properties that are only required under certain conditions.
+    These conditions are defined in the JSON schema using various conditional patterns
+    (anyOf, oneOf, allOf, if/then/else, not). The function recursively traverses the
+    entire conditional structure to find ALL properties that might be conditionally required.
+    
+    CONDITIONAL PATTERNS HANDLED:
+    ----------------------------
+    This function handles 5 different JSON Schema conditional patterns:
+    
+    1. anyOf:    "If ANY of these conditions is true, these properties are required"
+                 (One or more conditions can be met)
+    
+    2. oneOf:    "If EXACTLY ONE of these conditions is true, these properties are required"
+                 (Mutually exclusive - only one condition can be true)
+    
+    3. allOf:    "If ALL of these conditions are true, these properties are required"
+                 (All conditions must be met together)
+    
+    4. if/then/else: "IF this condition is true, THEN these properties are required"
+                     "Otherwise (ELSE), these other properties are required"
+    
+    5. not:      "If this condition is NOT met, these properties are required"
+                 (Negative condition - required when condition is false)
+    
+    PROCESS:
+    --------
+    1. Initialize: Create empty set to collect required property names
+    2. Scan for patterns: Check for each conditional pattern (anyOf, oneOf, allOf, if/then/else, not)
+    3. For each pattern found:
+       a. Look for "required" field in the pattern
+       b. Add any found required properties to the set
+       c. Recursively process nested conditions (patterns can be nested)
+    4. Return: Set of all property names found to be conditionally required
+    
+    RECURSION EXPLANATION:
+    ----------------------
+    Recursion handles patterns NESTED inside other patterns.
+    
+    Example - oneOf pattern nested inside anyOf:
+    {
+        "anyOf": [
+            {"oneOf": [{"required": ["email"]}, {"required": ["phone"]}]}
+        ]
+    }
+    
+    The function finds "oneOf" inside "anyOf" and collects: {"email", "phone"}
+    
+    RETURN VALUE:
+    ---------------
+    A set of property names (strings) that are conditionally required.
+    Example return: {"companyName", "businessLicense", "taxId"}
+    
+    These property names will be marked with a ⚙ (gear) icon in the properties table
+    to alert users that these properties have conditional requirements.
+    """
     conditional_requirements = set()
 
-    # Handle anyOf conditions
+    # PATTERN 1: anyOf - "IF ANY condition is true, these properties are required"
+    # Meaning: One or more of the conditions in anyOf can be satisfied
+    # Use case: Multiple optional scenarios that might make a property required
     if "anyOf" in contents:
         for item in contents["anyOf"]:
+            # Collect required properties from this anyOf option
             if "required" in item:
                 conditional_requirements.update(item["required"])
-            # Recursively check nested conditions
+            # Recursively check for nested conditions within this anyOf option
+            # (could contain if/then/else, not, oneOf, etc.)
             conditional_requirements.update(collect_conditional_requirements(item))
     
-    # Handle oneOf conditions
+    # PATTERN 2: oneOf - "IF EXACTLY ONE condition is true, these properties are required"
+    # Meaning: Only one of the conditions in oneOf can be satisfied (mutually exclusive)
+    # Use case: Different alternative forms (e.g., "or choose type A or type B")
     if "oneOf" in contents:
         for item in contents["oneOf"]:
+            # Collect required properties from this oneOf option
             if "required" in item:
                 conditional_requirements.update(item["required"])
-            # Recursively check nested conditions
+            # Recursively check for nested conditions within this oneOf option
             conditional_requirements.update(collect_conditional_requirements(item))
     
-    # Handle allOf conditions (includes if/then/else)
+    # PATTERN 3: allOf - "IF ALL conditions are true, these properties are required"
+    # Meaning: All conditions must be satisfied together
+    # Often combined with if/then/else patterns
     if "allOf" in contents:
         for item in contents["allOf"]:
-            # Handle if/then/else patterns
+            # Handle if/then pattern (the most common pattern in allOf)
             if "if" in item and "then" in item:
+                # Collect required properties from the "then" clause
                 if "required" in item["then"]:
                     conditional_requirements.update(item["then"]["required"])
-                # Also check nested if conditions in then
+                # Recursively check for nested conditions in the "then" clause
                 if isinstance(item["then"], dict):
                     conditional_requirements.update(collect_conditional_requirements(item["then"]))
             
-            # Handle else clause
+            # Handle else clause - triggered when the "if" condition is false
+            # "IF the condition is NOT met, THEN these properties are required"
             if "else" in item:
+                # Collect required properties from the "else" clause
                 if "required" in item["else"]:
                     conditional_requirements.update(item["else"]["required"])
-                # Also check nested if conditions in else
+                # Recursively check for nested conditions in the "else" clause
                 if isinstance(item["else"], dict):
                     conditional_requirements.update(collect_conditional_requirements(item["else"]))
             
-            # Recursively check the item itself
+            # Recursively process the allOf item itself (could contain more patterns)
             conditional_requirements.update(collect_conditional_requirements(item))
     
-    # Handle direct if/then/else at root level
+    # PATTERN 4: Direct if/then/else at root level (not nested in allOf)
+    # Same as if/then/else but at the top level of the schema
+    # "IF this condition is true, THEN these properties are required"
     if "if" in contents and "then" in contents:
+        # Collect required properties from the "then" clause
         if "required" in contents["then"]:
             conditional_requirements.update(contents["then"]["required"])
+        # Recursively check for nested conditions in the "then" clause
         if isinstance(contents["then"], dict):
             conditional_requirements.update(collect_conditional_requirements(contents["then"]))
     
+    # Handle else clause at root level
+    # "IF the if-condition is NOT met, THEN these properties are required"
     if "else" in contents:
+        # Collect required properties from the "else" clause
         if "required" in contents["else"]:
             conditional_requirements.update(contents["else"]["required"])
+        # Recursively check for nested conditions in the "else" clause
         if isinstance(contents["else"], dict):
             conditional_requirements.update(collect_conditional_requirements(contents["else"]))
 
-    # Handle not conditions
+    # PATTERN 5: not - "IF this condition is NOT met, these properties are required"
+    # Meaning: The negation of a condition - required when condition is false
+    # Use case: "Required unless this specific condition is met"
     if "not" in contents:
+        # Collect required properties from the "not" clause
         if "required" in contents["not"]:
             conditional_requirements.update(contents["not"]["required"])
+        # Recursively check for nested conditions within the "not" clause
         if isinstance(contents["not"], dict):
             conditional_requirements.update(collect_conditional_requirements(contents["not"]))
 
@@ -139,30 +261,78 @@ def collect_conditional_requirements(contents: dict) -> set[str]:
 
 
 def add_table_of_properties(contents: dict, md_file: MdUtils, conditional_requirements: set[str] = None):
-    """Create a markdown table listing all properties with their types, requirements, and formats."""
+    """
+    Create a markdown table listing all properties with their types, requirements, and formats.
+    
+    WORKFLOW SUMMARY:
+    ================
+    This function transforms a JSON schema's properties into a human-readable markdown table.
+    The table provides a quick reference showing what each property is, what type it accepts,
+    and any constraints that apply to it.
+    
+    PROCESS:
+    --------
+    1. Initialize: Create column headers for the table (6 columns)
+    2. Loop: For each property in the schema:
+       a. Get property metadata (format constraint, title, etc.)
+       b. Determine if it's required (in the required list)
+       c. Check if it's conditionally required
+       d. Build a single row with: [name, type, required?, conditional?, format, description]
+    3. Generate: Create a markdown table with all collected rows
+    
+    OUTPUT:
+    -------
+    A 6-column table written to the markdown file with:
+    - Column 1: Property name (as clickable link to property details section)
+    - Column 2: Data type (e.g., string, object, array)
+    - Column 3: Required status (✓ if always required, blank otherwise)
+    - Column 4: Conditional status (⚙ if conditionally required, blank otherwise)
+    - Column 5: Format constraint (e.g., email, date-time, uuid)
+    - Column 6: Title/description of the property
+    """
     if conditional_requirements is None:
         conditional_requirements = set()
     
-    # Column names for the properties table
+    # STEP 1: Initialize table structure
+    # Column headers define what each column in the table represents
     list_of_strings = ["Property", "Type", "Required", "Conditional Required", "Format", "Title"]
     md_file.new_line()
-    # Iterate through each property and collect its details for the table
+    
+    # STEP 2: Iterate through each property in the schema and build table rows
     for ppty, ppty_dict in contents["properties"].items():        
-        # Extract the format constraint if it exists
+        # Extract the format constraint (e.g., "email", "uuid") if it exists
         format = ppty_dict.get("format", "")
-        # Build a row with: property link, type, required status, conditional requirement status, format, and title
+        
+        # STEP 3: Build a single row for this property with 6 cells
         list_of_strings.extend(
             [
-                get_inline_link(ppty, md_file),  # Property name as anchor link
-                get_ppty_type(ppty_dict, md_file),  # Property type (formatted as markdown)
-                ":white_check_mark:" if ppty in contents.get("required", []) else "",  # Add Checkmark if its a 'required' property
-                ":gear:" if ppty in conditional_requirements else "",  # Add Gear icon if conditionally required
-                f"`{format}`" if format else "",  # Format constraint if present
-                ppty_dict.get("title") or "",  # Property title/description
+                # Cell 1: Property name as a clickable anchor link to this property's detailed section
+                get_inline_link(ppty, md_file),
+                
+                # Cell 2: Property type (string, number, object, array, etc.)
+                # Creates markdown links for nested objects/arrays
+                get_ppty_type(ppty_dict, md_file),
+                
+                # Cell 3: Required status - shows checkmark if in the required list
+                ":white_check_mark:" if ppty in contents.get("required", []) else "",
+                
+                # Cell 4: Conditional Required status - shows gear icon if conditionally required
+                # (This means the property is only required under certain conditions)
+                ":gear:" if ppty in conditional_requirements else "",
+                
+                # Cell 5: Format constraint (e.g., email format, date-time format)
+                # Wrapped in backticks for code formatting in markdown
+                f"`{format}`" if format else "",
+                
+                # Cell 6: Human-readable title/description of the property
+                ppty_dict.get("title") or "",
             ]
         )
+    
     md_file.new_line()
-    # Create a 6-column markdown table with property information
+    
+    # STEP 4: Create the final markdown table with all collected rows
+    # +1 to rows because we need space for the header row
     md_file.new_table(
         columns=6,
         rows=len(contents["properties"]) + 1,
@@ -204,19 +374,26 @@ def handle_inline_constraints(ppty_dict: dict, md_file: MdUtils):
                 md_file.new_line(f"{label}: `{ppty_dict[key]}`")
 
 
-def add_ppty_details(contents: dict, md_file: MdUtils):
+def add_ppty_details(contents: dict, md_file: MdUtils, conditional_requirements: set[str] = None):
     """Add detailed documentation for each property including type, requirement status, enums, and constraints."""
+    if conditional_requirements is None:
+        conditional_requirements = set()
+
     for ppty, ppty_dict in contents["properties"].items():
         md_file.new_header(level=2, title=ppty, add_table_of_contents="n")
         md_file.new_line()
         md_file.write(ppty_dict.get("description", ""))
         md_file.new_line()
         md_file.new_line()
+        required_status = (
+            "is required" if ppty in contents.get("required", [])
+            else "is conditionally required" if ppty in conditional_requirements
+            else "is not required"
+        )
+
         md_file.new_list(
             [
-                "is required"
-                if ppty in contents.get("required", [])
-                else "is not required",
+                required_status,
                 f"Type: {get_ppty_type(ppty_dict, md_file)}"
             ]
         )
@@ -660,7 +837,7 @@ def generate_markdown_for_object(
 
         # Add detailed documentation for each property (descriptions, constraints, enums)
         if "properties" in contents:
-            add_ppty_details(contents, md_file)
+            add_ppty_details(contents, md_file, conditional_requirements)
 
         # Write the complete markdown file to disk
         md_file.create_md_file()
