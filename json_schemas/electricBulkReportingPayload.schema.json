@@ -716,6 +716,9 @@
           "properties": {
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            },
+            "construction_type": {
+              "const": "EXISTING"
             }
           },
           "required": [
