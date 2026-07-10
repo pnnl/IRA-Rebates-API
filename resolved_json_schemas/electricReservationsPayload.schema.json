@@ -932,52 +932,6 @@
       }
     },
     {
-      "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED",
-      "if": {
-        "oneOf": [
-          {
-            "properties": {
-              "upgrade_type": {
-                "enum": [
-                  "ELECTRICAL_PANEL",
-                  "ELECTRIC_WIRING",
-                  "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
-                ]
-              }
-            }
-          },
-          {
-            "properties": {
-              "upgrade_type": {
-                "const": "INSULATION_AIR_SEALING_VENTILATION"
-              },
-              "original_component_details": {
-                "properties": {
-                  "insulation_air_sealing_ventilation_original_details": {
-                    "contains": {
-                      "title": "Air Sealing Original Component Details Object",
-                      "properties": {
-                        "upgrade_subtype": {
-                          "const": "AIR_SEALING"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "properties": {
-          "installation_type": {
-            "const": "CONTRACTOR_INSTALLED"
-          }
-        }
-      }
-    },
-    {
       "$comment": "Determine when contractor_dac_incentive and contractor_incentive are required or not allowed",
       "if": {
         "properties": {
