@@ -281,6 +281,15 @@
       "title": "Percent cost limit",
       "$comment": "This is a read-only field, automatically populated by the API in the response."
     },
+    "project_reservation_date": {
+      "$anchor": "project_reservation_date",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Project reservation date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+    },
     "remaining_reservation_amount": {
       "type": "number",
       "readOnly": true,
@@ -315,6 +324,14 @@
     "state_addenda": {
       "title": "State Addenda",
       "type": "object"
+    },
+    "state_attests_new_construction_cost_effectiveness": {
+      "$anchor": "safety_checks_yes_no_na",
+      "enum": [
+        "NA",
+        "NO",
+        "YES"
+      ]
     },
     "warnings": {
       "title": "Warning",

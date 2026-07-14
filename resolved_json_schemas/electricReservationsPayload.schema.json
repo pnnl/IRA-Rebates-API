@@ -154,6 +154,7 @@
           "properties": {
             "fuel_type": {
               "enum": [
+                "ELECTRIC",
                 "GAS",
                 "NONE"
               ]
@@ -219,6 +220,9 @@
                 "OIL_FURNACE",
                 "OTHER"
               ]
+            },
+            "state_attests_existing_fossil_fuel_system_not_replaced": {
+              "type": "boolean"
             }
           },
           "required": [
@@ -542,6 +546,14 @@
       "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.",
       "title": "Project id"
     },
+    "project_reservation_date": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Project reservation date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+    },
     "reservation_amount": {
       "type": "number",
       "multipleOf": 0.01,
@@ -565,6 +577,15 @@
       "minimum": 0,
       "maximum": 20,
       "description": "The number of bedrooms in the dwelling unit."
+    },
+    "state_attests_new_construction_cost_effectiveness": {
+      "title": "State attests new construction cost effectiveness",
+      "description": "The state attests that the new construction meets cost-effectiveness criteria.",
+      "enum": [
+        "NA",
+        "NO",
+        "YES"
+      ]
     },
     "state_attests_proof_of_identity_ownership_income": {
       "const": true,

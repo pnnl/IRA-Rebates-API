@@ -62,6 +62,9 @@
       "is_disadvantaged_community": {
         "$ref": "/schemas/definitions#is_disadvantaged_community"
       },
+      "is_mail_in_rebate": {
+        "$ref": "/schemas/definitions#is_mail_in_rebate"
+      },
       "limited_assessment": {
         "$ref": "/schemas/electrificationLimitedAssessment"
       },
@@ -102,6 +105,9 @@
       "project_id": {
         "$ref": "/schemas/definitions#project_id"
       },
+      "project_reservation_date": {
+        "$ref": "/schemas/definitions#project_reservation_date"
+      },
       "purchase_date": {
         "$ref": "/schemas/definitions#purchase_date"
       },
@@ -119,6 +125,9 @@
       },
       "sf_num_bedrooms": {
         "$ref": "/schemas/definitions#sf_num_bedrooms"
+      },
+      "state_attests_new_construction_cost_effectiveness": {
+        "$ref": "/schemas/definitions#state_attests_new_construction_cost_effectiveness"
       },
       "state_attests_proof_of_identity_ownership_income": {
         "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income"

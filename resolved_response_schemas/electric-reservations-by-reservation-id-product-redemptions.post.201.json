@@ -38,6 +38,12 @@
       "title": "Vendor id",
       "description": "This is a unique identifier for a vendor that the state will reimburse in connection with a redemption."
     },
+    "is_mail_in_rebate": {
+      "$anchor": "is_mail_in_rebate",
+      "type": "boolean",
+      "description": "Indicates whether a mail-in rebate was included as part of the redemption.",
+      "title": "Is mail-in rebate"
+    },
     "post_retrofit_inspection_passed": {
       "oneOf": [
         {

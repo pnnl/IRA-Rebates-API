@@ -97,6 +97,9 @@
     "project_id": {
       "$ref": "/schemas/definitions#project_id"
     },
+    "project_reservation_date": {
+      "$ref": "/schemas/definitions#project_reservation_date"
+    },
     "rebate_type": {
       "$ref": "/schemas/definitions#rebate_type"
     },
