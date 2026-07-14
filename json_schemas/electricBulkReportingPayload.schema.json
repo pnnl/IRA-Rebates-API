@@ -538,41 +538,15 @@
         }
       },
       {
-        "$comment": "Determine when installation_type must be CONTRACTOR_INSTALLED and when contractor_company_name, contractor_name, contractor_dac_incentive, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed",
+        "$comment": "Determine when contractor_company_name, contractor_name, contractor_dac_incentive, contractor_incentive, is_contractor_eligible, and safety_checks are required, optional, or not allowed",
         "if": {
-          "oneOf": [
-            {
-              "properties": {
-                "upgrade_type": {
-                  "enum": [
-                    "ELECTRICAL_PANEL",
-                    "ELECTRIC_WIRING",
-                    "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
-                  ]
-                }
-              }
-            },
-            {
-              "properties": {
-                "upgrade_type": {
-                  "const": "INSULATION_AIR_SEALING_VENTILATION"
-                },
-                "upgrade_component_details": {
-                  "properties": {
-                    "insulation_air_sealing_ventilation_upgrade_details": {
-                      "contains": {
-                        "title": "Air Sealing Original Component Details Object",
-                        "properties": {
-                          "upgrade_subtype": {
-                            "const": "AIR_SEALING"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+          "properties": {
+            "installation_type": {
+              "const": "CONTRACTOR_INSTALLED"
             }
+          },
+          "required": [
+            "installation_type"
           ]
         },
         "then": {
@@ -582,12 +556,7 @@
             "contractor_name",
             "is_contractor_eligible",
             "safety_checks"
-          ],
-          "properties": {
-            "installation_type": {
-              "const": "CONTRACTOR_INSTALLED"
-            }
-          }
+          ]
         },
         "else": {
           "if": {
@@ -716,6 +685,9 @@
           "properties": {
             "upgrade_type": {
               "const": "HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING"
+            },
+            "construction_type": {
+              "const": "EXISTING"
             }
           },
           "required": [
