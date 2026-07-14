@@ -115,11 +115,14 @@
       "post_retrofit_inspection_passed": {
         "$ref": "/schemas/definitions#post_retrofit_inspection_passed"
       },
+      "project_completion_date": {
+        "$ref": "/schemas/definitions#project_completion_date"
+      },
       "project_id": {
         "$ref": "/schemas/definitions#project_id"
       },
-      "project_completion_date": {
-        "$ref": "/schemas/definitions#project_completion_date"
+      "project_reservation_date": {
+        "$ref": "/schemas/definitions#project_reservation_date"
       },
       "rebate_deducted": {
         "$ref": "/schemas/definitions#rebate_deducted"

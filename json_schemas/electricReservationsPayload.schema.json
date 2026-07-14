@@ -67,6 +67,9 @@
     "project_id": {
       "$ref": "/schemas/definitions#project_id"
     },
+    "project_reservation_date": {
+      "$ref": "/schemas/definitions#project_reservation_date"
+    },
     "reservation_amount": {
       "$ref": "/schemas/definitions#electric_reservation_amount"
     },
@@ -75,6 +78,9 @@
     },
     "sf_num_bedrooms": {
       "$ref": "/schemas/definitions#sf_num_bedrooms"
+    },
+    "state_attests_new_construction_cost_effectiveness": {
+      "$ref": "/schemas/definitions#state_attests_new_construction_cost_effectiveness"
     },
     "state_attests_proof_of_identity_ownership_income": {
       "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income",

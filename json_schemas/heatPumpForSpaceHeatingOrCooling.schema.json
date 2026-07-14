@@ -22,6 +22,9 @@
             "OIL_FURNACE",
             "OTHER"
           ]
+        },
+        "state_attests_existing_fossil_fuel_system_not_replaced": {
+          "type": "boolean"
         }
       },
       "required": [

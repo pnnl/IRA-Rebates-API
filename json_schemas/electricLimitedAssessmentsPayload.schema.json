@@ -302,6 +302,14 @@
       "title": "Heating systems",
       "description": "Provide information for each existing heating system."
     },
+    "insulation_and_air_sealing_prerequisite": {
+      "enum": [
+        "UPGRADES_REQUIRED",
+        "MEETS_STATE_THRESHOLD"
+      ],
+      "title": "Insulation and air sealing prerequisite",
+      "description": "Indicates how the dwelling satisfies the insulation and air sealing prerequisite before installing heating or cooling upgrades. Select UPGRADES_REQUIRED if insulation and air sealing upgrades will be completed after installing heating or cooling upgrades. Select MEETS_STATE_THRESHOLD if the dwelling adequately meets the state-defined insulation and air sealing thresholds and additional insulation and air sealing upgrades are not required before installing heating or cooling upgrades."
+    },
     "is_ceiling_insulation_r_value_known": {
       "type": "boolean",
       "title": "Is ceiling insulation r-value known"
