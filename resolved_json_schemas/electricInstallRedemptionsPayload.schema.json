@@ -28,8 +28,8 @@
     "installation_cost": {
       "type": "number",
       "multipleOf": 0.01,
-      "exclusiveMinimum": 0,
-      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "minimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`. A zero dollar installation cost is only allowed when `is_final_project_redemption` is `true`.",
       "title": "Installation cost"
     },
     "is_contractor_eligible": {
@@ -869,6 +869,26 @@
           "required": [
             "project_completion_date"
           ]
+        }
+      }
+    },
+    {
+      "$comment": "A zero dollar installation_cost is only allowed if is_final_project_redemption is true.",
+      "if": {
+        "properties": {
+          "is_final_project_redemption": {
+            "const": true
+          }
+        },
+        "required": [
+          "is_final_project_redemption"
+        ]
+      },
+      "else": {
+        "properties": {
+          "installation_cost": {
+            "exclusiveMinimum": 0
+          }
         }
       }
     }

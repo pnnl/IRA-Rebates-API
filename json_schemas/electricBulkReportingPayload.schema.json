@@ -13,6 +13,9 @@
       "applicant_id": {
         "$ref": "/schemas/definitions#applicant_id"
       },
+      "building_name_or_number": {
+        "$ref": "/schemas/definitions#building_name_or_number"
+      },
       "building_project_type": {
         "$ref": "/schemas/definitions#electric_building_project_type"
       },
@@ -62,6 +65,9 @@
       "is_disadvantaged_community": {
         "$ref": "/schemas/definitions#is_disadvantaged_community"
       },
+      "is_mail_in_rebate": {
+        "$ref": "/schemas/definitions#is_mail_in_rebate"
+      },
       "limited_assessment": {
         "$ref": "/schemas/electrificationLimitedAssessment"
       },
@@ -102,6 +108,9 @@
       "project_id": {
         "$ref": "/schemas/definitions#project_id"
       },
+      "project_reservation_date": {
+        "$ref": "/schemas/definitions#project_reservation_date"
+      },
       "purchase_date": {
         "$ref": "/schemas/definitions#purchase_date"
       },
@@ -119,6 +128,9 @@
       },
       "sf_num_bedrooms": {
         "$ref": "/schemas/definitions#sf_num_bedrooms"
+      },
+      "state_attests_new_construction_cost_effectiveness": {
+        "$ref": "/schemas/definitions#state_attests_new_construction_cost_effectiveness"
       },
       "state_attests_proof_of_identity_ownership_income": {
         "$ref": "/schemas/definitions#state_attests_proof_of_identity_ownership_income"
@@ -321,9 +333,14 @@
                 "required": [
                   "num_units_meeting_income_bucket"
                 ]
+              },
+              {
+                "required": [
+                  "building_name_or_number"
+                ]
               }
             ],
-            "error_msg": "If 'building_project_type' is either 'SINGLE_FAMILY_ATTACHED', 'SINGLE_FAMILY_DETACHED', or 'MANUFACTURED', then 'mf_building_income_bucket', 'num_units', 'num_occupied_units', and 'num_units_meeting_income_bucket' must not be provided."
+            "error_msg": "If 'building_project_type' is either 'SINGLE_FAMILY_ATTACHED', 'SINGLE_FAMILY_DETACHED', or 'MANUFACTURED', then 'mf_building_income_bucket', 'num_units', 'num_occupied_units', 'num_units_meeting_income_bucket', and 'building_name_or_number' must not be provided."
           }
         }
       },
@@ -787,6 +804,42 @@
                   "error_msg": "'ahri_reference_number' must not be provided in 'product_info' item if 'upgrade_type' is not 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING' or 'HEAT_PUMP_WATER_HEATER'."
                 }
               }
+            }
+          }
+        }
+      },
+      {
+        "$comment": "Determine when state_attests_new_construction_cost_effectiveness is required",
+        "if": {
+          "allOf": [
+            {
+              "properties": {
+                "construction_type": {
+                  "const": "NEW"
+                }
+              }
+            },
+            {
+              "not": {
+                "properties": {
+                  "upgrade_type": {
+                    "enum": [
+                      "ELECTRIC_WIRING",
+                      "ELECTRICAL_PANEL"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "then": {
+          "required": [
+            "state_attests_new_construction_cost_effectiveness"
+          ],
+          "properties": {
+            "state_attests_new_construction_cost_effectiveness": {
+              "const": "YES"
             }
           }
         }

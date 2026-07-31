@@ -18,6 +18,10 @@
         "description": "This identifier is unique to the applicant (the building owner or renter that is to benefit from the rebate). It must be obtained from the API /applicant endpoint.",
         "title": "Applicant id"
       },
+      "building_name_or_number": {
+        "type": "string",
+        "description": "The name or number identifying a specific building at an address with multiple buildings. Used to enforce per-building caps when multiple buildings share the same address_id."
+      },
       "building_project_type": {
         "title": "Building project type",
         "enum": [
@@ -135,6 +139,11 @@
         "type": "boolean",
         "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
         "title": "Is disadvantaged community"
+      },
+      "is_mail_in_rebate": {
+        "type": "boolean",
+        "description": "Indicates whether a mail-in rebate was included as part of the redemption.",
+        "title": "Is mail-in rebate"
       },
       "limited_assessment": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -450,6 +459,14 @@
             "title": "Heating systems",
             "description": "Provide information for each existing heating system."
           },
+          "insulation_and_air_sealing_prerequisite": {
+            "enum": [
+              "UPGRADES_REQUIRED",
+              "MEETS_STATE_THRESHOLD"
+            ],
+            "title": "Insulation and air sealing prerequisite",
+            "description": "Indicates how the dwelling satisfies the insulation and air sealing prerequisite before installing heating or cooling upgrades. Select UPGRADES_REQUIRED if insulation and air sealing upgrades will be completed after installing heating or cooling upgrades. Select MEETS_STATE_THRESHOLD if the dwelling adequately meets the state-defined insulation and air sealing thresholds and additional insulation and air sealing upgrades are not required before installing heating or cooling upgrades."
+          },
           "is_ceiling_insulation_r_value_known": {
             "type": "boolean",
             "title": "Is ceiling insulation r-value known"
@@ -502,6 +519,7 @@
           "electrical_panel_max_amps",
           "envelope_professionally_air_sealed",
           "heating_systems",
+          "insulation_and_air_sealing_prerequisite",
           "is_ceiling_insulation_r_value_known",
           "is_whole_home_ventilation_system_rated_flow_cfm_known",
           "whole_home_ventilation_system_type",
@@ -646,6 +664,7 @@
             "properties": {
               "fuel_type": {
                 "enum": [
+                  "ELECTRIC",
                   "GAS",
                   "NONE"
                 ]
@@ -711,7 +730,28 @@
                   "OIL_FURNACE",
                   "OTHER"
                 ]
+              },
+              "state_attests_existing_fossil_fuel_system_not_replaced": {
+                "type": "boolean"
               }
+            },
+            "if": {
+              "properties": {
+                "primary_heating_fuel_and_system_type": {
+                  "enum": [
+                    "GAS_PROPANE_BOILER",
+                    "GAS_PROPANE_FURNACE",
+                    "OIL_BOILER",
+                    "OIL_FURNACE",
+                    "OTHER"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "state_attests_existing_fossil_fuel_system_not_replaced"
+              ]
             },
             "required": [
               "primary_heating_fuel_and_system_type"
@@ -1107,6 +1147,14 @@
         "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.",
         "title": "Project id"
       },
+      "project_reservation_date": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 10,
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "title": "Project reservation date",
+        "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+      },
       "purchase_date": {
         "type": "string",
         "minLength": 10,
@@ -1258,6 +1306,15 @@
         "minimum": 0,
         "maximum": 20,
         "description": "The number of bedrooms in the dwelling unit."
+      },
+      "state_attests_new_construction_cost_effectiveness": {
+        "title": "State attests new construction cost effectiveness",
+        "description": "The state attests that the new construction meets cost-effectiveness criteria.",
+        "enum": [
+          "NA",
+          "NO",
+          "YES"
+        ]
       },
       "state_attests_proof_of_identity_ownership_income": {
         "type": "boolean",
@@ -1961,6 +2018,11 @@
                 "required": [
                   "num_units_meeting_income_bucket"
                 ]
+              },
+              {
+                "required": [
+                  "building_name_or_number"
+                ]
               }
             ]
           }
@@ -2417,6 +2479,42 @@
                   ]
                 }
               }
+            }
+          }
+        }
+      },
+      {
+        "$comment": "Determine when state_attests_new_construction_cost_effectiveness is required",
+        "if": {
+          "allOf": [
+            {
+              "properties": {
+                "construction_type": {
+                  "const": "NEW"
+                }
+              }
+            },
+            {
+              "not": {
+                "properties": {
+                  "upgrade_type": {
+                    "enum": [
+                      "ELECTRIC_WIRING",
+                      "ELECTRICAL_PANEL"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "then": {
+          "required": [
+            "state_attests_new_construction_cost_effectiveness"
+          ],
+          "properties": {
+            "state_attests_new_construction_cost_effectiveness": {
+              "const": "YES"
             }
           }
         }

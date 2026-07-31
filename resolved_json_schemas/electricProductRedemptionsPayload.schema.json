@@ -18,6 +18,11 @@
       "minimum": 0,
       "title": "Installation cost"
     },
+    "is_mail_in_rebate": {
+      "type": "boolean",
+      "description": "Indicates whether a mail-in rebate was included as part of the redemption.",
+      "title": "Is mail-in rebate"
+    },
     "product_info": {
       "type": "array",
       "minItems": 1,
