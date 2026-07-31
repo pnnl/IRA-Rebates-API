@@ -55,6 +55,11 @@
       "description": "The API user must convert the binary file content to base64 encoding.",
       "title": "Binary file content Base64"
     },
+    "building_name_or_number": {
+      "$anchor": "building_name_or_number",
+      "type": "string",
+      "description": "The name or number identifying a specific building at an address with multiple buildings. Used to enforce per-building caps when multiple buildings share the same address_id."
+    },
     "construction_type": {
       "$anchor": "construction_type",
       "title": "Construction type",
@@ -212,8 +217,8 @@
       "$anchor": "electric_install_redemptions_installation_cost",
       "type": "number",
       "multipleOf": 0.01,
-      "exclusiveMinimum": 0,
-      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "minimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`. A zero dollar installation cost is only allowed when `is_final_project_redemption` is `true`.",
       "title": "Installation cost"
     },
     "electric_mf_building_income_bucket": {
@@ -438,6 +443,12 @@
       "type": "boolean",
       "description": "Set this to true if the project work has been completed and there will be no more redemptions made on this reservation. This will, among other things, free up any remaining reservation amount for the household's future use.",
       "title": "Is final project redemption"
+    },
+    "is_mail_in_rebate": {
+      "$anchor": "is_mail_in_rebate",
+      "type": "boolean",
+      "description": "Indicates whether a mail-in rebate was included as part of the redemption.",
+      "title": "Is mail-in rebate"
     },
     "jurisdiction_attests_proof_of_identity_ownership_income": {
       "$anchor": "jurisdiction_attests_proof_of_identity_ownership_income",
@@ -671,6 +682,15 @@
       "description": "This is a unique string supplied by the API user that is used to associate one or more reservations to a single project. Note: it is recommended that a uuid be used to avoid duplication, but the API user can use any other system that they find convenient, provided that it is unique for the state.",
       "title": "Project id"
     },
+    "project_reservation_date": {
+      "$anchor": "project_reservation_date",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Project reservation date",
+      "description": "This is a calendar date in the form YYYY-MM-DD. Time zone is immaterial."
+    },
     "purchase_date": {
       "$anchor": "purchase_date",
       "type": "string",
@@ -899,6 +919,12 @@
       "minLength": 2,
       "maxLength": 64,
       "description": "This field is required when `rebate_type` is `MEASURED`."
+    },
+    "state_attests_new_construction_cost_effectiveness": {
+      "$anchor": "state_attests_new_construction_cost_effectiveness",
+      "title": "State attests new construction cost effectiveness",
+      "description": "The state attests that the new construction meets cost-effectiveness criteria.",
+      "$ref": "#safety_checks_yes_no_na"
     },
     "state_attests_proof_of_identity_ownership_income": {
       "$anchor": "state_attests_proof_of_identity_ownership_income",

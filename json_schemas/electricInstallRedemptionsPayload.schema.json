@@ -229,6 +229,27 @@
           "error_msg": "The 'project_completion_date' field should not be provided if 'is_final_project_redemption' is 'false'."
         }
       }
+    },
+    {
+      "$comment": "A zero dollar installation_cost is only allowed if is_final_project_redemption is true.",
+      "if": {
+        "properties": {
+          "is_final_project_redemption": {
+            "const": true
+          }
+        },
+        "required": [
+          "is_final_project_redemption"
+        ]
+      },
+      "else": {
+        "properties": {
+          "installation_cost": {
+            "exclusiveMinimum": 0,
+            "error_msg": "The 'installation_cost' field must be greater than 0 unless 'is_final_project_redemption' is 'true'."
+          }
+        }
+      }
     }
   ]
 }

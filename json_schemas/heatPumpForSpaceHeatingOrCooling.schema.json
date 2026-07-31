@@ -22,7 +22,28 @@
             "OIL_FURNACE",
             "OTHER"
           ]
+        },
+        "state_attests_existing_fossil_fuel_system_not_replaced": {
+          "type": "boolean"
         }
+      },
+      "if": {
+        "properties": {
+          "primary_heating_fuel_and_system_type": {
+            "enum": [
+              "GAS_PROPANE_BOILER",
+              "GAS_PROPANE_FURNACE",
+              "OIL_BOILER",
+              "OIL_FURNACE",
+              "OTHER"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "state_attests_existing_fossil_fuel_system_not_replaced"
+        ]
       },
       "required": [
         "primary_heating_fuel_and_system_type"
