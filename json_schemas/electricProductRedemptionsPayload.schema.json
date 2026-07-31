@@ -12,6 +12,9 @@
       "$ref": "/schemas/definitions#installation_cost",
       "description": "Use this if installation cost is included at the point of purchase of the qualifying product(s), otherwise set this to 0."
     },
+    "is_mail_in_rebate": {
+      "$ref": "/schemas/definitions#is_mail_in_rebate"
+    },
     "product_info": {
       "$ref": "/schemas/definitions#product_info"
     },

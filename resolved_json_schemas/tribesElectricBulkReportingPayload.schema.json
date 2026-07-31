@@ -423,6 +423,14 @@
             "title": "Heating systems",
             "description": "Provide information for each existing heating system."
           },
+          "insulation_and_air_sealing_prerequisite": {
+            "enum": [
+              "UPGRADES_REQUIRED",
+              "MEETS_STATE_THRESHOLD"
+            ],
+            "title": "Insulation and air sealing prerequisite",
+            "description": "Indicates how the dwelling satisfies the insulation and air sealing prerequisite before installing heating or cooling upgrades. Select UPGRADES_REQUIRED if insulation and air sealing upgrades will be completed after installing heating or cooling upgrades. Select MEETS_STATE_THRESHOLD if the dwelling adequately meets the state-defined insulation and air sealing thresholds and additional insulation and air sealing upgrades are not required before installing heating or cooling upgrades."
+          },
           "is_ceiling_insulation_r_value_known": {
             "type": "boolean",
             "title": "Is ceiling insulation r-value known"
@@ -478,6 +486,7 @@
           "electrical_panel_max_amps",
           "envelope_professionally_air_sealed",
           "heating_systems",
+          "insulation_and_air_sealing_prerequisite",
           "is_ceiling_insulation_r_value_known",
           "is_whole_home_ventilation_system_rated_flow_cfm_known",
           "whole_home_ventilation_system_type",
@@ -608,6 +617,7 @@
             "properties": {
               "fuel_type": {
                 "enum": [
+                  "ELECTRIC",
                   "GAS",
                   "NONE"
                 ]
@@ -673,7 +683,28 @@
                   "OIL_FURNACE",
                   "OTHER"
                 ]
+              },
+              "state_attests_existing_fossil_fuel_system_not_replaced": {
+                "type": "boolean"
               }
+            },
+            "if": {
+              "properties": {
+                "primary_heating_fuel_and_system_type": {
+                  "enum": [
+                    "GAS_PROPANE_BOILER",
+                    "GAS_PROPANE_FURNACE",
+                    "OIL_BOILER",
+                    "OIL_FURNACE",
+                    "OTHER"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "state_attests_existing_fossil_fuel_system_not_replaced"
+              ]
             },
             "required": [
               "primary_heating_fuel_and_system_type"
