@@ -384,6 +384,11 @@
             "maxLength": 32,
             "description": "This is the unit designator for a unit in a multifamily building. It should also be used in situations where multiple homes share a street address and are distinguished only by a Lot# or other special designation. Do NOT include words or abbreviations such as 'APT' or 'UNIT'. For example, if the unit is referred to as 'APT 7B', then *unit_name_or_number* should be '7B'."
           },
+          "building_name_or_number": {
+            "$anchor": "building_name_or_number",
+            "type": "string",
+            "description": "The name or number identifying a specific building at an address with multiple buildings. Used to enforce per-building caps when multiple buildings share the same address_id."
+          },
           "upgrades": {
             "type": "array",
             "title": "Upgrades"

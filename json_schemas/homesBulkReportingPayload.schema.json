@@ -19,6 +19,9 @@
       "applicant_id": {
         "$ref": "/schemas/definitions#applicant_id"
       },
+      "building_name_or_number": {
+        "$ref": "/schemas/definitions#building_name_or_number"
+      },
       "building_project_type": {
         "$ref": "/schemas/definitions#homes_building_project_type"
       },
@@ -567,6 +570,11 @@
               {
                 "required": [
                   "num_units_meeting_income_bucket"
+                ]
+              },
+              {
+                "required": [
+                  "building_name_or_number"
                 ]
               }
             ]

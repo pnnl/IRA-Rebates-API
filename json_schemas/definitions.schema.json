@@ -55,6 +55,11 @@
       "description": "The API user must convert the binary file content to base64 encoding.",
       "title": "Binary file content Base64"
     },
+    "building_name_or_number": {
+      "$anchor": "building_name_or_number",
+      "type": "string",
+      "description": "The name or number identifying a specific building at an address with multiple buildings. Used to enforce per-building caps when multiple buildings share the same address_id."
+    },
     "construction_type": {
       "$anchor": "construction_type",
       "title": "Construction type",
@@ -212,8 +217,8 @@
       "$anchor": "electric_install_redemptions_installation_cost",
       "type": "number",
       "multipleOf": 0.01,
-      "exclusiveMinimum": 0,
-      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`.",
+      "minimum": 0,
+      "description": "The installation costs associated with this redemption. To qualify, the installation must be performed by an approved contractor. Also see `is_contractor_eligible`. A zero dollar installation cost is only allowed when `is_final_project_redemption` is `true`.",
       "title": "Installation cost"
     },
     "electric_mf_building_income_bucket": {
