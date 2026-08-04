@@ -28,9 +28,6 @@
       "contractor_company_name": {
         "$ref": "/schemas/definitions#contractor_company_name"
       },
-      "contractor_dac_incentive": {
-        "$ref": "/schemas/definitions#contractor_dac_incentive"
-      },
       "contractor_incentive": {
         "$ref": "/schemas/definitions#contractor_incentive"
       },
@@ -61,9 +58,6 @@
       },
       "is_contractor_eligible": {
         "$ref": "/schemas/definitions#is_contractor_eligible"
-      },
-      "is_disadvantaged_community": {
-        "$ref": "/schemas/definitions#is_disadvantaged_community"
       },
       "is_mail_in_rebate": {
         "$ref": "/schemas/definitions#is_mail_in_rebate"
@@ -596,11 +590,6 @@
                 },
                 {
                   "required": [
-                    "contractor_dac_incentive"
-                  ]
-                },
-                {
-                  "required": [
                     "contractor_incentive"
                   ]
                 },
@@ -616,7 +605,7 @@
                 }
               ]
             },
-            "error_msg": "If 'installation_type' is 'DO_IT_YOURSELF', then 'contractor_company_name', 'contractor_dac_incentive', 'contractor_incentive', 'contractor_name', and 'is_contractor_eligible' must not be provided."
+            "error_msg": "If 'installation_type' is 'DO_IT_YOURSELF', then 'contractor_company_name', 'contractor_incentive', 'contractor_name', and 'is_contractor_eligible' must not be provided."
           }
         }
       },
@@ -804,42 +793,6 @@
                   "error_msg": "'ahri_reference_number' must not be provided in 'product_info' item if 'upgrade_type' is not 'HEAT_PUMP_FOR_SPACE_HEATING_OR_COOLING' or 'HEAT_PUMP_WATER_HEATER'."
                 }
               }
-            }
-          }
-        }
-      },
-      {
-        "$comment": "Determine when state_attests_new_construction_cost_effectiveness is required",
-        "if": {
-          "allOf": [
-            {
-              "properties": {
-                "construction_type": {
-                  "const": "NEW"
-                }
-              }
-            },
-            {
-              "not": {
-                "properties": {
-                  "upgrade_type": {
-                    "enum": [
-                      "ELECTRIC_WIRING",
-                      "ELECTRICAL_PANEL"
-                    ]
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "then": {
-          "required": [
-            "state_attests_new_construction_cost_effectiveness"
-          ],
-          "properties": {
-            "state_attests_new_construction_cost_effectiveness": {
-              "const": "YES"
             }
           }
         }
