@@ -543,42 +543,6 @@
           ]
         }
       }
-    },
-    {
-      "$comment": "Determine when state_attests_new_construction_cost_effectiveness is required",
-      "if": {
-        "allOf": [
-          {
-            "properties": {
-              "construction_type": {
-                "const": "NEW"
-              }
-            }
-          },
-          {
-            "not": {
-              "properties": {
-                "upgrade_type": {
-                  "enum": [
-                    "ELECTRIC_WIRING",
-                    "ELECTRICAL_PANEL"
-                  ]
-                }
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "state_attests_new_construction_cost_effectiveness"
-        ],
-        "properties": {
-          "state_attests_new_construction_cost_effectiveness": {
-            "const": "YES"
-          }
-        }
-      }
     }
   ]
 }
