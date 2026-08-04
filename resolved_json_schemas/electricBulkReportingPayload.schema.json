@@ -519,7 +519,6 @@
           "electrical_panel_max_amps",
           "envelope_professionally_air_sealed",
           "heating_systems",
-          "insulation_and_air_sealing_prerequisite",
           "is_ceiling_insulation_r_value_known",
           "is_whole_home_ventilation_system_rated_flow_cfm_known",
           "whole_home_ventilation_system_type",
@@ -734,24 +733,6 @@
               "state_attests_existing_fossil_fuel_system_not_replaced": {
                 "type": "boolean"
               }
-            },
-            "if": {
-              "properties": {
-                "primary_heating_fuel_and_system_type": {
-                  "enum": [
-                    "GAS_PROPANE_BOILER",
-                    "GAS_PROPANE_FURNACE",
-                    "OIL_BOILER",
-                    "OIL_FURNACE",
-                    "OTHER"
-                  ]
-                }
-              }
-            },
-            "then": {
-              "required": [
-                "state_attests_existing_fossil_fuel_system_not_replaced"
-              ]
             },
             "required": [
               "primary_heating_fuel_and_system_type"
@@ -2479,42 +2460,6 @@
                   ]
                 }
               }
-            }
-          }
-        }
-      },
-      {
-        "$comment": "Determine when state_attests_new_construction_cost_effectiveness is required",
-        "if": {
-          "allOf": [
-            {
-              "properties": {
-                "construction_type": {
-                  "const": "NEW"
-                }
-              }
-            },
-            {
-              "not": {
-                "properties": {
-                  "upgrade_type": {
-                    "enum": [
-                      "ELECTRIC_WIRING",
-                      "ELECTRICAL_PANEL"
-                    ]
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "then": {
-          "required": [
-            "state_attests_new_construction_cost_effectiveness"
-          ],
-          "properties": {
-            "state_attests_new_construction_cost_effectiveness": {
-              "const": "YES"
             }
           }
         }
