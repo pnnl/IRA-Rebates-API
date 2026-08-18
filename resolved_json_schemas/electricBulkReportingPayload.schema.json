@@ -60,13 +60,6 @@
         "maxLength": 64,
         "description": "The name of the primary contracting company for the project."
       },
-      "contractor_dac_incentive": {
-        "type": "number",
-        "multipleOf": 0.01,
-        "minimum": 0,
-        "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive.",
-        "title": "Contractor DAC incentive"
-      },
       "contractor_incentive": {
         "type": "number",
         "multipleOf": 0.01,
@@ -134,11 +127,6 @@
         "type": "boolean",
         "description": "The contractor is eligible if they are on the state's approved list.",
         "title": "Is contractor eligible"
-      },
-      "is_disadvantaged_community": {
-        "type": "boolean",
-        "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
-        "title": "Is disadvantaged community"
       },
       "is_mail_in_rebate": {
         "type": "boolean",
@@ -519,6 +507,7 @@
           "electrical_panel_max_amps",
           "envelope_professionally_air_sealed",
           "heating_systems",
+          "insulation_and_air_sealing_prerequisite",
           "is_ceiling_insulation_r_value_known",
           "is_whole_home_ventilation_system_rated_flow_cfm_known",
           "whole_home_ventilation_system_type",
@@ -733,6 +722,24 @@
               "state_attests_existing_fossil_fuel_system_not_replaced": {
                 "type": "boolean"
               }
+            },
+            "if": {
+              "properties": {
+                "primary_heating_fuel_and_system_type": {
+                  "enum": [
+                    "GAS_PROPANE_BOILER",
+                    "GAS_PROPANE_FURNACE",
+                    "OIL_BOILER",
+                    "OIL_FURNACE",
+                    "OTHER"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "state_attests_existing_fossil_fuel_system_not_replaced"
+              ]
             },
             "required": [
               "primary_heating_fuel_and_system_type"
@@ -2259,11 +2266,6 @@
                 },
                 {
                   "required": [
-                    "contractor_dac_incentive"
-                  ]
-                },
-                {
-                  "required": [
                     "contractor_incentive"
                   ]
                 },
@@ -2460,6 +2462,42 @@
                   ]
                 }
               }
+            }
+          }
+        }
+      },
+      {
+        "$comment": "Determine when state_attests_new_construction_cost_effectiveness is required",
+        "if": {
+          "allOf": [
+            {
+              "properties": {
+                "construction_type": {
+                  "const": "NEW"
+                }
+              }
+            },
+            {
+              "not": {
+                "properties": {
+                  "upgrade_type": {
+                    "enum": [
+                      "ELECTRIC_WIRING",
+                      "ELECTRICAL_PANEL"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "then": {
+          "required": [
+            "state_attests_new_construction_cost_effectiveness"
+          ],
+          "properties": {
+            "state_attests_new_construction_cost_effectiveness": {
+              "const": "YES"
             }
           }
         }
