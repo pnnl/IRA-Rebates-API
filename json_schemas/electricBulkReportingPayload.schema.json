@@ -28,9 +28,6 @@
       "contractor_company_name": {
         "$ref": "/schemas/definitions#contractor_company_name"
       },
-      "contractor_dac_incentive": {
-        "$ref": "/schemas/definitions#contractor_dac_incentive"
-      },
       "contractor_incentive": {
         "$ref": "/schemas/definitions#contractor_incentive"
       },
@@ -62,8 +59,8 @@
       "is_contractor_eligible": {
         "$ref": "/schemas/definitions#is_contractor_eligible"
       },
-      "is_disadvantaged_community": {
-        "$ref": "/schemas/definitions#is_disadvantaged_community"
+      "is_mail_in_rebate": {
+        "$ref": "/schemas/definitions#is_mail_in_rebate"
       },
       "is_mail_in_rebate": {
         "$ref": "/schemas/definitions#is_mail_in_rebate"
@@ -596,11 +593,6 @@
                 },
                 {
                   "required": [
-                    "contractor_dac_incentive"
-                  ]
-                },
-                {
-                  "required": [
                     "contractor_incentive"
                   ]
                 },
@@ -616,7 +608,7 @@
                 }
               ]
             },
-            "error_msg": "If 'installation_type' is 'DO_IT_YOURSELF', then 'contractor_company_name', 'contractor_dac_incentive', 'contractor_incentive', 'contractor_name', and 'is_contractor_eligible' must not be provided."
+            "error_msg": "If 'installation_type' is 'DO_IT_YOURSELF', then 'contractor_company_name', 'contractor_incentive', 'contractor_name', and 'is_contractor_eligible' must not be provided."
           }
         }
       },

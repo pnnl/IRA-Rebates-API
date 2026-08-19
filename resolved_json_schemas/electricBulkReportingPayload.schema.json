@@ -60,13 +60,6 @@
         "maxLength": 64,
         "description": "The name of the primary contracting company for the project."
       },
-      "contractor_dac_incentive": {
-        "type": "number",
-        "multipleOf": 0.01,
-        "minimum": 0,
-        "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive.",
-        "title": "Contractor DAC incentive"
-      },
       "contractor_incentive": {
         "type": "number",
         "multipleOf": 0.01,
@@ -135,10 +128,10 @@
         "description": "The contractor is eligible if they are on the state's approved list.",
         "title": "Is contractor eligible"
       },
-      "is_disadvantaged_community": {
+      "is_mail_in_rebate": {
         "type": "boolean",
-        "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
-        "title": "Is disadvantaged community"
+        "description": "Indicates whether a mail-in rebate was included as part of the redemption.",
+        "title": "Is mail-in rebate"
       },
       "is_mail_in_rebate": {
         "type": "boolean",
@@ -2274,11 +2267,6 @@
                 {
                   "required": [
                     "contractor_company_name"
-                  ]
-                },
-                {
-                  "required": [
-                    "contractor_dac_incentive"
                   ]
                 },
                 {

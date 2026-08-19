@@ -56,13 +56,6 @@
       ],
       "description": "Set to NEW if the building is less than one year old. Otherwise, set to EXISTING."
     },
-    "contractor_dac_incentive": {
-      "type": "number",
-      "multipleOf": 0.01,
-      "minimum": 0,
-      "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive.",
-      "title": "Contractor DAC incentive"
-    },
     "contractor_incentive": {
       "type": "number",
       "multipleOf": 0.01,
@@ -97,11 +90,6 @@
         "DO_IT_YOURSELF"
       ],
       "description": "Indicates who performed the installation."
-    },
-    "is_disadvantaged_community": {
-      "type": "boolean",
-      "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
-      "title": "Is disadvantaged community"
     },
     "mf_building_income_bucket": {
       "title": "Multifamily building income bucket",
@@ -998,17 +986,8 @@
       },
       "else": {
         "not": {
-          "anyOf": [
-            {
-              "required": [
-                "contractor_dac_incentive"
-              ]
-            },
-            {
-              "required": [
-                "contractor_incentive"
-              ]
-            }
+          "required": [
+            "contractor_incentive"
           ]
         }
       }
