@@ -57,11 +57,6 @@
       ],
       "description": "Indicates who performed the installation."
     },
-    "is_disadvantaged_community": {
-      "type": "boolean",
-      "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
-      "title": "Is disadvantaged community"
-    },
     "mf_building_income_bucket": {
       "title": "Multifamily building income bucket",
       "enum": [
@@ -127,7 +122,7 @@
     "installation_type",
     "upgrade_type"
   ],
-  "additionalProperties": true,
+  "additionalProperties": false,
   "allOf": [
     {
       "$comment": "Determine which fields are required when building_project_type is MULTIFAMILY_CENTRAL",

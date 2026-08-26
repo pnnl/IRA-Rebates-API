@@ -25,9 +25,6 @@
     "construction_type": {
       "$ref": "/schemas/definitions#construction_type"
     },
-    "contractor_dac_incentive": {
-      "$ref": "/schemas/definitions#contractor_dac_incentive"
-    },
     "contractor_incentive": {
       "$ref": "/schemas/definitions#contractor_incentive"
     },
@@ -42,9 +39,6 @@
     },
     "installation_type": {
       "$ref": "/schemas/definitions#installation_type"
-    },
-    "is_disadvantaged_community": {
-      "$ref": "/schemas/definitions#is_disadvantaged_community"
     },
     "mf_building_income_bucket": {
       "$ref": "/schemas/definitions#electric_mf_building_income_bucket"
@@ -452,20 +446,11 @@
       },
       "else": {
         "not": {
-          "anyOf": [
-            {
-              "required": [
-                "contractor_dac_incentive"
-              ]
-            },
-            {
-              "required": [
-                "contractor_incentive"
-              ]
-            }
+          "required": [
+            "contractor_incentive"
           ]
         },
-        "error_msg": "If 'installation_type' is not 'CONTRACTOR_INSTALLED' then 'contractor_dac_incentive' and 'contractor_incentive' must not be provided."
+        "error_msg": "If 'installation_type' is not 'CONTRACTOR_INSTALLED' then 'contractor_incentive' must not be provided."
       }
     },
     {
@@ -541,6 +526,42 @@
           "required": [
             "sf_num_bedrooms"
           ]
+        }
+      }
+    },
+    {
+      "$comment": "Determine when state_attests_new_construction_cost_effectiveness is required",
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "construction_type": {
+                "const": "NEW"
+              }
+            }
+          },
+          {
+            "not": {
+              "properties": {
+                "upgrade_type": {
+                  "enum": [
+                    "ELECTRIC_WIRING",
+                    "ELECTRICAL_PANEL"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "required": [
+          "state_attests_new_construction_cost_effectiveness"
+        ],
+        "properties": {
+          "state_attests_new_construction_cost_effectiveness": {
+            "const": "YES"
+          }
         }
       }
     }

@@ -137,7 +137,7 @@
         "$ref": "/schemas/definitions#homes_reservation_amount"
       },
       "safety_checks": {
-        "$ref": "/schemas/definitions#safety_checks"
+        "$ref": "/schemas/definitions#homes_safety_checks"
       },
       "software_used_to_estimate_post_retrofit_energy_usage": {
         "$ref": "/schemas/definitions#software_used_to_estimate_post_retrofit_energy_usage"

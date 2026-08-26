@@ -56,13 +56,6 @@
       ],
       "description": "Set to NEW if the building is less than one year old. Otherwise, set to EXISTING."
     },
-    "contractor_dac_incentive": {
-      "type": "number",
-      "multipleOf": 0.01,
-      "minimum": 0,
-      "description": "This is the amount the state will pay to a contractor as a disadvantaged-community incentive.",
-      "title": "Contractor DAC incentive"
-    },
     "contractor_incentive": {
       "type": "number",
       "multipleOf": 0.01,
@@ -97,11 +90,6 @@
         "DO_IT_YOURSELF"
       ],
       "description": "Indicates who performed the installation."
-    },
-    "is_disadvantaged_community": {
-      "type": "boolean",
-      "description": "This field should only be used by states that have been approved by the DOE to do so. If provided, this will override the is_disadvantaged_community value from the address-service.",
-      "title": "Is disadvantaged community"
     },
     "mf_building_income_bucket": {
       "title": "Multifamily building income bucket",
@@ -228,6 +216,24 @@
             "state_attests_existing_fossil_fuel_system_not_replaced": {
               "type": "boolean"
             }
+          },
+          "if": {
+            "properties": {
+              "primary_heating_fuel_and_system_type": {
+                "enum": [
+                  "GAS_PROPANE_BOILER",
+                  "GAS_PROPANE_FURNACE",
+                  "OIL_BOILER",
+                  "OIL_FURNACE",
+                  "OTHER"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "state_attests_existing_fossil_fuel_system_not_replaced"
+            ]
           },
           "required": [
             "primary_heating_fuel_and_system_type"
@@ -980,17 +986,8 @@
       },
       "else": {
         "not": {
-          "anyOf": [
-            {
-              "required": [
-                "contractor_dac_incentive"
-              ]
-            },
-            {
-              "required": [
-                "contractor_incentive"
-              ]
-            }
+          "required": [
+            "contractor_incentive"
           ]
         }
       }
@@ -1068,6 +1065,42 @@
           "required": [
             "sf_num_bedrooms"
           ]
+        }
+      }
+    },
+    {
+      "$comment": "Determine when state_attests_new_construction_cost_effectiveness is required",
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "construction_type": {
+                "const": "NEW"
+              }
+            }
+          },
+          {
+            "not": {
+              "properties": {
+                "upgrade_type": {
+                  "enum": [
+                    "ELECTRIC_WIRING",
+                    "ELECTRICAL_PANEL"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "required": [
+          "state_attests_new_construction_cost_effectiveness"
+        ],
+        "properties": {
+          "state_attests_new_construction_cost_effectiveness": {
+            "const": "YES"
+          }
         }
       }
     }
