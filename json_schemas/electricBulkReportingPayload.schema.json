@@ -62,9 +62,6 @@
       "is_mail_in_rebate": {
         "$ref": "/schemas/definitions#is_mail_in_rebate"
       },
-      "is_mail_in_rebate": {
-        "$ref": "/schemas/definitions#is_mail_in_rebate"
-      },
       "limited_assessment": {
         "$ref": "/schemas/electrificationLimitedAssessment"
       },
@@ -118,7 +115,7 @@
         "$ref": "/schemas/definitions#rebate_deducted"
       },
       "safety_checks": {
-        "$ref": "/schemas/definitions#safety_checks"
+        "$ref": "/schemas/definitions#electric_safety_checks"
       },
       "sf_conditioned_floor_area": {
         "$ref": "/schemas/definitions#sf_conditioned_floor_area"
