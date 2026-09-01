@@ -1039,6 +1039,12 @@
       "maxLength": 64,
       "description": "This field is required when `rebate_type` is `MEASURED`."
     },
+    "state_attests_existing_fossil_fuel_system_not_replaced": {
+      "$anchor": "state_attests_existing_fossil_fuel_system_not_replaced",
+      "type": "boolean",
+      "title": "State attests existing fossil fuel system not replaced",
+      "description": "For dwellings with existing fossil-fuel HVAC equipment, this API field is to capture an attestation that the state will not use rebate dollars to decommission old non-electric systems as part of the rebate project."
+    },
     "state_attests_new_construction_cost_effectiveness": {
       "$anchor": "state_attests_new_construction_cost_effectiveness",
       "title": "State attests new construction cost effectiveness",

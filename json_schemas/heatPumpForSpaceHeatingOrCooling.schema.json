@@ -24,7 +24,7 @@
           ]
         },
         "state_attests_existing_fossil_fuel_system_not_replaced": {
-          "type": "boolean"
+          "$ref": "/schemas/definitions#state_attests_existing_fossil_fuel_system_not_replaced"
         }
       },
       "if": {

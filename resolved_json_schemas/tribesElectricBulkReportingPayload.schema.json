@@ -685,7 +685,9 @@
                 ]
               },
               "state_attests_existing_fossil_fuel_system_not_replaced": {
-                "type": "boolean"
+                "type": "boolean",
+                "title": "State attests existing fossil fuel system not replaced",
+                "description": "For dwellings with existing fossil-fuel HVAC equipment, this API field is to capture an attestation that the state will not use rebate dollars to decommission old non-electric systems as part of the rebate project."
               }
             },
             "if": {
