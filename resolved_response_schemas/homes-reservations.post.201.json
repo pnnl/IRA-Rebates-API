@@ -362,6 +362,61 @@
     "warnings": {
       "title": "Warning",
       "type": "array"
+    },
+    "reservation_options": {
+      "type": "object",
+      "title": "Reservation Options",
+      "description": "A dictionary of internal reservation options.",
+      "properties": {
+        "allow_requested_reservation_amount_reduction": {
+          "$anchor": "allow_requested_reservation_amount_reduction",
+          "type": "boolean",
+          "default": false,
+          "description": "If true, allows the rules engine to reduce the requested reservation amount.",
+          "title": "Allow requested reservation amount reduction"
+        },
+        "ruleset_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Date-based version (YYYY.MM.DD) of the ruleset used to generate this reservation."
+        },
+        "non_editable_fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "List of payload fields consulted by the rules engine when computing this reservation."
+        }
+      }
+    },
+    "edited_at": {
+      "title": "Edited at",
+      "description": "This is the date and time, in UTC, at which the reservation was last edited.",
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "edited_by_username": {
+      "title": "Edited by name",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   }
 }

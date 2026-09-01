@@ -70,6 +70,7 @@
     "safety_checks": {
       "title": "Safety Checks",
       "type": "object",
+      "description": "The results of the safety checks performed for this project. Only *confirm_all_safety_check_results_disclosed_to_homeowner* is required; every other safety check result is optional. Report the results that apply to the project and omit the rest.",
       "properties": {
         "ambient_co_test_result": {
           "description": "This test is only required if the home has one or more combustion appliances post-retrofit.",
@@ -90,6 +91,7 @@
           ]
         },
         "confirm_all_safety_check_results_disclosed_to_homeowner": {
+          "description": "Confirm that for every home energy upgrade project that is installed:\n- The contractor completed all health and safety testing as required by state and/or municipal building codes and standards. If any health and safety issues are identified, the issues will be remedied as required by the state or municipality.\n- If a post-retrofit inspection was conducted, issues that resulted in a failed inspection will be remedied as required by the state or municipality.\n- If the upgrade project impacted fossil fuel systems in the home, the contractor completed combustion safety testing and the state will maintain proof of testing.\n- The homeowner was informed of all the health and safety test results.",
           "title": "Confirm all safety check results disclosed to homeowner",
           "enum": [
             "NA",
@@ -164,16 +166,7 @@
         }
       },
       "required": [
-        "ambient_co_test_result",
-        "ashrae_62_2_ventilation_calculated",
-        "confirm_all_safety_check_results_disclosed_to_homeowner",
-        "drainage_system_condition",
-        "gas_leak_detection_test_result",
-        "roof_condition",
-        "signs_of_mold_or_moisture",
-        "spillage_test_result",
-        "undiluted_co_test_result",
-        "venting_test_result"
+        "confirm_all_safety_check_results_disclosed_to_homeowner"
       ],
       "additionalProperties": false
     },
