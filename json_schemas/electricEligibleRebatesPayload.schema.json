@@ -22,9 +22,6 @@
     "installation_type": {
       "$ref": "/schemas/definitions#installation_type"
     },
-    "is_disadvantaged_community": {
-      "$ref": "/schemas/definitions#is_disadvantaged_community"
-    },
     "mf_building_income_bucket": {
       "$ref": "/schemas/definitions#electric_mf_building_income_bucket"
     },
@@ -55,7 +52,7 @@
     "installation_type",
     "upgrade_type"
   ],
-  "additionalProperties": true,
+  "additionalProperties": false,
   "allOf": [
     {
       "$comment": "Determine which fields are required when building_project_type is MULTIFAMILY_CENTRAL",

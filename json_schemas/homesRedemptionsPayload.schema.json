@@ -36,7 +36,7 @@
       "$ref": "/schemas/definitions#rebate_type"
     },
     "safety_checks": {
-      "$ref": "/schemas/definitions#safety_checks"
+      "$ref": "/schemas/definitions#homes_safety_checks"
     },
     "total_rebate_payout": {
       "$ref": "/schemas/definitions#total_rebate_payout"
