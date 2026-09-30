@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ira-rebates.labworks.org/schemas/homesFileValidation",
+  "type": "object",
+  "title": "Homes Files Validation Payload",
+  "properties": {
+    "binary_file_content_base_64": {
+      "$ref": "/schemas/definitions#binary_file_content_base_64"
+    },
+    "file_type": {
+      "$ref": "/schemas/definitions#homes_file_type"
+    },
+    "file_purpose": {
+      "$ref": "/schemas/definitions#homes_file_purpose"
+    }
+  },
+  "required": [
+    "binary_file_content_base_64",
+    "file_type",
+    "file_purpose"
+  ],
+  "additionalProperties": false
+}
