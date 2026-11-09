@@ -355,6 +355,12 @@
         "YES"
       ]
     },
+    "rebate_status": {
+      "$anchor": "rebate_status",
+      "title": "Rebate Status",
+      "description": "The status of the rebate reservation.",
+      "type": "string"
+    },
     "warnings": {
       "title": "Warning",
       "type": "array"
