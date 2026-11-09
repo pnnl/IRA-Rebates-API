@@ -342,6 +342,12 @@
       "title": "State attests proof of identity ownership income",
       "description": "The state attests that they have obtained the required proof of identify, proof of ownership, and proof of income for this rebate."
     },
+    "rebate_status": {
+      "$anchor": "rebate_status",
+      "title": "Rebate Status",
+      "description": "The status of the rebate reservation.",
+      "type": "string"
+    },
     "unit_name_or_number": {
       "$anchor": "unit_name_or_number",
       "type": "string",
