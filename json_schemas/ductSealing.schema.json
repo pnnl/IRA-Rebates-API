@@ -24,7 +24,7 @@
         "cfm25": {
           "description": "Total duct leakage cfm at 25 Pa pressure difference",
           "type": "number",
-          "exclusiveminimum": 0
+          "exclusiveMinimum": 0
         },
         "is_leakage_rate_known": {
           "type": "boolean"
