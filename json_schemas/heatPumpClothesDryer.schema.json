@@ -31,7 +31,7 @@
       "properties": {
         "energy_guide_estimated_energy_use_kwh": {
           "type": "integer",
-          "exclsuiveMinimum": 0
+          "exclusiveMinimum": 0
         }
       },
       "required": [
